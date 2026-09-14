@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_HainGuvercin" Title="Hain Güvercin" TimeLimitInDays="30">
+  <TargetResolvers>
+    <Resolver Alias="looters" TargetType="MobileParty" Filters="BanditParty, Faction(looters)" Selector="Random" />
+  </TargetResolvers>
+
+  <Stages>
+    <Stage Id="Stage1_CapulcuAvla" NextStageId="Stage2_Bekleme" LogType="Progress" TargetAmount="3" IsSuccessNode="false" IsFailNode="false">
+      <LogText>Suikast görevinden şüphelendin ve araştırmaya başladın. {PlayerName} adını kullanarak etrafta dolaşan 3 farklı çapulcu partisi bulup yenmelisin. Gözcüleri sorguladığında gerçek ortaya çıkacak.</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="looters" Amount="3" />
+      </Conditions>
+      <OnEnterActions />
+      <OnExitActions />
+    </Stage>
+
+    <Stage Id="Stage2_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInHours="2">
+      <LogText>Esir aldığın yağmacıları sorguluyorsun... (biraz bekle)</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions>
+        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="5" />
+        <Action Type="ChangeStage" ObjectId="Stage3_EsirSorgu" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage3_EsirSorgu" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>Esirlerle sorgulama vakti geldi. Yakındaki bir çapulcu partisine (Saha Koordinatörü) gidip onlarla konuşmalısın.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+    </Stage>
+
+    <Stage Id="Stage4_ElebasiBekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>Esirler sana elebaşının yerini söyledi. Biraz beklersen asıl güvercinler sana gelecek.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+    </Stage>
+
+    <Stage Id="Stage5_Gercek" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>Asıl hainin kim olduğunu öğrendin. Artık tek yapman gereken krallığa bağlılık yemini etmek.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- Stage 3: Esir Sorgusu -->
+    <DialogNode Type="Npc" Id="Esir_Giris" TargetAlias="looters" InputToken="start" OutputToken="ql_esir_a1" Priority="200">
+      <Text>Biz Sahadaki bir Çapulcu tarafından gönderildik. Arkadaşlarımızı serbest bırak gerçekleri konuşmak için Çapulcuyu getirelim.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_EsirSorgu" />
+      </Conditions>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="Esir_P1" TargetAlias="looters" InputToken="ql_esir_a1" OutputToken="ql_esir_a2">
+      <Text>Bana bildiklerinizi anlatın yoksa hepinizi kılıçtan geçiririm!</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Npc" Id="Esir_N2" TargetAlias="looters" InputToken="ql_esir_a2" OutputToken="ql_esir_p2">
+      <Text>Biz sadece saha elemanıyız. Zanaatkar bize kimi hedef göstereceğini söylüyor. Ama asıl patron yakında burada olacak. Bırak onu sana getirelim!</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="Esir_P2" TargetAlias="looters" InputToken="ql_esir_p2" OutputToken="close_window">
+      <Text>Pekala sizi bırakıyorum. Zaten başka bir işe de yaramıyorsunuz. Elebaşınızı bekliyorum.</Text>
+      <Consequences>
+        <Action Type="DestroyEncounteredParty" />
+        <Action Type="ChangeStage" ObjectId="Stage4_ElebasiBekleme" />
+        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="25" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Stage 4: Elebaşı Konuşması -->
+    <DialogNode Type="Npc" Id="Elebasi_Giris" TargetAlias="looters" InputToken="start" OutputToken="ql_elebasi_a1" Priority="200">
+      <Text>Dur! Kılıç çekmeye gelmedik... Askerlerimi serbest bırakmışsın. Ben Saha koordinatörü bir Çapulcuyum.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage4_ElebasiBekleme" />
+      </Conditions>
+    </DialogNode>
+    
+    <DialogNode Type="Npc" Id="Elebasi_N1" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="ql_elebasi_p1">
+      <Text>Zanaatkar bizleri kandırdı. Senin sadakatini karalamak ve seni hain ilan etmek için bir kumpas kurdu! Bizler ise senin sadakatini ve barışçıllığını tescil etmekle görevlendirildik ve sonunda asıl hainin zanaatkar olduğunu anladık.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="Elebasi_P1" TargetAlias="looters" InputToken="ql_elebasi_p1" OutputToken="ql_elebasi_a2">
+      <Text>O haine hak ettiği cezayı vermeyi çok isterim. Zaten verdiği suikast görevinden şüphelenmiştim.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Npc" Id="Elebasi_N2" TargetAlias="looters" InputToken="ql_elebasi_a2" OutputToken="ql_elebasi_p2">
+      <Text>Onu cezalandırmak bırak Çapulculara kalsın. Senin görevin Anavatanına gidip kralına bağlılık yemini etmektir. Bu seni temize çıkaracak olan yegane hamle. Buna hazırsın.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="Elebasi_P2" TargetAlias="looters" InputToken="ql_elebasi_p2" OutputToken="ql_elebasi_a3">
+      <Text>Teşekkürler. Her şeyin çözülmesine sevindim.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Npc" Id="Elebasi_N3" TargetAlias="looters" InputToken="ql_elebasi_a3" OutputToken="close_window">
+      <Text>Yolun açık olsun Güvercin.</Text>
+      <Consequences>
+        <Action Type="DestroyEncounteredParty" />
+        <Action Type="ChangeStage" ObjectId="Stage5_Gercek" />
+      </Consequences>
+    </DialogNode>
+  </CustomDialogs>
+</Questline>

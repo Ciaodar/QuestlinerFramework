@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_AnavataninIhaneti" Title="Anavatanın İhaneti" TimeLimitInDays="60">
+  
+  <TargetResolvers>
+    <Resolver Alias="KoyBuyugu" TargetType="Hero" Filters="SameCultureAsPlayer, IsRuralNotable, !Target(Dost)" Selector="Random" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="SameCultureAsPlayer, Lord, !PlayerClan, !Leader, HasMobileParty, HasKingdom" Selector="Nearest" />
+    <Resolver Alias="UzakSehir" TargetType="Settlement" Filters="Town, SameCultureAsPlayer" Selector="Farthest" />
+    <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="SameCultureAsPlayer, IsArtisan" RequiredSettlementAlias="UzakSehir" Selector="Random" />
+    <Resolver Alias="Kral" TargetType="Hero" Filters="SameCultureAsPlayer, Leader" Selector="First" />
+  </TargetResolvers>
+
+  <Stages>
+    <Stage Id="Stage1_KoyBuyugu" NextStageId="" LogType="Progress" TargetAmount="70" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{KoyBuyugu_Link} isimli köy büyüğüne kendini kanıtlaman ve 70 kişilik bir ordu toplaman gerekiyor.</LogText>
+      <Conditions>
+        <Condition Type="HasTroopCount" Amount="70" />
+      </Conditions>
+    </Stage>
+
+    <Stage Id="Stage2_Zanaatkar" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{KoyBuyugu_Link} ile konuştun. Sana gizli bir deri verdi ve bunu {UzakSehir_Link} şehrindeki {ArtisanTarget_Link} isimli zanaatkara götürmeni istedi.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="Stage3_SuikastKabul" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>Çapulcu Güvercinler bilgesi {ArtisanTarget_Link}, bir suikast görevi verdi. Sorgulamadan kabul ettin. Hedefin: {Dost_Link}.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="Stage3_SuikastRed" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>Güvercinler daha önce dostun olduğunu söyledikleri {Dost_Link} isimli kişiyi şimdi öldürmeni istedi. Tutarsız bir takım gariplikler yaşanıyor. {ArtisanTarget_Link} ile konuşmanda verilen göreve karşı çıktın. Acilen bu şüphenden birilerine bahsetmek isteyebilirsin. (Köy yaşlısı veya Dost ile konuş)</LogText>
+      <Conditions />
+      <OnTimeoutActions TimeoutInDays="7">
+        <Action Type="StartQuest" ObjectId="QLF_HainGuvercin" />
+        <Action Type="ChangeStage" ObjectId="Stage_Bekleme_Guvercin" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage_Bekleme_Guvercin" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{ArtisanTarget_Link} arkandan iftiralar atmış. Sana bu şüpheli suikast görevini verdiğinde birileriyle konuşmalıydın. Çapulcuların arasında adın hızla karalanıyor. Karanlık bir köşeye çekilip beklemekten başka çaren kalmadı, belki de bu işi çözmenin başka bir yolu vardır.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="Stage4_Dost_Savas" NextStageId="Stage5_KaranlikSon" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>O hain sen olmalısın. Bana iftira atan da sensin. Ölmeye hazırlan! {Dost_Link} ile savaştın. Geri dönüş yok!</LogText>
+      <Conditions>
+        <Condition Type="TargetIsDead" TargetAlias="Dost" />
+      </Conditions>
+    </Stage>
+    
+    <Stage Id="Stage5_KaranlikSon" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>Birini idam etmek hiçbir zaman iyi olmamıştır. Güvercinler seni hain ilan etti. Anavatanın için ise açıkça bir düşmansın. Senden nefret ediyorlar. Böyle olmamalıydı...</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DeclareWar" TargetAlias="Dost" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage4_Dost_Inandi" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>Köy yaşlısı ile konuştun ve asıl görevini öğrendin. Hain Zanaatkar ile onlar ilgilenecek. Şimdi ise Krallık Lideri olan {Kral_Link} ile konuşup ona hizmetlerini sunmanın bir yolunu bulmalısın.</LogText>
+      <Conditions>
+        <Condition Type="HasPledgedAllegiance" TargetAlias="Kral" />
+      </Conditions>
+      <OnExitActions>
+        <Action Type="ChangeStage" ObjectId="Stage5_KralligaKatil" />
+      </OnExitActions>
+    </Stage>
+
+    <Stage Id="Stage5_KralligaKatil" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>Kendini kanıtladın ve krallığa katıldın. Şimdi sıra sana iftira atan kişiyi bulup intikamını almada. {Dost_Link} Seninle konuşmayı bekliyor. Onunla konuş ve ayrıntıları öğren.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>Tüm bunların sadakatini test etmek için kurulmuş bir oyun olduğunu öğrendin. Ödülünü aldın ve Anavatanın İhaneti görevi başarıyla son buldu.</LogText>
+      <Conditions />
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- 1. KÖY BÜYÜĞÜ DİYALOGLARI (GİRİŞ) -->
+    <DialogNode Type="Npc" Id="KB_Giris" TargetAlias="KoyBuyugu" InputToken="start" OutputToken="ql_kb_b1" Priority="100">
+      <Text>Adın {PlayerName} olmalı, değil mi?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_KoyBuyugu" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_B1a" TargetAlias="KoyBuyugu" InputToken="ql_kb_b1" OutputToken="ql_kb_a2">
+      <Text>Herkesin adımı bilmesine alışmalıyım sanırım.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_B1b" TargetAlias="KoyBuyugu" InputToken="ql_kb_b1" OutputToken="ql_kb_a2">
+      <Text>Sen de bir güvercin olmalısın...</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_A2" TargetAlias="KoyBuyugu" InputToken="ql_kb_a2" OutputToken="ql_kb_b2">
+      <Text>Evet, Elbette... Bir sonraki adım için buradasın. Şimdi yapacağın şey sana vereceğim gizli bilgilerin yer aldığı bu özel deriyi {UzakSehir_Link} şehrindeki {ArtisanTarget_Link} isimli zanaatkara götürmelisin.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_B2a" TargetAlias="KoyBuyugu" InputToken="ql_kb_b2" OutputToken="ql_kb_a3">
+      <Text>Bunun benim problemimle ne alakası var?</Text>
+    </DialogNode>
+    <DialogNode Type="Npc" Id="KB_A3" TargetAlias="KoyBuyugu" InputToken="ql_kb_a3" OutputToken="ql_kb_b2">
+      <Text>Her şey birbiriyle alakalıdır.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_B2b" TargetAlias="KoyBuyugu" InputToken="ql_kb_b2" OutputToken="ql_kb_a4">
+      <Text>Pekala, yapacağım.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_A4" TargetAlias="KoyBuyugu" InputToken="ql_kb_a4" OutputToken="ql_kb_b3">
+      <Text>İyi yolculuklar, çapulcu...</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_B3" TargetAlias="KoyBuyugu" InputToken="ql_kb_b3" OutputToken="close_window">
+      <Text>Teşekkürler güvercin...</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2_Zanaatkar" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- 2. ARTISAN (ZANAATKAR) DİYALOGLARI -->
+    <DialogNode Type="Player" Id="Art_B_Giris" TargetAlias="ArtisanTarget" InputToken="hero_main_options" OutputToken="ql_art_a1" Priority="100">
+      <Text>Bir güvercin size bu deriyi gönderdi.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_Zanaatkar" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Art_A1" TargetAlias="ArtisanTarget" InputToken="ql_art_a1" OutputToken="ql_art_b1">
+      <Text>Ahh, bir komplo daha demek! Söyle çapulcu, senin adın nedir?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B1a" TargetAlias="ArtisanTarget" InputToken="ql_art_b1" OutputToken="ql_art_a2">
+      <Text>Anubis.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B1b" TargetAlias="ArtisanTarget" InputToken="ql_art_b1" OutputToken="ql_art_a2">
+      <Text>Güvercin.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B1c" TargetAlias="ArtisanTarget" InputToken="ql_art_b1" OutputToken="ql_art_a2">
+      <Text>{PlayerName}.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Art_A2" TargetAlias="ArtisanTarget" InputToken="ql_art_a2" OutputToken="ql_art_b2">
+      <Text>Yavru güvercin yuvaya döner mi?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B2a" TargetAlias="ArtisanTarget" InputToken="ql_art_b2" OutputToken="ql_art_a3">
+      <Text>Döner.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B2b" TargetAlias="ArtisanTarget" InputToken="ql_art_b2" OutputToken="ql_art_a3">
+      <Text>Dönmez.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B2c" TargetAlias="ArtisanTarget" InputToken="ql_art_b2" OutputToken="ql_art_a3">
+      <Text>Dönmez mi?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Art_A3" TargetAlias="ArtisanTarget" InputToken="ql_art_a3" OutputToken="ql_art_b3">
+      <Text>Tabii ya! Peki adalet mi istersin intikam mı?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B3a" TargetAlias="ArtisanTarget" InputToken="ql_art_b3" OutputToken="ql_art_a4">
+      <Text>Adalet yerini bulmalı! Zira onun yüceliği daimidir.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B3b" TargetAlias="ArtisanTarget" InputToken="ql_art_b3" OutputToken="ql_art_a4">
+      <Text>Benim intikamım adaletin tecelli etmesini sağlamak olacaktır.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B3c" TargetAlias="ArtisanTarget" InputToken="ql_art_b3" OutputToken="ql_art_a4">
+      <Text>Dişe diş, kana kan. İNTİKAM, İNTİKAM!!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Art_A4" TargetAlias="ArtisanTarget" InputToken="ql_art_a4" OutputToken="ql_art_b4">
+      <Text>Pekala, Seninle bir sonuca vardık. Anavatanın İhaneti senin demir yumruğun ile son bulacaktır. Şimdiki görevin ise {Dost_Link} isimli kişiyi idam etmek.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B4a" TargetAlias="ArtisanTarget" InputToken="ql_art_b4" OutputToken="close_window">
+      <Text>Ne?! Bu adamın dostum olduğu söylenmişti. Bu çok saçma, siz bir şeyler saklıyorsunuz. Bunu yapmayacağım!</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_SuikastRed" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B4b" TargetAlias="ArtisanTarget" InputToken="ql_art_b4" OutputToken="close_window">
+      <Text>Başüstüne! Çapulcunun emri, güvercinin görevidir, İzninizle...</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_SuikastKabul" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- 3. DOST İLE YÜZLEŞME (SUIKAST EMRİ SONRASI) -->
+    <DialogNode Type="Npc" Id="Dost_Giris_Kabul" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_b1" Priority="100">
+      <Text>Dostum, erken geldin. Anavatana hizmete daha girmemişsin.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_SuikastKabul" />
+      </Conditions>
+    </DialogNode>
+    
+    <DialogNode Type="Npc" Id="Dost_Giris_Red" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_b1" Priority="100">
+      <Text>Dostum, erken geldin. Anavatana hizmete daha girmemişsin.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Dost_B1a" TargetAlias="Dost" InputToken="ql_dost_b1" OutputToken="ql_dost_a2">
+      <Text>Ecel geldi erkenden. Sen onu beklemezken.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="Dost_B1b" TargetAlias="Dost" InputToken="ql_dost_b1" OutputToken="ql_dost_a2">
+      <Text>Çapulcu kelleni istiyor. Dikkat et merhametime kalma.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Dost_A2" TargetAlias="Dost" InputToken="ql_dost_a2" OutputToken="ql_dost_b2">
+      <Text>Ne saçmalıyorsun? Onlar benden emir alıyorlar. Bu da demek oluyor ki aralarında seni kandırdığını sanan bir hain var!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Dost_B2a" TargetAlias="Dost" InputToken="ql_dost_b2" OutputToken="ql_dost_a3">
+      <Text>Haklısın, ne düşünüyordum ki ben. Senin için köy yaşlısı ile konuşacağım.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_SuikastRed" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Dost_A3" TargetAlias="Dost" InputToken="ql_dost_a3" OutputToken="close_window">
+      <Text>Korkunç bir karşılaşmaydı dostum. Kendine dikkat et. Tekrar karşılaşacağız.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Dost_B2b" TargetAlias="Dost" InputToken="ql_dost_b2" OutputToken="close_window">
+      <Text>Evet. O hain sen olmalısın. Bana iftira atan da sensin. Ölmeye hazırlan!</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage4_Dost_Savas" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- 4. KÖY YAŞLISI İLE YÜZLEŞME (SUIKAST REDDİ SONRASI) -->
+    <DialogNode Type="Player" Id="KB_Ihbar_Giris" TargetAlias="KoyBuyugu" InputToken="hero_main_options" OutputToken="ql_kb_ihbar_a1" Priority="100">
+      <Text>{ArtisanTarget_Link} hakkında konuşmalıyız.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_Ihbar_A1" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a1" OutputToken="ql_kb_ihbar_b1">
+      <Text>Dönüşün, beklemediğimiz bir gelişme. Bir sorun mu var?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_Ihbar_B1a" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b1" OutputToken="ql_kb_ihbar_a2">
+      <Text>{ArtisanTarget_Link} benden öldürmem için {Dost_Link} ismini verdi.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="KB_Ihbar_B1b" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b1" OutputToken="ql_kb_ihbar_a2">
+      <Text>Zanaatkar adam benden dostumuz olan adamı öldürmemi istedi.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_Ihbar_A2" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a2" OutputToken="ql_kb_ihbar_b2">
+      <Text>Öldürmek mi? Hem de dostumuzu? Bundan emin misin? Sana neden inanayım? Suçladığın kişi değerli bir çapulcu.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_Ihbar_B2a" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b2" OutputToken="ql_kb_ihbar_a3">
+      <Text>Haklısınız. Bana inanmak istemeyebilirsiniz. Ancak bu görevi yerine getirmeyeceğimi bilmelisiniz.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="KB_Ihbar_B2b" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b2" OutputToken="ql_kb_ihbar_a3">
+      <Text>Umrumda değil. Kimseyi öldürmeyeceğim. Sizi indandırmakla uğraşacak da değilim!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_Ihbar_A3" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a3" OutputToken="ql_kb_ihbar_b3">
+      <Text>Üzgünüm, Evet! sen yalan söylemiyorsun. Bu kaçıncı... O adam bir hain!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_Ihbar_B3a" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b3" OutputToken="ql_kb_ihbar_a4">
+      <Text>Belki beni ilgilendirmez ama isterseniz o adamı sizin için...</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="KB_Ihbar_B3b" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b3" OutputToken="ql_kb_ihbar_a4">
+      <Text>O adam! beni kullanacağını sandı he şimdi ben ona göster...</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_Ihbar_A4" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a4" OutputToken="close_window">
+      <Text>Hayır! Bu senin meselen değil. Git ve Daha fazla geç kalmadan Anavatanına hizmete adandığını göster. Senin görevin bu olmalıydı. Şimdi gitmeliyim. Hizmetin unutulmayacak.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage4_Dost_Inandi" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- 5. KRALLIĞA KATILDIKTAN SONRA DOST İLE SON YÜZLEŞME -->
+    <DialogNode Type="Player" Id="Dost_Final_Giris" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_final_a1" Priority="100">
+      <Text>Selam eski dost. Anavatana ihanet etmedim.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage5_KralligaKatil" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Dost_Final_A1" TargetAlias="Dost" InputToken="ql_dost_final_a1" OutputToken="ql_dost_final_b1">
+      <Text>Biliyordum! Sonunda karşılaştık {PlayerName}. Doğrusunu istersen senle şuan tanışıyoruz. İhanet meselesi ise Anavatana olan bağlılığını test etmek ve tazelemek için oynadığım bir oyundu. Bu konuda sinirlenebilirsin Ancak sonuçların güzel olduğunda hemfikiriz diye düşünüyorum.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Dost_Final_B1a" TargetAlias="Dost" InputToken="ql_dost_final_b1" OutputToken="ql_dost_final_a2">
+      <Text>Kesinlikle! Seni tanımadğımı zaten biliyordum. Aslında zaten aklımda daima Anavatana hizmet vardı.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="Dost_Final_B1b" TargetAlias="Dost" InputToken="ql_dost_final_b1" OutputToken="ql_dost_final_a2">
+      <Text>Beni kandırdığını zannetme. Ben zaten bu yolda ilerlemeyi kendim istiyordum. İftira atılması cabası olmuştu.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Dost_Final_A2" TargetAlias="Dost" InputToken="ql_dost_final_a2" OutputToken="ql_dost_final_a3">
+      <Text>Teşekkürler. Sana yapacağım bağış, başına açtığım belaların telafisi ve yeni hizmetinde sana yardımcı olacaktır.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Dost_Final_A3" TargetAlias="Dost" InputToken="ql_dost_final_a3" OutputToken="hero_main_options">
+      <Text>Başka bir şey konuşmayı istiyor muydun?</Text>
+      <Consequences>
+        <Action Type="AddGold" Amount="50000" />
+        <Action Type="ChangeStage" ObjectId="StageSuccess" />
+      </Consequences>
+    </DialogNode>
+  </CustomDialogs>
+</Questline>
