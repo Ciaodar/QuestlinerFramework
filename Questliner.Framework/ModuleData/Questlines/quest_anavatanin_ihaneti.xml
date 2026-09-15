@@ -2,23 +2,23 @@
 <Questline Id="QLF_AnavataninIhaneti" Title="Anavatanın İhaneti" TimeLimitInDays="60">
   
   <TargetResolvers>
-    <Resolver Alias="KoyBuyugu" TargetType="Hero" Filters="SameCultureAsPlayer, IsRuralNotable, !Target(Dost)" Selector="Random" />
-    <Resolver Alias="Dost" TargetType="Hero" Filters="SameCultureAsPlayer, Lord, !PlayerClan, !Leader, HasMobileParty, HasKingdom" Selector="Nearest" />
-    <Resolver Alias="UzakSehir" TargetType="Settlement" Filters="Town, SameCultureAsPlayer" Selector="Farthest" />
-    <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="SameCultureAsPlayer, IsArtisan" RequiredSettlementAlias="UzakSehir" Selector="Random" />
-    <Resolver Alias="Kral" TargetType="Hero" Filters="SameCultureAsPlayer, Leader" Selector="First" />
+    <Resolver Alias="KoyBuyugu" TargetType="Hero" Filters="SameCultureAsPlayer, RuralNotable, !Target(Dost)" Selector="Random" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="SameCultureAsPlayer, Lord, !PlayerClan, !ClanLeader, HasMobileParty, HasKingdom" Selector="Nearest" />
+    <Resolver Alias="UzakSehir" TargetType="Settlement" Filters="Town, SameCultureAsPlayer" Selector="Furthest" />
+    <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="SameCultureAsPlayer, Artisan" RequiredSettlementAlias="UzakSehir" Selector="Random" />
+    <Resolver Alias="Kral" TargetType="Hero" Filters="SameCultureAsPlayer, KingdomLeader" Selector="First" />
   </TargetResolvers>
 
   <Stages>
     <Stage Id="Stage1_KoyBuyugu" NextStageId="" LogType="Progress" TargetAmount="70" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{KoyBuyugu_Link} isimli köy büyüğüne kendini kanıtlaman ve 70 kişilik bir ordu toplaman gerekiyor.</LogText>
+      <LogText>Köy büyüğü {KoyBuyugu_Link} seni bekliyor. Topladığın 70 kişilik ordu ile ona giderek kendini kanıtlaman gerekiyor.</LogText>
       <Conditions>
         <Condition Type="HasTroopCount" Amount="70" />
       </Conditions>
     </Stage>
 
     <Stage Id="Stage2_Zanaatkar" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{KoyBuyugu_Link} ile konuştun. Sana gizli bir deri verdi ve bunu {UzakSehir_Link} şehrindeki {ArtisanTarget_Link} isimli zanaatkara götürmeni istedi.</LogText>
+      <LogText>Köy büyüğü {KoyBuyugu_Link} ile konuştun. Beklediğin gibi, bu sıradan bir görev değildi. Sana üzerinde şifreler olan gizli bir deri verdi ve bunu hiç vakit kaybetmeden {UzakSehir_Link} şehrindeki {ArtisanTarget_Link} isimli zanaatkara teslim etmeni istedi.</LogText>
       <Conditions />
     </Stage>
 

@@ -50,6 +50,9 @@ namespace Questliner.Shared.Models
         [XmlAttribute("Filters")]
         public string Filters { get; set; } = string.Empty; // e.g., "Lord, SameAsGiverFaction, !PlayerClan"
 
+        [XmlAttribute("RequiredSettlementAlias")]
+        public string RequiredSettlementAlias { get; set; } = string.Empty;
+
         [XmlAttribute("Selector")]
         public string Selector { get; set; } = "Random"; // Random, NearestTown, etc.
 

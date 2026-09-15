@@ -246,6 +246,19 @@ namespace Questliner.Framework.Core
                     }
                     parsedLogText.SetTextVariable("Player.Name", Hero.MainHero.Name);
                     parsedLogText.SetTextVariable("PlayerName", Hero.MainHero.Name);
+
+                    // Track objects mentioned in the log text dynamically
+                    foreach (var kvp in TargetHeroes)
+                    {
+                        if (nextStageModel.LogText.Contains("{" + kvp.Key) && !IsTracked(kvp.Value))
+                            AddTrackedObject(kvp.Value);
+                    }
+                    foreach (var kvp in TargetSettlements)
+                    {
+                        if (nextStageModel.LogText.Contains("{" + kvp.Key) && !IsTracked(kvp.Value))
+                            AddTrackedObject(kvp.Value);
+                    }
+
                     foreach (var cond in nextStageModel.Conditions)
                     {
                         if (!string.IsNullOrEmpty(cond.TargetAlias))

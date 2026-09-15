@@ -27,6 +27,18 @@ namespace Questliner.Framework.Engine
             // DYNAMIC QUESTS MUST ALWAYS EXCLUDE THE MAIN HERO FROM RANDOM ASSIGNMENTS
             candidates = candidates.Where(h => h != Hero.MainHero);
 
+            if (!string.IsNullOrEmpty(model.RequiredSettlementAlias))
+            {
+                if (quest != null && quest.TargetSettlements.TryGetValue(model.RequiredSettlementAlias, out var reqSettlement))
+                {
+                    candidates = candidates.Where(h => h.CurrentSettlement == reqSettlement || h.HomeSettlement == reqSettlement);
+                }
+                else
+                {
+                    return null; // Required settlement not resolved
+                }
+            }
+
             // 1. FILTER PIPELINE
             if (!string.IsNullOrEmpty(model.Filters))
             {
@@ -125,13 +137,20 @@ namespace Questliner.Framework.Engine
             IFaction? giverFaction = GetEffectiveFaction(effectiveGiver);
             IFaction playerFaction = Clan.PlayerClan.MapFaction;
 
+            bool isNegated = false;
+            if (filter.StartsWith("!"))
+            {
+                isNegated = true;
+                filter = filter.Substring(1);
+            }
+
             if (filter.StartsWith("SameFactionAs("))
             {
                 var alias = filter.Substring(14, filter.Length - 15);
                 if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
                 {
                     var faction = GetEffectiveFaction(aliasHero);
-                    return source.Where(h => GetEffectiveFaction(h) == faction);
+                    return isNegated ? source.Where(h => GetEffectiveFaction(h) != faction) : source.Where(h => GetEffectiveFaction(h) == faction);
                 }
                 return source;
             }
@@ -141,32 +160,55 @@ namespace Questliner.Framework.Engine
                 var alias = filter.Substring(13, filter.Length - 14);
                 if (quest != null && quest.TargetSettlements.TryGetValue(alias, out var aliasSettlement))
                 {
-                    return source.Where(h => h.CurrentSettlement == aliasSettlement || h.HomeSettlement == aliasSettlement);
+                    return isNegated 
+                        ? source.Where(h => h.CurrentSettlement != aliasSettlement && h.HomeSettlement != aliasSettlement)
+                        : source.Where(h => h.CurrentSettlement == aliasSettlement || h.HomeSettlement == aliasSettlement);
                 }
                 return source;
             }
 
-            return filter switch
+            if (filter.StartsWith("Target("))
             {
-                "PlayerFaction" => source.Where(h => GetEffectiveFaction(h) == playerFaction),
-                "SameCultureAsPlayer" => source.Where(h => h.Culture == Hero.MainHero.Culture),
-                "SameAsGiverFaction" => source.Where(h => giverFaction != null && GetEffectiveFaction(h) == giverFaction),
-                "EnemyFaction" => source.Where(h => {
+                var alias = filter.Substring(7, filter.Length - 8);
+                if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
+                {
+                    return isNegated ? source.Where(h => h != aliasHero) : source.Where(h => h == aliasHero);
+                }
+                return source;
+            }
+
+            Func<Hero, bool>? condition = filter switch
+            {
+                "PlayerFaction" => h => GetEffectiveFaction(h) == playerFaction,
+                "SameCultureAsPlayer" => h => h.Culture == Hero.MainHero.Culture,
+                "SameAsGiverFaction" => h => giverFaction != null && GetEffectiveFaction(h) == giverFaction,
+                "EnemyFaction" => h => {
                     var f = GetEffectiveFaction(h);
                     return f != null && f.IsAtWarWith(playerFaction);
-                }),
-                "!PlayerClan" => source.Where(h => h.Clan != Clan.PlayerClan),
-                "!Leader" => source.Where(h => h.Clan == null || h.Clan.Leader != h),
-                "Lord" => source.Where(h => h.IsLord),
-                "Artisan" => source.Where(h => h.IsNotable && h.CharacterObject.Occupation == Occupation.Artisan),
-                "Merchant" => source.Where(h => h.IsNotable && h.CharacterObject.Occupation == Occupation.Merchant),
-                "Headman" => source.Where(h => h.IsNotable && h.CharacterObject.Occupation == Occupation.Headman),
-                "GangLeader" => source.Where(h => h.IsNotable && h.CharacterObject.Occupation == Occupation.GangLeader),
-                "Wanderer" => source.Where(h => h.IsWanderer),
-                "IsFemale" => source.Where(h => h.IsFemale),
-                "IsMale" => source.Where(h => !h.IsFemale),
-                _ => source // Ignore unknown filters gracefully
+                },
+                "PlayerClan" => h => h.Clan == Clan.PlayerClan,
+                "ClanLeader" => h => h.Clan != null && h.Clan.Leader == h,
+                "KingdomLeader" => h => h.Clan != null && h.Clan.Kingdom != null && h.Clan.Kingdom.Leader == h,
+                "Lord" => h => h.IsLord,
+                "Artisan" => h => h.IsNotable && h.CharacterObject.Occupation == Occupation.Artisan,
+                "RuralNotable" => h => h.IsRuralNotable,
+                "HasMobileParty" => h => h.PartyBelongedTo != null,
+                "HasKingdom" => h => h.Clan != null && h.Clan.Kingdom != null,
+                "Merchant" => h => h.IsNotable && h.CharacterObject.Occupation == Occupation.Merchant,
+                "Headman" => h => h.IsNotable && h.CharacterObject.Occupation == Occupation.Headman,
+                "GangLeader" => h => h.IsNotable && h.CharacterObject.Occupation == Occupation.GangLeader,
+                "Wanderer" => h => h.IsWanderer,
+                "Female" => h => h.IsFemale,
+                "Male" => h => !h.IsFemale,
+                _ => null
             };
+
+            if (condition != null)
+            {
+                return isNegated ? source.Where(h => !condition(h)) : source.Where(condition);
+            }
+            
+            return source;
         }
 
         public static bool IsHeroMatch(TargetResolverModel model, Hero hero, DynamicQuest? quest, Hero? questGiver = null)

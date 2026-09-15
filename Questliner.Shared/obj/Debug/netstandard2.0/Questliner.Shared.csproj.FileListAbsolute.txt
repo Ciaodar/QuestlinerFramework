@@ -8,3 +8,4 @@ C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Shared\bin\Debug\net
 C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Shared\bin\Debug\netstandard2.0\Questliner.Shared.pdb
 C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Shared\obj\Debug\netstandard2.0\Questliner.Shared.dll
 C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Shared\obj\Debug\netstandard2.0\Questliner.Shared.pdb
+c:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Shared\obj\Debug\netstandard2.0\Questliner.Shared.sourcelink.json

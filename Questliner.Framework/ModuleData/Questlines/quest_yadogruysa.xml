@@ -8,12 +8,13 @@
   <TargetResolvers>
     <!-- GizemliSehir: Oyuncuya en yakın ikinci ŞEHİR (Town) -->
     <Resolver Alias="GizemliSehir" TargetType="Settlement" Filters="Town" Selector="SecondNearest" />
+    <Resolver Alias="Berber" TargetType="Hero" Filters="Artisan" RequiredSettlementAlias="GizemliSehir" Selector="Random" />
   </TargetResolvers>
 
   <Stages>
     <!-- Aşama 1: İstihbarat Arayışı -->
     <Stage Id="Stage1" NextStageId="StageSuccess" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>Çapulcunun biri itibarının tehlikede olduğunu ve {GizemliSehir_Link} berberinin konu hakkında istihbaratı olduğunu söylemişti. Çapulcuları kılıçtan geçirmiştin. Ama ya doğruysa? {GizemliSehir_Link} şehrine git ve berberi bul.</LogText>
+      <LogText>Çapulcularla karşılaştın ve birisi itibarının tehlikede olduğunu, gerçeği öğrenmek için {GizemliSehir_Link} şehrindeki berbere gitmen gerektiğini söyledi. Onları kılıçtan geçirmiş olsan da, içindeki şüphe tohumu yeşerdi. {GizemliSehir_Link} şehrindeki berberi bul ve 'Çapulcunun adı ne?' diye sor.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -21,7 +22,7 @@
 
     <!-- Aşama 2: Tamamlandı -->
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>İnanmayı tercih ettin. Akıllıca... Berber sana istihbaratı teslim etti.</LogText>
+      <LogText>Berberi bulup ona 'Çapulcunun adı ne?' diye sordun. Sana hakkındaki iftiralardan bahsetti. Anavatanından eski bir dostun, onun da bulunduğu 'Çapulcu Güvercinler' isimli gizli kültten senin için yardım istemiş. Sana bir miktar para vererek 70 kişilik bir parti toplayıp yakınlardaki bir köyün büyüğünü bulmanı söylediler.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="StartQuest" ObjectId="QLF_AnavataninIhaneti" />
@@ -89,55 +90,55 @@
     </DialogNode>
 
     <!-- 2. BERBER İLE KONUŞMA (GÖREVİ BİTİREN KISIM) -->
-    <DialogNode Type="Player" Id="Berber_Soru" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="hero_main_options" OutputToken="ql_berber_itibar_a1" Priority="100">
+    <DialogNode Type="Player" Id="Berber_Soru" TargetAlias="Berber" InputToken="hero_main_options" OutputToken="ql_berber_itibar_a1" Priority="100">
       <Text>Çapulcunun ismi ne?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Berber_A1_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a1" OutputToken="ql_berber_itibar_b1">
+    <DialogNode Type="Npc" Id="Berber_A1_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_a1" OutputToken="ql_berber_itibar_b1">
       <Text>Anubis. Çapulcular diyarın en kuşkulu kuşlarıdır. Ne istemiştin, yabancı?</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Berber_B1a_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b1" OutputToken="ql_berber_itibar_a2">
+    <DialogNode Type="Player" Id="Berber_B1a_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_b1" OutputToken="ql_berber_itibar_a2">
       <Text>Konuştuğum gizemli çapulcu kılıklı adam itibarımın tehlikede olduğunu söyledi. Umarım beni alaya almıyorsunuzdur.</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="Berber_B1b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b1" OutputToken="ql_berber_itibar_a2">
+    <DialogNode Type="Player" Id="Berber_B1b_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_b1" OutputToken="ql_berber_itibar_a2">
       <Text>Çapulcu bana itibarın tehlikede, dedi. Bu ne anlama geliyor?</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Berber_A2_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a2" OutputToken="ql_berber_itibar_b2">
+    <DialogNode Type="Npc" Id="Berber_A2_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_a2" OutputToken="ql_berber_itibar_b2">
       <Text>Ahh, {PlayerName}... Kuşkucu davranışın tabii ki çok haklı. Merak etme. Ona inanmak ve buraya gelmekle çok iyi ettin. Anavatanından bir dost bize ulaştı. Arkandan hain ilan edilebileceğin sözler yaymaya başladıklarından bahsetti.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Berber_B2a_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b2" OutputToken="ql_berber_itibar_a3">
+    <DialogNode Type="Player" Id="Berber_B2a_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_b2" OutputToken="ql_berber_itibar_a3">
       <Text>Siz de kimsiniz? Nasıl bir kült bu? Dümdüz ulak gönderemiyor muydu aptal herif? Ayrıca ben bu adamı tanımıyorum bile. Oyun oynamayı bırak.</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="Berber_B2b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b2" OutputToken="ql_berber_itibar_a3">
+    <DialogNode Type="Player" Id="Berber_B2b_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_b2" OutputToken="ql_berber_itibar_a3">
       <Text>Siz mi? Gizli bir topluluk musunuz? Derdiniz nedir?</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Berber_A3_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a3" OutputToken="ql_berber_itibar_b3">
+    <DialogNode Type="Npc" Id="Berber_A3_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_a3" OutputToken="ql_berber_itibar_b3">
       <Text>Merak etme dost. Biz asırlardır görev yapan Çapulcu Güvercinleriz. Herhangi bir ulaktan daha hızlı, herhangi bir uşaktan daha güçlüyüz. Dostun bizlere çokça yardımda bulunmuş cevval bir adamdır. Sana kefil oldu ve seni bu komplodan kurtarmamızı istedi.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Berber_B3_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b3" OutputToken="ql_berber_itibar_a4">
+    <DialogNode Type="Player" Id="Berber_B3_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_b3" OutputToken="ql_berber_itibar_a4">
       <Text>Benden ne istiyorsunuz?</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Berber_A4_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a4" OutputToken="ql_berber_itibar_b4">
+    <DialogNode Type="Npc" Id="Berber_A4_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_a4" OutputToken="ql_berber_itibar_b4">
       <Text>Samimiyetimizin göstergesi olarak sana bir miktar altın hediye ediyoruz. 70 kişi toplayıp en yakın köydeki köy büyüğünü bul.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Berber_B4a_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="ql_berber_itibar_a5">
+    <DialogNode Type="Player" Id="Berber_B4a_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_b4" OutputToken="ql_berber_itibar_a5">
       <Text>Paranızı istemem. 70 kişilik bölüğü oraya götürmeyi de biraz düşüneceğim.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="StageSuccess" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Berber_B4b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="ql_berber_itibar_a5">
+    <DialogNode Type="Player" Id="Berber_B4b_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_b4" OutputToken="ql_berber_itibar_a5">
       <Text>Teşekkürler. Bu parayla o bölüğü toplayıp köy ağası ile görüşeceğim.</Text>
       <Consequences>
         <Action Type="AddGold" Amount="1000" />
@@ -145,14 +146,14 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Berber_B4c_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Berber_B4c_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_b4" OutputToken="close_window">
       <Text>Bu saçmalıkla daha fazla ilgilenmiyorum. Eğlenecek başka birini bulun.</Text>
       <Consequences>
         <Action Type="FailQuest" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Berber_A5_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a5" OutputToken="close_window">
+    <DialogNode Type="Npc" Id="Berber_A5_Itibar" TargetAlias="Berber" InputToken="ql_berber_itibar_a5" OutputToken="close_window">
       <Text>Pekala, görüşmek üzere yavru güvercin...</Text>
     </DialogNode>
   </CustomDialogs>

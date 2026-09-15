@@ -8,3 +8,4 @@ C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\obj\Debug\
 C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\bin\Debug\net472\Questliner.Shared.dll
 C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\bin\Debug\net472\Questliner.Shared.pdb
 C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\obj\Debug\net472\Questlin.5CC4F45F.Up2Date
+c:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\obj\Debug\net472\Questliner.Framework.sourcelink.json
