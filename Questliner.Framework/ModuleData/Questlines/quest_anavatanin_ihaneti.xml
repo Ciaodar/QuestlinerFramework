@@ -27,10 +27,10 @@
       <Conditions />
     </Stage>
 
-    <Stage Id="Stage3_SuikastRed" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>Güvercinler daha önce dostun olduğunu söyledikleri {Dost_Link} isimli kişiyi şimdi öldürmeni istedi. Tutarsız bir takım gariplikler yaşanıyor. {ArtisanTarget_Link} ile konuşmanda verilen göreve karşı çıktın. Acilen bu şüphenden birilerine bahsetmek isteyebilirsin. (Köy yaşlısı veya Dost ile konuş)</LogText>
+    <Stage Id="Stage3_SuikastRed" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
+      <LogText>Güvercinler daha önce dostun olduğunu söyledikleri {Dost_Link} isimli kişiyi şimdi öldürmeni istedi. Tutarsız bir takım gariplikler yaşanıyor. {ArtisanTarget_Link} ile konuşmanda verilen göreve karşı çıktın. Acilen bu şüphenden birilerine bahsetmek isteyebilirsin.</LogText>
       <Conditions />
-      <OnTimeoutActions TimeoutInDays="7">
+      <OnTimeoutActions>
         <Action Type="StartQuest" ObjectId="QLF_HainGuvercin" />
         <Action Type="ChangeStage" ObjectId="Stage_Bekleme_Guvercin" />
       </OnTimeoutActions>
