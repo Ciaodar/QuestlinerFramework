@@ -136,6 +136,15 @@ namespace Questliner.Framework.Engine
                         party.SetMoveEngageParty(TaleWorlds.CampaignSystem.Party.MobileParty.MainParty, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
                     }
                     break;
+                case "MakeMet":
+                {
+                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
+                    if (target != null)
+                    {
+                        target.SetHasMet();
+                    }
+                    break;
+                }
                 case "ChangeRenown":
                 {
                     Clan.PlayerClan.AddRenown(action.Amount);
