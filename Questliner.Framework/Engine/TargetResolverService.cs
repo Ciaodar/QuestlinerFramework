@@ -155,6 +155,17 @@ namespace Questliner.Framework.Engine
                 return source;
             }
 
+            if (filter.StartsWith("SameKingdomAs("))
+            {
+                var alias = filter.Substring(14, filter.Length - 15);
+                if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
+                {
+                    var kingdom = aliasHero.Clan?.Kingdom;
+                    return isNegated ? source.Where(h => h.Clan?.Kingdom != kingdom) : source.Where(h => h.Clan?.Kingdom == kingdom);
+                }
+                return source;
+            }
+
             if (filter.StartsWith("InSettlement("))
             {
                 var alias = filter.Substring(13, filter.Length - 14);

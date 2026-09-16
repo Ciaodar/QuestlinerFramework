@@ -6,7 +6,7 @@
     <Resolver Alias="Dost" TargetType="Hero" Filters="SameCultureAsPlayer, Lord, !PlayerClan, !ClanLeader, HasMobileParty, HasKingdom" Selector="Nearest" />
     <Resolver Alias="UzakSehir" TargetType="Settlement" Filters="Town, SameCultureAsPlayer" Selector="Furthest" />
     <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="SameCultureAsPlayer, Artisan" RequiredSettlementAlias="UzakSehir" Selector="Random" />
-    <Resolver Alias="Kral" TargetType="Hero" Filters="SameFactionAs(Dost), KingdomLeader" Selector="First" />
+    <Resolver Alias="Kral" TargetType="Hero" Filters="SameKingdomAs(Dost), KingdomLeader" Selector="First" />
   </TargetResolvers>
 
   <Stages>
