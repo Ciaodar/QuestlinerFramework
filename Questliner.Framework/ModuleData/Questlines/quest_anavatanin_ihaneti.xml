@@ -11,7 +11,7 @@
 
   <Stages>
     <Stage Id="Stage1_KoyBuyugu" NextStageId="" LogType="Progress" TargetAmount="70" IsSuccessNode="false" IsFailNode="false">
-      <LogText>Köy büyüğü {KoyBuyugu_Link} seni bekliyor. Topladığın 70 kişilik ordu ile ona giderek kendini kanıtlaman gerekiyor.</LogText>
+      <LogText>Gizemli berberin anlattıkları zihnini kurcalıyor. Anavatanından eski bir dostun, senin itibarını zedeleyecek korkunç iftiralarla mücadele etmek için gizli örgüt Çapulcu Güvercinler'den yardım istemiş. Ancak Güvercinler seni aralarına kabul etmeden önce gücünü kanıtlamanı bekliyor. Sana verilen altınları kullanarak 70 kişilik bir bölük topla ve köy büyüğü {KoyBuyugu_Link} ile buluş.</LogText>
       <Conditions>
         <Condition Type="HasTroopCount" Amount="70" />
       </Conditions>
@@ -72,18 +72,22 @@
     </Stage>
 
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>Tüm bunların sadakatini test etmek için kurulmuş bir oyun olduğunu öğrendin. Ödülünü aldın ve Anavatanın İhaneti görevi başarıyla son buldu.</LogText>
+      <LogText>Tüm bunların sadakatini test etmek için kurulmuş bir oyun olduğunu öğrendin. Dostun {Dost_Link} ile ise yeni tanışıyormuşsunuz. Sana başına açtığı belaların telafisi ve hizmetinde yardımcı olması için 50.000 dinar hediye etti ve yeni hizmetinde başarılar diledi. İhanet söylentileri son buldu.</LogText>
       <Conditions />
     </Stage>
   </Stages>
 
   <CustomDialogs>
     <!-- 1. KÖY BÜYÜĞÜ DİYALOGLARI (GİRİŞ) -->
-    <DialogNode Type="Npc" Id="KB_Giris" TargetAlias="KoyBuyugu" InputToken="start" OutputToken="ql_kb_b1" Priority="100">
-      <Text>Adın {PlayerName} olmalı, değil mi?</Text>
+    <DialogNode Type="Player" Id="KB_Player_Giris" TargetAlias="KoyBuyugu" InputToken="hero_main_options" OutputToken="ql_kb_npc_giris" Priority="100">
+      <Text>Sizinle konuşmam gereken özel bir konu var.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_KoyBuyugu" />
       </Conditions>
+    </DialogNode>
+    
+    <DialogNode Type="Npc" Id="KB_Giris" TargetAlias="KoyBuyugu" InputToken="ql_kb_npc_giris" OutputToken="ql_kb_b1">
+      <Text>Adın {PlayerName} olmalı, değil mi?</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="KB_B1a" TargetAlias="KoyBuyugu" InputToken="ql_kb_b1" OutputToken="ql_kb_a2">
@@ -188,19 +192,23 @@
     </DialogNode>
 
     <!-- 3. DOST İLE YÜZLEŞME (SUIKAST EMRİ SONRASI) -->
-    <DialogNode Type="Npc" Id="Dost_Giris_Kabul" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_b1" Priority="100">
-      <Text>Dostum, erken geldin. Anavatana hizmete daha girmemişsin.</Text>
-      <Conditions>
-        <Condition Type="IsStageActive" ObjectId="Stage3_SuikastKabul" />
-      </Conditions>
-    </DialogNode>
-    
-    <DialogNode Type="Npc" Id="Dost_Giris_Red" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_b1" Priority="100">
-      <Text>Dostum, erken geldin. Anavatana hizmete daha girmemişsin.</Text>
-      <Conditions>
-        <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
-      </Conditions>
-    </DialogNode>
+      <DialogNode Type="Player" Id="Dost_Player_Giris_Kabul" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_npc_giris" Priority="100">
+        <Text>Sizinle konuşmam gereken özel bir konu var.</Text>
+        <Conditions>
+          <Condition Type="IsStageActive" ObjectId="Stage3_SuikastKabul" />
+        </Conditions>
+      </DialogNode>
+      
+      <DialogNode Type="Player" Id="Dost_Player_Giris_Red" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_npc_giris" Priority="100">
+        <Text>Sizinle konuşmam gereken özel bir konu var.</Text>
+        <Conditions>
+          <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
+        </Conditions>
+      </DialogNode>
+
+      <DialogNode Type="Npc" Id="Dost_Giris_Ortak" TargetAlias="Dost" InputToken="ql_dost_npc_giris" OutputToken="ql_dost_b1">
+        <Text>Dostum, erken geldin. Anavatana hizmete daha girmemişsin.</Text>
+      </DialogNode>
 
     <DialogNode Type="Player" Id="Dost_B1a" TargetAlias="Dost" InputToken="ql_dost_b1" OutputToken="ql_dost_a2">
       <Text>Ecel geldi erkenden. Sen onu beklemezken.</Text>

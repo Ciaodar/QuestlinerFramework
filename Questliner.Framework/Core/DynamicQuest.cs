@@ -311,7 +311,6 @@ namespace Questliner.Framework.Core
 
         protected override void InitializeQuestOnGameLoad()
         {
-            
             Model = Questliner.Framework.Services.QuestModuleScanner.LoadedQuests.FirstOrDefault(q => q.Id == _modelId);
             SetDialogs();
         }

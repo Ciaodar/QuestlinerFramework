@@ -46,6 +46,11 @@ namespace Questliner.Framework.Engine
                     // Relies on EventDispatcher setting this flag when a conversation ends
                     return quest != null && quest.GetFlag($"TalkedTo_{condition.TargetAlias}");
                 }
+                case "HasPledgedAllegiance":
+                {
+                    Hero? target = quest?.GetTargetHero(condition.TargetAlias);
+                    return target != null && Hero.MainHero.Clan.Kingdom != null && Hero.MainHero.Clan.Kingdom == target.Clan?.Kingdom;
+                }
                 case "TargetIsDead":
                 {
                     Hero? target = quest?.GetTargetHero(condition.TargetAlias);
