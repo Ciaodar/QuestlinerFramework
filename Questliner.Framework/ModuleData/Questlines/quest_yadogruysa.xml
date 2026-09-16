@@ -89,7 +89,7 @@
     </DialogNode>
 
     <!-- 2. BERBER İLE KONUŞMA (GÖREVİ BİTİREN KISIM) -->
-    <DialogNode Type="Player" Id="Berber_Soru" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="hero_main_options" OutputToken="ql_berber_itibar_a1" Priority="100">
+    <DialogNode Type="Player" Id="Berber_Soru" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="barber_question1" OutputToken="ql_berber_itibar_a1" Priority="100">
       <Text>Çapulcunun ismi ne?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1" />
