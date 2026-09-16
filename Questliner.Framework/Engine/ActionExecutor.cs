@@ -83,12 +83,12 @@ namespace Questliner.Framework.Engine
                         TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.LeaveEncounter = true;
                     }
                     break;
-                case "StartQuest":
+                    case "StartQuest":
                     var newQuestModel = Questliner.Framework.Services.QuestModuleScanner.LoadedQuests.FirstOrDefault(q => q.Id == action.ObjectId);
                     if (newQuestModel != null)
                     {
                         var duration = TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(newQuestModel.TimeLimitInDays > 0 ? newQuestModel.TimeLimitInDays : 9999);
-                        var newQ = new DynamicQuest(newQuestModel, Hero.MainHero, duration);
+                        var newQ = new DynamicQuest(newQuestModel, null, duration);
                         
                         foreach(var res in newQuestModel.TargetResolvers)
                         {
