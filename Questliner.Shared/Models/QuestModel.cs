@@ -37,6 +37,33 @@ namespace Questliner.Shared.Models
         [XmlArray("CustomDialogs")]
         [XmlArrayItem("DialogNode")]
         public List<CustomDialogModel> CustomDialogs { get; set; } = new List<CustomDialogModel>();
+
+        [XmlArray("GameMenuOptions")]
+        [XmlArrayItem("GameMenuOption")]
+        public List<GameMenuOptionModel> GameMenuOptions { get; set; } = new List<GameMenuOptionModel>();
+    }
+
+    public class GameMenuOptionModel
+    {
+        [XmlAttribute("Id")]
+        public string Id { get; set; } = string.Empty;
+
+        [XmlAttribute("TargetMenu")]
+        public string TargetMenu { get; set; } = string.Empty;
+
+        [XmlAttribute("Text")]
+        public string Text { get; set; } = string.Empty;
+
+        [XmlAttribute("IsLeave")]
+        public bool IsLeave { get; set; } = false;
+
+        [XmlArray("Conditions")]
+        [XmlArrayItem("Condition")]
+        public List<ConditionModel> Conditions { get; set; } = new List<ConditionModel>();
+
+        [XmlArray("Consequences")]
+        [XmlArrayItem("Action")]
+        public List<ActionModel> Consequences { get; set; } = new List<ActionModel>();
     }
 
     public class TargetResolverModel

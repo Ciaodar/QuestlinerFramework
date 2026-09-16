@@ -48,6 +48,39 @@ namespace Questliner.Framework.Behaviors
                 null, 
                 StartMatchingQuest);
 
+            // Inject Custom Game Menus
+            foreach (var questModel in Questliner.Framework.Services.QuestModuleScanner.LoadedQuests)
+            {
+                foreach (var menuOption in questModel.GameMenuOptions)
+                {
+                    bool MenuCondition(TaleWorlds.CampaignSystem.GameMenus.MenuCallbackArgs args)
+                    {
+                        args.optionLeaveType = TaleWorlds.CampaignSystem.GameMenus.GameMenuOption.LeaveType.Continue;
+                        if (menuOption.IsLeave)
+                        {
+                            args.optionLeaveType = TaleWorlds.CampaignSystem.GameMenus.GameMenuOption.LeaveType.Leave;
+                        }
+
+                        foreach(var condition in menuOption.Conditions)
+                        {
+                            if (!Engine.ConditionEvaluator.IsConditionMet(condition, null))
+                                return false;
+                        }
+                        return true;
+                    }
+
+                    void MenuConsequence(TaleWorlds.CampaignSystem.GameMenus.MenuCallbackArgs args)
+                    {
+                        foreach(var action in menuOption.Consequences)
+                        {
+                            Engine.ActionExecutor.Execute(action, null);
+                        }
+                    }
+
+                    starter.AddGameMenuOption(menuOption.TargetMenu, menuOption.Id, menuOption.Text, MenuCondition, MenuConsequence, menuOption.IsLeave);
+                }
+            }
+
             // Inject handover/discuss dialogue for ONGOING quest stages
             starter.AddPlayerLine("ql_quest_discuss", "hero_main_options", "ql_quest_discuss_response", 
                 "{=ql_dialog_discuss}About the task...", 

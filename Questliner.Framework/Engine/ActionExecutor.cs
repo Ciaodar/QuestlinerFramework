@@ -52,6 +52,12 @@ namespace Questliner.Framework.Engine
                     GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, action.Amount);
                     break;
                 }
+                case "LoseGoldPercentage":
+                {
+                    int amountToLose = (int)(Hero.MainHero.Gold * (action.Amount / 100f));
+                    GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, null, amountToLose);
+                    break;
+                }
                 case "RemovePrisoner":
                 {
                     var troop = TaleWorlds.ObjectSystem.MBObjectManager.Instance.GetObject<TaleWorlds.CampaignSystem.CharacterObject>(action.ObjectId);
