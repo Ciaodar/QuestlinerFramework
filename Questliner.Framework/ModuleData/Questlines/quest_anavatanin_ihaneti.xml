@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Questline Id="QLF_AnavataninIhaneti" Title="Anavatanın İhaneti" TimeLimitInDays="60">
-  
   <TargetResolvers>
-    <Resolver Alias="KoyBuyugu" TargetType="Hero" Filters="SameCultureAsPlayer, RuralNotable, !Target(Dost)" Selector="Random" />
+    <Resolver Alias="KoyBuyugu" TargetType="Hero" Filters="SameCultureAsPlayer, RuralNotable, !Target(Dost)" Selector="Nearest" />
     <Resolver Alias="Dost" TargetType="Hero" Filters="SameCultureAsPlayer, Lord, !PlayerClan, !ClanLeader, HasMobileParty, HasKingdom" Selector="Nearest" />
-    <Resolver Alias="UzakSehir" TargetType="Settlement" Filters="Town, SameCultureAsPlayer" Selector="Furthest" />
+    <Resolver Alias="UzakSehir" TargetType="Settlement" Filters="Town, SameKingdomAs(Dost)" Selector="Furthest" />
     <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="SameCultureAsPlayer, Artisan" RequiredSettlementAlias="UzakSehir" Selector="Random" />
     <Resolver Alias="Kral" TargetType="Hero" Filters="SameKingdomAs(Dost), KingdomLeader" Selector="First" />
   </TargetResolvers>
@@ -79,11 +78,14 @@
 
   <CustomDialogs>
     <!-- 1. KÖY BÜYÜĞÜ DİYALOGLARI (GİRİŞ) -->
-    <DialogNode Type="Player" Id="KB_Player_Giris" TargetAlias="KoyBuyugu" InputToken="hero_main_options" OutputToken="ql_kb_npc_giris" Priority="100">
+    <DialogNode Type="Player" Id="KB_Player_Giris" TargetAlias="KoyBuyugu" InputToken="start" OutputToken="ql_kb_npc_giris" Priority="150">
       <Text>Sizinle konuşmam gereken özel bir konu var.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_KoyBuyugu" />
       </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
+      </Consequences>
     </DialogNode>
     
     <DialogNode Type="Npc" Id="KB_Giris" TargetAlias="KoyBuyugu" InputToken="ql_kb_npc_giris" OutputToken="ql_kb_b1">
@@ -199,11 +201,14 @@
         </Conditions>
       </DialogNode>
       
-      <DialogNode Type="Player" Id="Dost_Player_Giris_Red" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_npc_giris" Priority="100">
+      <DialogNode Type="Player" Id="Dost_Player_Giris_Red" TargetAlias="Dost" InputToken="start" OutputToken="ql_dost_npc_giris" Priority="150">
         <Text>Sizinle konuşmam gereken özel bir konu var.</Text>
         <Conditions>
           <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
         </Conditions>
+        <Consequences>
+          <Action Type="MakeMet" TargetAlias="Dost" />
+        </Consequences>
       </DialogNode>
 
       <DialogNode Type="Npc" Id="Dost_Giris_Ortak" TargetAlias="Dost" InputToken="ql_dost_npc_giris" OutputToken="ql_dost_b1">
@@ -231,6 +236,9 @@
 
     <DialogNode Type="Npc" Id="Dost_A3" TargetAlias="Dost" InputToken="ql_dost_a3" OutputToken="close_window">
       <Text>Korkunç bir karşılaşmaydı dostum. Kendine dikkat et. Tekrar karşılaşacağız.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Dost_B2b" TargetAlias="Dost" InputToken="ql_dost_b2" OutputToken="close_window">
@@ -241,11 +249,14 @@
     </DialogNode>
 
     <!-- 4. KÖY YAŞLISI İLE YÜZLEŞME (SUIKAST REDDİ SONRASI) -->
-    <DialogNode Type="Player" Id="KB_Ihbar_Giris" TargetAlias="KoyBuyugu" InputToken="hero_main_options" OutputToken="ql_kb_ihbar_a1" Priority="100">
+    <DialogNode Type="Player" Id="KB_Ihbar_Giris" TargetAlias="KoyBuyugu" InputToken="start" OutputToken="ql_kb_ihbar_a1" Priority="150">
       <Text>{ArtisanTarget_Link} hakkında konuşmalıyız.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
       </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
+      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="KB_Ihbar_A1" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a1" OutputToken="ql_kb_ihbar_b1">
@@ -292,15 +303,14 @@
     </DialogNode>
 
     <!-- 5. KRALLIĞA KATILDIKTAN SONRA DOST İLE SON YÜZLEŞME -->
-    <DialogNode Type="Player" Id="Dost_Final_Giris" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_final_a1" Priority="100">
-      <Text>Selam eski dost. Anavatana ihanet etmedim.</Text>
+    <DialogNode Type="Npc" Id="Dost_Final_Giris" TargetAlias="Dost" InputToken="start" OutputToken="ql_dost_final_b1" Priority="150">
+      <Text>{PLAYER.NAME}! Sonunda {Kral_Link}'a bağlılık yemini etmişsin. Ben de seninle görüşmeyi istiyordum.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage5_KralligaKatil" />
       </Conditions>
-    </DialogNode>
-
-    <DialogNode Type="Npc" Id="Dost_Final_A1" TargetAlias="Dost" InputToken="ql_dost_final_a1" OutputToken="ql_dost_final_b1">
-      <Text>Biliyordum! Sonunda karşılaştık {PlayerName}. Doğrusunu istersen senle şuan tanışıyoruz. İhanet meselesi ise Anavatana olan bağlılığını test etmek ve tazelemek için oynadığım bir oyundu. Bu konuda sinirlenebilirsin Ancak sonuçların güzel olduğunda hemfikiriz diye düşünüyorum.</Text>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="Dost" />
+      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Dost_Final_B1a" TargetAlias="Dost" InputToken="ql_dost_final_b1" OutputToken="ql_dost_final_a2">

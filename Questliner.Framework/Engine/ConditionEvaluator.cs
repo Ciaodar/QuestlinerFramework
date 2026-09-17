@@ -94,7 +94,7 @@ namespace Questliner.Framework.Engine
                 }
                 case "IsQuestActive":
                 {
-                    bool active = TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.Any(q => q.IsOngoing && q.StringId.Contains(condition.ObjectId));
+                    bool active = TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.IsOngoing && q.Model?.Id == condition.ObjectId);
                     return (condition.Amount > 0) ? active : !active;
                 }
                                 case "IsQuestCompleted":

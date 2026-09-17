@@ -279,39 +279,46 @@ namespace Questliner.Framework.Behaviors
                     {
                         // PRE-RESOLVE ALL TARGETS TO PREVENT BROKEN QUESTS!
                         bool canResolveAll = true;
+                        var duration = TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(questModel.TimeLimitInDays > 0 ? questModel.TimeLimitInDays : 9999);
+                        var tempQuest = new DynamicQuest(questModel, speaker, duration);
+                        
                         foreach(var res in questModel.TargetResolvers)
                         {
                             if (res.Alias == startTrigger.TargetAlias)
                             {
-                                _pendingResolvedHeroes[res.Alias] = speaker;
+                                tempQuest.TargetHeroes[res.Alias] = speaker;
                                 continue;
                             }
 
                             if (res.TargetType == "Settlement")
                             {
-                                var s = Engine.TargetResolverService.ResolveSettlement(res, null, speaker);
+                                var s = Engine.TargetResolverService.ResolveSettlement(res, tempQuest, speaker);
                                 if (s == null) 
                                 { 
                                     canResolveAll = false; 
                                     break; 
                                 }
-                                _pendingResolvedSettlements[res.Alias] = s;
+                                tempQuest.TargetSettlements[res.Alias] = s;
                             }
                             else
                             {
-                                var h = Engine.TargetResolverService.ResolveHero(res, null, speaker);
+                                var h = Engine.TargetResolverService.ResolveHero(res, tempQuest, speaker);
                                 if (h == null) 
                                 { 
                                     canResolveAll = false; 
                                     break; 
                                 }
-                                _pendingResolvedHeroes[res.Alias] = h;
+                                tempQuest.TargetHeroes[res.Alias] = h;
                             }
                         }
 
                         if (canResolveAll)
                         {
                             _pendingQuestToStart = questModel;
+                            // Store the pre-resolved tempQuest so we don't recreate it
+                            _pendingResolvedHeroes = tempQuest.TargetHeroes.ToDictionary(k => k.Key, v => v.Value);
+                            _pendingResolvedSettlements = tempQuest.TargetSettlements.ToDictionary(k => k.Key, v => v.Value);
+                        }
                             return true;
                         }
                     }

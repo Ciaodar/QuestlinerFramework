@@ -89,6 +89,15 @@ namespace Questliner.Framework.Engine
                             candidates = candidates.Where(s => s.MapFaction == faction);
                         }
                     }
+                    else if (filter.StartsWith("SameKingdomAs("))
+                    {
+                        var alias = filter.Substring(14, filter.Length - 15);
+                        if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
+                        {
+                            var kingdom = aliasHero.Clan?.Kingdom;
+                            candidates = candidates.Where(s => s.MapFaction != null && s.MapFaction.IsKingdomFaction && s.MapFaction == kingdom);
+                        }
+                    }
                 }
             }
 

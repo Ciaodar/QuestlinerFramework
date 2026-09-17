@@ -77,6 +77,15 @@ namespace Questliner.Framework.Engine
                 case "ChangeStage":
                     quest?.TransitionToStage(action.ObjectId);
                     break;
+                case "ChangeOtherQuestStage":
+                {
+                    var otherQuest = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(q => q.Model?.Id == action.ObjectId && q.IsOngoing);
+                    if (otherQuest != null)
+                    {
+                        otherQuest.TransitionToStage(action.TargetAlias);
+                    }
+                    break;
+                }
                 case "FailQuest":
                     quest?.ForceFail();
                     break;
@@ -122,6 +131,13 @@ namespace Questliner.Framework.Engine
                         party.ActualClan = TaleWorlds.CampaignSystem.Clan.BanditFactions.FirstOrDefault(c => c.StringId == "looters");
                         party.InitializeMobilePartyAroundPosition(looterTemplate, TaleWorlds.CampaignSystem.Party.MobileParty.MainParty.Position, 1f, 0.5f);
                         
+                        if (quest != null && !string.IsNullOrEmpty(action.TargetAlias))
+                        {
+                            quest.TargetParties[action.TargetAlias] = party;
+                        }
+                        
+                        party.SetCustomName(new TaleWorlds.Localization.TextObject("{=!}Looters"));
+
                         // Set troop count
                         int targetAmount = action.Amount > 0 ? action.Amount : 15;
                         var looterCharacter = TaleWorlds.CampaignSystem.Campaign.Current.ObjectManager.GetObject<TaleWorlds.CampaignSystem.CharacterObject>("looter");
