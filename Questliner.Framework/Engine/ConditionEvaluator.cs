@@ -54,7 +54,8 @@ namespace Questliner.Framework.Engine
                 case "TargetIsDead":
                 {
                     Hero? target = quest?.GetTargetHero(condition.TargetAlias);
-                    return target != null && !target.IsAlive;
+                    bool isDead = target != null && (!target.IsAlive || (quest != null && quest.GetFlag($"Killed_{condition.TargetAlias}")));
+                    return isDead;
                 }
                 case "TargetIsAlive":
                 {

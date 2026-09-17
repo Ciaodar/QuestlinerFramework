@@ -453,8 +453,16 @@ namespace Questliner.Framework.Behaviors
             }
         }
 
-        private void OnHeroKilled(Hero victim, Hero killer, KillCharacterAction.KillCharacterActionDetail detail, bool showNotification)
+        private void OnHeroKilled(Hero victim, Hero killer, TaleWorlds.CampaignSystem.Actions.KillCharacterAction.KillCharacterActionDetail detail, bool showNotification)
         {
+            foreach (var quest in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
+            {
+                var targetAlias = quest.TargetHeroes.FirstOrDefault(x => x.Value == victim).Key;
+                if (!string.IsNullOrEmpty(targetAlias))
+                {
+                    quest.SetFlag($"Killed_{targetAlias}", true);
+                }
+            }
             EvaluateAllQuests();
         }
 

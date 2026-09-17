@@ -20,7 +20,7 @@
       <OnEnterActions />
       <OnExitActions />
       <OnTimeoutActions>
-        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="5" />
+        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="5" StringValue="{=!}Hain Çapulcular" />
         <Action Type="ChangeStage" ObjectId="Stage3_EsirSorgu" />
       </OnTimeoutActions>
     </Stage>
@@ -66,15 +66,15 @@
       <Text>Biz sadece saha elemanıyız. Zanaatkar bize kimi hedef göstereceğini söylüyor. Ama asıl patron yakında burada olacak. Bırak onu sana getirelim!</Text>
     </DialogNode>
     
-    <DialogNode Type="Player" Id="Esir_P2" TargetAlias="looters" InputToken="ql_esir_p2" OutputToken="close_window">
-      <Text>Pekala sizi bırakıyorum. Zaten başka bir işe de yaramıyorsunuz. Elebaşınızı bekliyorum.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-        <Action Type="DestroyEncounteredParty" />
-        <Action Type="ChangeStage" ObjectId="Stage4_ElebasiBekleme" />
-        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="25" />
-      </Consequences>
-    </DialogNode>
+      <DialogNode Type="Player" Id="Esir_P2" TargetAlias="looters" InputToken="ql_esir_p2" OutputToken="close_window">
+        <Text>Pekala sizi bırakıyorum. Zaten başka bir işe de yaramıyorsunuz. Elebaşınızı bekliyorum.</Text>
+        <Consequences>
+          <Action Type="LeaveEncounter" />
+          <Action Type="DestroyEncounteredParty" />
+          <Action Type="ChangeStage" ObjectId="Stage4_ElebasiBekleme" />
+          <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="25" StringValue="{=!}Çapulcu Elebaşı" />
+        </Consequences>
+      </DialogNode>
 
     <!-- Stage 4: Elebaşı Konuşması -->
     <DialogNode Type="Npc" Id="Elebasi_Giris" TargetAlias="looters" InputToken="start" OutputToken="ql_elebasi_a1" Priority="200">
