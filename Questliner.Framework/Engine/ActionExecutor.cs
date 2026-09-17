@@ -98,7 +98,13 @@ namespace Questliner.Framework.Engine
                         TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.LeaveEncounter = true;
                     }
                     break;
-                    case "StartQuest":
+                case "DestroyEncounteredParty":
+                    if (TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.Current != null && TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.EncounteredMobileParty != null)
+                    {
+                        TaleWorlds.CampaignSystem.Actions.DestroyPartyAction.Apply(null, TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.EncounteredMobileParty);
+                    }
+                    break;
+                case "StartQuest":
                     var newQuestModel = Questliner.Framework.Services.QuestModuleScanner.LoadedQuests.FirstOrDefault(q => q.Id == action.ObjectId);
                     if (newQuestModel != null)
                     {

@@ -56,7 +56,7 @@
     </Stage>
 
     <Stage Id="Stage4_Dost_Inandi" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>Köy yaşlısı ile konuştun ve asıl görevini öğrendin. Hain Zanaatkar ile onlar ilgilenecek. Şimdi ise Krallık Lideri olan {Kral_Link} ile konuşup ona hizmetlerini sunmanın bir yolunu bulmalısın.</LogText>
+      <LogText>Çapulcu ile konuştun ve asıl görevini öğrendin. Hain Zanaatkar ile onlar ilgilenecek. Şimdi ise Krallık Lideri olan {Kral_Link} ile konuşup ona hizmetlerini sunmanın bir yolunu bulmalısın.</LogText>
       <Conditions>
         <Condition Type="HasPledgedAllegiance" TargetAlias="Kral" />
       </Conditions>
@@ -304,7 +304,7 @@
 
     <!-- 5. KRALLIĞA KATILDIKTAN SONRA DOST İLE SON YÜZLEŞME -->
     <DialogNode Type="Npc" Id="Dost_Final_Giris" TargetAlias="Dost" InputToken="start" OutputToken="ql_dost_final_b1" Priority="150">
-      <Text>{PLAYER.NAME}! Sonunda {Kral_Link}'a bağlılık yemini etmişsin. Ben de seninle görüşmeyi istiyordum.</Text>
+      <Text>{PLAYER.NAME}! Sonunda {Kral_Link}'a bağlılık yemini etmişsin. Ben de seninle görüşmeyi istiyordum. Hakkında atılan bir iftira zaten yoktu. Ben seni anavatana hizmete girmeye ikna etmek için böyle bir oyun oynadım. İhanet eden kimse yoktu. Hatta seninle eskiden dost da değiliz. </Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage5_KralligaKatil" />
       </Conditions>

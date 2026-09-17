@@ -171,18 +171,37 @@ namespace Questliner.Framework.Behaviors
             
             // Generic party logic (Bandits, minor factions, etc)
             var cp = TaleWorlds.CampaignSystem.Party.MobileParty.ConversationParty;
-            if (cp != null && cp.IsBandit)
+            bool isQuestParty = false;
+            
+            if (quest != null && cp != null)
             {
-                string factionId = cp.MapFaction?.StringId?.ToLower() ?? "";
-                string aliasLower = dialogNode.TargetAlias.ToLower().Replace("_", "").Replace(" ", "");
-                string factionLower = factionId.Replace("_", "").Replace(" ", "");
+                isQuestParty = quest.TargetParties.Values.Contains(cp);
+            }
 
-                // If TargetAlias exactly matches the faction (e.g. "looters") or is "BanditParty" (any bandit)
-                if (aliasLower == "banditparty" || aliasLower == factionLower)
+            if (cp != null && (cp.IsBandit || isQuestParty))
+            {
+                bool matchedAlias = false;
+                if (isQuestParty && quest != null)
                 {
-                    // Match! We proceed to condition checks.
+                    var aliasKvp = quest.TargetParties.FirstOrDefault(x => x.Value == cp);
+                    if (aliasKvp.Key == dialogNode.TargetAlias)
+                    {
+                        matchedAlias = true;
+                    }
                 }
-                else
+                
+                if (!matchedAlias && cp.IsBandit)
+                {
+                    string factionId = cp.MapFaction?.StringId?.ToLower() ?? "";
+                    string aliasLower = dialogNode.TargetAlias.ToLower().Replace("_", "").Replace(" ", "");
+                    string factionLower = factionId.Replace("_", "").Replace(" ", "");
+                    if (aliasLower == "banditparty" || aliasLower == factionLower)
+                    {
+                        matchedAlias = true;
+                    }
+                }
+
+                if (!matchedAlias)
                 {
                     return false;
                 }
