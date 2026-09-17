@@ -318,7 +318,6 @@ namespace Questliner.Framework.Behaviors
                             // Store the pre-resolved tempQuest so we don't recreate it
                             _pendingResolvedHeroes = tempQuest.TargetHeroes.ToDictionary(k => k.Key, v => v.Value);
                             _pendingResolvedSettlements = tempQuest.TargetSettlements.ToDictionary(k => k.Key, v => v.Value);
-                        }
                             return true;
                         }
                     }

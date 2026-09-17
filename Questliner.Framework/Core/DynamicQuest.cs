@@ -56,6 +56,10 @@ namespace Questliner.Framework.Core
         private Dictionary<string, Settlement> _targetSettlements = new Dictionary<string, Settlement>();
         public Dictionary<string, Settlement> TargetSettlements => _targetSettlements;
 
+        [SaveableField(8)]
+        private Dictionary<string, TaleWorlds.CampaignSystem.Party.MobileParty> _targetParties = new Dictionary<string, TaleWorlds.CampaignSystem.Party.MobileParty>();
+        public Dictionary<string, TaleWorlds.CampaignSystem.Party.MobileParty> TargetParties => _targetParties;
+
         [SaveableField(4)]
         private Dictionary<string, bool> _trackedFlags = new Dictionary<string, bool>();
 

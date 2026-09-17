@@ -136,7 +136,7 @@ namespace Questliner.Framework.Engine
                             quest.TargetParties[action.TargetAlias] = party;
                         }
                         
-                        party.SetCustomName(new TaleWorlds.Localization.TextObject("{=!}Looters"));
+                        party.Party.SetCustomName(new TaleWorlds.Localization.TextObject("{=!}Looters"));
 
                         // Set troop count
                         int targetAmount = action.Amount > 0 ? action.Amount : 15;
