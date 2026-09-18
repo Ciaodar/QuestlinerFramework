@@ -2,7 +2,7 @@
 <Module>
   <Name value="Questliner Framework" />
   <Id value="QuestlinerFramework" />
-  <Version value="v1.0.0.98" />
+  <Version value="v1.0.0.99" />
   <DefaultModule value="false" />
   <ModuleCategory value="Singleplayer" />
   <ModuleType value="Community" />

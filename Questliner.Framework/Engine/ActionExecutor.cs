@@ -249,6 +249,22 @@ namespace Questliner.Framework.Engine
                     quest?.SetFlag(action.ObjectId, action.Amount > 0);
                     break;
                 }
+                case "SetVariable":
+                {
+                    if (quest != null)
+                    {
+                        if (!string.IsNullOrEmpty(action.StringValue))
+                            quest.SetStringVariable(action.TargetAlias, action.StringValue);
+                        else
+                            quest.SetCounter(action.TargetAlias, action.Amount);
+                    }
+                    break;
+                }
+                case "IncrementVariable":
+                {
+                    quest?.IncrementCounter(action.TargetAlias, action.Amount);
+                    break;
+                }
                 // Future expansions: SpawnParty, DeclareWar, TriggerSequelQuest, etc.
             }
         }

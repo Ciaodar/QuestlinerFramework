@@ -155,22 +155,7 @@ namespace Questliner.Framework.Behaviors
 
             if (quest != null)
             {
-                foreach (var kvp in quest.TargetHeroes)
-                {
-                    if (kvp.Value != null)
-                    {
-                        TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
-                        TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
-                    }
-                }
-                foreach (var kvp in quest.TargetSettlements)
-                {
-                    if (kvp.Value != null)
-                    {
-                        TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
-                        TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
-                    }
-                }
+                quest.InjectVariablesToTextManager();
             }
 
             Hero speaker = Hero.OneToOneConversationHero;

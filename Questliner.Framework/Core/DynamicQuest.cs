@@ -90,6 +90,48 @@ namespace Questliner.Framework.Core
         public void IncrementCounter(string key, int amount) => TrackedCounters[key] = GetCounter(key) + amount;
         public void SetCounter(string key, int amount) => TrackedCounters[key] = amount;
 
+        [TaleWorlds.SaveSystem.SaveableField(8)]
+        private System.Collections.Generic.Dictionary<string, string> _trackedStrings = new System.Collections.Generic.Dictionary<string, string>();
+        public System.Collections.Generic.Dictionary<string, string> TrackedStrings
+        {
+            get
+            {
+                if (_trackedStrings == null) _trackedStrings = new System.Collections.Generic.Dictionary<string, string>();
+                return _trackedStrings;
+            }
+        }
+        public string GetString(string key) => TrackedStrings.TryGetValue(key, out var val) ? val : string.Empty;
+        public void SetStringVariable(string key, string value) => TrackedStrings[key] = value;
+
+        public void InjectVariablesToTextManager()
+        {
+            foreach (var kvp in TargetHeroes)
+            {
+                if (kvp.Value != null)
+                {
+                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
+                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                }
+            }
+            foreach (var kvp in TargetSettlements)
+            {
+                if (kvp.Value != null)
+                {
+                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
+                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                }
+            }
+            foreach (var kvp in TrackedCounters)
+            {
+                TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key, kvp.Value);
+            }
+            foreach (var kvp in TrackedStrings)
+            {
+                if (!string.IsNullOrEmpty(kvp.Value))
+                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key, new TaleWorlds.Localization.TextObject(kvp.Value));
+            }
+        }
+
         [SaveableField(5)]
         private string _modelId;
 
@@ -265,6 +307,15 @@ namespace Questliner.Framework.Core
                     {
                         parsedLogText.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
                         parsedLogText.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                    }
+                    foreach (var kvp in TrackedCounters)
+                    {
+                        parsedLogText.SetTextVariable(kvp.Key, kvp.Value);
+                    }
+                    foreach (var kvp in TrackedStrings)
+                    {
+                        if (!string.IsNullOrEmpty(kvp.Value))
+                            parsedLogText.SetTextVariable(kvp.Key, new TextObject(kvp.Value));
                     }
                     parsedLogText.SetTextVariable("Player.Name", Hero.MainHero.Name);
                     parsedLogText.SetTextVariable("PlayerName", Hero.MainHero.Name);
