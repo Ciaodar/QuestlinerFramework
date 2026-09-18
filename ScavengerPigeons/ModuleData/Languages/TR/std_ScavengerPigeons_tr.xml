@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Türkçe" />
+  </tags>
+  <strings>
+    <!-- Hain Guvercin -->
+    <string id="sp_hg_title" text="Hain Güvercin" />
+    <string id="sp_hg_s1_log" text="Suikast görevinden şüphelendin ve araştırmaya başladın. {PlayerName} adını kullanarak etrafta dolaşan 3 farklı çapulcu partisi bulup yenmelisin. Gözcüleri sorguladığında gerçek ortaya çıkacak." />
+    <string id="sp_hg_s2_log" text="Esir aldığın yağmacıları sorguluyorsun... (biraz bekle)" />
+    <string id="sp_hg_spawn1" text="Hain Çapulcular" />
+    <string id="sp_hg_s3_log" text="Esirlerle sorgulama vakti geldi. Yakındaki bir çapulcu partisine (Saha Koordinatörü) gidip onlarla konuşmalısın." />
+    <string id="sp_hg_s4_log" text="Esirler sana elebaşının yerini söyledi. Biraz beklersen asıl güvercinler sana gelecek." />
+    <string id="sp_hg_s5_log" text="Asıl hainin kim olduğunu öğrendin. Artık tek yapman gereken krallığa bağlılık yemini etmek." />
+    
+    <string id="sp_hg_dlg1" text="Biz Sahadaki bir Çapulcu tarafından gönderildik. Arkadaşlarımızı serbest bırak gerçekleri konuşmak için Çapulcuyu getirelim." />
+    <string id="sp_hg_dlg2" text="Bana bildiklerinizi anlatın yoksa hepinizi kılıçtan geçiririm!" />
+    <string id="sp_hg_dlg3" text="Biz sadece saha elemanıyız. Zanaatkar bize kimi hedef göstereceğini söylüyor. Ama asıl patron yakında burada olacak. Bırak onu sana getirelim!" />
+    <string id="sp_hg_dlg4" text="Pekala sizi bırakıyorum. Zaten başka bir işe de yaramıyorsunuz. Elebaşınızı bekliyorum." />
+    <string id="sp_hg_spawn2" text="Çapulcu Elebaşı" />
+    
+    <string id="sp_hg_dlg5" text="Dur! Kılıç çekmeye gelmedik... Askerlerimi serbest bırakmışsın. Ben Saha koordinatörü bir çapulcuyum. Bu ne demek oluyor? Bir şey mi anlatmaya çalışıyorsun?" />
+    <string id="sp_hg_dlg6" text="Evet, dostumuz denen adamı öldürmediğimi kanıtlamak için çıkıyorum karşına. İftiraların kimden çıktığını öğrenmem gerek." />
+    <string id="sp_hg_dlg7" text="Hayır, Siz çapulcular ile işim yok artık. Gidip sizin için tanımadığım birini idam edecek değildim ya?" />
+    <string id="sp_hg_dlg8" text="Öldürmek mi? Aramızdaki hain sen değilsin o zaman... O hain sana bu emri veren kişi {ArtisanTarget_Link} denen soysuz köpektir. Senin asıl görevin ise Anavatana dönüp hizmetini sunmak olmalıydı." />
+    <string id="sp_hg_dlg9" text="Beklenmedik bir sınavdan geçtin güvercin. Güvenilirliğini fazlasıyla kanıtladın. Yolun açık olsun." />
+
+    <!-- Anavatanin Ihaneti -->
+    <string id="sp_ai_title" text="Anavatanın İhaneti" />
+    <string id="sp_ai_s1_log" text="Gizemli berberin anlattıkları zihnini kurcalıyor. Anavatanından eski bir dostun, senin itibarını zedeleyecek korkunç iftiralarla mücadele etmek için gizli örgüt Çapulcu Güvercinler'den yardım istemiş. Ancak Güvercinler seni aralarına kabul etmeden önce gücünü kanıtlamanı bekliyor. Sana verilen altınları kullanarak 70 kişilik bir bölük topla ve köy büyüğü {KoyBuyugu_Link} ile buluş." />
+    <string id="sp_ai_s2_log" text="Köy büyüğü {KoyBuyugu_Link} ile konuştun. Beklediğin gibi, bu sıradan bir görev değildi. Sana üzerinde şifreler olan gizli bir deri verdi ve bunu hiç vakit kaybetmeden {UzakSehir_Link} şehrindeki {ArtisanTarget_Link} isimli zanaatkara teslim etmeni istedi." />
+    <string id="sp_ai_s3a_log" text="Çapulcu Güvercinler bilgesi {ArtisanTarget_Link}, bir suikast görevi verdi. Sorgulamadan kabul ettin. Hedefin: {Dost_Link}." />
+    <string id="sp_ai_s3b_log" text="Güvercinler daha önce dostun olduğunu söyledikleri {Dost_Link} isimli kişiyi şimdi öldürmeni istedi. Tutarsız bir takım gariplikler yaşanıyor. {ArtisanTarget_Link} ile konuşmanda verilen göreve karşı çıktın. Acilen bu şüphenden birilerine bahsetmek isteyebilirsin." />
+    <string id="sp_ai_s_bekleme_log" text="{ArtisanTarget_Link} arkandan iftiralar atmış. Sana bu şüpheli suikast görevini verdiğinde birileriyle konuşmalıydın. Çapulcuların arasında adın hızla karalanıyor. Karanlık bir köşeye çekilip beklemekten başka çaren kalmadı, belki de bu işi çözmenin başka bir yolu vardır." />
+    <string id="sp_ai_s4_savas_log" text="O hain sen olmalısın. Bana iftira atan da sensin. Ölmeye hazırlan! {Dost_Link} ile savaştın. Geri dönüş yok!" />
+    <string id="sp_ai_s5_karanlik_log" text="Birini idam etmek hiçbir zaman iyi olmamıştır. Güvercinler seni hain ilan etti. Anavatanın için ise açıkça bir düşmansın. Senden nefret ediyorlar. Böyle olmamalıydı..." />
+    <string id="sp_ai_s4_inandi_log" text="Çapulcu ile konuştun ve asıl görevini öğrendin. Hain Zanaatkar ile onlar ilgilenecek. Şimdi ise Krallık Lideri olan {Kral_Link} ile konuşup ona hizmetlerini sunmanın bir yolunu bulmalısın." />
+    <string id="sp_ai_s5_katil_log" text="Kendini kanıtladın ve krallığa katıldın. Şimdi sıra sana iftira atan kişiyi bulup intikamını almada. {Dost_Link} Seninle konuşmayı bekliyor. Onunla konuş ve ayrıntıları öğren." />
+    <string id="sp_ai_s_success_log" text="Tüm bunların sadakatini test etmek için kurulmuş bir oyun olduğunu öğrendin. Dostun {Dost_Link} ile ise yeni tanışıyormuşsunuz. Sana başına açtığı belaların telafisi ve hizmetinde yardımcı olması için 50.000 dinar hediye etti ve yeni hizmetinde başarılar diledi. İhanet söylentileri son buldu." />
+    
+    <string id="sp_ai_dlg1" text="Sizinle konuşmam gereken özel bir konu var." />
+    <string id="sp_ai_dlg2" text="Adın {PlayerName} olmalı, değil mi?" />
+    <string id="sp_ai_dlg3" text="Herkesin adımı bilmesine alışmalıyım sanırım." />
+    <string id="sp_ai_dlg4" text="Sen de bir güvercin olmalısın..." />
+    <string id="sp_ai_dlg5" text="Evet, Elbette... Bir sonraki adım için buradasın. Şimdi yapacağın şey sana vereceğim gizli bilgilerin yer aldığı bu özel deriyi {UzakSehir_Link} şehrindeki {ArtisanTarget_Link} isimli zanaatkara götürmelisin." />
+    <string id="sp_ai_dlg6" text="Bunun benim problemimle ne alakası var?" />
+    <string id="sp_ai_dlg7" text="Her şey birbiriyle alakalıdır." />
+    <string id="sp_ai_dlg8" text="Pekala, yapacağım." />
+    <string id="sp_ai_dlg9" text="İyi yolculuklar, çapulcu..." />
+    <string id="sp_ai_dlg10" text="Teşekkürler güvercin..." />
+    
+    <string id="sp_ai_dlg11" text="Bir güvercin size bu deriyi gönderdi." />
+    <string id="sp_ai_dlg12" text="Ahh, bir komplo daha demek! Söyle çapulcu, senin adın nedir?" />
+    <string id="sp_ai_dlg13" text="Anubis." />
+    <string id="sp_ai_dlg14" text="Güvercin." />
+    <string id="sp_ai_dlg15" text="{PlayerName}." />
+    <string id="sp_ai_dlg16" text="Yavru güvercin yuvaya döner mi?" />
+    <string id="sp_ai_dlg17" text="Döner." />
+    <string id="sp_ai_dlg18" text="Dönmez." />
+    <string id="sp_ai_dlg19" text="Dönmez mi?" />
+    <string id="sp_ai_dlg20" text="Tabii ya! Peki adalet mi istersin intikam mı?" />
+    <string id="sp_ai_dlg21" text="Adalet yerini bulmalı! Zira onun yüceliği daimidir." />
+    <string id="sp_ai_dlg22" text="Benim intikamım adaletin tecelli etmesini sağlamak olacaktır." />
+    <string id="sp_ai_dlg23" text="Dişe diş, kana kan. İNTİKAM, İNTİKAM!!" />
+    <string id="sp_ai_dlg24" text="Pekala, Seninle bir sonuca vardık. Anavatanın İhaneti senin demir yumruğun ile son bulacaktır. Şimdiki görevin ise {Dost_Link} isimli kişiyi idam etmek." />
+    <string id="sp_ai_dlg25" text="Ne?! Bu adamın dostum olduğu söylenmişti. Bu çok saçma, siz bir şeyler saklıyorsunuz. Bunu yapmayacağım!" />
+    <string id="sp_ai_dlg26" text="Başüstüne! Çapulcunun emri, güvercinin görevidir, İzninizle..." />
+    
+    <string id="sp_ai_dlg27" text="Sizinle konuşmam gereken özel bir konu var." />
+    <string id="sp_ai_dlg28" text="Sizinle konuşmam gereken özel bir konu var." />
+    <string id="sp_ai_dlg29" text="Dostum, erken geldin. Anavatana hizmete daha girmemişsin." />
+    <string id="sp_ai_dlg30" text="Ecel geldi erkenden. Sen onu beklemezken." />
+    <string id="sp_ai_dlg31" text="Çapulcu kelleni istiyor. Dikkat et merhametime kalma." />
+    <string id="sp_ai_dlg32" text="Ne saçmalıyorsun? Onlar benden emir alıyorlar. Bu da demek oluyor ki aralarında seni kandırdığını sanan bir hain var!" />
+    <string id="sp_ai_dlg33" text="Haklısın, ne düşünüyordum ki ben. Senin için köy yaşlısı ile konuşacağım." />
+    <string id="sp_ai_dlg34" text="Korkunç bir karşılaşmaydı dostum. Kendine dikkat et. Tekrar karşılaşacağız." />
+    <string id="sp_ai_dlg35" text="Evet. O hain sen olmalısın. Bana iftira atan da sensin. Ölmeye hazırlan!" />
+    
+    <string id="sp_ai_dlg36" text="{ArtisanTarget_Link} hakkında konuşmalıyız." />
+    <string id="sp_ai_dlg37" text="Dönüşün, beklemediğimiz bir gelişme. Bir sorun mu var?" />
+    <string id="sp_ai_dlg38" text="{ArtisanTarget_Link} benden öldürmem için {Dost_Link} ismini verdi." />
+    <string id="sp_ai_dlg39" text="Zanaatkar adam benden dostumuz olan adamı öldürmemi istedi." />
+    <string id="sp_ai_dlg40" text="Öldürmek mi? Hem de dostumuzu? Bundan emin misin? Sana neden inanayım? Suçladığın kişi değerli bir çapulcu." />
+    <string id="sp_ai_dlg41" text="Haklısınız. Bana inanmak istemeyebilirsiniz. Ancak bu görevi yerine getirmeyeceğimi bilmelisiniz." />
+    <string id="sp_ai_dlg42" text="Umrumda değil. Kimseyi öldürmeyeceğim. Sizi indandırmakla uğraşacak da değilim!" />
+    <string id="sp_ai_dlg43" text="Üzgünüm, Evet! sen yalan söylemiyorsun. Bu kaçıncı... O adam bir hain!" />
+    <string id="sp_ai_dlg44" text="Belki beni ilgilendirmez ama isterseniz o adamı sizin için..." />
+    <string id="sp_ai_dlg45" text="O adam! beni kullanacağını sandı he şimdi ben ona göster..." />
+    <string id="sp_ai_dlg46" text="Hayır! Bu senin meselen değil. Git ve Daha fazla geç kalmadan Anavatanına hizmete adandığını göster. Senin görevin bu olmalıydı. Şimdi gitmeliyim. Hizmetin unutulmayacak." />
+    
+    <string id="sp_ai_dlg47" text="{PLAYER.NAME}! Sonunda {Kral_Link}'a bağlılık yemini etmişsin. Ben de seninle görüşmeyi istiyordum. Hakkında atılan bir iftira zaten yoktu. Ben seni anavatana hizmete girmeye ikna etmek için böyle bir oyun oynadım. İhanet eden kimse yoktu. Hatta seninle eskiden dost da değiliz." />
+    <string id="sp_ai_dlg48" text="Kesinlikle! Seni tanımadığımı zaten biliyordum. Aslında zaten aklımda daima Anavatana hizmet vardı." />
+    <string id="sp_ai_dlg49" text="Beni kandırdığını zannetme. Ben zaten bu yolda ilerlemeyi kendim istiyordum. İftira atılması cabası olmuştu." />
+    <string id="sp_ai_dlg50" text="Teşekkürler. Sana yapacağım bağış, başına açtığım belaların telafisi ve yeni hizmetinde sana yardımcı olacaktır." />
+    <string id="sp_ai_dlg51" text="Başka bir şey konuşmayı istiyor muydun?" />
+  </strings>
+</base>
