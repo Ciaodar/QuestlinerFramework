@@ -143,7 +143,7 @@ namespace Questliner.Framework.Behaviors
             TaleWorlds.Localization.MBTextManager.SetTextVariable("PlayerName", Hero.MainHero.Name);
 
             // Find ongoing dynamic quest matching QuestId (may be null if quest hasn't started yet)
-            var quest = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(q => q.Model.Id == questModel.Id && q.IsOngoing);
+            var quest = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(q => q.Model?.Id == questModel.Id && q.IsOngoing);
 
             if (quest == null && questModel.Prerequisites != null && questModel.Prerequisites.Count > 0)
             {
@@ -157,13 +157,19 @@ namespace Questliner.Framework.Behaviors
             {
                 foreach (var kvp in quest.TargetHeroes)
                 {
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                    if (kvp.Value != null)
+                    {
+                        TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
+                        TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                    }
                 }
                 foreach (var kvp in quest.TargetSettlements)
                 {
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                    if (kvp.Value != null)
+                    {
+                        TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
+                        TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                    }
                 }
             }
 
@@ -193,7 +199,7 @@ namespace Questliner.Framework.Behaviors
                 if (!matchedAlias && cp.IsBandit)
                 {
                     string factionId = cp.MapFaction?.StringId?.ToLower() ?? "";
-                    string aliasLower = dialogNode.TargetAlias.ToLower().Replace("_", "").Replace(" ", "");
+                    string aliasLower = (dialogNode.TargetAlias ?? "").ToLower().Replace("_", "").Replace(" ", "");
                     string factionLower = factionId.Replace("_", "").Replace(" ", "");
                     if (aliasLower == "banditparty" || aliasLower == factionLower)
                     {
@@ -268,7 +274,7 @@ namespace Questliner.Framework.Behaviors
 
         private void DynamicDialogConsequence(QuestModel questModel, CustomDialogModel dialogNode)
         {
-            var quest = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(q => q.Model.Id == questModel.Id && q.IsOngoing);
+            var quest = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(q => q.Model?.Id == questModel.Id && q.IsOngoing);
             foreach (var action in dialogNode.Consequences)
             {
                 Questliner.Framework.Engine.ActionExecutor.Execute(action, quest);
@@ -287,7 +293,7 @@ namespace Questliner.Framework.Behaviors
             foreach (var questModel in Questliner.Framework.Services.QuestModuleScanner.LoadedQuests)
             {
                 // Don't show option if quest is already ongoing
-                if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.Model.Id == questModel.Id))
+                if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.Model?.Id == questModel.Id))
                     continue;
 
                 var startTrigger = questModel.Triggers.FirstOrDefault(t => t.EventType == "OnConversation");
