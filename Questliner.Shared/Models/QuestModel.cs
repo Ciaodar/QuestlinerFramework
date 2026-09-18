@@ -158,6 +158,12 @@ namespace Questliner.Shared.Models
 
         [XmlAttribute("StringValue")]
         public string StringValue { get; set; } = string.Empty;
+
+        [XmlAttribute("SpawnDistance")]
+        public float SpawnDistance { get; set; } = 3f;
+
+        [XmlAttribute("SpawnRadius")]
+        public float SpawnRadius { get; set; } = 2f;
     }
 
     public class ConditionModel

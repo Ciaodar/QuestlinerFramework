@@ -147,7 +147,26 @@ namespace Questliner.Framework.Engine
                         var party = TaleWorlds.CampaignSystem.Party.MobileParty.CreateParty("ql_spawned_looters_" + TaleWorlds.Core.MBRandom.RandomInt(10000), null);
                         
                         party.ActualClan = TaleWorlds.CampaignSystem.Clan.BanditFactions.FirstOrDefault(c => c.StringId == "looters");
-                        party.InitializeMobilePartyAroundPosition(looterTemplate, TaleWorlds.CampaignSystem.Party.MobileParty.MainParty.Position, 1f, 0.5f);
+                        
+                        TaleWorlds.CampaignSystem.CampaignVec2 spawnPosition = TaleWorlds.CampaignSystem.Party.MobileParty.MainParty.Position;
+                        if (quest != null && !string.IsNullOrEmpty(action.ObjectId))
+                        {
+                            var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
+                            if (targetSettlement != null)
+                            {
+                                spawnPosition = targetSettlement.GatePosition;
+                            }
+                            else
+                            {
+                                var targetParty = quest.TargetParties.TryGetValue(action.ObjectId, out var p) ? p : null;
+                                if (targetParty != null && targetParty.IsActive)
+                                {
+                                    spawnPosition = targetParty.Position;
+                                }
+                            }
+                        }
+
+                        party.InitializeMobilePartyAroundPosition(looterTemplate, spawnPosition, action.SpawnRadius > 0 ? action.SpawnRadius : 2f, action.SpawnDistance > 0 ? action.SpawnDistance : 1f);
                         
                         if (quest != null && !string.IsNullOrEmpty(action.TargetAlias))
                         {
