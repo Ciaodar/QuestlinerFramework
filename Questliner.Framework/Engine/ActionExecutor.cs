@@ -101,7 +101,19 @@ namespace Questliner.Framework.Engine
                 case "DestroyEncounteredParty":
                     if (TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.Current != null && TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.EncounteredMobileParty != null)
                     {
-                        TaleWorlds.CampaignSystem.Actions.DestroyPartyAction.Apply(null, TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.EncounteredMobileParty);
+                        var mobileParty = TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.EncounteredMobileParty;
+                        TaleWorlds.CampaignSystem.Campaign.Current.ConversationManager.ConversationEndOneShot += () =>
+                        {
+                            if (TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.Current != null)
+                            {
+                                TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.Finish(true);
+                            }
+                            if (TaleWorlds.CampaignSystem.Campaign.Current.CurrentMenuContext != null)
+                            {
+                                TaleWorlds.CampaignSystem.GameMenus.GameMenu.ExitToLast();
+                            }
+                            TaleWorlds.CampaignSystem.Actions.DestroyPartyAction.Apply(null, mobileParty);
+                        };
                     }
                     break;
                 case "StartQuest":
