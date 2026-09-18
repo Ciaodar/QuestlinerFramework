@@ -90,7 +90,7 @@ namespace Questliner.Framework.Core
         public void IncrementCounter(string key, int amount) => TrackedCounters[key] = GetCounter(key) + amount;
         public void SetCounter(string key, int amount) => TrackedCounters[key] = amount;
 
-        [TaleWorlds.SaveSystem.SaveableField(8)]
+        [TaleWorlds.SaveSystem.SaveableField(9)]
         private System.Collections.Generic.Dictionary<string, string> _trackedStrings = new System.Collections.Generic.Dictionary<string, string>();
         public System.Collections.Generic.Dictionary<string, string> TrackedStrings
         {

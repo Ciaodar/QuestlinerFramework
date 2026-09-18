@@ -20,6 +20,9 @@ namespace Questliner.Framework.Core
             ConstructContainerDefinition(typeof(Dictionary<string, Settlement>));
             ConstructContainerDefinition(typeof(Dictionary<string, bool>));
             ConstructContainerDefinition(typeof(System.Collections.Generic.Dictionary<string, int>));
+            ConstructContainerDefinition(typeof(System.Collections.Generic.Dictionary<string, string>));
+            ConstructContainerDefinition(typeof(System.Collections.Generic.Dictionary<string, TaleWorlds.CampaignSystem.Party.MobileParty>));
+            ConstructContainerDefinition(typeof(System.Collections.Generic.List<string>));
         }
     }
 }

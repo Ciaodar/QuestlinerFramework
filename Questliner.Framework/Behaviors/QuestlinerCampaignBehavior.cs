@@ -364,6 +364,13 @@ namespace Questliner.Framework.Behaviors
         public override void SyncData(IDataStore dataStore)
         {
             // DynamicQuest instances are natively synced by Campaign.Current.QuestManager.
+            dataStore.SyncData("Questliner_CompletedQuests", ref _completedQuestIds);
+            
+            // Protect against null initialization from legacy saves
+            if (_completedQuestIds == null)
+            {
+                _completedQuestIds = new List<string>();
+            }
         }
 
         private DynamicQuest? _activeDiscussQuest = null;

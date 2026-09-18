@@ -278,7 +278,11 @@ namespace Questliner.Framework.Engine
                     }
                     break;
                 }
-                // Future expansions: SpawnParty, DeclareWar, TriggerSequelQuest, etc.
+                default:
+                {
+                    TaleWorlds.Library.Debug.Print($"[Questliner] Unknown Action Type executed: {action.ActionType}");
+                    break;
+                }
             }
         }
     }
