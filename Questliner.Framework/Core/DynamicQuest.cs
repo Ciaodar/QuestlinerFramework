@@ -21,23 +21,7 @@ namespace Questliner.Framework.Core
             }
         }
 
-        public override TextObject Title 
-        {
-            get 
-            {
-                EnsureModelLoaded();
-                return new TextObject(Model?.Title ?? "YÃ¼klenen GÃ¶rev...");
-            }
-        }
-        
-        public override bool IsRemainingTimeHidden 
-        {
-            get 
-            {
-                EnsureModelLoaded();
-                return Model?.TimeLimitInDays <= 0;
-            }
-        }
+
         
         // TaleWorlds hack: If quest giver is null, we MUST provide a SpecialQuestType string,
         // otherwise Native silently cancels/deletes the quest during daily ticks or serialization.
@@ -347,9 +331,36 @@ namespace Questliner.Framework.Core
         public bool GetFlag(string key) => TrackedFlags.TryGetValue(key, out var val) && val;
         public void SetFlag(string key, bool value) => TrackedFlags[key] = value;
 
+        public override TextObject Title 
+        {
+            get 
+            {
+                EnsureModelLoaded();
+                return new TextObject(Model?.Title ?? "{=!}Eksik/Silinmiş Mod Görevi");
+            }
+        }
+        
+        public override bool IsRemainingTimeHidden 
+        {
+            get
+            {
+                EnsureModelLoaded();
+                return Model == null || !Model.Stages.Any(s => s.TimeoutInDays > 0 || s.TimeoutInHours > 0);
+            }
+        }
+
         protected override void InitializeQuestOnGameLoad()
         {
             Model = Questliner.Framework.Services.QuestModuleScanner.LoadedQuests.FirstOrDefault(q => q.Id == _modelId);
+            
+            if (Model == null)
+            {
+                TaleWorlds.Library.Debug.Print($"[Questliner] Orphaned quest detected: {_modelId}. Canceling safely.");
+                TaleWorlds.Core.MBInformationManager.AddQuickInformation(new TaleWorlds.Localization.TextObject("{=!}Bir mod silindiği için ona ait olan görev iptal edildi."));
+                CompleteQuestWithCancel(new TaleWorlds.Localization.TextObject("{=!}Bu görev, ait olduğu mod dosyaları bulunamadığı için sistem tarafından otomatik olarak iptal edilmiştir."));
+                return;
+            }
+
             SetDialogs();
         }
 
