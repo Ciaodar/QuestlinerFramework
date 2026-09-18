@@ -251,5 +251,47 @@ namespace Questliner.Framework.Engine
             }
             return true; 
         }
+        public static MobileParty? ResolveMobileParty(TargetResolverModel model, DynamicQuest? quest, Hero? questGiver = null)
+        {
+            if (model.TargetType != "MobileParty") return null;
+            if (!string.IsNullOrEmpty(model.SpecificId)) return MobileParty.All.FirstOrDefault(p => p.StringId == model.SpecificId);
+
+            IEnumerable<MobileParty> candidates = MobileParty.All.Where(p => p.IsActive);
+            
+            if (!string.IsNullOrEmpty(model.Filters))
+            {
+                var filters = model.Filters.Split(',').Select(f => f.Trim());
+                foreach (var rawFilter in filters)
+                {
+                    bool invert = rawFilter.StartsWith("!");
+                    string filter = invert ? rawFilter.Substring(1) : rawFilter;
+                    
+                    IEnumerable<MobileParty> step = candidates;
+
+                    if (filter == "BanditParty") step = candidates.Where(p => p.IsBandit);
+                    else if (filter == "Caravan") step = candidates.Where(p => p.IsCaravan);
+                    else if (filter == "LordParty") step = candidates.Where(p => p.IsLordParty);
+                    else if (filter.StartsWith("Faction("))
+                    {
+                        var factionStr = filter.Substring(8, filter.Length - 9);
+                        step = candidates.Where(p => p.MapFaction != null && p.MapFaction.StringId == factionStr);
+                    }
+
+                    candidates = invert ? candidates.Except(step) : step;
+                }
+            }
+
+            var finalList = candidates.ToList();
+            if (!finalList.Any()) return null;
+
+            if (model.Selector == "Random")
+                return finalList[TaleWorlds.Core.MBRandom.RandomInt(finalList.Count)];
+            else if (model.Selector == "Nearest")
+                return finalList.OrderBy(p => p.GetPosition2D.DistanceSquared(MobileParty.MainParty.GetPosition2D)).First();
+            else if (model.Selector == "Furthest")
+                return finalList.OrderByDescending(p => p.GetPosition2D.DistanceSquared(MobileParty.MainParty.GetPosition2D)).First();
+
+            return finalList[TaleWorlds.Core.MBRandom.RandomInt(finalList.Count)];
+        }
     }
 }

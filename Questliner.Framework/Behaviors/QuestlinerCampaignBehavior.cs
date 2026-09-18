@@ -310,6 +310,16 @@ namespace Questliner.Framework.Behaviors
                                 }
                                 tempQuest.TargetSettlements[res.Alias] = s;
                             }
+                            else if (res.TargetType == "MobileParty")
+                            {
+                                var p = Engine.TargetResolverService.ResolveMobileParty(res, tempQuest, speaker);
+                                if (p == null) 
+                                { 
+                                    canResolveAll = false; 
+                                    break; 
+                                }
+                                tempQuest.TargetParties[res.Alias] = p;
+                            }
                             else
                             {
                                 var h = Engine.TargetResolverService.ResolveHero(res, tempQuest, speaker);
@@ -550,6 +560,12 @@ namespace Questliner.Framework.Behaviors
                     var s = Engine.TargetResolverService.ResolveSettlement(res, tempQuest, Hero.MainHero);
                     if (s == null) { canResolveAll = false; break; }
                     tempQuest.TargetSettlements[res.Alias] = s;
+                }
+                else if (res.TargetType == "MobileParty")
+                {
+                    var p = Engine.TargetResolverService.ResolveMobileParty(res, tempQuest, Hero.MainHero);
+                    if (p == null) { canResolveAll = false; break; }
+                    tempQuest.TargetParties[res.Alias] = p;
                 }
                 else
                 {
