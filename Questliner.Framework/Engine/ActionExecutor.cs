@@ -168,9 +168,6 @@ namespace Questliner.Framework.Engine
 
                         party.InitializeMobilePartyAroundPosition(looterTemplate, spawnPosition, action.SpawnRadius > 0 ? action.SpawnRadius : 2f, action.SpawnDistance > 0 ? action.SpawnDistance : 1f);
                         
-                        // Ignore this party by AI so they don't get destroyed before the player reaches them
-                        party.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.Never);
-
                         if (quest != null && !string.IsNullOrEmpty(action.TargetAlias))
                         {
                             quest.TargetParties[action.TargetAlias] = party;
@@ -263,6 +260,32 @@ namespace Questliner.Framework.Engine
                 case "IncrementVariable":
                 {
                     quest?.IncrementCounter(action.TargetAlias, action.Amount);
+                    break;
+                }
+                case "SetPartyAi":
+                {
+                    if (quest != null && quest.TargetParties.TryGetValue(action.TargetAlias, out var p) && p != null && p.IsActive)
+                    {
+                        if (action.StringValue == "IgnoreAi") p.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.Never);
+                        else if (action.StringValue == "UnignoreAi") p.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.Now);
+                        else if (action.StringValue == "Hold") p.SetMoveModeHold();
+                        else if (!string.IsNullOrEmpty(action.ObjectId))
+                        {
+                            if (action.StringValue == "EngageParty" && quest.TargetParties.TryGetValue(action.ObjectId, out var targetP) && targetP != null)
+                                p.SetMoveEngageParty(targetP, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
+                            else if (action.StringValue == "EscortParty" && quest.TargetParties.TryGetValue(action.ObjectId, out var escortP) && escortP != null)
+                                p.SetMoveEscortParty(escortP, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default, false);
+                            else
+                            {
+                                var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
+                                if (targetSettlement != null)
+                                {
+                                    if (action.StringValue == "GoToSettlement") p.SetMoveGoToSettlement(targetSettlement, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default, false);
+                                    else if (action.StringValue == "PatrolAroundSettlement") p.SetMovePatrolAroundSettlement(targetSettlement, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default, false);
+                                }
+                            }
+                        }
+                    }
                     break;
                 }
                 // Future expansions: SpawnParty, DeclareWar, TriggerSequelQuest, etc.

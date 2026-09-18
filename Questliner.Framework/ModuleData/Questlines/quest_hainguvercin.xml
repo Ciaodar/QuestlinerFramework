@@ -89,7 +89,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Elebasi_N2" TargetAlias="looters" InputToken="ql_elebasi_a2" OutputToken="ql_elebasi_a3">
-      <Text>Aramızdaki hain sen değilsin o zaman... O sana bu emri veren kişi {ArtisanTarget_Link} denen soysuz köpektir. Köy yaşlısı senin yalan söylemediğini bana iletmişti zaten. Bir testten geçtin güvercin. Bize sadakatini kanıtladın.</Text>
+      <Text>Aramızdaki hain sen değilsin o zaman... O sana bu emri veren kişi {ArtisanTarget_Link} denen soysuz köpektir. Sen Beklenmedik bir testten geçtin güvercin. Bize sadakatini kanıtladın.</Text>
     </DialogNode>
     
     <DialogNode Type="Npc" Id="Elebasi_N3" TargetAlias="looters" InputToken="ql_elebasi_a3" OutputToken="close_window">
