@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name value="Questliner Demo Quests" />
+  <Id value="QuestlinerDemoQuests" />
+  <Version value="v1.0.0" />
+  <SingleplayerModule value="true" />
+  <MultiplayerModule value="false" />
+  <DependedModules>
+    <DependedModule Id="Native" />
+    <DependedModule Id="SandBoxCore" />
+    <DependedModule Id="Sandbox" />
+    <DependedModule Id="CustomBattle" />
+    <DependedModule Id="StoryMode" />
+    <DependedModule Id="QuestlinerFramework" />
+  </DependedModules>
+  <SubModules>
+    <!-- No C# submodules needed, this is just an XML data pack for QLF -->
+  </SubModules>
+  <Xmls>
+  </Xmls>
+</Module>
