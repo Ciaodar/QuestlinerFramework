@@ -168,6 +168,9 @@ namespace Questliner.Framework.Engine
 
                         party.InitializeMobilePartyAroundPosition(looterTemplate, spawnPosition, action.SpawnRadius > 0 ? action.SpawnRadius : 2f, action.SpawnDistance > 0 ? action.SpawnDistance : 1f);
                         
+                        // Ignore this party by AI so they don't get destroyed before the player reaches them
+                        party.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.Never);
+
                         if (quest != null && !string.IsNullOrEmpty(action.TargetAlias))
                         {
                             quest.TargetParties[action.TargetAlias] = party;
