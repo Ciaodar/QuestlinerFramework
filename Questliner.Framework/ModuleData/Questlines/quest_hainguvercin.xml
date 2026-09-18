@@ -80,22 +80,25 @@
 
     <!-- Stage 4: Elebaşı Konuşması -->
     <DialogNode Type="Npc" Id="Elebasi_Giris" TargetAlias="looters" InputToken="start" OutputToken="ql_elebasi_a1" Priority="200">
-      <Text>Dur! Kılıç çekmeye gelmedik... Askerlerimi serbest bırakmışsın. Ben Saha koordinatörü bir çapulcuyum.</Text>
+      <Text>Dur! Kılıç çekmeye gelmedik... Askerlerimi serbest bırakmışsın. Ben Saha koordinatörü bir çapulcuyum. Bu ne demek oluyor? Bir şey mi anlatmaya çalışıyorsun?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage4_ElebasiBekleme" />
       </Conditions>
     </DialogNode>
     
     <DialogNode Type="Player" Id="Elebasi_P1" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="ql_elebasi_a2">
-      <Text>Evet, dostumuzu öldürmediğimizi kanıtlamak için gönderildim. İftiraların kimden çıktığını öğrenmem gerek.</Text>
+      <Text>Evet, dostumuz denen adamı öldürmediğimi kanıtlamak için çıkıyorum karşına. İftiraların kimden çıktığını öğrenmem gerek.</Text>
+    </DialogNode>
+        <DialogNode Type="Player" Id="Elebasi_P2" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="ql_elebasi_a2">
+      <Text>Hayır, Siz çapulcular ile işim yok artık. Gidip sizin için tanımadığım birini idam edecek değildim ya?</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Elebasi_N2" TargetAlias="looters" InputToken="ql_elebasi_a2" OutputToken="ql_elebasi_a3">
-      <Text>Aramızdaki hain sen değilsin o zaman... O sana bu emri veren kişi {ArtisanTarget_Link} denen soysuz köpektir. Senin asıl görevin ise  Beklenmedik bir testten geçtin güvercin. Bize sadakatini kanıtladın.</Text>
+      <Text>Öldürmek mi? Aramızdaki hain sen değilsin o zaman... O hain sana bu emri veren kişi {ArtisanTarget_Link} denen soysuz köpektir. Senin asıl görevin ise Anavatana dönüp hizmetini sunmak olmalıydı.</Text>
     </DialogNode>
     
     <DialogNode Type="Npc" Id="Elebasi_N3" TargetAlias="looters" InputToken="ql_elebasi_a3" OutputToken="close_window">
-      <Text>Yolun açık olsun Güvercin.</Text>
+      <Text>Beklenmedik bir sınavdan geçtin güvercin. Güvenilirliğini fazlasıyla kanıtladın. Yolun açık olsun.</Text>
       <Consequences>
         <Action Type="DestroyEncounteredParty" />
         <Action Type="ChangeStage" ObjectId="Stage5_Gercek" />

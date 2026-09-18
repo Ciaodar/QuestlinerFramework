@@ -116,37 +116,18 @@ namespace Questliner.Framework.Engine
                         };
                     }
                     break;
-                case "StartQuest":
-                    var newQuestModel = Questliner.Framework.Services.QuestModuleScanner.LoadedQuests.FirstOrDefault(q => q.Id == action.ObjectId);
-                    if (newQuestModel != null)
-                    {
-                        var duration = TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(newQuestModel.TimeLimitInDays > 0 ? newQuestModel.TimeLimitInDays : 9999);
-                        var newQ = new DynamicQuest(newQuestModel, null, duration);
-                        
-                        foreach(var res in newQuestModel.TargetResolvers)
-                        {
-                            if (res.TargetType == "Settlement")
-                            {
-                                var s = Questliner.Framework.Engine.TargetResolverService.ResolveSettlement(res, newQ);
-                                if (s != null) newQ.TargetSettlements[res.Alias] = s;
-                            }
-                            else
-                            {
-                                var h = Questliner.Framework.Engine.TargetResolverService.ResolveHero(res, newQ);
-                                if (h != null) newQ.TargetHeroes[res.Alias] = h;
-                            }
-                        }
-                        newQ.StartQuest();
-                    }
-                    break;
+
                 case "SpawnBanditParty":
-                    var looterTemplate = TaleWorlds.CampaignSystem.Campaign.Current.ObjectManager.GetObject<TaleWorlds.CampaignSystem.Party.PartyTemplateObject>("looters_template");
+                    string templateId = string.IsNullOrEmpty(action.PartyTemplateId) ? "looters_template" : action.PartyTemplateId;
+                    string clanId = templateId.Replace("_template", ""); // e.g. looters, sea_raiders
+                    
+                    var looterTemplate = TaleWorlds.CampaignSystem.Campaign.Current.ObjectManager.GetObject<TaleWorlds.CampaignSystem.Party.PartyTemplateObject>(templateId);
                     
                     if (looterTemplate != null)
                     {
-                        var party = TaleWorlds.CampaignSystem.Party.MobileParty.CreateParty("ql_spawned_looters_" + TaleWorlds.Core.MBRandom.RandomInt(10000), null);
+                        var party = TaleWorlds.CampaignSystem.Party.MobileParty.CreateParty("ql_spawned_" + clanId + "_" + TaleWorlds.Core.MBRandom.RandomInt(10000), null);
                         
-                        party.ActualClan = TaleWorlds.CampaignSystem.Clan.BanditFactions.FirstOrDefault(c => c.StringId == "looters");
+                        party.ActualClan = TaleWorlds.CampaignSystem.Clan.BanditFactions.FirstOrDefault(c => c.StringId == clanId) ?? TaleWorlds.CampaignSystem.Clan.BanditFactions.FirstOrDefault(c => c.StringId == "looters");
                         
                         TaleWorlds.CampaignSystem.CampaignVec2 spawnPosition = TaleWorlds.CampaignSystem.Party.MobileParty.MainParty.Position;
                         if (quest != null && !string.IsNullOrEmpty(action.ObjectId))
@@ -285,6 +266,15 @@ namespace Questliner.Framework.Engine
                                 }
                             }
                         }
+                    }
+                    break;
+                }
+                case "StartQuest":
+                {
+                    var model = Questliner.Framework.Services.QuestModuleScanner.LoadedQuests.FirstOrDefault(q => q.Id == action.ObjectId);
+                    if (model != null && !TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.OfType<Questliner.Framework.Core.DynamicQuest>().Any(q => q.Model?.Id == model.Id))
+                    {
+                        Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.TryAutoStartQuest(model);
                     }
                     break;
                 }

@@ -516,6 +516,59 @@ namespace Questliner.Framework.Behaviors
         private void OnHourlyTick()
         {
             EvaluateAllQuests();
+
+            // Check for AutoStart quests
+            foreach (var questModel in Questliner.Framework.Services.QuestModuleScanner.LoadedQuests)
+            {
+                if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.Model?.Id == questModel.Id))
+                    continue;
+
+                if (questModel.Triggers.Any(t => t.EventType == "AutoStart"))
+                {
+                    TryAutoStartQuest(questModel);
+                }
+            }
+        }
+
+        public void TryAutoStartQuest(QuestModel questModel)
+        {
+            var duration = TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(questModel.TimeLimitInDays > 0 ? questModel.TimeLimitInDays : 9999);
+            var tempQuest = new DynamicQuest(questModel, Hero.MainHero, duration); // AutoStart quests default to MainHero as giver if no other giver is specified, but TargetResolvers should assign proper heroes.
+            
+            bool canResolveAll = true;
+            foreach (var res in questModel.TargetResolvers)
+            {
+                if (res.TargetType == "Settlement")
+                {
+                    var s = Engine.TargetResolverService.ResolveSettlement(res, tempQuest, Hero.MainHero);
+                    if (s == null) { canResolveAll = false; break; }
+                    tempQuest.TargetSettlements[res.Alias] = s;
+                }
+                else
+                {
+                    var h = Engine.TargetResolverService.ResolveHero(res, tempQuest, Hero.MainHero);
+                    if (h == null) { canResolveAll = false; break; }
+                    tempQuest.TargetHeroes[res.Alias] = h;
+                }
+            }
+
+            if (canResolveAll)
+            {
+                bool reqsMet = true;
+                foreach (var req in questModel.Prerequisites)
+                {
+                    if (!Engine.ConditionEvaluator.IsConditionMet(req, tempQuest))
+                    {
+                        reqsMet = false;
+                        break;
+                    }
+                }
+
+                if (reqsMet)
+                {
+                    tempQuest.StartQuest();
+                }
+            }
         }
 
         private void EvaluateAllQuests()

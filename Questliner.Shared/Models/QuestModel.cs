@@ -12,6 +12,9 @@ namespace Questliner.Shared.Models
         [XmlAttribute("Title")]
         public string Title { get; set; } = string.Empty;
 
+        [XmlAttribute("StartType")]
+        public string StartType { get; set; } = "Dialog"; // Options: Dialog, AutoStart, GameMenu
+
         [XmlAttribute("TimeLimitInDays")]
         public int TimeLimitInDays { get; set; } = -1;
 
@@ -159,6 +162,10 @@ namespace Questliner.Shared.Models
         [XmlAttribute("StringValue")]
         public string StringValue { get; set; } = string.Empty;
 
+        [XmlAttribute("PartyTemplateId")]
+        public string PartyTemplateId { get; set; } = string.Empty;
+
+        // Optional parameters for spawning
         [XmlAttribute("SpawnDistance")]
         public float SpawnDistance { get; set; } = 3f;
 
