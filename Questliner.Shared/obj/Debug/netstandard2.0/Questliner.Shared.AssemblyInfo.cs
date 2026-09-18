@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Questliner.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f6b66681d8812c8dcc989251c47d7c87a2a3b105")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+838ae6f1947c7431f423111314b035b7e0246cc0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Questliner.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Questliner.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

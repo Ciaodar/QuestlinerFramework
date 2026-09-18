@@ -45,7 +45,7 @@ namespace Questliner.Framework.Core
 
         // Dynamic State Storage
         [SaveableField(1)]
-        private string _currentStageId;
+        private string _currentStageId = string.Empty;
         public string CurrentStageId { get => _currentStageId; private set => _currentStageId = value; }
 
         [SaveableField(2)]

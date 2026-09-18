@@ -186,33 +186,33 @@ namespace Questliner.Framework.Engine
                 }
                 case "DeclareWar":
                 {
-                    Hero? target = quest.GetTargetHero(action.TargetAlias);
+                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
                     if (target?.Clan?.MapFaction != null)
                         DeclareWarAction.ApplyByDefault(Clan.PlayerClan.MapFaction, target.Clan.MapFaction);
                     break;
                 }
                 case "MakePeace":
                 {
-                    Hero? target = quest.GetTargetHero(action.TargetAlias);
+                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
                     if (target?.Clan?.MapFaction != null)
                         MakePeaceAction.Apply(Clan.PlayerClan.MapFaction, target.Clan.MapFaction);
                     break;
                 }
                 case "SetPrisoner":
                 {
-                    Hero? target = quest.GetTargetHero(action.TargetAlias);
+                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
                     if (target != null) TakePrisonerAction.Apply(PartyBase.MainParty, target);
                     break;
                 }
                 case "DamageHero":
                 {
-                    Hero? target = quest.GetTargetHero(action.TargetAlias);
+                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
                     if (target != null) target.HitPoints -= action.Amount;
                     break;
                 }
                 case "SetFlag":
                 {
-                    quest.SetFlag(action.ObjectId, action.Amount > 0);
+                    quest?.SetFlag(action.ObjectId, action.Amount > 0);
                     break;
                 }
                 // Future expansions: SpawnParty, DeclareWar, TriggerSequelQuest, etc.

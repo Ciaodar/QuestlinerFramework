@@ -12,7 +12,7 @@ namespace Questliner.Framework.Behaviors
 {
     public class QuestlinerCampaignBehavior : CampaignBehaviorBase
     {
-        public static QuestlinerCampaignBehavior Instance { get; private set; }
+        public static QuestlinerCampaignBehavior? Instance { get; private set; }
         public System.Collections.Generic.List<string> CompletedQuestIds => _completedQuestIds;
         public override void RegisterEvents()
         {
