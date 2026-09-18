@@ -1,0 +1,10 @@
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ScavengerPigeons\bin\x64\Debug\net472\ScavengerPigeons.dll
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ScavengerPigeons\bin\x64\Debug\net472\ScavengerPigeons.pdb
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ScavengerPigeons\obj\x64\Debug\net472\ScavengerPigeons.csproj.AssemblyReference.cache
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ScavengerPigeons\obj\x64\Debug\net472\ScavengerPigeons.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ScavengerPigeons\obj\x64\Debug\net472\ScavengerPigeons.AssemblyInfoInputs.cache
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ScavengerPigeons\obj\x64\Debug\net472\ScavengerPigeons.AssemblyInfo.cs
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ScavengerPigeons\obj\x64\Debug\net472\ScavengerPigeons.csproj.CoreCompileInputs.cache
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ScavengerPigeons\obj\x64\Debug\net472\ScavengerPigeons.sourcelink.json
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ScavengerPigeons\obj\x64\Debug\net472\ScavengerPigeons.dll
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ScavengerPigeons\obj\x64\Debug\net472\ScavengerPigeons.pdb
