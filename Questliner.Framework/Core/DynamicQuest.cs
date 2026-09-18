@@ -50,27 +50,61 @@ namespace Questliner.Framework.Core
 
         [SaveableField(2)]
         private Dictionary<string, Hero> _targetHeroes = new Dictionary<string, Hero>();
-        public Dictionary<string, Hero> TargetHeroes => _targetHeroes;
+        public Dictionary<string, Hero> TargetHeroes
+        {
+            get
+            {
+                if (_targetHeroes == null) _targetHeroes = new Dictionary<string, Hero>();
+                return _targetHeroes;
+            }
+        }
 
         [SaveableField(3)]
         private Dictionary<string, Settlement> _targetSettlements = new Dictionary<string, Settlement>();
-        public Dictionary<string, Settlement> TargetSettlements => _targetSettlements;
+        public Dictionary<string, Settlement> TargetSettlements
+        {
+            get
+            {
+                if (_targetSettlements == null) _targetSettlements = new Dictionary<string, Settlement>();
+                return _targetSettlements;
+            }
+        }
 
         [SaveableField(8)]
         private Dictionary<string, TaleWorlds.CampaignSystem.Party.MobileParty> _targetParties = new Dictionary<string, TaleWorlds.CampaignSystem.Party.MobileParty>();
-        public Dictionary<string, TaleWorlds.CampaignSystem.Party.MobileParty> TargetParties => _targetParties;
+        public Dictionary<string, TaleWorlds.CampaignSystem.Party.MobileParty> TargetParties
+        {
+            get
+            {
+                if (_targetParties == null) _targetParties = new Dictionary<string, TaleWorlds.CampaignSystem.Party.MobileParty>();
+                return _targetParties;
+            }
+        }
 
         [SaveableField(4)]
         private Dictionary<string, bool> _trackedFlags = new Dictionary<string, bool>();
+        public Dictionary<string, bool> TrackedFlags
+        {
+            get
+            {
+                if (_trackedFlags == null) _trackedFlags = new Dictionary<string, bool>();
+                return _trackedFlags;
+            }
+        }
 
         [TaleWorlds.SaveSystem.SaveableField(7)]
         private System.Collections.Generic.Dictionary<string, int> _trackedCounters = new System.Collections.Generic.Dictionary<string, int>();
-        public System.Collections.Generic.Dictionary<string, int> TrackedCounters => _trackedCounters;
-
-        public int GetCounter(string key) => _trackedCounters.TryGetValue(key, out var val) ? val : 0;
-        public void IncrementCounter(string key, int amount) => _trackedCounters[key] = GetCounter(key) + amount;
-        public void SetCounter(string key, int amount) => _trackedCounters[key] = amount;
-        public Dictionary<string, bool> TrackedFlags => _trackedFlags;
+        public System.Collections.Generic.Dictionary<string, int> TrackedCounters
+        {
+            get
+            {
+                if (_trackedCounters == null) _trackedCounters = new System.Collections.Generic.Dictionary<string, int>();
+                return _trackedCounters;
+            }
+        }
+        public int GetCounter(string key) => TrackedCounters.TryGetValue(key, out var val) ? val : 0;
+        public void IncrementCounter(string key, int amount) => TrackedCounters[key] = GetCounter(key) + amount;
+        public void SetCounter(string key, int amount) => TrackedCounters[key] = amount;
 
         [SaveableField(5)]
         private string _modelId;
