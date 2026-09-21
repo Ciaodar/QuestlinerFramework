@@ -1,0 +1,50 @@
+{
+  "format": 1,
+  "restore": {
+    "c:\\Users\\meteh\\RiderProjects\\QuestlinerFramework\\ShadowsAscendancy\\ShadowsAscendancy.csproj": {}
+  },
+  "projects": {
+    "c:\\Users\\meteh\\RiderProjects\\QuestlinerFramework\\ShadowsAscendancy\\ShadowsAscendancy.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\meteh\\RiderProjects\\QuestlinerFramework\\ShadowsAscendancy\\ShadowsAscendancy.csproj",
+        "projectName": "ShadowsAscendancy",
+        "projectPath": "c:\\Users\\meteh\\RiderProjects\\QuestlinerFramework\\ShadowsAscendancy\\ShadowsAscendancy.csproj",
+        "packagesPath": "C:\\Users\\meteh\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\meteh\\RiderProjects\\QuestlinerFramework\\ShadowsAscendancy\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\meteh\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.420\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

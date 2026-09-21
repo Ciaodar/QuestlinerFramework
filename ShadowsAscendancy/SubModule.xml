@@ -1,7 +1,7 @@
-<Module>
+﻿<Module>
   <Name value="Questliner - Shadows' Ascendancy" />
   <Id value="ShadowsAscendancy" />
-  <Version value="v1.0.0" />
+  <Version value="v1.0.0.1" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
   <DependedModules>
@@ -24,3 +24,4 @@
   <Xmls>
   </Xmls>
 </Module>
+

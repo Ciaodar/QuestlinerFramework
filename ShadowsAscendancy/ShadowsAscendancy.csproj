@@ -34,6 +34,10 @@
     </Reference>
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File &quot;$(ProjectDir)Build\UpdateVersion.ps1&quot; -BuildType Debug" />
+  </Target>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /Y /S /I &quot;$(ProjectDir)ModuleData&quot; &quot;$(GameFolder)\Modules\$(ProjectName)\ModuleData&quot;&#xD;&#xA;xcopy /Y &quot;$(ProjectDir)SubModule.xml&quot; &quot;$(GameFolder)\Modules\$(ProjectName)\&quot;&#xD;&#xA;xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(GameFolder)\Modules\$(ProjectName)\bin\Win64_Shipping_Client\&quot;" />
   </Target>
