@@ -51,6 +51,26 @@ namespace Questliner.Framework.Engine
 
             if (!candidates.Any()) return null;
 
+            // 1.5 EXCLUDE ALREADY USED HEROES IF POSSIBLE
+            if (TaleWorlds.CampaignSystem.Campaign.Current != null)
+            {
+                var usedHeroes = new System.Collections.Generic.HashSet<Hero>();
+                var dynamicQuests = TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing);
+                foreach (var dq in dynamicQuests)
+                {
+                    foreach (var th in dq.TargetHeroes.Values)
+                    {
+                        if (th != null) usedHeroes.Add(th);
+                    }
+                }
+
+                var unusedCandidates = candidates.Where(h => !usedHeroes.Contains(h)).ToList();
+                if (unusedCandidates.Any())
+                {
+                    candidates = unusedCandidates;
+                }
+            }
+
             // 2. SELECTOR
             var playerPos = GetPlayerPosition();
             return model.Selector switch
@@ -175,6 +195,17 @@ namespace Questliner.Framework.Engine
                 return source;
             }
 
+            if (filter.StartsWith("SameClanAs("))
+            {
+                var alias = filter.Substring(11, filter.Length - 12);
+                if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
+                {
+                    var clan = aliasHero.Clan;
+                    return isNegated ? source.Where(h => h.Clan != clan) : source.Where(h => h.Clan == clan);
+                }
+                return source;
+            }
+
             if (filter.StartsWith("InSettlement("))
             {
                 var alias = filter.Substring(13, filter.Length - 14);
@@ -195,6 +226,48 @@ namespace Questliner.Framework.Engine
                     return isNegated ? source.Where(h => h != aliasHero) : source.Where(h => h == aliasHero);
                 }
                 return source;
+            }
+
+            if (filter.StartsWith("GlobalHero("))
+            {
+                var key = filter.Substring(11, filter.Length - 12);
+                var globalHero = Questliner.Framework.Core.GlobalStateManager.Instance.GetGlobalHero(key);
+                // If globalHero is null (not set or died and removed from dictionary depending on how Bannerlord handles dead heroes references, though they remain as dead heroes usually),
+                // we still filter strictly.
+                return isNegated ? source.Where(h => h != globalHero) : source.Where(h => h == globalHero);
+            }
+
+            if (filter.StartsWith("Trait("))
+            {
+                var traitName = filter.Substring(6, filter.Length - 7).ToLower();
+                var trait = TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.All.FirstOrDefault(t => t.StringId.ToLower() == traitName);
+                if (trait != null)
+                {
+                    // Treat negative traits (like Cruel, Devious) specially. If they ask for Cruel, they mean Mercy < 0.
+                    // But if traitName is "mercy", they might want positive. The easiest way is:
+                    // Just match if GetTraitLevel(trait) != 0, but Bannerlord has specific named traits.
+                    // For simplicity, we just check if GetTraitLevel(trait) > 0.
+                    // Wait, what if they specify "Cruel"? In Bannerlord, Cruel is actually Mercy = -2. But there is no trait object named "Cruel".
+                    // The trait object is "Mercy".
+                    // So we must handle "Cruel" manually!
+                }
+                
+                Func<Hero, bool> traitCondition = traitName switch
+                {
+                    "cruel" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Mercy) < 0,
+                    "devious" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Honor) < 0,
+                    "calculating" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Calculating) > 0,
+                    "impulsive" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Calculating) < 0,
+                    "mercy" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Mercy) > 0,
+                    "honor" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Honor) > 0,
+                    "generosity" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Generosity) > 0,
+                    "closefisted" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Generosity) < 0,
+                    "valor" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Valor) > 0,
+                    "cautious" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Valor) < 0,
+                    _ => h => true
+                };
+
+                return isNegated ? source.Where(h => !traitCondition(h)) : source.Where(traitCondition);
             }
 
             Func<Hero, bool>? condition = filter switch
@@ -220,6 +293,8 @@ namespace Questliner.Framework.Engine
                 "Wanderer" => h => h.IsWanderer,
                 "Female" => h => h.IsFemale,
                 "Male" => h => !h.IsFemale,
+                "IsPrisoner" => h => h.IsPrisoner,
+                "IsPrisonerInSettlement" => h => h.IsPrisoner && h.PartyBelongedToAsPrisoner != null && h.PartyBelongedToAsPrisoner.IsSettlement,
                 _ => null
             };
 

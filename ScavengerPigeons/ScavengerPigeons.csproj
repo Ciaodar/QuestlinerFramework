@@ -11,6 +11,10 @@
     <SubModuleTemplatePath>$(ProjectDir)SubModule.xml</SubModuleTemplatePath>
   </PropertyGroup>
 
+  <Target Name="UpdateVersion" BeforeTargets="PreBuildEvent">
+    <Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)Build\UpdateVersion.ps1&quot; -BuildType Debug" />
+  </Target>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <PropertyGroup>
       <ModuleFolder>$(GameFolder)\Modules\$(OutputModuleName)</ModuleFolder>

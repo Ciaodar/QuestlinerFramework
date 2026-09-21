@@ -62,6 +62,12 @@ namespace Questliner.Framework.Engine
                     Hero? target = quest?.GetTargetHero(condition.TargetAlias);
                     return target != null && target.IsAlive;
                 }
+                case "BattleResolvedAs":
+                {
+                    if (quest == null) return false;
+                    string result = quest.GetString($"BattleResult_{condition.TargetAlias}");
+                    return result.Equals(condition.StringValue, System.StringComparison.OrdinalIgnoreCase);
+                }
                 case "TargetIsPrisoner":
                 {
                     Hero? target = quest?.GetTargetHero(condition.TargetAlias);
@@ -134,6 +140,29 @@ namespace Questliner.Framework.Engine
                             count += element.Number;
                     }
                     return count >= condition.Amount;
+                }
+                case "GlobalFlag":
+                {
+                    bool flagValue = GlobalStateManager.Instance.GetFlag(condition.ObjectId);
+                    // If Amount > 0 it expects true, else it expects false. But we also support Operator in future, for now Amount > 0 -> true.
+                    // Wait, the XML says <Condition Type="GlobalFlag" Key="..." Operator="==" Value="true" />
+                    // But our engine currently parses condition.Amount. If we want it simple, Amount=1 means true, Amount=0 means false. 
+                    // Let's use Amount:
+                    bool expected = condition.Amount > 0;
+                    return flagValue == expected;
+                }
+                case "ItemCountInInventory":
+                {
+                    ItemObject? item = Campaign.Current.ObjectManager.GetObject<ItemObject>(condition.ObjectId);
+                    if (item == null) return false;
+                    return MobileParty.MainParty.ItemRoster.GetItemNumber(item) >= condition.Amount;
+                }
+                case "SkillCheck":
+                {
+                    // ObjectId should be the skill string id (e.g., "Charm", "Roguery")
+                    var skill = Campaign.Current.ObjectManager.GetObject<TaleWorlds.Core.SkillObject>(condition.ObjectId);
+                    if (skill == null) return false;
+                    return Hero.MainHero.GetSkillValue(skill) >= condition.Amount;
                 }
                 // Future expansions: HasTroop, SettlementProsperity...
                 default:

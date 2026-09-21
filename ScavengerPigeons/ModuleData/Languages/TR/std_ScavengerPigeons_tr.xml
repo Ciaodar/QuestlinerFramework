@@ -91,7 +91,54 @@
     <string id="sp_ai_dlg47" text="{PLAYER.NAME}! Sonunda {Kral_Link}'a bağlılık yemini etmişsin. Ben de seninle görüşmeyi istiyordum. Hakkında atılan bir iftira zaten yoktu. Ben seni anavatana hizmete girmeye ikna etmek için böyle bir oyun oynadım. İhanet eden kimse yoktu. Hatta seninle eskiden dost da değiliz." />
     <string id="sp_ai_dlg48" text="Kesinlikle! Seni tanımadığımı zaten biliyordum. Aslında zaten aklımda daima Anavatana hizmet vardı." />
     <string id="sp_ai_dlg49" text="Beni kandırdığını zannetme. Ben zaten bu yolda ilerlemeyi kendim istiyordum. İftira atılması cabası olmuştu." />
-    <string id="sp_ai_dlg50" text="Teşekkürler. Sana yapacağım bağış, başına açtığım belaların telafisi ve yeni hizmetinde sana yardımcı olacaktır." />
-    <string id="sp_ai_dlg51" text="Başka bir şey konuşmayı istiyor muydun?" />
+    <!-- Ya Dogruysa -->
+    <string id="sp_yd_title" text="Çapulcunun Sözü: Ya Doğruysa?" />
+    <string id="sp_yd_s1_log" text="Çapulcularla karşılaştın ve birisi itibarının tehlikede olduğunu, gerçeği öğrenmek için {GizemliSehir_Link} şehrindeki berbere gitmen gerektiğini söyledi. Onları kılıçtan geçirmiş olsan da, içindeki şüphe tohumu yeşerdi. {GizemliSehir_Link} şehrindeki berberi bul ve 'Çapulcunun adı ne?' diye sor." />
+    <string id="sp_yd_s_success_log" text="Berberi bulup ona 'Çapulcunun adı ne?' diye sordun. Sana hakkındaki iftiralardan bahsetti. Anavatanından eski bir dostun, onun da bulunduğu 'Çapulcu Güvercinler' isimli gizli kültten senin için yardım istemiş. Sana bir miktar para vererek 70 kişilik bir parti toplayıp yakınlardaki bir köyün büyüğünü bulmanı söylediler." />
+    
+    <string id="sp_yd_dlg1" text="{PlayerName}! Sonunda seni bulabildim. Çapulcu olmak gerçekten çok zormuş." />
+    <string id="sp_yd_dlg2" text="Bu saçmalık da ne, adımı nereden biliyorsun onursuz pislik?!" />
+    <string id="sp_yd_dlg3" text="Dinle, bu alelade bir çapulcunun saçma bir kandırma denemesi değil tamam mı? İtibarın tehlikede. Anavatanından bir dostunun dostuyum. Eğer itibarına değer veriyorsan en yakın ikinci şehrin berberine git ve &quot;Çapulcunun ismi ne?&quot; diye sor. Sana istihbarat sağlayacak." />
+    <string id="sp_yd_dlg4" text="Acınası bir savaş taktiği. (Saldır)" />
+    <string id="sp_yd_dlg5" text="İyi deneme. Sende taktiksel bir cevher var." />
+    <string id="sp_yd_dlg6" text="İnanıyorsun. Biliyordum!" />
+    <string id="sp_yd_dlg7" text="Belki... Öyle ya da böyle kandırmaca tekniğine saygımdan sizi serbest bırakacağım." />
+    <string id="sp_yd_dlg8" text="Göreceğiz..." />
+    <string id="sp_yd_dlg9" text="Dökülen her söz önem arz eder. Yine de onursuz bir çapulcunun başı omzunun üstünde kalamaz! (Saldır)" />
+    
+    <string id="sp_yd_dlg10" text="Çapulcunun ismi ne?" />
+    <string id="sp_yd_dlg11" text="Anubis. Çapulcular diyarın en kuşkulu kuşlarıdır. Ne istemiştin, yabancı?" />
+    <string id="sp_yd_dlg12" text="Konuştuğum gizemli çapulcu kılıklı adam itibarımın tehlikede olduğunu söyledi. Umarım beni alaya almıyorsunuzdur." />
+    <string id="sp_yd_dlg13" text="Çapulcu bana itibarın tehlikede, dedi. Bu ne anlama geliyor?" />
+    <string id="sp_yd_dlg14" text="Ahh, {PlayerName}... Kuşkucu davranışın tabii ki çok haklı. Merak etme. Ona inanmak ve buraya gelmekle çok iyi ettin. Anavatanından bir dost bize ulaştı. Arkandan hain ilan edilebileceğin sözler yaymaya başladıklarından bahsetti." />
+    <string id="sp_yd_dlg15" text="Siz de kimsiniz? Nasıl bir kült bu? Dümdüz ulak gönderemiyor muydu aptal herif? Ayrıca ben bu adamı tanımıyorum bile. Oyun oynamayı bırak." />
+    <string id="sp_yd_dlg16" text="Siz mi? Gizli bir topluluk musunuz? Derdiniz nedir?" />
+    <string id="sp_yd_dlg17" text="Merak etme dost. Biz asırlardır görev yapan Çapulcu Güvercinleriz. Herhangi bir ulaktan daha hızlı, herhangi bir uşaktan daha güçlüyüz. Dostun bizlere çokça yardımda bulunmuş cevval bir adamdır. Sana kefil oldu ve seni bu komplodan kurtarmamızı istedi." />
+    <string id="sp_yd_dlg18" text="Benden ne istiyorsunuz?" />
+    <string id="sp_yd_dlg19" text="Samimiyetimizin göstergesi olarak sana bir miktar altın hediye ediyoruz. 70 kişi toplayıp en yakın köydeki köy büyüğünü bul." />
+    <string id="sp_yd_dlg20" text="Paranızı istemem. 70 kişilik bölüğü oraya götürmeyi de biraz düşüneceğim." />
+    <string id="sp_yd_dlg21" text="Teşekkürler. Bu parayla o bölüğü toplayıp köy ağası ile görüşeceğim." />
+    <string id="sp_yd_dlg22" text="Bu saçmalıkla daha fazla ilgilenmiyorum. Eğlenecek başka birini bulun." />
+    <string id="sp_yd_dlg23" text="Pekala, görüşmek üzere yavru güvercin..." />
+
+    <!-- Itibar Dersi -->
+    <string id="sp_id_title" text="Çapulcudan İtibar Dersi" />
+    <string id="sp_id_s1_log" text="Çapulcu kılığındaki gizemli adam sana {GizemliSehir_Link} şehrindeki berbere gitmen gerektiğini söylemişti. Kandırmaca yeteneğine duyduğun saygıdan onu ve ekibini serbest bıraktın. Belki de dediklerinde bir doğruluk payı vardır? {GizemliSehir_Link} şehrine git ve berberi bul." />
+    <string id="sp_id_s_success_log" text="Berberi bulup ona 'Çapulcunun adı ne?' diye sordun. Sana hakkındaki iftiralardan bahsetti. Anavatanından eski bir dostun, onun da bulunduğu 'Çapulcu Güvercinler' isimli gizli kültten senin için yardım istemiş. Sana bir miktar para vererek 70 kişilik bir parti toplayıp yakınlardaki bir köyün büyüğünü bulmanı söylediler." />
+    
+    <string id="sp_id_dlg10" text="Çapulcunun ismi ne?" />
+    <string id="sp_id_dlg11" text="Anubis. Çapulcular diyarın en kuşkulu kuşlarıdır. Ne istemiştin, yabancı?" />
+    <string id="sp_id_dlg12" text="Konuştuğum gizemli çapulcu kılıklı adam itibarımın tehlikede olduğunu söyledi. Umarım beni alaya almıyorsunuzdur." />
+    <string id="sp_id_dlg13" text="Çapulcu bana itibarın tehlikede, dedi. Bu ne anlama geliyor?" />
+    <string id="sp_id_dlg14" text="Ahh, {PlayerName}... Kuşkucu davranın tabii ki çok haklı. Merak etme. Ona inanmak ve buraya gelmekle çok iyi ettin. Anavatanından bir dost bize ulaştı. Arkandan hain ilan edilebileceğin sözler yaymaya başladıklarından bahsetti." />
+    <string id="sp_id_dlg15" text="Siz de kimsiniz? Nasıl bir kült bu? Dümdüz ulak gönderemiyor muydu aptal herif? Ayrıca ben bu adamı tanımıyorum bile. Oyun oynamayı bırak." />
+    <string id="sp_id_dlg16" text="Siz mi? Gizli bir topluluk musunuz? Derdiniz nedir?" />
+    <string id="sp_id_dlg17" text="Merak etme dost. Biz asırlardır görev yapan Çapulcu Güvercinleriz. Herhangi bir ulaktan daha hızlı, herhangi bir uçaktan daha güçlüyüz. Dostun bizlere çokça yardımda bulunmuş cevval bir adamdır. Sana kefil oldu ve seni bu komplodan kurtarmamızı istedi." />
+    <string id="sp_id_dlg18" text="Benden ne istiyorsunuz?" />
+    <string id="sp_id_dlg19" text="Samimiyetimizin göstergesi olarak sana bir miktar altın hediye ediyoruz. 70 kişi toplayıp en yakın köydeki köy büyüğünü bul." />
+    <string id="sp_id_dlg20" text="Paranızı istemem. 70 kişilik bölüğü oraya götürmeyi de biraz düşüneceğim." />
+    <string id="sp_id_dlg21" text="Teşekkürler. Bu parayla o bölüğü toplayıp köy ağası ile görüşeceğim." />
+    <string id="sp_id_dlg22" text="Bu saçmalıkla daha fazla ilgilenmiyorum. Eğlenecek başka birini bulun." />
+    <string id="sp_id_dlg23" text="Pekala, görüşmek üzere yavru güvercin..." />
   </strings>
 </base>

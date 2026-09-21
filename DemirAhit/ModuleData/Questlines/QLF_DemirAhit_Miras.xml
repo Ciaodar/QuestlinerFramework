@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_DemirAhit_Miras" Title="{=demirahit4_title}Mirasın Dövülüşü" TimeLimitInDays="120">
+  <TargetResolvers>
+    <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="GlobalHero(DemirAhit_AnaDemirci)" Selector="Nearest" />
+    <Resolver Alias="Kalan" TargetType="Hero" Filters="GlobalHero(DemirAhit_Kalan)" Selector="Nearest" />
+    <Resolver Alias="IttifakKrali" TargetType="Hero" Filters="KingdomLeader, SameFactionAs(Player)" Selector="Nearest" IsOptional="true" />
+  </TargetResolvers>
+
+  <Prerequisites>
+    <Condition Type="ClanTier" Amount="5" />
+    <Condition Type="GlobalFlag" ObjectId="DemirAhit3_Basarili" Amount="1" />
+  </Prerequisites>
+
+  <Triggers>
+    <Trigger EventType="AutoStart" />
+  </Triggers>
+
+  <Stages>
+    <Stage Id="Stage1_SonMalzeme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=da_log_4_1}Efsanevi kılıcın tamamlanması için son bir adım kaldı. {EfsaneviDemirci.Name} seni atölyesine bekliyor.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+
+    <Stage Id="Stage2_Toplama" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=da_log_4_2}EfsaneviDemirci ve Kalan'ın "Kalbin Ateşi" ritüelini yapabilmesi için savaş ganimetlerinden toplanmış 50.000 altınlık kaynağa ihtiyacı var.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+
+    <Stage Id="Stage3_Secim" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=da_log_4_3}Ahit Kılıcı nihayet dövüldü! Kılıcın kime ait olacağına karar vermek için Efsanevi Demirci ile konuş.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+
+    <Stage Id="Stage4_KlanMirasi" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=da_log_4_4}Ahit Kılıcı klanının ebedi mirası oldu. Klanının gücü ve ihtişamı tüm diyara yayıldı!</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="GiveItem" ObjectId="AhitKilici_Efsanevi" Amount="1" />
+        <Action Type="ChangeRenown" Amount="200" />
+        <Action Type="SetGlobalFlag" ObjectId="DemirAhit_Tamamlandi" Amount="1" />
+        <Action Type="CompleteQuest" />
+      </OnEnterActions>
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+
+    <Stage Id="Stage4_KrallikArmagani" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=da_log_4_5}Ahit Kılıcını kralına armağan ettin. Krallık içindeki nüfuzun ve itibarın efsanevi boyutlara ulaştı!</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="ChangeRelation" TargetAlias="IttifakKrali" Amount="40" />
+        <Action Type="ChangeInfluence" Amount="300" />
+        <Action Type="SetGlobalFlag" ObjectId="DemirAhit_Tamamlandi" Amount="1" />
+        <Action Type="CompleteQuest" />
+      </OnEnterActions>
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- Stage 1 Dialog -->
+    <DialogNode Type="Npc" Id="Miras_Giris" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_miras_secimler" Priority="200">
+      <Text>{=da_miras_dlg_1}Evlat, kardeşim {Kalan.Name} ile birlikte aylardır çalışıyoruz. Çelik kusursuzlaştı. Ancak ona ruhunu vermek için "Kalbin Ateşi" dediğimiz bir ritüel gerekiyor. Bunun için 50.000 altın değerinde ganimete ihtiyacımız var.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_SonMalzeme" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Giris_Kabul" TargetAlias="EfsaneviDemirci" InputToken="da_miras_secimler" OutputToken="close_window">
+      <Text>{=da_miras_p1}Gereken altın ve kaynakları toplayıp döneceğim.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2_Toplama" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Stage 2 Dialog -->
+    <DialogNode Type="Npc" Id="Miras_Toplama" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_miras_teslim" Priority="200">
+      <Text>{=da_miras_dlg_2}Ritüel ateşi için gerekenleri getirdin mi?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_Toplama" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Toplama_Ver" TargetAlias="EfsaneviDemirci" InputToken="da_miras_teslim" OutputToken="da_miras_dovuldu">
+      <Text>{=da_miras_p2}İşte 50.000 altın. Kılıcı bitirin.</Text>
+      <Conditions>
+        <Condition Type="HasGold" Amount="50000" />
+      </Conditions>
+      <Consequences>
+        <Action Type="TakeGold" Amount="50000" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Toplama_Eksik" TargetAlias="EfsaneviDemirci" InputToken="da_miras_teslim" OutputToken="close_window">
+      <Text>{=da_miras_p3}Henüz yeterli kaynak toplayamadım.</Text>
+      <Conditions>
+        <Condition Type="!HasGold" Amount="50000" />
+      </Conditions>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Miras_Dovuldu" TargetAlias="EfsaneviDemirci" InputToken="da_miras_dovuldu" OutputToken="close_window">
+      <Text>{=da_miras_dlg_3}Ateş yanıyor! Bana birkaç saat ver... (Örs sesleri yükselir ve efsanevi bir parlama ile kılıç tamamlanır) Şaheserimiz hazır! Konuşmamız gereken son bir şey var.</Text>
+      <Consequences>
+        <Action Type="GiveItem" ObjectId="KalbinAtesi" Amount="1" />
+        <Action Type="TakeItem" ObjectId="KalbinAtesi" Amount="1" />
+        <Action Type="ChangeStage" ObjectId="Stage3_Secim" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Stage 3 Dialog (The Choice) -->
+    <DialogNode Type="Npc" Id="Miras_Secim" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_miras_karar" Priority="200">
+      <Text>{=da_miras_dlg_4}Ahit Kılıcı... Bugüne kadar dövdüğüm en kusursuz çelik. Bu gücü kendi klanının ebedi mirası olarak mı kuşanacaksın, yoksa hizmet ettiğin krala armağan mı edeceksin?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_Secim" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Karar_Klan" TargetAlias="EfsaneviDemirci" InputToken="da_miras_karar" OutputToken="close_window">
+      <Text>{=da_miras_p4}Bu kılıç, soyumun ve klanımın sarsılmaz gücünün sembolü olacak.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage4_KlanMirasi" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Karar_Kral" TargetAlias="EfsaneviDemirci" InputToken="da_miras_karar" OutputToken="close_window">
+      <Text>{=da_miras_p5}Bu eşsiz kılıcı Kral {IttifakKrali.Name}'e sunacağım. Krallığımızın ihtişamı artacak.</Text>
+      <Conditions>
+        <Condition Type="IsVassalOfTargetFaction" TargetAlias="IttifakKrali" Amount="1" />
+      </Conditions>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage4_KrallikArmagani" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+  </CustomDialogs>
+</Questline>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_DemirAhit_Usta" Title="{=demirahit3_title}Ustanın Yükü" TimeLimitInDays="90">
+  <TargetResolvers>
+    <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="GlobalHero(DemirAhit_AnaDemirci)" Selector="Nearest" />
+    <Resolver Alias="Kalan" TargetType="Hero" Filters="IsPrisonerInSettlement" Selector="Random" />
+    <Resolver Alias="DusmanKale" TargetType="Settlement" Filters="SameSettlementAs(Kalan)" Selector="Nearest" />
+  </TargetResolvers>
+
+  <Prerequisites>
+    <Condition Type="ClanTier" Amount="4" />
+    <Condition Type="GlobalFlag" ObjectId="DemirAhit2_Basarili" Amount="1" />
+  </Prerequisites>
+
+  <Triggers>
+    <Trigger EventType="AutoStart" />
+  </Triggers>
+
+  <Stages>
+    <Stage Id="Stage1_Haber" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=da_log_3_1}Efsanevi Demirci seni aceleyle yanına çağırıyor. Çok kötü bir haber almış gibi görünüyor.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+
+    <Stage Id="Stage2_Kurtarma" NextStageId="Stage3_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=da_log_3_2}Demircinin kardeşi {Kalan.Name} esir düşmüş. Onu {DusmanKale_Link} veya bulunduğu yerden kurtarman gerekiyor. Gizlice sızabilir, kaleyi kuşatabilir veya fidyesini ödeyebilirsin.</LogText>
+      <Conditions>
+        <Condition Type="!TargetIsPrisoner" TargetAlias="Kalan" />
+      </Conditions>
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+
+    <Stage Id="Stage2B_Savunma" NextStageId="Stage3_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=da_log_3_2B}Sızma girişimin fark edildi! Devriyeler üstüne çullandı. Onları yenersen Kalan'ı da alıp kaçabilirsin.</LogText>
+      <Conditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="GarnizonMuhafizlari" StringValue="Victory" />
+      </Conditions>
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions>
+        <Action Type="DestroyParty" TargetAlias="GarnizonMuhafizlari" />
+        <Action Type="ChangeStage" ObjectId="Stage2_Kurtarma" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage3_Zafer" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=da_log_3_3}Kalan'ı kurtardın! Artık efsanevi kılıcın son hazırlıkları yapılabilir.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="ChangeRenown" Amount="120" />
+        <Action Type="SetGlobalFlag" ObjectId="DemirAhit3_Basarili" Amount="1" />
+        <Action Type="SaveHeroToGlobal" TargetAlias="Kalan" StringValue="DemirAhit_Kalan" />
+        <Action Type="CompleteQuest" />
+      </OnEnterActions>
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- Stage 1 Dialog with Demirci -->
+    <DialogNode Type="Npc" Id="Demirci_Haber_Giris" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_haber_secimler" Priority="200">
+      <Text>{=da_haber_dlg_1}Evlat... Kardeşim {Kalan.Name} esir düştü. O olmadan kılıcı bitiremem. Yalvarırım onu kurtar!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_Haber" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_Haber_Kabul" TargetAlias="EfsaneviDemirci" InputToken="da_haber_secimler" OutputToken="close_window">
+      <Text>{=da_haber_p1}Kardeşini bulup sağ salim geri getireceğim. Endişelenme.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2_Kurtarma" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Stage 2 Dialog with Kalan in Dungeon -->
+    <DialogNode Type="Npc" Id="Kalan_Zindan_Giris" TargetAlias="Kalan" InputToken="start" OutputToken="da_kalan_secimler" Priority="200">
+      <Text>{=da_kalan_dlg_1}Sen de kimsin? Ağabeyim mi gönderdi? Şükürler olsun... Ama burası çok sıkı korunuyor, nasıl çıkacağız?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_Kurtarma" />
+        <Condition Type="TargetIsPrisoner" TargetAlias="Kalan" />
+      </Conditions>
+    </DialogNode>
+
+    <!-- Stealth Success -->
+    <DialogNode Type="Player" Id="Kalan_Sizma_Basarili" TargetAlias="Kalan" InputToken="da_kalan_secimler" OutputToken="da_kalan_kacis">
+      <Text>{=da_kalan_p1}Sessiz ol ve beni takip et. Devriyelerin rotasını ezberledim. [Serserilik]</Text>
+      <Conditions>
+        <Condition Type="SkillCheck" ObjectId="Roguery" Amount="80" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Kalan_Kacis_NPC" TargetAlias="Kalan" InputToken="da_kalan_kacis" OutputToken="close_window">
+      <Text>{=da_kalan_dlg_2}Gidelim hemen!</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_Zafer" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Stealth Failure -->
+    <DialogNode Type="Player" Id="Kalan_Sizma_Basarisiz" TargetAlias="Kalan" InputToken="da_kalan_secimler" OutputToken="da_kalan_yakalanma">
+      <Text>{=da_kalan_p1}Sessiz ol ve beni takip et. Devriyelerin rotasını ezberledim. [Serserilik]</Text>
+      <Conditions>
+        <Condition Type="!SkillCheck" ObjectId="Roguery" Amount="80" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Kalan_Yakalanma_NPC" TargetAlias="Kalan" InputToken="da_kalan_yakalanma" OutputToken="close_window">
+      <Text>{=da_kalan_dlg_3}Dikkat et, arkanda muhafızlar var! Bizi fark ettiler!</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2B_Savunma" />
+        <Action Type="SpawnBanditParty" TargetAlias="GarnizonMuhafizlari" Amount="150" PartyTemplateId="sea_raiders_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_muhafiz}Garnizon Muhafızları" />
+        <Action Type="SetPartyAi" TargetAlias="GarnizonMuhafizlari" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+  </CustomDialogs>
+</Questline>

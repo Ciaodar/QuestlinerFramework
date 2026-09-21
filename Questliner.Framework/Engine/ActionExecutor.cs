@@ -117,6 +117,18 @@ namespace Questliner.Framework.Engine
                     }
                     break;
 
+                case "DestroyParty":
+                {
+                    if (quest != null && quest.TargetParties.TryGetValue(action.TargetAlias, out var partyToDestroy))
+                    {
+                        if (partyToDestroy != null && partyToDestroy.IsActive)
+                        {
+                            TaleWorlds.CampaignSystem.Actions.DestroyPartyAction.Apply(null, partyToDestroy);
+                        }
+                    }
+                    break;
+                }
+
                 case "SpawnBanditParty":
                     string templateId = string.IsNullOrEmpty(action.PartyTemplateId) ? "looters_template" : action.PartyTemplateId;
                     string clanId = templateId.Replace("_template", ""); // e.g. looters, sea_raiders
@@ -275,6 +287,52 @@ namespace Questliner.Framework.Engine
                     if (model != null && !TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.OfType<Questliner.Framework.Core.DynamicQuest>().Any(q => q.Model?.Id == model.Id))
                     {
                         Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.TryAutoStartQuest(model);
+                    }
+                    break;
+                }
+                case "SetGlobalFlag":
+                {
+                    Questliner.Framework.Core.GlobalStateManager.Instance.SetFlag(action.ObjectId, action.Amount > 0);
+                    break;
+                }
+                case "SaveHeroToGlobal":
+                {
+                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
+                    if (target != null && !string.IsNullOrEmpty(action.StringValue))
+                    {
+                        Questliner.Framework.Core.GlobalStateManager.Instance.SetGlobalHero(action.StringValue, target);
+                    }
+                    break;
+                }
+                case "ForceConversation":
+                {
+                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
+                    if (target != null && target.CharacterObject != null)
+                    {
+                        TaleWorlds.CampaignSystem.CampaignMapConversation.OpenConversation(
+                            new TaleWorlds.CampaignSystem.Conversation.ConversationCharacterData(Hero.MainHero.CharacterObject), 
+                            new TaleWorlds.CampaignSystem.Conversation.ConversationCharacterData(target.CharacterObject)
+                        );
+                    }
+                    break;
+                }
+                case "KillHero":
+                {
+                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
+                    if (target != null && target.IsAlive)
+                    {
+                        // ApplyByMurder natively handles removing them from towns, resolving their workshops, etc.
+                        TaleWorlds.CampaignSystem.Actions.KillCharacterAction.ApplyByMurder(target, null, true);
+                    }
+                    break;
+                }
+                case "MakeFugitive":
+                {
+                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
+                    if (target != null && target.IsAlive && target.IsActive)
+                    {
+                        // Safely removes the hero from the active map (Lost/Fugitive status)
+                        TaleWorlds.CampaignSystem.Actions.DisableHeroAction.Apply(target);
                     }
                     break;
                 }

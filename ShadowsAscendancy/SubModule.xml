@@ -1,0 +1,26 @@
+<Module>
+  <Name value="Questliner - Shadows' Ascendancy" />
+  <Id value="ShadowsAscendancy" />
+  <Version value="v1.0.0" />
+  <SingleplayerModule value="true" />
+  <MultiplayerModule value="false" />
+  <DependedModules>
+    <DependedModule Id="Native" />
+    <DependedModule Id="SandBoxCore" />
+    <DependedModule Id="Sandbox" />
+    <DependedModule Id="CustomBattle" />
+    <DependedModule Id="StoryMode" />
+  </DependedModules>
+  <SubModules>
+    <SubModule>
+      <Name value="ShadowsAscendancy" />
+      <DLLName value="ShadowsAscendancy.dll" />
+      <SubModuleClassType value="ShadowsAscendancy.SubModule" />
+      <Tags>
+        <Tag key="Scripts" value="true" />
+      </Tags>
+    </SubModule>
+  </SubModules>
+  <Xmls>
+  </Xmls>
+</Module>

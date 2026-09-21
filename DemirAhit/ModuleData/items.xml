@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item id="YildizDemiri" name="{=da_item_yildiz_demiri}Yıldız Demiri" mesh="iron_ingot" Type="Goods" value="100" weight="1.5">
+    <ItemComponent>
+      <Trade value="100" />
+    </ItemComponent>
+    <Flags />
+  </Item>
+  <Item id="GecicilAhitKilici" name="{=da_item_gecici_ahit}Geçici Ahit Kılıcı" mesh="sword_1" Type="OneHandedWeapon" value="2000" weight="2.0">
+    <ItemComponent>
+      <Weapon weapon_class="OneHandedSword" thrust_speed="90" speed_rating="95" missile_speed="0" weapon_length="100" thrust_damage="35" cut_damage="70" thrust_damage_type="Pierce" cut_damage_type="Cut" item_usage="onehanded" />
+    </ItemComponent>
+    <Flags />
+  </Item>
+  <Item id="KalfaMuhru" name="{=da_item_kalfa_muhru}Kalfa Mührü" mesh="jewelry_amulet" Type="Goods" value="500" weight="0.1">
+    <ItemComponent>
+      <Trade value="500" />
+    </ItemComponent>
+    <Flags />
+  </Item>
+  <Item id="KalbinAtesi" name="{=da_item_kalbin_atesi}Kalbin Ateşi" mesh="ore_iron" Type="Goods" value="5000" weight="2.5">
+    <ItemComponent>
+      <Trade value="5000" />
+    </ItemComponent>
+    <Flags />
+  </Item>
+  <Item id="AhitKilici_Efsanevi" name="{=da_item_ahit_efsanevi}Efsanevi Ahit Kılıcı" mesh="sword_2" Type="OneHandedWeapon" value="20000" weight="1.8">
+    <ItemComponent>
+      <Weapon weapon_class="OneHandedSword" thrust_speed="100" speed_rating="105" missile_speed="0" weapon_length="110" thrust_damage="45" cut_damage="90" thrust_damage_type="Pierce" cut_damage_type="Cut" item_usage="onehanded" />
+    </ItemComponent>
+    <Flags />
+  </Item>
+</Items>

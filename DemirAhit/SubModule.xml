@@ -1,0 +1,26 @@
+<Module>
+  <Name value="Questliner - Iron Covenant" />
+  <Id value="DemirAhit" />
+  <Version value="v1.0.0.0" />
+  <SingleplayerModule value="true" />
+  <MultiplayerModule value="false" />
+  <DependedModules>
+    <DependedModule Id="Native" />
+    <DependedModule Id="SandBoxCore" />
+    <DependedModule Id="Sandbox" />
+    <DependedModule Id="CustomBattle" />
+    <DependedModule Id="StoryMode" />
+  </DependedModules>
+  <SubModules>
+    <SubModule>
+      <Name value="DemirAhit" />
+      <DLLName value="DemirAhit.dll" />
+      <SubModuleClassType value="DemirAhit.SubModule" />
+      <Tags>
+        <Tag key="Scripts" value="true" />
+      </Tags>
+    </SubModule>
+  </SubModules>
+  <Xmls>
+  </Xmls>
+</Module>

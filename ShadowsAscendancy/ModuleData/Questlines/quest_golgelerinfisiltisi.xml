@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_GolgelerinFisiltisi" Title="{=shdw_q1_title}Gölgelerin Fısıltısı" TimeLimitInDays="45">
+  <TargetResolvers>
+    <Resolver Alias="HedefSehir" TargetType="Settlement" Filters="IsTown" Selector="Nearest" />
+    <Resolver Alias="GorevVeren" TargetType="Hero" Filters="Merchant" RequiredSettlementAlias="HedefSehir" Selector="Random" />
+    <Resolver Alias="KacakciLideri" TargetType="Hero" Filters="GangLeader" RequiredSettlementAlias="HedefSehir" Selector="Random" />
+  </TargetResolvers>
+
+  <Prerequisites>
+    <Condition Type="ClanTier" Amount="2" />
+  </Prerequisites>
+
+  <Triggers>
+    <Trigger EventType="OnSettlementEnter" TargetAlias="HedefSehir" />
+  </Triggers>
+
+  <Stages>
+    <Stage Id="Stage1_TuccarDiyalog" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=shdw_q1_s1_log}Klanının adı buralarda duyulmaya başladı. {HedefSehir_Link} şehrinde bir tüccar olan {GorevVeren_Link} seninle görüşmek istiyor. Kervanları son zamanlarda gizemli bir şekilde ortadan kayboluyormuş.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="ForceConversation" TargetAlias="GorevVeren" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage2_Takip" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=shdw_q1_s2_log}Tüccar {GorevVeren_Link} ile konuştun ve kervanlarının peşindeki haydutları bulmayı kabul ettin. Kaçakçı Kervanını haritada yakala ve onları yen.</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="HedefKervan" Amount="1" />
+      </Conditions>
+      <OnExitActions>
+        <Action Type="GiveItem" ObjectId="sifreli_defter" Amount="1" />
+        <Action Type="ChangeStage" ObjectId="Stage3_Kanit" />
+      </OnExitActions>
+    </Stage>
+
+    <Stage Id="Stage3_Kanit" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=shdw_q1_s3_log}Kaçakçıları yendin ve liderlerinin üzerinde şifreli bir defter buldun. Defterde çalınan malların çete lideri {KacakciLideri_Link}'ne aktarıldığı yazıyor. Şehre dönüp onunla yüzleş.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="Stage4_Kavga" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=shdw_q1_s4a_log}Çete lideri {KacakciLideri_Link} teslim olmayı reddedip seninle savaşmayı seçti. Adamlarıyla birlikte şehrin dışına kaçmaya çalışıyor. Onu yakala ve çete partisini yok et!</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="CetePartisi" Amount="1" />
+      </Conditions>
+      <OnExitActions>
+        <Action Type="AddGold" Amount="3000" />
+        <Action Type="ChangeRelation" TargetAlias="GorevVeren" Amount="15" />
+        <Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_KanunAdami" Amount="1" />
+        <Action Type="ChangeStage" ObjectId="StageSuccess_Kanun" />
+      </OnExitActions>
+    </Stage>
+
+    <Stage Id="Stage4_Ihanet" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=shdw_q1_s4b_log}Çete lideri {KacakciLideri_Link} ile anlaştın. Karanlık tarafa ilk adımını attın. Şimdi söz verdiğin gibi tüccar {GorevVeren_Link}'i bulup konuşarak işini bitir.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="Stage4_KorumalarlaSavas" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=shdw_q1_s4c_log}Tüccar {GorevVeren_Link} canını kurtarmak için paralı askerlerini üzerine saldı. Onları yen ve tüccarın işini bitir!</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="TuccarKorumalari" Amount="1" />
+      </Conditions>
+      <OnExitActions>
+        <Action Type="KillHero" TargetAlias="GorevVeren" />
+        <Action Type="AddGold" Amount="5000" />
+        <Action Type="ChangeRelation" TargetAlias="KacakciLideri" Amount="20" />
+        <Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_KaranlikOrtak" Amount="1" />
+        <Action Type="ChangeStage" ObjectId="StageSuccess_Suc" />
+      </OnExitActions>
+    </Stage>
+
+    <Stage Id="StageSuccess_Kanun" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=shdw_q1_s5a_log}Çeteyi çökerttin ve {HedefSehir_Link} şehrinde düzeni sağladın. Tüccar sana minnettar. Adaletin kılıcı olduğunu bir kez daha kanıtladın.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="StageSuccess_Suc" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=shdw_q1_s5b_log}Tüccarı ortadan kaldırdın ve yeraltı dünyasına ilk adımını attın. Artık gölgeler senin için fısıldıyor, karaborsa kapıları sana ardına kadar açık.</LogText>
+      <Conditions />
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- Aşama 1: Tüccar ile Görüşme -->
+    <DialogNode Type="Player" Id="Tuccar_Giris" TargetAlias="GorevVeren" InputToken="start" OutputToken="ql_shdw_t1" Priority="200">
+      <Text>{=shdw_q1_dlg1}Gönderdiğin haberi aldım. Benimle neden görüşmek istedin?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_TuccarDiyalog" />
+      </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="GorevVeren" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Tuccar_Cevap1" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="ql_shdw_t2">
+      <Text>{=shdw_q1_dlg2}Adın buralarda duyulmaya başladı dostum. Şehrin muhafızları kör ve sağır; kervanlarım şehre varmadan hemen önce buharlaşıyor. Çapulcu işi değil, içeriden birileri onlara haber uçuruyor.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Npc" Id="Tuccar_Cevap2" TargetAlias="GorevVeren" InputToken="ql_shdw_t2" OutputToken="ql_shdw_t3">
+      <Text>{=shdw_q1_dlg3}Bunu çözersen sana yüklü ödeme yaparım.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Tuccar_Kabul" TargetAlias="GorevVeren" InputToken="ql_shdw_t3" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg4}Kervanlarının izini süreceğim. Eğer içeriden biri varsa, onu da bulurum.</Text>
+      <Consequences>
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="30" StringValue="{=shdw_q1_kervan}Kaçakçı Kervanı" />
+        <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="IgnoreAi" />
+        <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Aşama 3: Çete Lideri ile Yüzleşme -->
+    <DialogNode Type="Player" Id="Cete_Giris" TargetAlias="KacakciLideri" InputToken="start" OutputToken="ql_shdw_c1" Priority="200">
+      <Text>{=shdw_q1_dlg5}Kervanları vuran senin adamlarınmış. Defterim elimde. Bunu lordlara verirsem kellenden olursun.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_Kanit" />
+      </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="KacakciLideri" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Cete_Cevap1" TargetAlias="KacakciLideri" InputToken="ql_shdw_c1" OutputToken="ql_shdw_c2">
+      <Text>{=shdw_q1_dlg6}Lordlar mı? O malların yarısı zaten bu şehrin asilzadelerine gidiyor aptal! Bana katıl, defteri yak, o tüccarı da ortadan kaldıralım. Kazancı kırışırız.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Cete_Karar_Kanun" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg7}Adaletten kaçamazsın. Kılıcını çek!</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+        <Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="40" StringValue="{=shdw_q1_cetepartisi}Çete Mensupları" />
+        <Action Type="SetPartyAi" TargetAlias="CetePartisi" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="ChangeStage" ObjectId="Stage4_Kavga" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Cete_Karar_Suc" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg8}Teklifin ilgimi çekti. Tüccarı halledeceğim.</Text>
+      <Consequences>
+        <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
+        <Action Type="ChangeRelation" TargetAlias="GorevVeren" Amount="-20" />
+        <Action Type="ChangeStage" ObjectId="Stage4_Ihanet" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Aşama 4B: Tüccar ile Son Konuşma (İhanet) -->
+    <DialogNode Type="Player" Id="Tuccar_Ihanet_Giris" TargetAlias="GorevVeren" InputToken="start" OutputToken="ql_shdw_t4" Priority="200">
+      <Text>{=shdw_q1_dlg9}Sana kötü bir haberim var tüccar. O kervanları vuranlar artık benim ortaklarım.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage4_Ihanet" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Tuccar_Ihanet_Cevap" TargetAlias="GorevVeren" InputToken="ql_shdw_t4" OutputToken="ql_shdw_t5">
+      <Text>{=shdw_q1_dlg10}Ne? Bütün bunlar bir yalan mıydı? Muhafızlar! Muhafızlar!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Tuccar_Ihanet_Saldiri" TargetAlias="GorevVeren" InputToken="ql_shdw_t5" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg11}Çok geç. Geber!</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+        <Action Type="SpawnBanditParty" TargetAlias="TuccarKorumalari" Amount="20" StringValue="{=shdw_q1_korumalar}Tüccar Korumaları" />
+        <Action Type="SetPartyAi" TargetAlias="TuccarKorumalari" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="ChangeStage" ObjectId="Stage4_KorumalarlaSavas" />
+      </Consequences>
+    </DialogNode>
+
+  </CustomDialogs>
+</Questline>

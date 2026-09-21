@@ -88,6 +88,9 @@ namespace Questliner.Shared.Models
 
         [XmlAttribute("SpecificId")]
         public string SpecificId { get; set; } = string.Empty; // Used if exact ID is needed (e.g. "poros")
+
+        [XmlAttribute("IsOptional")]
+        public bool IsOptional { get; set; } = false;
     }
 
     public class TriggerModel

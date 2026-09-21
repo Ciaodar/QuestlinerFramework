@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_DemirAhit_Kalfa" Title="{=demirahit2_title}Kalfa Sınavı" TimeLimitInDays="60">
+  <TargetResolvers>
+    <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="GlobalHero(DemirAhit_AnaDemirci)" Selector="Nearest" />
+    <Resolver Alias="RakipTuccar" TargetType="Hero" Filters="GlobalHero(DemirAhit_RakipTuccar)" Selector="Nearest" />
+  </TargetResolvers>
+
+  <Prerequisites>
+    <Condition Type="ClanTier" Amount="3" />
+    <Condition Type="GlobalFlag" ObjectId="DemirAhit1_Basarili" Amount="1" />
+  </Prerequisites>
+
+  <Triggers>
+    <Trigger EventType="AutoStart" />
+  </Triggers>
+
+  <Stages>
+    <Stage Id="Stage1_Uyari" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=da_log_2_1}{EfsaneviDemirci.Name} atölyesine gece baskınları planlandığını haber aldı. Seninle önemli bir konu hakkında konuşmak istiyor.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+
+    <Stage Id="Stage2A_Nobet" NextStageId="" LogType="Progress" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="5">
+      <LogText>{=da_log_2_2A}Köyde kalarak 5 gün boyunca pusuya karşı nöbet tutmaya karar verdin. Dikkatli ol, saldırı her an gelebilir.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions>
+        <Action Type="SpawnBanditParty" TargetAlias="Sabotajcilar" Amount="60" PartyTemplateId="sea_raiders_template" SpawnDistance="2" SpawnRadius="3" StringValue="{=da_sabotajci}Rakip Atölye Sabotajcıları" />
+        <Action Type="SetPartyAi" TargetAlias="Sabotajcilar" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="ChangeStage" ObjectId="Stage2A_Savas" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage2A_Savas" NextStageId="Stage3_Basari" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=da_log_2_2A_savas}Beklenen sabotajcılar köye saldırdı! Atölyeyi korumak için onları yenmelisin.</LogText>
+      <Conditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="Sabotajcilar" StringValue="Victory" />
+      </Conditions>
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions>
+        <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="-10" />
+        <Action Type="DestroyParty" TargetAlias="Sabotajcilar" />
+        <Action Type="FailQuest" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage2B_Takip" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=da_log_2_2B}Savunmada beklemek yerine sorunu kaynağında çözmeye karar verdin. {RakipTuccar.Name} ile yüzleşmelisin.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+
+    <Stage Id="Stage2B_Savas" NextStageId="Stage3_Basari" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=da_log_2_2B_savas}{RakipTuccar.Name} senin tehditlerine boyun eğmedi ve korumalarını üzerine saldı. Hayatta kalmak için onları yenmelisin.</LogText>
+      <Conditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="Korumalar" StringValue="Victory" />
+      </Conditions>
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions>
+        <Action Type="DestroyParty" TargetAlias="Korumalar" />
+        <Action Type="FailQuest" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage3_Basari" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=da_log_2_3}Sorunu başarıyla çözdün ve Efsanevi Demirci seni Kalfa olarak onurlandırdı!</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="GiveItem" ObjectId="KalfaMuhru" Amount="1" />
+        <Action Type="ChangeRenown" Amount="80" />
+        <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="15" />
+        <Action Type="ChangeRelation" TargetAlias="RakipTuccar" Amount="-20" />
+        <Action Type="SetGlobalFlag" ObjectId="DemirAhit2_Basarili" Amount="1" />
+        <Action Type="CompleteQuest" />
+      </OnEnterActions>
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- Stage 1 Dialog with Demirci -->
+    <DialogNode Type="Npc" Id="Kalfa_Uyari_Giris" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_kalfa_secimler" Priority="200">
+      <Text>{=da_kalfa_dlg_1}Evlat, atölyemize yönelik gece baskınları planlandığını öğrendim. Tüccar {RakipTuccar.Name} bu işin arkasında. Atölyeyi koruyamazsak kılıcın son aşamalarına geçemeyiz.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_Uyari" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kalfa_Uyari_Secim1" TargetAlias="EfsaneviDemirci" InputToken="da_kalfa_secimler" OutputToken="close_window">
+      <Text>{=da_kalfa_p1}Köyde kalıp nöbet tutacağım, buraya adım atamayacaklar.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2A_Nobet" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kalfa_Uyari_Secim2" TargetAlias="EfsaneviDemirci" InputToken="da_kalfa_secimler" OutputToken="close_window">
+      <Text>{=da_kalfa_p2}Sorunu kaynağında çözeceğim. Tüccarı bulup haddini bildireceğim.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2B_Takip" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Stage 2B Dialog with RakipTuccar -->
+    <DialogNode Type="Npc" Id="Kalfa_Takip_Giris" TargetAlias="RakipTuccar" InputToken="start" OutputToken="da_kalfa_t_secimler" Priority="200">
+      <Text>{=da_kalfa_dlg_2}Bu topraklarda ticaret benim hakkım, o yaşlı demirci değil! Ne istiyorsun?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2B_Takip" />
+      </Conditions>
+    </DialogNode>
+
+    <!-- Rüşvet / Bribery -->
+    <DialogNode Type="Player" Id="Kalfa_Takip_Rusvet" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_secimler" OutputToken="close_window">
+      <Text>{=da_kalfa_t_p1}Sana 2000 altın teklif ediyorum. Bu işin peşini bırak.</Text>
+      <Conditions>
+        <Condition Type="HasGold" Amount="2000" />
+      </Conditions>
+      <Consequences>
+        <Action Type="TakeGold" Amount="2000" />
+        <Action Type="ChangeStage" ObjectId="Stage3_Basari" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Tehdit / Intimidation - Success -->
+    <DialogNode Type="Player" Id="Kalfa_Takip_Tehdit_Basarili" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_secimler" OutputToken="da_kalfa_t_korktu">
+      <Text>{=da_kalfa_t_p2}Adamlarını atölyeden çekmezsen, gece uykunda seni ziyarete gelirim. [Serserilik]</Text>
+      <Conditions>
+        <Condition Type="SkillCheck" ObjectId="Roguery" Amount="50" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Kalfa_Takip_Korktu" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_korktu" OutputToken="close_window">
+      <Text>{=da_kalfa_dlg_3}T-tamam, sakin ol! O moruğun atölyesiyle işim bitti, beni rahat bırak.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_Basari" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Tehdit / Intimidation - Failure -->
+    <DialogNode Type="Player" Id="Kalfa_Takip_Tehdit_Basarisiz" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_secimler" OutputToken="da_kalfa_t_saldirdi">
+      <Text>{=da_kalfa_t_p2}Adamlarını atölyeden çekmezsen, gece uykunda seni ziyarete gelirim. [Serserilik]</Text>
+      <Conditions>
+        <Condition Type="!SkillCheck" ObjectId="Roguery" Amount="50" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Kalfa_Takip_Saldirdi" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_saldirdi" OutputToken="close_window">
+      <Text>{=da_kalfa_dlg_4}Sen kimi tehdit ediyorsun serseri? Korumalar, şunu öldürün!</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2B_Savas" />
+        <Action Type="SpawnBanditParty" TargetAlias="Korumalar" Amount="25" PartyTemplateId="looters_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_koruma}Tüccar Korumaları" />
+        <Action Type="SetPartyAi" TargetAlias="Korumalar" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+  </CustomDialogs>
+</Questline>

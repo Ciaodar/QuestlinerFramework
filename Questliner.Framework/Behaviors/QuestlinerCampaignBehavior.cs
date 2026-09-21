@@ -303,32 +303,32 @@ namespace Questliner.Framework.Behaviors
                             if (res.TargetType == "Settlement")
                             {
                                 var s = Engine.TargetResolverService.ResolveSettlement(res, tempQuest, speaker);
-                                if (s == null) 
+                                if (s == null && !res.IsOptional) 
                                 { 
                                     canResolveAll = false; 
                                     break; 
                                 }
-                                tempQuest.TargetSettlements[res.Alias] = s;
+                                if (s != null) tempQuest.TargetSettlements[res.Alias] = s;
                             }
                             else if (res.TargetType == "MobileParty")
                             {
                                 var p = Engine.TargetResolverService.ResolveMobileParty(res, tempQuest, speaker);
-                                if (p == null) 
+                                if (p == null && !res.IsOptional) 
                                 { 
                                     canResolveAll = false; 
                                     break; 
                                 }
-                                tempQuest.TargetParties[res.Alias] = p;
+                                if (p != null) tempQuest.TargetParties[res.Alias] = p;
                             }
                             else
                             {
                                 var h = Engine.TargetResolverService.ResolveHero(res, tempQuest, speaker);
-                                if (h == null) 
+                                if (h == null && !res.IsOptional) 
                                 { 
                                     canResolveAll = false; 
                                     break; 
                                 }
-                                tempQuest.TargetHeroes[res.Alias] = h;
+                                if (h != null) tempQuest.TargetHeroes[res.Alias] = h;
                             }
                         }
 
@@ -381,6 +381,16 @@ namespace Questliner.Framework.Behaviors
             {
                 _completedQuestIds = new List<string>();
             }
+
+            // Sync global flags
+            var globalFlags = GlobalStateManager.Instance.GlobalFlags;
+            dataStore.SyncData("Questliner_GlobalFlags", ref globalFlags);
+            GlobalStateManager.Instance.GlobalFlags = globalFlags ?? new Dictionary<string, bool>();
+
+            // Sync global heroes
+            var globalHeroes = GlobalStateManager.Instance.GlobalHeroes;
+            dataStore.SyncData("Questliner_GlobalHeroes", ref globalHeroes);
+            GlobalStateManager.Instance.GlobalHeroes = globalHeroes ?? new Dictionary<string, Hero>();
         }
 
         private DynamicQuest? _activeDiscussQuest = null;
@@ -469,6 +479,7 @@ namespace Questliner.Framework.Behaviors
         {
             if (party != MobileParty.MainParty) return;
             
+            // 1. Process Ongoing Quests
             foreach (var quest in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
             {
                 var targetAlias = quest.TargetSettlements.FirstOrDefault(x => x.Value == settlement).Key;
@@ -477,6 +488,68 @@ namespace Questliner.Framework.Behaviors
                     quest.SetFlag($"Entered_{targetAlias}", true);
                 }
                 quest.CheckStageProgression();
+            }
+
+            // 2. Check for OnSettlementEnter Triggers
+            foreach (var questModel in Questliner.Framework.Services.QuestModuleScanner.LoadedQuests)
+            {
+                if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.Model?.Id == questModel.Id))
+                    continue; // Zaten aktif
+
+                var trigger = questModel.Triggers.FirstOrDefault(t => t.EventType == "OnSettlementEnter");
+                if (trigger != null)
+                {
+                    var resolver = questModel.TargetResolvers.FirstOrDefault(r => r.Alias == trigger.TargetAlias);
+                    if (resolver != null && Engine.TargetResolverService.IsSettlementMatch(resolver, settlement, null))
+                    {
+                        var duration = TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(questModel.TimeLimitInDays > 0 ? questModel.TimeLimitInDays : 9999);
+                        var tempQuest = new DynamicQuest(questModel, Hero.MainHero, duration);
+                        tempQuest.TargetSettlements[trigger.TargetAlias] = settlement;
+                        
+                        bool canResolveAll = true;
+                        foreach (var res in questModel.TargetResolvers)
+                        {
+                            if (res.Alias == trigger.TargetAlias) continue;
+                            
+                            if (res.TargetType == "Settlement")
+                            {
+                                var s = Engine.TargetResolverService.ResolveSettlement(res, tempQuest, Hero.MainHero);
+                                if (s == null && !res.IsOptional) { canResolveAll = false; break; }
+                                if (s != null) tempQuest.TargetSettlements[res.Alias] = s;
+                            }
+                            else if (res.TargetType == "MobileParty")
+                            {
+                                var p = Engine.TargetResolverService.ResolveMobileParty(res, tempQuest, Hero.MainHero);
+                                if (p == null && !res.IsOptional) { canResolveAll = false; break; }
+                                if (p != null) tempQuest.TargetParties[res.Alias] = p;
+                            }
+                            else
+                            {
+                                var h = Engine.TargetResolverService.ResolveHero(res, tempQuest, Hero.MainHero);
+                                if (h == null && !res.IsOptional) { canResolveAll = false; break; }
+                                if (h != null) tempQuest.TargetHeroes[res.Alias] = h;
+                            }
+                        }
+
+                        if (canResolveAll)
+                        {
+                            bool reqsMet = true;
+                            foreach (var req in questModel.Prerequisites)
+                            {
+                                if (!Engine.ConditionEvaluator.IsConditionMet(req, tempQuest))
+                                {
+                                    reqsMet = false;
+                                    break;
+                                }
+                            }
+
+                            if (reqsMet)
+                            {
+                                tempQuest.StartQuest();
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -501,24 +574,70 @@ namespace Questliner.Framework.Behaviors
 
         private void OnMapEventEnded(TaleWorlds.CampaignSystem.MapEvents.MapEvent mapEvent)
         {
-            if (mapEvent.IsPlayerMapEvent) 
+            if (mapEvent == null) return;
+            var involvedParties = mapEvent.InvolvedParties.ToList();
+
+            foreach (var quest in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
             {
-                if (mapEvent.WinningSide == mapEvent.PlayerSide)
+                // Native specific defeat counters
+                if (mapEvent.IsPlayerMapEvent && mapEvent.WinningSide == mapEvent.PlayerSide)
                 {
                     var defeatedParties = mapEvent.InvolvedParties.Where(p => p.Side != mapEvent.PlayerSide);
-                    foreach (var quest in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
+                    foreach(var dp in defeatedParties)
                     {
-                        foreach(var dp in defeatedParties)
+                        if (dp.MobileParty != null && dp.MobileParty.Party != null && dp.MobileParty.Party.Culture != null)
                         {
-                            if (dp.MobileParty != null && dp.MobileParty.Party != null && dp.MobileParty.Party.Culture != null)
-                            {
-                                quest.IncrementCounter($"Defeated_{dp.MobileParty.Party.Culture.StringId}_Parties", 1);
-                            }
+                            quest.IncrementCounter($"Defeated_{dp.MobileParty.Party.Culture.StringId}_Parties", 1);
                         }
                     }
                 }
-                EvaluateAllQuests();
+
+                // Questliner framework TargetParty battle result tracking
+                foreach (var targetPartyKvp in quest.TargetParties)
+                {
+                    var alias = targetPartyKvp.Key;
+                    var targetParty = targetPartyKvp.Value;
+                    
+                    if (targetParty != null && targetParty.Party != null && involvedParties.Contains(targetParty.Party))
+                    {
+                        string result = "";
+                        bool isPlayerInvolved = involvedParties.Contains(PartyBase.MainParty);
+                        
+                        if (isPlayerInvolved)
+                        {
+                            if (mapEvent.WinningSide == mapEvent.PlayerSide)
+                            {
+                                result = "Victory";
+                            }
+                            else if (mapEvent.WinningSide == TaleWorlds.Core.BattleSideEnum.None)
+                            {
+                                result = "Retreat";
+                            }
+                            else
+                            {
+                                result = "Defeat";
+                            }
+                        }
+                        else
+                        {
+                            var targetSide = mapEvent.AttackerSide.Parties.Any(p => p.Party == targetParty.Party) ? TaleWorlds.Core.BattleSideEnum.Attacker : TaleWorlds.Core.BattleSideEnum.Defender;
+                            if (mapEvent.WinningSide != TaleWorlds.Core.BattleSideEnum.None && mapEvent.WinningSide != targetSide)
+                            {
+                                result = "DestroyedByAI";
+                            }
+                        }
+                        
+                        if (!string.IsNullOrEmpty(result))
+                        {
+                            quest.SetStringVariable($"BattleResult_{alias}", result);
+                        }
+                    }
+                }
+
+                quest.CheckStageProgression();
             }
+            
+            EvaluateAllQuests();
         }
 
         
@@ -558,20 +677,20 @@ namespace Questliner.Framework.Behaviors
                 if (res.TargetType == "Settlement")
                 {
                     var s = Engine.TargetResolverService.ResolveSettlement(res, tempQuest, Hero.MainHero);
-                    if (s == null) { canResolveAll = false; break; }
-                    tempQuest.TargetSettlements[res.Alias] = s;
+                    if (s == null && !res.IsOptional) { canResolveAll = false; break; }
+                    if (s != null) tempQuest.TargetSettlements[res.Alias] = s;
                 }
                 else if (res.TargetType == "MobileParty")
                 {
                     var p = Engine.TargetResolverService.ResolveMobileParty(res, tempQuest, Hero.MainHero);
-                    if (p == null) { canResolveAll = false; break; }
-                    tempQuest.TargetParties[res.Alias] = p;
+                    if (p == null && !res.IsOptional) { canResolveAll = false; break; }
+                    if (p != null) tempQuest.TargetParties[res.Alias] = p;
                 }
                 else
                 {
                     var h = Engine.TargetResolverService.ResolveHero(res, tempQuest, Hero.MainHero);
-                    if (h == null) { canResolveAll = false; break; }
-                    tempQuest.TargetHeroes[res.Alias] = h;
+                    if (h == null && !res.IsOptional) { canResolveAll = false; break; }
+                    if (h != null) tempQuest.TargetHeroes[res.Alias] = h;
                 }
             }
 
