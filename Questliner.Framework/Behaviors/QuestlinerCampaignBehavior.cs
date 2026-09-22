@@ -264,7 +264,7 @@ namespace Questliner.Framework.Behaviors
 
         private bool DynamicClickableCondition(QuestModel questModel, CustomDialogModel dialogNode, out TaleWorlds.Localization.TextObject explanation)
         {
-            explanation = TaleWorlds.Localization.TextObject.Empty;
+            explanation = new TaleWorlds.Localization.TextObject();
 
             if (dialogNode.ShowWhenDisabled)
             {
