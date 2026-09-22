@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+    <string id="da_item_yildiz_demiri" text="Star Iron" />
+    <string id="da_item_gecici_ahit" text="Temporary Covenant Sword" />
+    <string id="da_item_kalfa_muhru" text="Journeyman's Seal" />
+    <string id="da_item_kalbin_atesi" text="Heart's Fire" />
+    <string id="da_item_ahit_efsanevi" text="Legendary Covenant Sword" />
+    <string id="demirahit1_title" text="Apprentice's Oath" />
+    <string id="da_log_1" text="{EfsaneviDemirci.Name} summons you to forge your clan's legendary sword. However, you need to find 5 Star Iron around {HammadeKaynagi_Link} for the sword." />
+    <string id="da_katiller" text="Hired Assassins" />
+    <string id="da_log_2" text="While gathering ores, bandits hired by the Rival Merchant ambushed you! You must defeat them." />
+    <string id="da_log_2_win" text="You have cleared the ambushers. You can now return to your quest." />
+    <string id="da_log_kestirme" text="You convinced the blacksmith and received a pre-forged sword as a shortcut." />
+    <string id="da_log_3" text="You collected the Star Iron, you can now deliver them to {EfsaneviDemirci.Name}." />
+    <string id="da_tek_1" text="The name of your clan is growing, child. I forged the sword of your ancestors; now it's time I forge a new one for you. But first, bring me 5 Star Iron." />
+    <string id="da_tek_p1" text="Where can I find this ore?" />
+    <string id="da_tek_p2" text="I don't have time to wait this long, just give me an already forged sword." />
+    <string id="da_teslim_ready" text="My eyes aren't deceiving me, are they? You brought the Star Iron!" />
+    <string id="da_teslim_p1" text="Yes master, here you go." />
+    <string id="da_teslim_2" text="This is it! Now to the fire — the sword is starting to take shape. Take this sword for now, we will meet again when your name is heard even further." />
+    <string id="da_teslim_p2" text="Thank you master. I will be waiting." />
+    <string id="demirahit2_title" text="Journeyman's Trial" />
+    <string id="da_log_2_1" text="{EfsaneviDemirci.Name} received word that night raids are planned on his workshop. He wants to speak with you about an important matter." />
+    <string id="da_log_2_2A" text="You decided to stay in the village and stand guard against the ambush for 5 days. Be careful, the attack could come at any moment." />
+    <string id="da_sabotajci" text="Rival Workshop Saboteurs" />
+    <string id="da_log_2_2A_savas" text="The expected saboteurs attacked the village! You must defeat them to protect the workshop." />
+    <string id="da_log_2_2B" text="Instead of waiting on the defense, you decided to solve the problem at its source. You must confront {RakipTuccar.Name}." />
+    <string id="da_log_2_2B_savas" text="{RakipTuccar.Name} did not submit to your threats and unleashed his guards on you. Defeat them to survive." />
+    <string id="da_log_2_3" text="You successfully resolved the issue and the Legendary Blacksmith honored you as a Journeyman!" />
+    <string id="da_kalfa_dlg_1" text="Child, I've learned that night raids are planned on our workshop. The merchant {RakipTuccar.Name} is behind this. If we can't protect the workshop, we can't move to the final stages of the sword." />
+    <string id="da_kalfa_p1" text="I will stay in the village and keep guard, they won't be able to step foot here." />
+    <string id="da_kalfa_p2" text="I'll solve the problem at its source. I will find the merchant and teach him a lesson." />
+    <string id="da_kalfa_dlg_2" text="Trade in these lands is my right, not that old blacksmith's! What do you want?" />
+    <string id="da_kalfa_t_p1" text="I offer you 2000 gold. Let this go." />
+    <string id="da_kalfa_t_p2" text="If you don't pull your men from the workshop, I'll visit you in your sleep tonight. [Roguery]" />
+    <string id="da_kalfa_dlg_3" text="O-okay, calm down! I'm done with that geezer's workshop, leave me alone." />
+    <string id="da_kalfa_dlg_4" text="Who are you threatening, punk? Guards, kill this fool!" />
+    <string id="da_koruma" text="Merchant Guards" />
+    <string id="demirahit4_title" text="Forging the Legacy" />
+    <string id="da_log_4_1" text="There's only one step left to complete the legendary sword. {EfsaneviDemirci.Name} expects you at his workshop." />
+    <string id="da_log_4_2" text="To finalize the sword's spirit, you need to deliver the 'Heart's Fire', which costs 50,000 gold." />
+    <string id="da_log_4_3" text="The Covenant Sword is finally forged! Talk to the Legendary Blacksmith to decide who the sword will belong to." />
+    <string id="da_log_4_4" text="The Covenant Sword became your clan's eternal legacy. The power and glory of your clan spread across the whole realm!" />
+    <string id="da_log_4_5" text="You gifted the Covenant Sword to your king. Your influence and reputation within the kingdom reached legendary proportions!" />
+    <string id="da_miras_dlg_1" text="Child, my brother {Kalan.Name} and I have been working for months. The steel is perfected. But to give it a soul we need the 'Heart's Fire', which costs 50,000 gold." />
+    <string id="da_miras_p1" text="I will gather the necessary gold and resources and return." />
+    <string id="da_miras_dlg_2" text="Did you bring what's needed for the ritual fire?" />
+    <string id="da_miras_p2" text="Here is 50,000 gold. Finish the sword." />
+    <string id="da_miras_p3" text="I haven't gathered enough resources yet." />
+    <string id="da_miras_dlg_3" text="The fire burns! Give me a few hours... (Anvil sounds rise and the sword is completed with a legendary glow) Our masterpiece is ready! There is one last thing we need to discuss." />
+    <string id="da_miras_dlg_4" text="The Covenant Sword... The most perfect steel I have forged to this day. Will you wield this power as your own clan's eternal legacy, or will you gift it to the king you serve?" />
+    <string id="da_miras_p4" text="This sword will be the symbol of the unshakable power of my lineage and my clan." />
+    <string id="da_miras_p5" text="I will present this unique sword to King {IttifakKrali.Name}. The glory of our kingdom will increase." />
+    <string id="demirahit3_title" text="Master's Burden" />
+    <string id="da_log_3_1" text="The Legendary Blacksmith hurriedly calls you to his side. He seems to have received very bad news." />
+    <string id="da_log_3_2" text="The blacksmith's brother {Kalan.Name} has fallen prisoner. You need to rescue him from {DusmanKale_Link} or wherever he is. You can sneak in, besiege the castle, or pay his ransom." />
+    <string id="da_log_3_2B" text="Your infiltration attempt was noticed! Patrols swarmed you. If you defeat them, you can take Kalan and escape." />
+    <string id="da_log_3_3" text="You rescued Kalan! Now the final preparations for the legendary sword can be made." />
+    <string id="da_haber_dlg_1" text="Child... My brother {Kalan.Name} has fallen prisoner. I cannot finish the sword without him. I beg you, rescue him!" />
+    <string id="da_haber_p1" text="I will find your brother and bring him back safe and sound. Do not worry." />
+    <string id="da_kalan_dlg_1" text="Who are you? Did my older brother send you? Thank goodness... But this place is heavily guarded, how will we get out?" />
+    <string id="da_kalan_p1" text="Be quiet and follow me. I've memorized the patrols' routes. [Roguery]" />
+    <string id="da_kalan_dlg_2" text="Let's go immediately!" />
+    <string id="da_kalan_dlg_3" text="Careful, there are guards behind you! They noticed us!" />
+    <string id="da_muhafiz" text="Garrison Guards" />
+  </strings>
+</base>

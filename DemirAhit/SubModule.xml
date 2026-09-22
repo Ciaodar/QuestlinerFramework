@@ -1,5 +1,5 @@
-﻿<Module>
-  <Name value="Questliner - Iron Covenant" />
+<Module>
+  <Name value="Iron Covenant" />
   <Id value="DemirAhit" />
   <Version value="v1.0.0.1" />
   <SingleplayerModule value="true" />
@@ -10,6 +10,7 @@
     <DependedModule Id="Sandbox" />
     <DependedModule Id="CustomBattle" />
     <DependedModule Id="StoryMode" />
+    <DependedModule Id="QuestlinerFramework" />
   </DependedModules>
   <SubModules>
     <SubModule>

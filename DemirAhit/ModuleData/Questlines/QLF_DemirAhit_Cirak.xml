@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Questline Id="QLF_DemirAhit_Cirak" Title="{=demirahit1_title}Çırağın Yemini" TimeLimitInDays="45">
+<Questline Id="QLF_DemirAhit_Cirak" Title="{=demirahit1_title}Apprentice's Oath" TimeLimitInDays="45">
   <TargetResolvers>
     <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="Artisan" Selector="Nearest" />
     <Resolver Alias="HammadeKaynagi" TargetType="Settlement" Filters="Village" Selector="Nearest" />
@@ -17,7 +17,7 @@
 
   <Stages>
     <Stage Id="Stage1_Teklif" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_1}{EfsaneviDemirci.Name} seni klanının efsanevi kılıcını dövmek için yanına çağırıyor. Ancak kılıç için {HammadeKaynagi_Link} civarında bulunan Yıldız Demiri'nden 5 adet bulman gerek.</LogText>
+      <LogText>{=da_log_1}{EfsaneviDemirci.Name} summons you to forge your clan's legendary sword. However, you need to find 5 Star Iron around {HammadeKaynagi_Link} for the sword.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit_Baslatildi" Amount="1" />
@@ -26,14 +26,14 @@
       </OnEnterActions>
       <OnExitActions />
       <OnTimeoutActions>
-        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="30" PartyTemplateId="sea_raiders_template" SpawnDistance="3" SpawnRadius="5" StringValue="{=da_katiller}Kiralık Katiller" />
+        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="30" PartyTemplateId="sea_raiders_template" SpawnDistance="3" SpawnRadius="5" StringValue="{=da_katiller}Hired Assassins" />
         <Action Type="SetPartyAi" TargetAlias="KiralikKatiller" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Pusu" />
       </OnTimeoutActions>
     </Stage>
 
     <Stage Id="Stage2_Pusu" NextStageId="Stage2_Pusu_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="1">
-      <LogText>{=da_log_2}Madenleri toplarken Rakip Tüccar'ın kiraladığı haydutlar sana pusu kurdu! Onları yenmelisin.</LogText>
+      <LogText>{=da_log_2}While gathering ores, bandits hired by the Rival Merchant ambushed you! You must defeat them.</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="KiralikKatiller" StringValue="Victory" />
       </Conditions>
@@ -47,7 +47,7 @@
     </Stage>
 
     <Stage Id="Stage2_Pusu_Zafer" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=da_log_2_win}Pusudaki haydutları temizledin. Artık görevine dönebilirsin.</LogText>
+      <LogText>{=da_log_2_win}You have cleared the ambushers. You can now return to your quest.</LogText>
       <Conditions />
       <OnEnterActions>
          <Action Type="ChangeRelation" TargetAlias="RakipTuccar" Amount="-5" />
@@ -58,7 +58,7 @@
     </Stage>
 
     <Stage Id="Stage2_KestirmeYol" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=da_log_kestirme}Demirciyi ikna ederek kestirmeden kılıcı teslim aldın.</LogText>
+      <LogText>{=da_log_kestirme}You convinced the blacksmith and received a pre-forged sword as a shortcut.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="GiveItem" ObjectId="GecicilAhitKilici" Amount="1" />
@@ -72,7 +72,7 @@
     </Stage>
 
     <Stage Id="Stage3_Teslim" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=da_log_3}Yıldız Demirlerini topladın, artık bunları {EfsaneviDemirci.Name}'e teslim edebilirsin.</LogText>
+      <LogText>{=da_log_3}You collected the Star Iron, you can now deliver them to {EfsaneviDemirci.Name}.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -86,7 +86,7 @@
   <CustomDialogs>
     <!-- Stage 1: Demirci ile konuşup görevi dinleme / kestirme yolu seçme -->
     <DialogNode Type="Npc" Id="Demirci_Teklif_Giris" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_tek_secimler" Priority="200">
-      <Text>{=da_tek_1}Klanının adı büyüyor evlat. Atalarının kılıcını ben dövmüştüm; şimdi senin için yenisini dövme vaktim geldi. Ama önce bana 5 adet Yıldız Demiri getir.</Text>
+      <Text>{=da_tek_1}The name of your clan is growing, child. I forged the sword of your ancestors; now it's time I forge a new one for you. But first, bring me 5 Star Iron.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Teklif" />
         <Condition Type="!HasItem" ObjectId="YildizDemiri" Amount="5" />
@@ -94,14 +94,14 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Demirci_Teklif_Bilgi" TargetAlias="EfsaneviDemirci" InputToken="da_tek_secimler" OutputToken="close_window">
-      <Text>{=da_tek_p1}Nerede bulabilirim bu madeni?</Text>
+      <Text>{=da_tek_p1}Where can I find this ore?</Text>
       <Consequences>
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Demirci_Teklif_Kestirme" TargetAlias="EfsaneviDemirci" InputToken="da_tek_secimler" OutputToken="close_window">
-      <Text>{=da_tek_p2}Bu kadar beklemeye vaktim yok, bana zaten dövülmüş bir kılıç ver.</Text>
+      <Text>{=da_tek_p2}I don't have time to wait this long, just give me an already forged sword.</Text>
       <Conditions>
          <Condition Type="SkillCheck" ObjectId="Charm" Amount="30" />
       </Conditions>
@@ -113,7 +113,7 @@
 
     <!-- Stage 1 -> 3 Gecis Dialogu -->
     <DialogNode Type="Npc" Id="Demirci_Teslim_Gecis" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_teslim_gecis_1" Priority="200">
-      <Text>{=da_teslim_ready}Gözlerim beni yanıltmıyor değil mi? Yıldız Demirlerini getirmişsin!</Text>
+      <Text>{=da_teslim_ready}My eyes aren't deceiving me, are they? You brought the Star Iron!</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Teklif" />
         <Condition Type="HasItem" ObjectId="YildizDemiri" Amount="5" />
@@ -121,7 +121,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_P" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_1" OutputToken="close_window">
-      <Text>{=da_teslim_p1}Evet usta, al bakalım.</Text>
+      <Text>{=da_teslim_p1}Yes master, here you go.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage3_Teslim" />
       </Consequences>
@@ -129,14 +129,14 @@
 
     <!-- Stage 3: Nihai Teslim Dialogu -->
     <DialogNode Type="Npc" Id="Demirci_Teslim_Son" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_teslim_son_1" Priority="200">
-      <Text>{=da_teslim_2}İşte bu! Şimdi ateş başına — kılıç şekil almaya başlıyor. Şimdilik bu kılıcı al, adın daha da duyulduğunda tekrar görüşeceğiz.</Text>
+      <Text>{=da_teslim_2}This is it! Now to the fire — the sword is starting to take shape. Take this sword for now, we will meet again when your name is heard even further.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Teslim" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Demirci_Teslim_Son_P" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_son_1" OutputToken="close_window">
-      <Text>{=da_teslim_p2}Teşekkürler usta. Bekliyor olacağım.</Text>
+      <Text>{=da_teslim_p2}Thank you master. I will be waiting.</Text>
       <Consequences>
         <Action Type="TakeItem" ObjectId="YildizDemiri" Amount="5" />
         <Action Type="GiveItem" ObjectId="GecicilAhitKilici" Amount="1" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Questline Id="QLF_DemirAhit_Miras" Title="{=demirahit4_title}Mirasın Dövülüşü" TimeLimitInDays="120">
+<Questline Id="QLF_DemirAhit_Miras" Title="{=demirahit4_title}Forging the Legacy" TimeLimitInDays="120">
   <TargetResolvers>
     <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="GlobalHero(DemirAhit_AnaDemirci)" Selector="Nearest" />
     <Resolver Alias="Kalan" TargetType="Hero" Filters="GlobalHero(DemirAhit_Kalan)" Selector="Nearest" />
@@ -17,7 +17,7 @@
 
   <Stages>
     <Stage Id="Stage1_SonMalzeme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=da_log_4_1}Efsanevi kılıcın tamamlanması için son bir adım kaldı. {EfsaneviDemirci.Name} seni atölyesine bekliyor.</LogText>
+      <LogText>{=da_log_4_1}There's only one step left to complete the legendary sword. {EfsaneviDemirci.Name} expects you at his workshop.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -25,7 +25,7 @@
     </Stage>
 
     <Stage Id="Stage2_Toplama" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=da_log_4_2}EfsaneviDemirci ve Kalan'ın "Kalbin Ateşi" ritüelini yapabilmesi için savaş ganimetlerinden toplanmış 50.000 altınlık kaynağa ihtiyacı var.</LogText>
+      <LogText>{=da_log_4_2}To finalize the sword's spirit, you need to deliver the 'Heart's Fire', which costs 50,000 gold."Kalbin Ateşi" ritüelini yapabilmesi için savaş ganimetlerinden toplanmış 50.000 altınlık kaynağa ihtiyacı var.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -33,7 +33,7 @@
     </Stage>
 
     <Stage Id="Stage3_Secim" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=da_log_4_3}Ahit Kılıcı nihayet dövüldü! Kılıcın kime ait olacağına karar vermek için Efsanevi Demirci ile konuş.</LogText>
+      <LogText>{=da_log_4_3}The Covenant Sword is finally forged! Talk to the Legendary Blacksmith to decide who the sword will belong to.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -41,7 +41,7 @@
     </Stage>
 
     <Stage Id="Stage4_KlanMirasi" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=da_log_4_4}Ahit Kılıcı klanının ebedi mirası oldu. Klanının gücü ve ihtişamı tüm diyara yayıldı!</LogText>
+      <LogText>{=da_log_4_4}The Covenant Sword became your clan's eternal legacy. The power and glory of your clan spread across the whole realm!</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="GiveItem" ObjectId="AhitKilici_Efsanevi" Amount="1" />
@@ -54,7 +54,7 @@
     </Stage>
 
     <Stage Id="Stage4_KrallikArmagani" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=da_log_4_5}Ahit Kılıcını kralına armağan ettin. Krallık içindeki nüfuzun ve itibarın efsanevi boyutlara ulaştı!</LogText>
+      <LogText>{=da_log_4_5}You gifted the Covenant Sword to your king. Your influence and reputation within the kingdom reached legendary proportions!</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="ChangeRelation" TargetAlias="IttifakKrali" Amount="40" />
@@ -70,14 +70,14 @@
   <CustomDialogs>
     <!-- Stage 1 Dialog -->
     <DialogNode Type="Npc" Id="Miras_Giris" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_miras_secimler" Priority="200">
-      <Text>{=da_miras_dlg_1}Evlat, kardeşim {Kalan.Name} ile birlikte aylardır çalışıyoruz. Çelik kusursuzlaştı. Ancak ona ruhunu vermek için "Kalbin Ateşi" dediğimiz bir ritüel gerekiyor. Bunun için 50.000 altın değerinde ganimete ihtiyacımız var.</Text>
+      <Text>{=da_miras_dlg_1}Child, my brother {Kalan.Name} and I have been working for months. The steel is perfected. But to give it a soul we need the 'Heart's Fire', which costs 50,000 gold."Kalbin Ateşi" dediğimiz bir ritüel gerekiyor. Bunun için 50.000 altın değerinde ganimete ihtiyacımız var.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_SonMalzeme" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Miras_Giris_Kabul" TargetAlias="EfsaneviDemirci" InputToken="da_miras_secimler" OutputToken="close_window">
-      <Text>{=da_miras_p1}Gereken altın ve kaynakları toplayıp döneceğim.</Text>
+      <Text>{=da_miras_p1}I will gather the necessary gold and resources and return.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Toplama" />
         <Action Type="LeaveEncounter" />
@@ -86,14 +86,14 @@
 
     <!-- Stage 2 Dialog -->
     <DialogNode Type="Npc" Id="Miras_Toplama" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_miras_teslim" Priority="200">
-      <Text>{=da_miras_dlg_2}Ritüel ateşi için gerekenleri getirdin mi?</Text>
+      <Text>{=da_miras_dlg_2}Did you bring what's needed for the ritual fire?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Toplama" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Miras_Toplama_Ver" TargetAlias="EfsaneviDemirci" InputToken="da_miras_teslim" OutputToken="da_miras_dovuldu">
-      <Text>{=da_miras_p2}İşte 50.000 altın. Kılıcı bitirin.</Text>
+      <Text>{=da_miras_p2}Here is 50,000 gold. Finish the sword.</Text>
       <Conditions>
         <Condition Type="HasGold" Amount="50000" />
       </Conditions>
@@ -103,7 +103,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Miras_Toplama_Eksik" TargetAlias="EfsaneviDemirci" InputToken="da_miras_teslim" OutputToken="close_window">
-      <Text>{=da_miras_p3}Henüz yeterli kaynak toplayamadım.</Text>
+      <Text>{=da_miras_p3}I haven't gathered enough resources yet.</Text>
       <Conditions>
         <Condition Type="!HasGold" Amount="50000" />
       </Conditions>
@@ -113,7 +113,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Miras_Dovuldu" TargetAlias="EfsaneviDemirci" InputToken="da_miras_dovuldu" OutputToken="close_window">
-      <Text>{=da_miras_dlg_3}Ateş yanıyor! Bana birkaç saat ver... (Örs sesleri yükselir ve efsanevi bir parlama ile kılıç tamamlanır) Şaheserimiz hazır! Konuşmamız gereken son bir şey var.</Text>
+      <Text>{=da_miras_dlg_3}The fire burns! Give me a few hours... (Anvil sounds rise and the sword is completed with a legendary glow) Our masterpiece is ready! There is one last thing we need to discuss.</Text>
       <Consequences>
         <Action Type="GiveItem" ObjectId="KalbinAtesi" Amount="1" />
         <Action Type="TakeItem" ObjectId="KalbinAtesi" Amount="1" />
@@ -124,14 +124,14 @@
 
     <!-- Stage 3 Dialog (The Choice) -->
     <DialogNode Type="Npc" Id="Miras_Secim" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_miras_karar" Priority="200">
-      <Text>{=da_miras_dlg_4}Ahit Kılıcı... Bugüne kadar dövdüğüm en kusursuz çelik. Bu gücü kendi klanının ebedi mirası olarak mı kuşanacaksın, yoksa hizmet ettiğin krala armağan mı edeceksin?</Text>
+      <Text>{=da_miras_dlg_4}The Covenant Sword... The most perfect steel I have forged to this day. Will you wield this power as your own clan's eternal legacy, or will you gift it to the king you serve?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Secim" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Miras_Karar_Klan" TargetAlias="EfsaneviDemirci" InputToken="da_miras_karar" OutputToken="close_window">
-      <Text>{=da_miras_p4}Bu kılıç, soyumun ve klanımın sarsılmaz gücünün sembolü olacak.</Text>
+      <Text>{=da_miras_p4}This sword will be the symbol of the unshakable power of my lineage and my clan.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage4_KlanMirasi" />
         <Action Type="LeaveEncounter" />
@@ -139,7 +139,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Miras_Karar_Kral" TargetAlias="EfsaneviDemirci" InputToken="da_miras_karar" OutputToken="close_window">
-      <Text>{=da_miras_p5}Bu eşsiz kılıcı Kral {IttifakKrali.Name}'e sunacağım. Krallığımızın ihtişamı artacak.</Text>
+      <Text>{=da_miras_p5}I will present this unique sword to King {IttifakKrali.Name}. The glory of our kingdom will increase.</Text>
       <Conditions>
         <Condition Type="IsVassalOfTargetFaction" TargetAlias="IttifakKrali" Amount="1" />
       </Conditions>
