@@ -290,6 +290,7 @@ namespace Questliner.Framework.Engine
                     }
                     break;
                 }
+
                 case "SetGlobalFlag":
                 {
                     Questliner.Framework.Core.GlobalStateManager.Instance.SetFlag(action.ObjectId, action.Amount > 0);

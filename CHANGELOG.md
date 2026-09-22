@@ -15,6 +15,7 @@ Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sis
   - `MakeFugitive`: Belirtilen karakteri öldürmeden haritadan silerek "Kayıp/Sürgün" statüsüne alır.
   - `SaveHeroToGlobal`: Görev içindeki bir NPC'yi diğer görevlerde çağırabilmek için StringValue adıyla kalıcı hafızaya alır.
   - `DestroyParty`: `TargetAlias` ile belirlenen bir MobileParty'yi güvenli bir şekilde (eğer halen aktifse) haritadan siler. Başarısızlık durumunda (FailNode) kalan çeteleri temizlemek için idealdir.
+  - `MakeMet`: Hedef NPC ile oyuncuyu daha önce tanışmış (HasMet = true) olarak işaretler. Pusu veya ani olay diyaloglarında Native motorun araya girip "Sen kimsin?" diye sormasını (tanışma faslını) bypass etmek için eklenmiştir.
 - **Yeni Trigger (Tetikleyiciler):**
   - `OnSettlementEnter`: Oyuncu bir yerleşkeye (şehir/köy) girdiğinde, gereksinimler (Prerequisites) sağlanıyorsa arka planda görevi anında başlatan tetikleyici C# motoruna dahil edildi. `ForceConversation` aksiyonu ile birleştiğinde anlık pusu/karşılama diyalogları yaratılabilir.
 - **Yeni Condition'lar (Koşullar):**

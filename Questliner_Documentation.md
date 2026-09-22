@@ -78,7 +78,8 @@ Aksiyonlar, diyalogların sonunda (`Consequences`), aşamalar tamamlandığında
 | **DestroyParty** | Belirtilen TargetAlias partisini (MobileParty) haritadan kalıcı olarak siler. Zaten silinmişse güvenli bir şekilde pas geçer. | `<Action Type="DestroyParty" TargetAlias="PusuPartisi" />` |
 | **DestroyEncounteredParty** | O an oyuncunun savaş/diyalog menüsünde muhatap olduğu partiyi (EncounteredMobileParty) yok eder. Genellikle görev çapulcuları ile diyalog bittikten sonra onları barışçıl veya hikaye gereği haritadan silmek için kullanılır. | `<Action Type="DestroyEncounteredParty" />` |
 | **StartQuest** | Belirtilen XML görevini otomatik olarak başlatır. (`ObjectId`: Görev ID'si) | `<Action Type="StartQuest" ObjectId="QLF_DemirAhit_Kalfa" />` |
-| **ForceConversation** | Oyun ekranını keserek doğrudan hedefle bir diyalog penceresi açar. Genellikle "OnSettlementEnter" tetikleyicisiyle oyuncuyu aniden karşılamak için kullanılır. | `<Action Type="ForceConversation" TargetAlias="Tüccar" />` |
+| **MakeMet** | Oyuncunun hedefle daha önce tanışmış (HasMet = true) sayılmasını sağlar. Native oyunun "Tanışma" diyaloglarının araya girmesini engellemek için ForceConversation'dan hemen önce kullanılır. | `<Action Type="MakeMet" TargetAlias="Tüccar" />` |
+| **ForceConversation** | Oyun ekranını keserek doğrudan hedefle bir diyalog penceresi açar. Genellikle "OnSettlementEnter" tetikleyicisiyle oyuncuyu aniden karşılamak için kullanılır. Öncesinde MakeMet kullanmanız önerilir. | `<Action Type="ForceConversation" TargetAlias="Tüccar" />` |
 
 ### 3.1. SpawnBanditParty ve SetPartyAi Detayları
 `SpawnBanditParty` oyuncuya düşman partiler üretmek için harikadır.
