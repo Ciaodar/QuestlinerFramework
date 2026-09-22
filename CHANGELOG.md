@@ -18,6 +18,8 @@ Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sis
   - `MakeMet`: Hedef NPC ile oyuncuyu daha önce tanışmış (HasMet = true) olarak işaretler. Pusu veya ani olay diyaloglarında Native motorun araya girip "Sen kimsin?" diye sormasını (tanışma faslını) bypass etmek için eklenmiştir.
 - **Yeni Trigger (Tetikleyiciler):**
   - `OnSettlementEnter`: Oyuncu bir yerleşkeye (şehir/köy) girdiğinde, gereksinimler (Prerequisites) sağlanıyorsa arka planda görevi anında başlatan tetikleyici C# motoruna dahil edildi. `ForceConversation` aksiyonu ile birleştiğinde anlık pusu/karşılama diyalogları yaratılabilir.
+- **Yeni UI / Diyalog Özellikleri:**
+  - `ShowWhenDisabled="true"` ve `DisabledHint`: Oyuncu diyalog (DialogNode) seçeneklerinde koşul başarısız olduğunda seçeneğin tamamen gizlenmesi yerine, Bannerlord'un native UI'ı kullanılarak gri (tıklanamaz) hale getirilmesi ve fareyle üzerine gelindiğinde `DisabledHint` metninin (örn: "Yetersiz Altın") çıkması sağlandı.
 - **Yeni Condition'lar (Koşullar):**
   - `IsPlayerInSettlement`: Oyuncunun şu anda herhangi bir yerleşkede (Şehir, Kale, Köy vb.) olup olmadığını kontrol eder. Olayların (pusu vb.) sadece açık haritada gerçekleşmesini garantiye almak için `!IsPlayerInSettlement` şeklinde olumsuzlanarak kullanıma uygundur.
   - `BattleResolvedAs`: `TargetAlias` ile belirlenen bir MobileParty'nin sonucunu kontrol eder. (Victory, Defeat, Retreat, DestroyedByAI). Auto-Resolve dahil tüm savaş sonuçlarını dinler.

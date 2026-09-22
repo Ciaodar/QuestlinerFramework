@@ -194,6 +194,7 @@ namespace Questliner.Shared.Models
         public string StringValue { get; set; } = string.Empty;
     }
 
+
     public class CustomDialogModel
     {
         [XmlAttribute("Type")]
@@ -201,6 +202,12 @@ namespace Questliner.Shared.Models
 
         [XmlAttribute("Id")]
         public string Id { get; set; } = string.Empty; // Must be unique per quest
+
+        [XmlAttribute("ShowWhenDisabled")]
+        public bool ShowWhenDisabled { get; set; } = false;
+
+        [XmlAttribute("DisabledHint")]
+        public string DisabledHint { get; set; } = string.Empty;
 
         [XmlAttribute("TargetAlias")]
         public string TargetAlias { get; set; } = string.Empty; // Who is this dialogue linked to? e.g., "Giver", "NobleTarget"

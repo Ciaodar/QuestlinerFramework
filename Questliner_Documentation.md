@@ -140,4 +140,25 @@ Görevlerin oyun dünyasında nasıl başlayacağını belirleyen ana mekanizmal
 - **Aşama Logları (`LogText`):** Aşamada yazan LogText ekranda görünür. Eğer text içerisinde süslü parantez ile `{HedefAlias_Link}` yazarsanız, oyun otomatik olarak bu ismi mavi yapar ve haritada/ansiklopedide o hedefi **Quest Marker (Mavi Ünlem)** ile işaretler! Manuel bir tracking koduna gerek yoktur.
 
 ---
+
+## 7. Özel Diyaloglar (Custom Dialogs) ve UI Özellikleri
+
+Görevlerin normal "Teslim etme" diyalogları dışında, tamamen özel konuşma ağaçları oluşturmak için `<CustomDialogs>` kullanılır.
+
+### ShowWhenDisabled ve DisabledHint
+Eğer oyuncunun yetersiz bir koşulu (örneğin yeterli altını veya skilli olmaması) durumunda diyalog seçeneğinin *tamamen gizlenmesi* yerine **gri renkte (tıklanamaz)** olarak ekranda görünmesini istiyorsanız şu özellikleri kullanın:
+- `ShowWhenDisabled="true"`: Bu ayar açıkken, altındaki `<Condition>`'lardan biri bile başarısız olsa diyalog gizlenmez, Bannerlord UI'ında gri (disabled) olarak belirir.
+- `DisabledHint="{=hint_key}Metin"`: Oyuncu fareyle grileştirilmiş diyaloğun üzerine geldiğinde çıkacak olan ipucu metnidir.
+
+**Örnek Kullanım:**
+```xml
+<DialogNode Type="Player" Id="Rusvet_Ver" InputToken="ql_q1_start" OutputToken="ql_q1_rusvet" ShowWhenDisabled="true" DisabledHint="{=hint1}500 Altın Gerekiyor">
+  <Text>{=text1}İşte sana 500 altın, bu işi sessizce halledelim.</Text>
+  <Conditions>
+    <Condition Type="HasGold" Amount="500" />
+  </Conditions>
+</DialogNode>
+```
+
+---
 `Bu belge Questliner Framework C# Motor Geliştiricisi tarafından hazırlanmıştır ve her zaman en güncel sürümü temsil eder.`

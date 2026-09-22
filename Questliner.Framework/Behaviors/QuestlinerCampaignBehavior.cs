@@ -123,7 +123,9 @@ namespace Questliner.Framework.Behaviors
                     {
                         starter.AddPlayerLine(globalDialogId, dialogNode.InputToken, dialogNode.OutputToken, textId,
                             () => DynamicDialogCondition(capturedQuestModel, capturedDialogNode),
-                            () => DynamicDialogConsequence(capturedQuestModel, capturedDialogNode));
+                            () => DynamicDialogConsequence(capturedQuestModel, capturedDialogNode),
+                            100,
+                            (out TaleWorlds.Localization.TextObject explanation) => DynamicClickableCondition(capturedQuestModel, capturedDialogNode, out explanation));
                     }
                     else
                     {
@@ -248,10 +250,37 @@ namespace Questliner.Framework.Behaviors
             }
 
             // Check custom XML conditions
-            foreach (var cond in dialogNode.Conditions)
+            if (!dialogNode.ShowWhenDisabled)
             {
-                if (!Questliner.Framework.Engine.ConditionEvaluator.IsConditionMet(cond, quest))
-                    return false;
+                foreach (var cond in dialogNode.Conditions)
+                {
+                    if (!Questliner.Framework.Engine.ConditionEvaluator.IsConditionMet(cond, quest))
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool DynamicClickableCondition(QuestModel questModel, CustomDialogModel dialogNode, out TaleWorlds.Localization.TextObject explanation)
+        {
+            explanation = TaleWorlds.Localization.TextObject.Empty;
+
+            if (dialogNode.ShowWhenDisabled)
+            {
+                var quest = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(q => q.Model?.Id == questModel.Id && q.IsOngoing);
+                
+                foreach (var cond in dialogNode.Conditions)
+                {
+                    if (!Questliner.Framework.Engine.ConditionEvaluator.IsConditionMet(cond, quest))
+                    {
+                        if (!string.IsNullOrEmpty(dialogNode.DisabledHint))
+                        {
+                            explanation = new TaleWorlds.Localization.TextObject(dialogNode.DisabledHint);
+                        }
+                        return false;
+                    }
+                }
             }
 
             return true;
