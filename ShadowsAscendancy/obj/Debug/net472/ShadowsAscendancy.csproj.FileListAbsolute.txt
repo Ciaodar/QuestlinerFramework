@@ -1,0 +1,10 @@
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ShadowsAscendancy\bin\Debug\net472\ShadowsAscendancy.dll
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ShadowsAscendancy\bin\Debug\net472\ShadowsAscendancy.pdb
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ShadowsAscendancy\obj\Debug\net472\ShadowsAscendancy.csproj.AssemblyReference.cache
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ShadowsAscendancy\obj\Debug\net472\ShadowsAscendancy.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ShadowsAscendancy\obj\Debug\net472\ShadowsAscendancy.AssemblyInfoInputs.cache
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ShadowsAscendancy\obj\Debug\net472\ShadowsAscendancy.AssemblyInfo.cs
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ShadowsAscendancy\obj\Debug\net472\ShadowsAscendancy.csproj.CoreCompileInputs.cache
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ShadowsAscendancy\obj\Debug\net472\ShadowsAscendancy.sourcelink.json
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ShadowsAscendancy\obj\Debug\net472\ShadowsAscendancy.dll
+c:\Users\meteh\RiderProjects\QuestlinerFramework\ShadowsAscendancy\obj\Debug\net472\ShadowsAscendancy.pdb
