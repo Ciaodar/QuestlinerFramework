@@ -6,6 +6,9 @@
   </Prerequisites>
 
 
+  <Triggers>
+    <Trigger EventType="AutoStart" />
+  </Triggers>
 
   <TargetResolvers>
     <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
@@ -13,6 +16,14 @@
   </TargetResolvers>
 
   <Stages>
+    <Stage Id="Stage0_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
+      <LogText>{=sp_kb_s0_log}You are waiting for news about the traitorous looter {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you.</LogText>
+      <Conditions />
+      <OnTimeoutActions>
+        <Action Type="ChangeStage" ObjectId="Stage1_Mesaj" />
+      </OnTimeoutActions>
+    </Stage>
+
     <Stage Id="Stage1_Mesaj" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_kb_s1_log}You received an urgent, blood-stained message from a pigeon. Your friend {Dost_Link} needs to see you immediately. Find him and ask what the emergency is.</LogText>
       <Conditions />
