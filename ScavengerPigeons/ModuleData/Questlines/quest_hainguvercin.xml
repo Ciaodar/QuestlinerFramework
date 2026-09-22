@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_HainGuvercin" Title="{=sp_hg_title}Traitor Pigeon" TimeLimitInDays="30">
+  <TargetResolvers>
+    <Resolver Alias="looters" TargetType="MobileParty" Filters="BanditParty, Faction(looters)" Selector="Random" />
+  </TargetResolvers>
+
+  <Stages>
+    <Stage Id="Stage1_CapulcuAvla" NextStageId="Stage2_Bekleme" LogType="Progress" TargetAmount="3" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_hg_s1_log}You suspected the assassination mission and started investigating. You must find and defeat 3 different looter parties wandering around using the name {PlayerName}. The truth will be revealed when you interrogate their scouts.</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="looters" Amount="3" />
+      </Conditions>
+      <OnEnterActions />
+      <OnExitActions />
+    </Stage>
+
+    <Stage Id="Stage2_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInHours="2">
+      <LogText>{=sp_hg_s2_log}You are interrogating the captured looters... (wait a bit)</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions>
+        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="5" StringValue="{=sp_hg_spawn1}Traitor Looters" />
+        <Action Type="SetPartyAi" TargetAlias="looters" StringValue="IgnoreAi" />
+        <Action Type="ChangeStage" ObjectId="Stage3_EsirSorgu" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage3_EsirSorgu" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_hg_s3_log}It is time to interrogate the captives. You must go to a nearby looter party (Field Coordinator) and speak with them.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+    </Stage>
+
+    <Stage Id="Stage4_ElebasiBekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_hg_s4_log}The captives told you the whereabouts of their ringleader. If you wait a bit, the real pigeons will come to you.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+    </Stage>
+
+    <Stage Id="Stage5_Gercek" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_hg_s5_log}You found out who the real traitor is. Now all you have to do is pledge your allegiance to the kingdom.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="ChangeOtherQuestStage" ObjectId="QLF_AnavataninIhaneti" TargetAlias="Stage4_Dost_Inandi" />
+      </OnEnterActions>
+      <OnExitActions />
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- Stage 3: Esir Sorgusu -->
+    <DialogNode Type="Npc" Id="Esir_Giris" TargetAlias="looters" InputToken="start" OutputToken="ql_esir_a1" Priority="200">
+      <Text>{=sp_hg_dlg1}We were sent by a looter in the field. Release our friends, and we will bring the looter to speak the truth.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_EsirSorgu" />
+      </Conditions>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="Esir_P1" TargetAlias="looters" InputToken="ql_esir_a1" OutputToken="ql_esir_a2">
+      <Text>{=sp_hg_dlg2}Tell me what you know, or I will put you all to the sword!</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Npc" Id="Esir_N2" TargetAlias="looters" InputToken="ql_esir_a2" OutputToken="ql_esir_p2">
+      <Text>{=sp_hg_dlg3}We are just field operatives. The artisan tells us who to target. But the real boss will be here soon. Let us bring him to you!</Text>
+    </DialogNode>
+    
+      <DialogNode Type="Player" Id="Esir_P2" TargetAlias="looters" InputToken="ql_esir_p2" OutputToken="close_window">
+        <Text>{=sp_hg_dlg4}Alright, I'm letting you go. You're of no other use anyway. I'll be waiting for your ringleader.</Text>
+        <Consequences>
+          <Action Type="LeaveEncounter" />
+          <Action Type="DestroyEncounteredParty" />
+          <Action Type="ChangeStage" ObjectId="Stage4_ElebasiBekleme" />
+          <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="25" StringValue="{=sp_hg_spawn2}Looter Ringleader" />
+          <Action Type="SetPartyAi" TargetAlias="looters" StringValue="IgnoreAi" />
+        </Consequences>
+      </DialogNode>
+
+    <!-- Stage 4: Elebaşı Konusmasi -->
+    <DialogNode Type="Npc" Id="Elebasi_Giris" TargetAlias="looters" InputToken="start" OutputToken="ql_elebasi_a1" Priority="200">
+      <Text>{=sp_hg_dlg5}Halt! We are not here to draw swords... You released my soldiers. I am a looter field coordinator. What is the meaning of this? Are you trying to tell us something?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage4_ElebasiBekleme" />
+      </Conditions>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="Elebasi_P1" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="ql_elebasi_a2">
+      <Text>{=sp_hg_dlg6}Yes, I stand before you to prove I didn't kill the man we call our friend. I need to find out who started these slanderous rumors.</Text>
+    </DialogNode>
+        <DialogNode Type="Player" Id="Elebasi_P2" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="ql_elebasi_a2">
+      <Text>{=sp_hg_dlg7}No, I have no more business with you looters. I wasn't going to execute someone I don't even know for you.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Elebasi_N2" TargetAlias="looters" InputToken="ql_elebasi_a2" OutputToken="ql_elebasi_a3">
+      <Text>{=sp_hg_dlg8}Kill? Then you are not the traitor among us... The real traitor is that rabid dog {ArtisanTarget_Link} who gave you the order. Your true mission should have been to return to the Motherland and offer your services.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Npc" Id="Elebasi_N3" TargetAlias="looters" InputToken="ql_elebasi_a3" OutputToken="close_window">
+      <Text>{=sp_hg_dlg9}You passed an unexpected test, pigeon. You've more than proven your reliability. Farewell.</Text>
+      <Consequences>
+        <Action Type="DestroyEncounteredParty" />
+        <Action Type="ChangeStage" ObjectId="Stage5_Gercek" />
+      </Consequences>
+    </DialogNode>
+  </CustomDialogs>
+</Questline>

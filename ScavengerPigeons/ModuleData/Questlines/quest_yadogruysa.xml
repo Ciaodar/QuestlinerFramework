@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_YaDogruysa" Title="{=sp_yd_title}Looter's Word: What If It's True?" TimeLimitInDays="30">
+  
+  <Prerequisites>
+    <Condition Type="ClanTier" Amount="2" />
+  </Prerequisites>
+  
+  <TargetResolvers>
+    <!-- GizemliSehir: Oyuncuya en yakın ikinci ŞEHİR (Town) -->
+    <Resolver Alias="GizemliSehir" TargetType="Settlement" Filters="Town" Selector="SecondNearest" />
+  </TargetResolvers>
+
+  <Stages>
+    <!-- Asama 1: Istihbarat Arayisi -->
+    <Stage Id="Stage1" NextStageId="StageSuccess" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_yd_s1_log}You encountered looters and one said your reputation is in danger. You were told to go to the barber in {GizemliSehir_Link} to learn the truth. Even though you put them to the sword, the seed of doubt grew within you. Find the barber in {GizemliSehir_Link} and ask 'What is the name of the looter?'.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+    </Stage>
+
+    <!-- Asama 2: Tamamlandi -->
+    <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_yd_s_success_log}You found the barber and asked him 'What is the name of the looter?'. He told you about the slanders against you. An old friend from your motherland asked for your help from the secret cult 'Scavenger Pigeons', of which he is a member. They gave you some money and told you to gather a party of 70 men and find the elder of a nearby village.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="StartQuest" ObjectId="QLF_AnavataninIhaneti" />
+      </OnEnterActions>
+      <OnExitActions />
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- 1. CAPULCU ILE KARSILASMA (ON GORU DIYALOGLARI) -->
+    <DialogNode Type="Npc" Id="Capulcu_Giris" TargetAlias="looters" InputToken="start" OutputToken="ql_prequel_player_1" Priority="200">
+      <Text>{=sp_yd_dlg1}{PlayerName}! I finally found you. Being a looter is really hard.</Text>
+      <Conditions>
+        <Condition Type="IsQuestActive" ObjectId="QLF_YaDogruysa" Amount="0" />
+        <Condition Type="IsQuestActive" ObjectId="QLF_ItibarDersi" Amount="0" />
+        <Condition Type="IsQuestCompleted" ObjectId="QLF_YaDogruysa" Amount="0" />
+        <Condition Type="IsQuestCompleted" ObjectId="QLF_ItibarDersi" Amount="0" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="B1_Sorgu" TargetAlias="looters" InputToken="ql_prequel_player_1" OutputToken="ql_capulcu_aciklama">
+      <Text>{=sp_yd_dlg2}What is this nonsense, how do you know my name, you honorless scum?!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="A2_Aciklama" TargetAlias="looters" InputToken="ql_capulcu_aciklama" OutputToken="ql_prequel_choices">
+      <Text>{=sp_yd_dlg3}Listen, this isn't some ordinary looter's foolish deception attempt, alright? Your reputation is in danger. I am a friend of a friend from your motherland. If you value your reputation, go to the barber of the second nearest city and ask 'What is the name of the looter?'. He will provide you with intel.</Text>
+    </DialogNode>
+
+    <!-- SECENEK 1: SAVASMAK -> Ya Dogruysa Gorevi Baslar & Savas'a Girilir -->
+    <DialogNode Type="Player" Id="B3_Savas" TargetAlias="looters" InputToken="ql_prequel_choices" OutputToken="close_window">
+      <Text>{=sp_yd_dlg4}A pathetic battle tactic. (Attack)</Text>
+      <Consequences>
+        <Action Type="StartQuest" ObjectId="QLF_YaDogruysa" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- SECENEK 2: DIYALOGA DEVAM ET -->
+    <DialogNode Type="Player" Id="B2_IyiDeneme" TargetAlias="looters" InputToken="ql_prequel_choices" OutputToken="ql_capulcu_inanis">
+      <Text>{=sp_yd_dlg5}Nice try. You have a knack for tactics.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="A2_Inanis" TargetAlias="looters" InputToken="ql_capulcu_inanis" OutputToken="ql_prequel_subchoices">
+      <Text>{=sp_yd_dlg6}You believe me. I knew it!</Text>
+    </DialogNode>
+
+    <!-- SECENEK 2.1: SERBEST BIRAKMAK -> Capulcudan Itibar Dersi Gorevi Baslar & Savas Engellenir -->
+    <DialogNode Type="Player" Id="B3_Baris" TargetAlias="looters" InputToken="ql_prequel_subchoices" OutputToken="ql_capulcu_veda">
+      <Text>{=sp_yd_dlg7}Maybe... One way or another, out of respect for your deception technique, I will release you.</Text>
+      <Consequences>
+        <Action Type="StartQuest" ObjectId="QLF_ItibarDersi" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="A3_Veda" TargetAlias="looters" InputToken="ql_capulcu_veda" OutputToken="close_window">
+      <Text>{=sp_yd_dlg8}We shall see...</Text>
+    </DialogNode>
+
+    <!-- SECENEK 2.2: YINE DE SAVASMAK -->
+    <DialogNode Type="Player" Id="B3_Savas2" TargetAlias="looters" InputToken="ql_prequel_subchoices" OutputToken="close_window">
+      <Text>{=sp_yd_dlg9}Every word spoken holds importance. Yet, an honorless looter's head cannot stay on his shoulders! (Attack)</Text>
+      <Consequences>
+        <Action Type="StartQuest" ObjectId="QLF_YaDogruysa" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- 2. BERBER ILE KONUSMA (GOREVI BITIREN KISIM) -->
+    <DialogNode Type="Player" Id="Berber_Soru" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="barber_question1" OutputToken="ql_berber_itibar_a1" Priority="100">
+      <Text>{=sp_yd_dlg10}What is the name of the looter?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Berber_A1_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a1" OutputToken="ql_berber_itibar_b1">
+      <Text>{=sp_yd_dlg11}Anubis. Looters are the most suspicious birds of the realm. What did you want, stranger?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Berber_B1a_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b1" OutputToken="ql_berber_itibar_a2">
+      <Text>{=sp_yd_dlg12}The mysterious man dressed as a looter I spoke to said my reputation is in danger. I hope you aren't mocking me.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Berber_B1b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b1" OutputToken="ql_berber_itibar_a2">
+      <Text>{=sp_yd_dlg13}The looter told me my reputation is in danger. What does this mean?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Berber_A2_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a2" OutputToken="ql_berber_itibar_b2">
+      <Text>{=sp_yd_dlg14}Ahh, {PlayerName}... Your suspicious behavior is, of course, very justified. Don't worry. You did very well to believe him and come here. A friend from your motherland contacted us. He mentioned that they started spreading rumors behind your back that could declare you a traitor.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Berber_B2a_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b2" OutputToken="ql_berber_itibar_a3">
+      <Text>{=sp_yd_dlg15}Who are you people? What kind of cult is this? Couldn't that idiot just send a regular messenger? Besides, I don't even know this man. Stop playing games.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Berber_B2b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b2" OutputToken="ql_berber_itibar_a3">
+      <Text>{=sp_yd_dlg16}You? Are you a secret society? What is your problem?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Berber_A3_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a3" OutputToken="ql_berber_itibar_b3">
+      <Text>{=sp_yd_dlg17}Don't worry friend. We are the Scavenger Pigeons, serving for centuries. We are faster than any messenger, stronger than any servant. Your friend is a brave man who has helped us a lot. He vouched for you and asked us to save you from this conspiracy.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Berber_B3_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b3" OutputToken="ql_berber_itibar_a4">
+      <Text>{=sp_yd_dlg18}What do you want from me?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Berber_A4_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a4" OutputToken="ql_berber_itibar_b4">
+      <Text>{=sp_yd_dlg19}As a token of our sincerity, we are gifting you some gold. Gather 70 men and find the village elder in the nearest village.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Berber_B4a_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="ql_berber_itibar_a5">
+      <Text>{=sp_yd_dlg20}I don't want your money. I'll also have to think a bit about taking a company of 70 men there.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="StageSuccess" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Berber_B4b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="ql_berber_itibar_a5">
+      <Text>{=sp_yd_dlg21}Thank you. I will gather that company with this money and meet with the village elder.</Text>
+      <Consequences>
+        <Action Type="AddGold" Amount="1000" />
+        <Action Type="ChangeStage" ObjectId="StageSuccess" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Berber_B4c_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="close_window">
+      <Text>{=sp_yd_dlg22}I am no longer interested in this nonsense. Find someone else to entertain yourselves with.</Text>
+      <Consequences>
+        <Action Type="FailQuest" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Berber_A5_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a5" OutputToken="close_window">
+      <Text>{=sp_yd_dlg23}Alright, see you later, baby pigeon...</Text>
+    </DialogNode>
+  </CustomDialogs>
+</Questline>

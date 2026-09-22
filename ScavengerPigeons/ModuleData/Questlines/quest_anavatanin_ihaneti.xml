@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_AnavataninIhaneti" Title="{=sp_ai_title}Treason of the Motherland" TimeLimitInDays="60">
+  <TargetResolvers>
+    <Resolver Alias="KoyBuyugu" TargetType="Hero" Filters="SameCultureAsPlayer, RuralNotable, !Target(Dost)" Selector="Nearest" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="SameCultureAsPlayer, Lord, !PlayerClan, !ClanLeader, HasMobileParty, HasKingdom" Selector="Nearest" />
+    <Resolver Alias="UzakSehir" TargetType="Settlement" Filters="Town, SameKingdomAs(Dost)" Selector="Furthest" />
+    <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="SameCultureAsPlayer, Artisan" RequiredSettlementAlias="UzakSehir" Selector="Random" />
+    <Resolver Alias="Kral" TargetType="Hero" Filters="SameKingdomAs(Dost), KingdomLeader" Selector="First" />
+  </TargetResolvers>
+
+  <Stages>
+    <Stage Id="Stage1_KoyBuyugu" NextStageId="" LogType="Progress" TargetAmount="70" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ai_s1_log}The mysterious barber's words haunt your mind. An old friend from your motherland has asked the secret society 'Scavenger Pigeons' for help to fight against terrible slanders that will ruin your reputation. However, before the Pigeons accept you, you must prove your strength. Use the gold you were given to gather a company of 70 men and meet with the village elder {KoyBuyugu_Link}.</LogText>
+      <Conditions>
+        <Condition Type="HasTroopCount" Amount="70" />
+      </Conditions>
+    </Stage>
+
+    <Stage Id="Stage2_Zanaatkar" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ai_s2_log}You spoke with the village elder {KoyBuyugu_Link}. As expected, this was no ordinary task. He gave you a piece of leather with secret ciphers on it and told you to deliver it to the artisan {ArtisanTarget_Link} in the city of {UzakSehir_Link} without wasting any time.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="Stage3_SuikastKabul" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ai_s3a_log}The Scavenger Pigeons' sage, {ArtisanTarget_Link}, gave you an assassination mission. You accepted it without question. Your target: {Dost_Link}.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="Stage3_SuikastRed" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
+      <LogText>{=sp_ai_s3b_log}The Pigeons have asked you to kill {Dost_Link}, the person they previously said was your friend. Inconsistent and strange things are happening. You objected to the mission during your conversation with {ArtisanTarget_Link}. You might want to urgently speak to someone about your suspicions.</LogText>
+      <Conditions />
+      <OnTimeoutActions>
+        <Action Type="StartQuest" ObjectId="QLF_HainGuvercin" />
+        <Action Type="ChangeStage" ObjectId="Stage_Bekleme_Guvercin" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage_Bekleme_Guvercin" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ai_s_bekleme_log}{ArtisanTarget_Link} has been slandering you behind your back. When he gave you that suspicious assassination mission, you should have spoken to someone. Your name is quickly being tarnished among the looters. You have no choice but to retreat to a dark corner and wait, perhaps there is another way to solve this.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="Stage4_Dost_Savas" NextStageId="Stage5_KaranlikSon" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ai_s4_savas_log}You must be the traitor. You are the one who slandered me. Prepare to die! You fought {Dost_Link}. There is no turning back!</LogText>
+      <Conditions>
+        <Condition Type="TargetIsDead" TargetAlias="Dost" />
+      </Conditions>
+    </Stage>
+    
+    <Stage Id="Stage5_KaranlikSon" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=sp_ai_s5_karanlik_log}Executing someone has never led to anything good. The Pigeons have declared you a traitor. For your motherland, you are now an open enemy. They hate you. It shouldn't have been like this...</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DeclareWar" TargetAlias="Dost" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage4_Dost_Inandi" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ai_s4_inandi_log}You spoke with the looter and learned your true mission. They will deal with the traitorous Artisan. Now you must speak with the Kingdom Leader {Kral_Link} and find a way to offer your services.</LogText>
+      <Conditions>
+        <Condition Type="HasPledgedAllegiance" TargetAlias="Kral" />
+      </Conditions>
+      <OnExitActions>
+        <Action Type="ChangeStage" ObjectId="Stage5_KralligaKatil" />
+      </OnExitActions>
+    </Stage>
+
+    <Stage Id="Stage5_KralligaKatil" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ai_s5_katil_log}You proved yourself and joined the kingdom. Now it is time to find the person who slandered you and take your revenge. {Dost_Link} is waiting to speak with you. Talk to him and learn the details.</LogText>
+      <Conditions />
+    </Stage>
+
+    <Stage Id="Stage6_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
+      <LogText>{=sp_ai_s_success_log}You learned that all of this was a game set up to test your loyalty. It turns out you have just met your friend {Dost_Link}. He gave you 50,000 denars as compensation for the troubles he caused and wished you success in your new service. The rumors of treason have ended.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />
+        <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
+      </OnEnterActions>
+      <OnTimeoutActions>
+        <Action Type="ChangeStage" ObjectId="StageSuccess" />
+        <Action Type="StartQuest" ObjectId="QLF_KopukBaglar" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_ai_s_success_final_log}A week has passed since you joined the Pigeons. A new mission awaits.</LogText>
+      <Conditions />
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- 1. KOY BUYUGU DIYALOGLARI (GIRIS) -->
+    <DialogNode Type="Player" Id="KB_Player_Giris" TargetAlias="KoyBuyugu" InputToken="start" OutputToken="ql_kb_npc_giris" Priority="150">
+      <Text>{=sp_ai_dlg1}I have a special matter to discuss with you.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_KoyBuyugu" />
+      </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
+      </Consequences>
+    </DialogNode>
+    
+    <DialogNode Type="Npc" Id="KB_Giris" TargetAlias="KoyBuyugu" InputToken="ql_kb_npc_giris" OutputToken="ql_kb_b1">
+      <Text>{=sp_ai_dlg2}Your name must be {PlayerName}, isn't it?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_B1a" TargetAlias="KoyBuyugu" InputToken="ql_kb_b1" OutputToken="ql_kb_a2">
+      <Text>{=sp_ai_dlg3}I guess I should get used to everyone knowing my name.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_B1b" TargetAlias="KoyBuyugu" InputToken="ql_kb_b1" OutputToken="ql_kb_a2">
+      <Text>{=sp_ai_dlg4}You must be a pigeon too...</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_A2" TargetAlias="KoyBuyugu" InputToken="ql_kb_a2" OutputToken="ql_kb_b2">
+      <Text>{=sp_ai_dlg5}Yes, of course... You are here for the next step. What you will do now is take this special leather containing secret information to the artisan named {ArtisanTarget_Link} in the city of {UzakSehir_Link}.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_B2a" TargetAlias="KoyBuyugu" InputToken="ql_kb_b2" OutputToken="ql_kb_a3">
+      <Text>{=sp_ai_dlg6}What does this have to do with my problem?</Text>
+    </DialogNode>
+    <DialogNode Type="Npc" Id="KB_A3" TargetAlias="KoyBuyugu" InputToken="ql_kb_a3" OutputToken="ql_kb_b2">
+      <Text>{=sp_ai_dlg7}Everything is connected.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_B2b" TargetAlias="KoyBuyugu" InputToken="ql_kb_b2" OutputToken="ql_kb_a4">
+      <Text>{=sp_ai_dlg8}Alright, I will do it.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_A4" TargetAlias="KoyBuyugu" InputToken="ql_kb_a4" OutputToken="ql_kb_b3">
+      <Text>{=sp_ai_dlg9}Safe travels, looter...</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_B3" TargetAlias="KoyBuyugu" InputToken="ql_kb_b3" OutputToken="close_window">
+      <Text>{=sp_ai_dlg10}Thank you, pigeon...</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2_Zanaatkar" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- 2. ARTISAN (ZANAATKAR) DIYALOGLARI -->
+    <DialogNode Type="Player" Id="Art_B_Giris" TargetAlias="ArtisanTarget" InputToken="hero_main_options" OutputToken="ql_art_a1" Priority="100">
+      <Text>{=sp_ai_dlg11}A pigeon sent you this leather.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_Zanaatkar" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Art_A1" TargetAlias="ArtisanTarget" InputToken="ql_art_a1" OutputToken="ql_art_b1">
+      <Text>{=sp_ai_dlg12}Ahh, another conspiracy! Tell me looter, what is your name?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B1a" TargetAlias="ArtisanTarget" InputToken="ql_art_b1" OutputToken="ql_art_a2">
+      <Text>{=sp_ai_dlg13}Anubis.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B1b" TargetAlias="ArtisanTarget" InputToken="ql_art_b1" OutputToken="ql_art_a2">
+      <Text>{=sp_ai_dlg14}Pigeon.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B1c" TargetAlias="ArtisanTarget" InputToken="ql_art_b1" OutputToken="ql_art_a2">
+      <Text>{=sp_ai_dlg15}{PlayerName}.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Art_A2" TargetAlias="ArtisanTarget" InputToken="ql_art_a2" OutputToken="ql_art_b2">
+      <Text>{=sp_ai_dlg16}Does a baby pigeon return to its nest?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B2a" TargetAlias="ArtisanTarget" InputToken="ql_art_b2" OutputToken="ql_art_a3">
+      <Text>{=sp_ai_dlg17}It returns.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B2b" TargetAlias="ArtisanTarget" InputToken="ql_art_b2" OutputToken="ql_art_a3">
+      <Text>{=sp_ai_dlg18}It does not return.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B2c" TargetAlias="ArtisanTarget" InputToken="ql_art_b2" OutputToken="ql_art_a3">
+      <Text>{=sp_ai_dlg19}Does it not return?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Art_A3" TargetAlias="ArtisanTarget" InputToken="ql_art_a3" OutputToken="ql_art_b3">
+      <Text>{=sp_ai_dlg20}Of course! So, do you seek justice or revenge?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B3a" TargetAlias="ArtisanTarget" InputToken="ql_art_b3" OutputToken="ql_art_a4">
+      <Text>{=sp_ai_dlg21}Justice must be served! For its greatness is eternal.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B3b" TargetAlias="ArtisanTarget" InputToken="ql_art_b3" OutputToken="ql_art_a4">
+      <Text>{=sp_ai_dlg22}My revenge will ensure that justice is manifested.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Art_B3c" TargetAlias="ArtisanTarget" InputToken="ql_art_b3" OutputToken="ql_art_a4">
+      <Text>{=sp_ai_dlg23}An eye for an eye, blood for blood. REVENGE, REVENGE!!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Art_A4" TargetAlias="ArtisanTarget" InputToken="ql_art_a4" OutputToken="ql_art_b4">
+      <Text>{=sp_ai_dlg24}Alright, we have come to a conclusion. The treason of the motherland will end with your iron fist. Your current mission is to execute the person named {Dost_Link}.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B4a" TargetAlias="ArtisanTarget" InputToken="ql_art_b4" OutputToken="close_window">
+      <Text>{=sp_ai_dlg25}What?! I was told this man is my friend. This is absurd, you are hiding something. I will not do this!</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_SuikastRed" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B4b" TargetAlias="ArtisanTarget" InputToken="ql_art_b4" OutputToken="close_window">
+      <Text>{=sp_ai_dlg26}At your command! The looter's order is the pigeon's duty, if you'll excuse me...</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_SuikastKabul" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- 3. DOST ILE YUZLESME (SUIKAST EMRI SONRASI) -->
+      <DialogNode Type="Player" Id="Dost_Player_Giris_Kabul" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_npc_giris" Priority="100">
+        <Text>{=sp_ai_dlg27}I have a special matter to discuss with you.</Text>
+        <Conditions>
+          <Condition Type="IsStageActive" ObjectId="Stage3_SuikastKabul" />
+        </Conditions>
+      </DialogNode>
+      
+      <DialogNode Type="Player" Id="Dost_Player_Giris_Red" TargetAlias="Dost" InputToken="start" OutputToken="ql_dost_npc_giris" Priority="150">
+        <Text>{=sp_ai_dlg28}I have a special matter to discuss with you.</Text>
+        <Conditions>
+          <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
+        </Conditions>
+        <Consequences>
+          <Action Type="MakeMet" TargetAlias="Dost" />
+        </Consequences>
+      </DialogNode>
+
+      <DialogNode Type="Npc" Id="Dost_Giris_Ortak" TargetAlias="Dost" InputToken="ql_dost_npc_giris" OutputToken="ql_dost_b1">
+        <Text>{=sp_ai_dlg29}My friend, you're early. You haven't even entered the service of the Motherland yet.</Text>
+      </DialogNode>
+
+    <DialogNode Type="Player" Id="Dost_B1a" TargetAlias="Dost" InputToken="ql_dost_b1" OutputToken="ql_dost_a2">
+      <Text>{=sp_ai_dlg30}Death came early. When you least expected it.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="Dost_B1b" TargetAlias="Dost" InputToken="ql_dost_b1" OutputToken="ql_dost_a2">
+      <Text>{=sp_ai_dlg31}A looter wants your head. Be careful not to be left to my mercy.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Dost_A2" TargetAlias="Dost" InputToken="ql_dost_a2" OutputToken="ql_dost_b2">
+      <Text>{=sp_ai_dlg32}What nonsense are you spouting? They take orders from me. This means there is a traitor among them who thinks they've fooled you!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Dost_B2a" TargetAlias="Dost" InputToken="ql_dost_b2" OutputToken="ql_dost_a3">
+      <Text>{=sp_ai_dlg33}You're right, what was I thinking. I'll go talk to the village elder for you.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_SuikastRed" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Dost_A3" TargetAlias="Dost" InputToken="ql_dost_a3" OutputToken="close_window">
+      <Text>{=sp_ai_dlg34}That was a terrifying encounter, my friend. Take care of yourself. We will meet again.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Dost_B2b" TargetAlias="Dost" InputToken="ql_dost_b2" OutputToken="close_window">
+      <Text>{=sp_ai_dlg35}Yes. You must be the traitor. You are the one who slandered me. Prepare to die!</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage4_Dost_Savas" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- 4. KOY YASLISI ILE YUZLESME (SUIKAST REDDI SONRASI) -->
+    <DialogNode Type="Player" Id="KB_Ihbar_Giris" TargetAlias="KoyBuyugu" InputToken="start" OutputToken="ql_kb_ihbar_a1" Priority="150">
+      <Text>{=sp_ai_dlg36}We need to talk about {ArtisanTarget_Link}.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
+      </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_Ihbar_A1" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a1" OutputToken="ql_kb_ihbar_b1">
+      <Text>{=sp_ai_dlg37}Your return is an unexpected development. Is there a problem?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_Ihbar_B1a" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b1" OutputToken="ql_kb_ihbar_a2">
+      <Text>{=sp_ai_dlg38}{ArtisanTarget_Link} gave me the name {Dost_Link} to kill.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="KB_Ihbar_B1b" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b1" OutputToken="ql_kb_ihbar_a2">
+      <Text>{=sp_ai_dlg39}The artisan wanted me to kill the man who is our friend.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_Ihbar_A2" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a2" OutputToken="ql_kb_ihbar_b2">
+      <Text>{=sp_ai_dlg40}Kill? And our friend no less? Are you sure about this? Why should I believe you? The person you accuse is a valuable looter.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_Ihbar_B2a" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b2" OutputToken="ql_kb_ihbar_a3">
+      <Text>{=sp_ai_dlg41}You are right. You might not want to believe me. But you should know that I will not carry out this mission.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="KB_Ihbar_B2b" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b2" OutputToken="ql_kb_ihbar_a3">
+      <Text>{=sp_ai_dlg42}I don't care. I will not kill anyone. I am not going to bother convincing you either!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_Ihbar_A3" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a3" OutputToken="ql_kb_ihbar_b3">
+      <Text>{=sp_ai_dlg43}I am sorry, Yes! You are not lying. How many times has this happened... That man is a traitor!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_Ihbar_B3a" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b3" OutputToken="ql_kb_ihbar_a4">
+      <Text>{=sp_ai_dlg44}Maybe it's none of my business, but if you want, I can take care of that man for you...</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="KB_Ihbar_B3b" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b3" OutputToken="ql_kb_ihbar_a4">
+      <Text>{=sp_ai_dlg45}That man! He thought he could use me, huh. Now I'll show him...</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_Ihbar_A4" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a4" OutputToken="close_window">
+      <Text>{=sp_ai_dlg46}No! This is not your affair. Go and show your dedication to serving the Motherland before it is too late. That should have been your true mission. I must go now. Your service will not be forgotten.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage4_Dost_Inandi" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- 5. KRALLIGA KATILDIKTAN SONRA DOST ILE SON YUZLESME -->
+    <DialogNode Type="Npc" Id="Dost_Final_Giris" TargetAlias="Dost" InputToken="start" OutputToken="ql_dost_final_b1" Priority="150">
+      <Text>{=sp_ai_dlg47}{PLAYER.NAME}! You have finally pledged your allegiance to {Kral_Link}. I wanted to see you as well. There was never any slander against you. I played this game to convince you to enter the service of the motherland. There was no traitor. In fact, we were never friends in the past either.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage5_KralligaKatil" />
+      </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="Dost" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Dost_Final_B1a" TargetAlias="Dost" InputToken="ql_dost_final_b1" OutputToken="ql_dost_final_a2">
+      <Text>{=sp_ai_dlg48}Absolutely! I already knew I didn't know you. Actually, I always had serving the Motherland in mind anyway.</Text>
+    </DialogNode>
+    
+    <DialogNode Type="Player" Id="Dost_Final_B1b" TargetAlias="Dost" InputToken="ql_dost_final_b1" OutputToken="ql_dost_final_a2">
+      <Text>{=sp_ai_dlg49}Don't think you fooled me. I already wanted to go down this path myself. The slander was just an added bonus.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Dost_Final_A2" TargetAlias="Dost" InputToken="ql_dost_final_a2" OutputToken="ql_dost_final_a3">
+      <Text>{=sp_ai_dlg50}Thank you. The donation I'm about to make will compensate for the trouble I've caused you and help you in your new service.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Dost_Final_A3" TargetAlias="Dost" InputToken="ql_dost_final_a3" OutputToken="hero_main_options">
+      <Text>{=sp_ai_dlg51}Did you want to talk about anything else?</Text>
+      <Consequences>
+        <Action Type="AddGold" Amount="50000" />
+        <Action Type="ChangeStage" ObjectId="Stage6_Bekleme" />
+      </Consequences>
+    </DialogNode>
+  </CustomDialogs>
+</Questline>
