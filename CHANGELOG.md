@@ -19,7 +19,8 @@ Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sis
 - **Yeni Trigger (Tetikleyiciler):**
   - `OnSettlementEnter`: Oyuncu bir yerleşkeye (şehir/köy) girdiğinde, gereksinimler (Prerequisites) sağlanıyorsa arka planda görevi anında başlatan tetikleyici C# motoruna dahil edildi. `ForceConversation` aksiyonu ile birleştiğinde anlık pusu/karşılama diyalogları yaratılabilir.
 - **Yeni Condition'lar (Koşullar):**
-  - `BattleResolvedAs`: TargetAlias ile işaretlenmiş hedefin savaştan nasıl çıktığını kontrol eder (Victory, Defeat, Retreat, DestroyedByAI). Auto-Resolve dahil tüm savaş sonuçlarını dinler.
+  - `IsPlayerInSettlement`: Oyuncunun şu anda herhangi bir yerleşkede (Şehir, Kale, Köy vb.) olup olmadığını kontrol eder. Olayların (pusu vb.) sadece açık haritada gerçekleşmesini garantiye almak için `!IsPlayerInSettlement` şeklinde olumsuzlanarak kullanıma uygundur.
+  - `BattleResolvedAs`: `TargetAlias` ile belirlenen bir MobileParty'nin sonucunu kontrol eder. (Victory, Defeat, Retreat, DestroyedByAI). Auto-Resolve dahil tüm savaş sonuçlarını dinler.
   - `GlobalFlag`: Kalıcı hafızadaki durumu (True/False) kontrol eden koşul eklendi.
   - `ItemCountInInventory`: Envanterdeki belirli bir eşyanın miktarını kontrol eden koşul eklendi (`HasItem` ile eşdeğer çalışır).
   - `SkillCheck`: Ana karakterin (MainHero) özel yeteneklerinin (Charm, Roguery vs.) seviyesini zar atar gibi kontrol etmeye yarayan koşul eklendi.

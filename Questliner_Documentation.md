@@ -36,6 +36,8 @@ Koşullar `<Prerequisites>` (Görevin başlama şartı), Aşama (Stage) ilerleme
 | **IsQuestActive** | Belirtilen ID'li görev şu an devam ediyor mu? (1: Evet, 0: Hayır) | `<Condition Type="IsQuestActive" ObjectId="QLF_DemirAhit_Cirak" Amount="1" />` |
 | **IsQuestCompleted** | Belirtilen ID'li görev başarıyla tamamlanmış mı? | `<Condition Type="IsQuestCompleted" ObjectId="QLF_DemirAhit_Cirak" Amount="1" />` |
 | **IsVassalOfTargetFaction** | Oyuncu, belirtilen hedefin krallığında *paralı asker olmadan* direkt Vassal mı? | `<Condition Type="IsVassalOfTargetFaction" TargetAlias="King" Amount="1" />` |
+| **StageTimeout** | Belirtilen `Amount` kadar gün geçtiğinde tetiklenir (Genellikle `FailNode` için kullanılır). | `<Condition Type="StageTimeout" Amount="5" />` |
+| **IsPlayerInSettlement** | Oyuncunun haritada rastgele dolaşmak yerine herhangi bir yerleşkenin (Şehir, Kale, Köy) içinde olup olmadığını kontrol eder. | `<Condition Type="!IsPlayerInSettlement" />` |
 | **DefeatedParties** | Belirtilen kültürden/fraksiyondan kaç parti mağlup edildi? (`TargetAlias` kültür ID'si olur) | `<Condition Type="DefeatedParties" TargetAlias="looters" Amount="3" />` |
 | **BattleResolvedAs** | SpawnBanditParty vb. ile yaratılan hedefin savaşı nasıl sonuçlandı? (Victory, Defeat, Retreat, DestroyedByAI) | `<Condition Type="BattleResolvedAs" TargetAlias="KiralikKatiller" StringValue="Victory" />` |
 | **HasPrisoner** | Oyuncunun esirleri arasında belirtilen karakterden istenen sayıda var mı? | `<Condition Type="HasPrisoner" ObjectId="looter" Amount="5" />` |

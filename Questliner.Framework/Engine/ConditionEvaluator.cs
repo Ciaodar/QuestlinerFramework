@@ -40,6 +40,10 @@ namespace Questliner.Framework.Engine
                 {
                     return Hero.MainHero.Gold >= condition.Amount;
                 }
+                case "IsPlayerInSettlement":
+                {
+                    return Hero.MainHero.CurrentSettlement != null;
+                }
 
                 case "TalkedTo":
                 {
