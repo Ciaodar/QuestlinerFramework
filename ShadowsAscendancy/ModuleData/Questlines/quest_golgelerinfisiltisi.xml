@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Questline Id="QLF_GolgelerinFisiltisi" Title="{=shdw_q1_title}Gölgelerin Fısıltısı" TimeLimitInDays="45">
+<Questline Id="QLF_GolgelerinFisiltisi" Title="{=shdw_q1_title}Whispers of the Shadows" TimeLimitInDays="45">
   <TargetResolvers>
     <Resolver Alias="HedefSehir" TargetType="Settlement" Filters="IsTown" Selector="Nearest" />
     <Resolver Alias="GorevVeren" TargetType="Hero" Filters="Merchant" RequiredSettlementAlias="HedefSehir" Selector="Random" />
@@ -16,7 +16,7 @@
 
   <Stages>
     <Stage Id="Stage1_TuccarDiyalog" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q1_s1_log}Klanının adı buralarda duyulmaya başladı. {HedefSehir_Link} şehrinde bir tüccar olan {GorevVeren_Link} seninle görüşmek istiyor. Kervanları son zamanlarda gizemli bir şekilde ortadan kayboluyormuş.</LogText>
+      <LogText>{=shdw_q1_s1_log}Your clan's name has started to be heard around here. A merchant named {GorevVeren_Link} in {HedefSehir_Link} wants to see you. It seems their caravans have been mysteriously disappearing lately.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="ForceConversation" TargetAlias="GorevVeren" />
@@ -24,7 +24,7 @@
     </Stage>
 
     <Stage Id="Stage2_Takip" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q1_s2_log}Tüccar {GorevVeren_Link} ile konuştun ve kervanlarının peşindeki haydutları bulmayı kabul ettin. Kaçakçı Kervanını haritada yakala ve onları yen.</LogText>
+      <LogText>{=shdw_q1_s2_log}You spoke with the merchant {GorevVeren_Link} and agreed to track down the bandits attacking their caravans. Find the Smuggler Caravan on the map and defeat them.</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="HedefKervan" Amount="1" />
       </Conditions>
@@ -35,30 +35,31 @@
     </Stage>
 
     <Stage Id="Stage3_Kanit" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q1_s3_log}Kaçakçıları yendin ve liderlerinin üzerinde şifreli bir defter buldun. Defterde çalınan malların çete lideri {KacakciLideri_Link}'ne aktarıldığı yazıyor. Şehre dönüp onunla yüzleş.</LogText>
+      <LogText>{=shdw_q1_s3_log}You destroyed the caravan and obtained the Encrypted Ledger. Now you must head to the back alleys of {HedefSehir_Link} and confront the Gang Leader {KacakciLideri_Link}.</LogText>
       <Conditions />
     </Stage>
 
     <Stage Id="Stage4_Kavga" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q1_s4a_log}Çete lideri {KacakciLideri_Link} teslim olmayı reddedip seninle savaşmayı seçti. Adamlarıyla birlikte şehrin dışına kaçmaya çalışıyor. Onu yakala ve çete partisini yok et!</LogText>
+      <LogText>{=shdw_q1_s4a_log}You rejected the gang leader's bribe. You are fighting to completely wipe out the gang. Eliminate the remaining gang members.</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="CetePartisi" Amount="1" />
       </Conditions>
       <OnExitActions>
         <Action Type="AddGold" Amount="3000" />
         <Action Type="ChangeRelation" TargetAlias="GorevVeren" Amount="15" />
+        <Action Type="ChangeRelation" TargetAlias="KacakciLideri" Amount="-30" />
         <Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_KanunAdami" Amount="1" />
         <Action Type="ChangeStage" ObjectId="StageSuccess_Kanun" />
       </OnExitActions>
     </Stage>
 
     <Stage Id="Stage4_Ihanet" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q1_s4b_log}Çete lideri {KacakciLideri_Link} ile anlaştın. Karanlık tarafa ilk adımını attın. Şimdi söz verdiğin gibi tüccar {GorevVeren_Link}'i bulup konuşarak işini bitir.</LogText>
+      <LogText>{=shdw_q1_s4b_log}You struck a deal with the gang leader {KacakciLideri_Link}. You took your first step into the dark side. Now, as promised, find the merchant {GorevVeren_Link}, speak with them, and finish the job.</LogText>
       <Conditions />
     </Stage>
 
     <Stage Id="Stage4_KorumalarlaSavas" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q1_s4c_log}Tüccar {GorevVeren_Link} canını kurtarmak için paralı askerlerini üzerine saldı. Onları yen ve tüccarın işini bitir!</LogText>
+      <LogText>{=shdw_q1_s4c_log}The merchant {GorevVeren_Link} unleashed their mercenaries to save their own life. Defeat them and finish off the merchant!</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="TuccarKorumalari" Amount="1" />
       </Conditions>
@@ -72,20 +73,20 @@
     </Stage>
 
     <Stage Id="StageSuccess_Kanun" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=shdw_q1_s5a_log}Çeteyi çökerttin ve {HedefSehir_Link} şehrinde düzeni sağladın. Tüccar sana minnettar. Adaletin kılıcı olduğunu bir kez daha kanıtladın.</LogText>
+      <LogText>{=shdw_q1_s5a_log}You ignored the whispers of the shadows and brought justice. The caravan routes are safer now, but the underworld has marked your name.</LogText>
       <Conditions />
     </Stage>
 
     <Stage Id="StageSuccess_Suc" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=shdw_q1_s5b_log}Tüccarı ortadan kaldırdın ve yeraltı dünyasına ilk adımını attın. Artık gölgeler senin için fısıldıyor, karaborsa kapıları sana ardına kadar açık.</LogText>
+      <LogText>{=shdw_q1_s5b_log}The gleam of gold covered the color of blood. You became a partner of the shadows. The merchant is dead, and the caravans are now under your protection (or threat).</LogText>
       <Conditions />
     </Stage>
   </Stages>
 
   <CustomDialogs>
-    <!-- Aşama 1: Tüccar ile Görüşme -->
+    <!-- Aşama 1: Tüccarla İlk Görüşme -->
     <DialogNode Type="Player" Id="Tuccar_Giris" TargetAlias="GorevVeren" InputToken="start" OutputToken="ql_shdw_t1" Priority="200">
-      <Text>{=shdw_q1_dlg1}Gönderdiğin haberi aldım. Benimle neden görüşmek istedin?</Text>
+      <Text>{=shdw_q1_dlg1}How can I help you, merchant?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_TuccarDiyalog" />
       </Conditions>
@@ -94,26 +95,22 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Tuccar_Cevap1" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="ql_shdw_t2">
-      <Text>{=shdw_q1_dlg2}Adın buralarda duyulmaya başladı dostum. Şehrin muhafızları kör ve sağır; kervanlarım şehre varmadan hemen önce buharlaşıyor. Çapulcu işi değil, içeriden birileri onlara haber uçuruyor.</Text>
-    </DialogNode>
-    
-    <DialogNode Type="Npc" Id="Tuccar_Cevap2" TargetAlias="GorevVeren" InputToken="ql_shdw_t2" OutputToken="ql_shdw_t3">
-      <Text>{=shdw_q1_dlg3}Bunu çözersen sana yüklü ödeme yaparım.</Text>
+    <DialogNode Type="Npc" Id="Tuccar_Aciklama" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="ql_shdw_t2">
+      <Text>{=shdw_q1_dlg2}My caravans... Someone is attacking them! Bandits are stealing my goods, but this is no ordinary robbery; it's as if they know our routes. Please find them and finish them off.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Tuccar_Kabul" TargetAlias="GorevVeren" InputToken="ql_shdw_t3" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg4}Kervanlarının izini süreceğim. Eğer içeriden biri varsa, onu da bulurum.</Text>
+    <DialogNode Type="Player" Id="Tuccar_Kabul" TargetAlias="GorevVeren" InputToken="ql_shdw_t2" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="30" StringValue="{=shdw_q1_kervan}Kaçakçı Kervanı" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="30" StringValue="{=shdw_q1_kervan}Smuggler Caravan" />
         <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="IgnoreAi" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
     </DialogNode>
 
-    <!-- Aşama 3: Çete Lideri ile Yüzleşme -->
+    <!-- Aşama 3: Çete Lideriyle Yüzleşme -->
     <DialogNode Type="Player" Id="Cete_Giris" TargetAlias="KacakciLideri" InputToken="start" OutputToken="ql_shdw_c1" Priority="200">
-      <Text>{=shdw_q1_dlg5}Kervanları vuran senin adamlarınmış. Defterim elimde. Bunu lordlara verirsem kellenden olursun.</Text>
+      <Text>{=shdw_q1_dlg4}I found the dogs plundering the caravans and seized this encrypted ledger. You're no common bandit, who is behind this?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Kanit" />
       </Conditions>
@@ -122,46 +119,52 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Cete_Cevap1" TargetAlias="KacakciLideri" InputToken="ql_shdw_c1" OutputToken="ql_shdw_c2">
-      <Text>{=shdw_q1_dlg6}Lordlar mı? O malların yarısı zaten bu şehrin asilzadelerine gidiyor aptal! Bana katıl, defteri yak, o tüccarı da ortadan kaldıralım. Kazancı kırışırız.</Text>
+    <DialogNode Type="Npc" Id="Cete_Aciklama" TargetAlias="KacakciLideri" InputToken="ql_shdw_c1" OutputToken="ql_shdw_c2">
+      <Text>{=shdw_q1_dlg5}(Laughs) You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market.</Text>
+      <Consequences>
+        <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
+      </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Cete_Karar_Kanun" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg7}Adaletten kaçamazsın. Kılıcını çek!</Text>
+    <DialogNode Type="Npc" Id="Cete_Teklif" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2" OutputToken="ql_shdw_c3">
+      <Text>{=shdw_q1_dlg6}Instead of causing me so much trouble, let's make a deal. Eliminate that merchant, and I'll give you a cut. The city streets are ours, and you'll profit too.</Text>
+    </DialogNode>
+
+    <!-- Oyuncu Kararları -->
+    <DialogNode Type="Player" Id="Cete_Karar_Kanun" TargetAlias="KacakciLideri" InputToken="ql_shdw_c3" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg7}You can't escape justice. Draw your sword!</Text>
       <Consequences>
         <Action Type="LeaveEncounter" />
-        <Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="40" StringValue="{=shdw_q1_cetepartisi}Çete Mensupları" />
+        <Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="40" StringValue="{=shdw_q1_cetepartisi}Gang Members" />
         <Action Type="SetPartyAi" TargetAlias="CetePartisi" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage4_Kavga" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Cete_Karar_Suc" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg8}Teklifin ilgimi çekti. Tüccarı halledeceğim.</Text>
+    <DialogNode Type="Player" Id="Cete_Karar_Karanlik" TargetAlias="KacakciLideri" InputToken="ql_shdw_c3" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg8}Gold opens all doors. We have a deal.</Text>
       <Consequences>
-        <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
-        <Action Type="ChangeRelation" TargetAlias="GorevVeren" Amount="-20" />
         <Action Type="ChangeStage" ObjectId="Stage4_Ihanet" />
       </Consequences>
     </DialogNode>
 
-    <!-- Aşama 4B: Tüccar ile Son Konuşma (İhanet) -->
+    <!-- Aşama 4: Tüccara İhanet (Eğer oyuncu çete ile anlaştıysa) -->
     <DialogNode Type="Player" Id="Tuccar_Ihanet_Giris" TargetAlias="GorevVeren" InputToken="start" OutputToken="ql_shdw_t4" Priority="200">
-      <Text>{=shdw_q1_dlg9}Sana kötü bir haberim var tüccar. O kervanları vuranlar artık benim ortaklarım.</Text>
+      <Text>{=shdw_q1_dlg9}You will pay for your betrayal with your blood!</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage4_Ihanet" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Tuccar_Ihanet_Cevap" TargetAlias="GorevVeren" InputToken="ql_shdw_t4" OutputToken="ql_shdw_t5">
-      <Text>{=shdw_q1_dlg10}Ne? Bütün bunlar bir yalan mıydı? Muhafızlar! Muhafızlar!</Text>
+    <DialogNode Type="Npc" Id="Tuccar_Ihanet_Yalvaris" TargetAlias="GorevVeren" InputToken="ql_shdw_t4" OutputToken="ql_shdw_t5">
+      <Text>{=shdw_q1_dlg10}What betrayal? What are you talking about?! No, wait, guards!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Tuccar_Ihanet_Saldiri" TargetAlias="GorevVeren" InputToken="ql_shdw_t5" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg11}Çok geç. Geber!</Text>
+      <Text>{=shdw_q1_dlg11}Too late. Die!</Text>
       <Consequences>
         <Action Type="LeaveEncounter" />
-        <Action Type="SpawnBanditParty" TargetAlias="TuccarKorumalari" Amount="20" StringValue="{=shdw_q1_korumalar}Tüccar Korumaları" />
+        <Action Type="SpawnBanditParty" TargetAlias="TuccarKorumalari" Amount="20" StringValue="{=shdw_q1_korumalar}Merchant Guards" />
         <Action Type="SetPartyAi" TargetAlias="TuccarKorumalari" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage4_KorumalarlaSavas" />
       </Consequences>

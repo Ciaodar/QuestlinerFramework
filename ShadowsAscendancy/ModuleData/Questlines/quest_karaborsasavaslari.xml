@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Questline Id="QLF_KaraborsaSavaslari" Title="{=shdw_q2_title}Karaborsa Savaşları" TimeLimitInDays="60">
+<Questline Id="QLF_KaraborsaSavaslari" Title="{=shdw_q2_title}Black Market Wars" TimeLimitInDays="60">
   <TargetResolvers>
     <!-- YozlasmisLord: Cruel veya Devious trait'e sahip bir lord -->
     <Resolver Alias="YozlasmisLord" TargetType="Hero" Filters="IsLord, Trait(Devious)" Selector="Random" />
@@ -18,49 +18,49 @@
 
   <Stages>
     <Stage Id="Stage1_Suikast" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q2_s1_log}Klanın artık tüm diyarda tanınıyor (Tier 3). Ancak geçmişin seni bırakmıyor. Başına büyük bir ödül konmuş ve kiralık katiller peşinde. Onları yenerek hayatta kal!</LogText>
+      <LogText>{=shdw_q2_s1_log}Your clan is now known throughout the realm (Tier 3). However, your past isn't letting you go. A large bounty has been placed on your head, and hired assassins are after you. Defeat them and survive!</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="KiralikKatiller" Amount="1" />
       </Conditions>
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="60" StringValue="{=shdw_q2_katiller}Kiralık Katiller" />
+        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="60" StringValue="{=shdw_q2_katiller}Hired Assassins" />
         <Action Type="SetPartyAi" TargetAlias="KiralikKatiller" StringValue="EngageParty" ObjectId="Player" />
       </OnEnterActions>
       <OnExitActions>
         <!-- Katiller yenilince yaralı bir komutan partisi spawn edip beklemesini sağlıyoruz -->
-        <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" StringValue="{=shdw_q2_komutan}Yaralı Komutan" />
+        <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" StringValue="{=shdw_q2_komutan}Wounded Commander" />
         <Action Type="SetPartyAi" TargetAlias="KatilKomutan" StringValue="Hold" />
         <Action Type="ChangeStage" ObjectId="Stage2_Sorgu" />
       </OnExitActions>
     </Stage>
 
     <Stage Id="Stage2_Sorgu" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q2_s2_log}Kiralık katilleri yendin ve hayatta kaldın. Haritada bekleyen Yaralı Komutanı bul ve onu sorgula.</LogText>
+      <LogText>{=shdw_q2_s2_log}You defeated the hired assassins and survived. Find the Wounded Commander waiting on the map and interrogate him.</LogText>
       <Conditions />
     </Stage>
 
     <Stage Id="Stage3_Intikam" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q2_s3_log}Suikast girişiminin arkasında {YozlasmisLord_Link} olduğunu öğrendin ve kanıtı (Lordun Mühürlü Emri) ele geçirdin. Şimdi onunla yüzleşme zamanı.</LogText>
+      <LogText>{=shdw_q2_s3_log}You learned that {YozlasmisLord_Link} was behind the assassination attempt and secured the evidence (Lord's Sealed Order). Now it's time to confront him.</LogText>
       <Conditions />
     </Stage>
 
     <Stage Id="Stage4_Hukumdar" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q2_s4_log}Lordun rüşvet teklifini reddettin. Şimdi {Hukumdar_Link} ile konuşup ihaneti kanıtlaman gerekiyor.</LogText>
+      <LogText>{=shdw_q2_s4_log}You rejected the lord's bribe. Now you must speak with {Hukumdar_Link} to prove his betrayal.</LogText>
       <Conditions />
     </Stage>
 
     <Stage Id="StageSuccess_Santaj" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=shdw_q2_s5a_log}Yozlaşmış lorddan yüklü miktarda sus payı alarak olayların üstünü örttün. Belki onursuzca bir hareketti ama cüzdanın oldukça doldu.</LogText>
+      <LogText>{=shdw_q2_s5a_log}You took a hefty hush money payment from the corrupt lord and covered up the incident. It might have been a dishonorable move, but your purse is quite full.</LogText>
       <Conditions />
     </Stage>
 
     <Stage Id="StageSuccess_Savas" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=shdw_q2_s5b_log}Krallığa savaş ilan etmek pahasına da olsa kendi adaletini kılıcınla sağladın. Tüm Kalradya senin gazabından korkmalı!</LogText>
+      <LogText>{=shdw_q2_s5b_log}Even at the cost of declaring war on a kingdom, you delivered your own justice with your sword. All of Calradia should fear your wrath!</LogText>
       <Conditions />
     </Stage>
 
     <Stage Id="StageSuccess_Politik" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=shdw_q2_s5c_log}Krallık liderine belgeleri sunarak yozlaşmış lordun sürgün edilmesini sağladın. Hükümdarın gözüne girdin ve krallıkta büyük bir siyasi zafer kazandın.</LogText>
+      <LogText>{=shdw_q2_s5c_log}By presenting the documents to the kingdom leader, you ensured the corrupt lord's exile. You gained favor with the ruler and achieved a great political victory in the kingdom.</LogText>
       <Conditions />
     </Stage>
   </Stages>
@@ -68,7 +68,7 @@
   <CustomDialogs>
     <!-- Aşama 2: Komutan Sorgusu -->
     <DialogNode Type="Player" Id="Kom_Giris" TargetAlias="KatilKomutan" InputToken="start" OutputToken="ql_shdw_kom_1" Priority="200">
-      <Text>{=shdw_q2_dlg1}Seni kim gönderdi? Konuş yoksa kelleni alırım!</Text>
+      <Text>{=shdw_q2_dlg1}Who sent you? Speak, or I'll take your head!</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Sorgu" />
       </Conditions>
@@ -78,7 +78,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kom_Cevap_Kanun" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_1" OutputToken="ql_shdw_kom_2">
-      <Text>{=shdw_q2_dlg2}Canımı bağışla! Emri {YozlasmisLord_Link} verdi. Geçmişte çeteyi çökertip gelirlerine mani olduğun için senin ölmeni istedi. Kanıt istersen, mühürlü emri zırhımın içindedir.</Text>
+      <Text>{=shdw_q2_dlg2}Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you dead because you crushed the gang and ruined his income in the past. If you want proof, his sealed order is inside my armor.</Text>
       <Conditions>
         <!-- Eğer oyuncu mafyayı çökerterek iyi yol seçmişse -->
         <Condition Type="GlobalFlag" ObjectId="GolgelerinFisiltisi_KanunAdami" Amount="1" />
@@ -86,7 +86,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kom_Cevap_Ihanet" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_1" OutputToken="ql_shdw_kom_2">
-      <Text>{=shdw_q2_dlg3}Canımı bağışla! Emri {YozlasmisLord_Link} verdi. Çeteyle yaptığın o karanlık anlaşmada kendi payını alamadığı için seni ortadan kaldırmak istedi. Kanıt istersen, mühürlü emri zırhımın içindedir.</Text>
+      <Text>{=shdw_q2_dlg3}Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you eliminated because he couldn't get his cut in that dark deal you made with the gang. If you want proof, his sealed order is inside my armor.</Text>
       <Conditions>
         <!-- Eğer oyuncu çeteyle anlaşıp tüccarı öldürdüyse -->
         <Condition Type="GlobalFlag" ObjectId="GolgelerinFisiltisi_KaranlikOrtak" Amount="1" />
@@ -95,7 +95,7 @@
 
     <!-- Fallback if no flag matched for some reason -->
     <DialogNode Type="Npc" Id="Kom_Cevap_Fallback" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_1" OutputToken="ql_shdw_kom_2">
-      <Text>{=shdw_q2_dlg2_fallback}Canımı bağışla! Emri {YozlasmisLord_Link} verdi. Karaborsa çıkarlarına mani olduğun için seni ortadan kaldırmak istedi. Mühürlü emri zırhımın içindedir.</Text>
+      <Text>{=shdw_q2_dlg2_fallback}Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you eliminated because you stood in the way of his black market interests. The sealed order is inside my armor.</Text>
       <Conditions>
         <Condition Type="!GlobalFlag" ObjectId="GolgelerinFisiltisi_KanunAdami" Amount="1" />
         <Condition Type="!GlobalFlag" ObjectId="GolgelerinFisiltisi_KaranlikOrtak" Amount="1" />
@@ -103,7 +103,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kom_Sonuc" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_2" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg4}Defol git buradan! Lorduna da selamımı söyle, onun için geliyorum.</Text>
+      <Text>{=shdw_q2_dlg4}Get out of here! And give my regards to your lord, I'm coming for him.</Text>
       <Consequences>
         <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="DestroyParty" TargetAlias="KatilKomutan" />
@@ -114,7 +114,7 @@
 
     <!-- Aşama 3: Lord ile Yüzleşme -->
     <DialogNode Type="Player" Id="Lord_Giris" TargetAlias="YozlasmisLord" InputToken="start" OutputToken="ql_shdw_lord_1" Priority="200">
-      <Text>{=shdw_q2_dlg5}Gönderdiğin köpekleri kestim. Mühürlü emrin elimde. Bunu krallığın geri kalanına gösterirsem onurun yerle bir olur!</Text>
+      <Text>{=shdw_q2_dlg5}I slaughtered the dogs you sent. I have your sealed order. If I show this to the rest of the kingdom, your honor will be in ruins!</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Intikam" />
       </Conditions>
@@ -124,11 +124,11 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Cevap1" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_1" OutputToken="ql_shdw_lord_2">
-      <Text>{=shdw_q2_dlg6}(Güler) Ben bir asilzadeyim, sen ise sadece kılıcını kiralayan birisin. Kral bana mı inanacak sana mı? Yine de baş ağrısı istemiyorum. Ne istiyorsun?</Text>
+      <Text>{=shdw_q2_dlg6}(Laughs) I am a nobleman, and you are just a sellsword. Will the king believe me or you? Still, I don't want a headache. What do you want?</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Karar_Santaj" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg7}Bana 20.000 Denar öde, bu konu sonsuza dek kapansın.</Text>
+      <Text>{=shdw_q2_dlg7}Pay me 20,000 Denars, and this matter is closed forever.</Text>
       <Consequences>
         <Action Type="AddGold" Amount="20000" />
         <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
@@ -138,7 +138,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Karar_Savas" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg8}Benim onurum parayla satılmaz. Seni keseceğim!</Text>
+      <Text>{=shdw_q2_dlg8}My honor cannot be bought. I will cut you down!</Text>
       <Consequences>
         <Action Type="DeclareWar" TargetAlias="YozlasmisLord" />
         <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
@@ -147,7 +147,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Karar_Politik" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg9}Bu belgeyi doğrudan hükümdara götüreceğim. Adalet yerini bulacak.</Text>
+      <Text>{=shdw_q2_dlg9}I will take this document straight to the ruler. Justice will be served.</Text>
       <Consequences>
         <Action Type="ChangeRelation" TargetAlias="YozlasmisLord" Amount="-50" />
         <Action Type="ChangeStage" ObjectId="Stage4_Hukumdar" />
@@ -156,14 +156,14 @@
 
     <!-- Aşama 4: Hükümdar ile Görüşme -->
     <DialogNode Type="Player" Id="Hukumdar_Giris" TargetAlias="Hukumdar" InputToken="start" OutputToken="ql_shdw_huk_1" Priority="200">
-      <Text>{=shdw_q2_dlg10}Yüce hükümdarım, asilzadelerinizden {YozlasmisLord_Link} arkamdan iş çevirip beni öldürtmek için suikastçılar tuttu. İhanetinin kanıtı bu mühürlü emirdir!</Text>
+      <Text>{=shdw_q2_dlg10}My liege, one of your noblemen, {YozlasmisLord_Link}, plotted behind my back and hired assassins to kill me. This sealed order is the proof of his betrayal!</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage4_Hukumdar" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Hukumdar_Cevap" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_1" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg11}Bir asilzadeyi suçlamak büyük bir cürettir, ancak mühür açıkça onun. Bu küstahlığı cezasız kalmayacak. Krallığa olan sadakatin için teşekkürler, hak ettiğin değeri göreceksin.</Text>
+      <Text>{=shdw_q2_dlg11}Accusing a nobleman is a great audacity, but the seal is clearly his. This insolence will not go unpunished. Thank you for your loyalty to the kingdom; you will receive the respect you deserve.</Text>
       <Consequences>
         <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="ChangeRelation" TargetAlias="Hukumdar" Amount="30" />
