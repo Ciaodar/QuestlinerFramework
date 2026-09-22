@@ -189,6 +189,9 @@ namespace Questliner.Shared.Models
 
         [XmlAttribute("Amount")]
         public int Amount { get; set; } = 1;
+
+        [XmlAttribute("StringValue")]
+        public string StringValue { get; set; } = string.Empty;
     }
 
     public class CustomDialogModel

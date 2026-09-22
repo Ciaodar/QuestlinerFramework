@@ -309,7 +309,7 @@ namespace Questliner.Framework.Engine
                     Hero? target = quest?.GetTargetHero(action.TargetAlias);
                     if (target != null && target.CharacterObject != null)
                     {
-                        TaleWorlds.CampaignSystem.CampaignMapConversation.OpenConversation(
+                        TaleWorlds.CampaignSystem.Conversation.CampaignMapConversation.OpenConversation(
                             new TaleWorlds.CampaignSystem.Conversation.ConversationCharacterData(Hero.MainHero.CharacterObject), 
                             new TaleWorlds.CampaignSystem.Conversation.ConversationCharacterData(target.CharacterObject)
                         );

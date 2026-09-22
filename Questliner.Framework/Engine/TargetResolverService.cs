@@ -134,6 +134,40 @@ namespace Questliner.Framework.Engine
             };
         }
 
+        public static bool IsSettlementMatch(TargetResolverModel model, Settlement settlement, DynamicQuest? quest, Hero? questGiver = null)
+        {
+            if (model.TargetType != "Settlement") return false;
+            if (!string.IsNullOrEmpty(model.SpecificId) && settlement.StringId != model.SpecificId) return false;
+
+            if (!string.IsNullOrEmpty(model.Filters))
+            {
+                var filters = model.Filters.Split(',').Select(f => f.Trim());
+                foreach (var filter in filters)
+                {
+                    if (filter == "Town" && !settlement.IsTown) return false;
+                    else if (filter == "Village" && !settlement.IsVillage) return false;
+                    else if (filter == "Castle" && !settlement.IsCastle) return false;
+                    else if (filter == "SameCultureAsPlayer" && settlement.Culture != Hero.MainHero.Culture) return false;
+                    else if (filter.StartsWith("SameFactionAs("))
+                    {
+                        var alias = filter.Substring(14, filter.Length - 15);
+                        if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
+                        {
+                            if (settlement.MapFaction != GetEffectiveFaction(aliasHero)) return false;
+                        }
+                    }
+                    else if (filter.StartsWith("SameKingdomAs("))
+                    {
+                        var alias = filter.Substring(14, filter.Length - 15);
+                        if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
+                        {
+                            if (settlement.MapFaction == null || !settlement.MapFaction.IsKingdomFaction || settlement.MapFaction != aliasHero.Clan?.Kingdom) return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
         
         private static int ParseSelectorSkip(string selector)
         {
@@ -240,30 +274,18 @@ namespace Questliner.Framework.Engine
             if (filter.StartsWith("Trait("))
             {
                 var traitName = filter.Substring(6, filter.Length - 7).ToLower();
-                var trait = TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.All.FirstOrDefault(t => t.StringId.ToLower() == traitName);
-                if (trait != null)
-                {
-                    // Treat negative traits (like Cruel, Devious) specially. If they ask for Cruel, they mean Mercy < 0.
-                    // But if traitName is "mercy", they might want positive. The easiest way is:
-                    // Just match if GetTraitLevel(trait) != 0, but Bannerlord has specific named traits.
-                    // For simplicity, we just check if GetTraitLevel(trait) > 0.
-                    // Wait, what if they specify "Cruel"? In Bannerlord, Cruel is actually Mercy = -2. But there is no trait object named "Cruel".
-                    // The trait object is "Mercy".
-                    // So we must handle "Cruel" manually!
-                }
-                
                 Func<Hero, bool> traitCondition = traitName switch
                 {
-                    "cruel" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Mercy) < 0,
-                    "devious" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Honor) < 0,
-                    "calculating" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Calculating) > 0,
-                    "impulsive" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Calculating) < 0,
-                    "mercy" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Mercy) > 0,
-                    "honor" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Honor) > 0,
-                    "generosity" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Generosity) > 0,
-                    "closefisted" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Generosity) < 0,
-                    "valor" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Valor) > 0,
-                    "cautious" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterAttributes.DefaultTraits.Valor) < 0,
+                    "cruel" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterDevelopment.DefaultTraits.Mercy) < 0,
+                    "devious" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterDevelopment.DefaultTraits.Honor) < 0,
+                    "calculating" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterDevelopment.DefaultTraits.Calculating) > 0,
+                    "impulsive" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterDevelopment.DefaultTraits.Calculating) < 0,
+                    "mercy" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterDevelopment.DefaultTraits.Mercy) > 0,
+                    "honor" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterDevelopment.DefaultTraits.Honor) > 0,
+                    "generosity" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterDevelopment.DefaultTraits.Generosity) > 0,
+                    "closefisted" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterDevelopment.DefaultTraits.Generosity) < 0,
+                    "valor" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterDevelopment.DefaultTraits.Valor) > 0,
+                    "cautious" => h => h.GetTraitLevel(TaleWorlds.CampaignSystem.CharacterDevelopment.DefaultTraits.Valor) < 0,
                     _ => h => true
                 };
 

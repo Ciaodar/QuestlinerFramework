@@ -17,7 +17,7 @@ namespace Questliner.Framework.Engine
         {
             if (condition.ConditionType.StartsWith("!"))
             {
-                var copy = new ConditionModel { ConditionType = condition.ConditionType.Substring(1), TargetAlias = condition.TargetAlias, ObjectId = condition.ObjectId, Amount = condition.Amount };
+                var copy = new ConditionModel { ConditionType = condition.ConditionType.Substring(1), TargetAlias = condition.TargetAlias, ObjectId = condition.ObjectId, Amount = condition.Amount, StringValue = condition.StringValue };
                 return !IsConditionMet(copy, quest);
             }
             switch (condition.ConditionType)
