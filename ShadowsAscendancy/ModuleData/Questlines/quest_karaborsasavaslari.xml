@@ -17,7 +17,7 @@
   </Triggers>
 
   <Stages>
-    <Stage Id="Stage1_Suikast" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+    <Stage Id="Stage1_Suikast" NextStageId="Stage2_Sorgu" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=shdw_q2_s1_log}Your clan is now known throughout the realm (Tier 3). However, your past isn't letting you go. A large bounty has been placed on your head, and hired assassins are after you. Defeat them and survive!</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="KiralikKatiller" Amount="1" />
@@ -30,7 +30,6 @@
         <!-- Katiller yenilince yaralı bir komutan partisi spawn edip beklemesini sağlıyoruz -->
         <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" StringValue="{=shdw_q2_komutan}Wounded Commander" />
         <Action Type="SetPartyAi" TargetAlias="KatilKomutan" StringValue="Hold" />
-        <Action Type="ChangeStage" ObjectId="Stage2_Sorgu" />
       </OnExitActions>
     </Stage>
 

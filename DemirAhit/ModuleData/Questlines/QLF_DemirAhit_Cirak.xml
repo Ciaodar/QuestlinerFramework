@@ -16,14 +16,22 @@
   </Triggers>
 
   <Stages>
-    <Stage Id="Stage1_Teklif" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_1}{EfsaneviDemirci.Name} summons you to forge your clan's legendary sword. However, you need to find 5 Star Iron around {HammadeKaynagi_Link} for the sword.</LogText>
+    <Stage Id="Stage1_Davet" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
+      <LogText>{=da_log_0}Your reputation precedes you in the halls of lords. The legendary blacksmith {EfsaneviDemirci_Link} wants to see you about forging a sword passed down from your ancestors.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit_Baslatildi" Amount="1" />
         <Action Type="SaveHeroToGlobal" TargetAlias="EfsaneviDemirci" StringValue="DemirAhit_AnaDemirci" />
         <Action Type="SaveHeroToGlobal" TargetAlias="RakipTuccar" StringValue="DemirAhit_RakipTuccar" />
       </OnEnterActions>
+      <OnExitActions />
+      <OnTimeoutActions />
+    </Stage>
+
+    <Stage Id="Stage1_Toplama" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=da_log_1}Find 5 Star Iron around {HammadeKaynagi_Link}.</LogText>
+      <Conditions />
+      <OnEnterActions />
       <OnExitActions />
       <OnTimeoutActions>
         <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="30" PartyTemplateId="sea_raiders_template" SpawnDistance="3" SpawnRadius="5" StringValue="{=da_katiller}Hired Assassins" />
@@ -42,7 +50,7 @@
       <OnTimeoutActions>
          <Action Type="TakeItem" ObjectId="YildizDemiri" Amount="2" />
          <Action Type="DestroyParty" TargetAlias="KiralikKatiller" />
-         <Action Type="ChangeStage" ObjectId="Stage1_Teklif" />
+         <Action Type="ChangeStage" ObjectId="Stage1_Toplama" />
       </OnTimeoutActions>
     </Stage>
 
@@ -51,19 +59,18 @@
       <Conditions />
       <OnEnterActions>
          <Action Type="ChangeRelation" TargetAlias="RakipTuccar" Amount="-5" />
-         <Action Type="ChangeStage" ObjectId="Stage1_Teklif" />
+         <Action Type="ChangeStage" ObjectId="Stage1_Toplama" />
       </OnEnterActions>
       <OnExitActions />
       <OnTimeoutActions />
     </Stage>
 
     <Stage Id="Stage2_KestirmeYol" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=da_log_kestirme}You convinced the blacksmith and received a pre-forged sword as a shortcut.</LogText>
+      <LogText>{=da_log_kestirme}You bought the sword from the blacksmith, taking a rather costly shortcut.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="GiveItem" ObjectId="GecicilAhitKilici" Amount="1" />
         <Action Type="ChangeRenown" Amount="25" />
-        <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="5" />
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit1_Basarili" Amount="1" />
         <Action Type="CompleteQuest" />
       </OnEnterActions>
@@ -72,7 +79,7 @@
     </Stage>
 
     <Stage Id="Stage3_Teslim" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=da_log_3}You collected the Star Iron, you can now deliver them to {EfsaneviDemirci.Name}.</LogText>
+      <LogText>{=da_log_3}You collected the Star Iron, you can now deliver them to {EfsaneviDemirci_Link}.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -84,43 +91,63 @@
   </Stages>
 
   <CustomDialogs>
-    <!-- Stage 1: Demirci ile konuşup görevi dinleme / kestirme yolu seçme -->
-    <DialogNode Type="Npc" Id="Demirci_Teklif_Giris" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_tek_secimler" Priority="200">
-      <Text>{=da_tek_1}The name of your clan is growing, child. I forged the sword of your ancestors; now it's time I forge a new one for you. But first, bring me 5 Star Iron.</Text>
+    <!-- Entry point via Main Hero Options (skips meeting introductions) -->
+    <DialogNode Type="Player" Id="Demirci_Giris" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_tek_secimler" Priority="200">
+      <Text>{=da_giris_p}You sent for me, master?</Text>
       <Conditions>
-        <Condition Type="IsStageActive" ObjectId="Stage1_Teklif" />
-        <Condition Type="!HasItem" ObjectId="YildizDemiri" Amount="5" />
+        <Condition Type="IsStageActive" ObjectId="Stage1_Davet" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Demirci_Teklif_Bilgi" TargetAlias="EfsaneviDemirci" InputToken="da_tek_secimler" OutputToken="close_window">
+    <DialogNode Type="Npc" Id="Demirci_Teklif_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_tek_secimler" OutputToken="da_tek_sorular" Priority="200">
+      <Text>{=da_tek_1}Your clan's name is growing, child. I forged the sword of your ancestors; now it's time I forge a new one for you. But first, I need 5 Star Iron.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_Teklif_Bilgi" TargetAlias="EfsaneviDemirci" InputToken="da_tek_sorular" OutputToken="da_tek_bilgi_cevap">
       <Text>{=da_tek_p1}Where can I find this ore?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Demirci_Teklif_Bilgi_Cevap" TargetAlias="EfsaneviDemirci" InputToken="da_tek_bilgi_cevap" OutputToken="close_window">
+      <Text>{=da_tek_npc_bilgi}I am certain you can find some around {HammadeKaynagi_Link}.</Text>
       <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage1_Toplama" />
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Demirci_Teklif_Kestirme" TargetAlias="EfsaneviDemirci" InputToken="da_tek_secimler" OutputToken="close_window">
-      <Text>{=da_tek_p2}I don't have time to wait this long, just give me an already forged sword.</Text>
+    <DialogNode Type="Player" Id="Demirci_Teklif_Kestirme" TargetAlias="EfsaneviDemirci" InputToken="da_tek_sorular" OutputToken="da_tek_kestirme_cevap">
+      <Text>{=da_tek_p2}Master, don't misunderstand, but could the sword you mentioned be the one standing behind you? I don't have much time, can I just buy it from you?</Text>
       <Conditions>
-         <Condition Type="SkillCheck" ObjectId="Charm" Amount="30" />
+         <Condition Type="HasGold" Amount="10000" />
       </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Demirci_Teklif_Kestirme_Cevap" TargetAlias="EfsaneviDemirci" InputToken="da_tek_kestirme_cevap" OutputToken="close_window">
+      <Text>{=da_tek_npc_kestirme}You have not yet grasped the spirit of this craft, child. But of course, the sword is your right. Here, take it. We will meet again...</Text>
       <Consequences>
+         <Action Type="TakeGold" Amount="10000" />
          <Action Type="ChangeStage" ObjectId="Stage2_KestirmeYol" />
          <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
     <!-- Stage 1 -> 3 Gecis Dialogu -->
-    <DialogNode Type="Npc" Id="Demirci_Teslim_Gecis" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_teslim_gecis_1" Priority="200">
-      <Text>{=da_teslim_ready}My eyes aren't deceiving me, are they? You brought the Star Iron!</Text>
+    <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_Giris" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_teslim_gecis_1" Priority="200">
+      <Text>{=da_teslim_p_giris}I brought the iron you requested.</Text>
       <Conditions>
-        <Condition Type="IsStageActive" ObjectId="Stage1_Teklif" />
+        <Condition Type="IsStageActive" ObjectId="Stage1_Toplama" />
         <Condition Type="HasItem" ObjectId="YildizDemiri" Amount="5" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_P" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_1" OutputToken="close_window">
+    <DialogNode Type="Npc" Id="Demirci_Teslim_Gecis" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_1" OutputToken="da_teslim_gecis_2" Priority="200">
+      <Text>{=da_teslim_ready}My eyes aren't deceiving me, are they? You brought the Star Iron!</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_P" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_2" OutputToken="close_window">
       <Text>{=da_teslim_p1}Yes master, here you go.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage3_Teslim" />
