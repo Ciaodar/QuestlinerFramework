@@ -70,7 +70,7 @@
       <Conditions />
     </Stage>
 
-    <Stage Id="Stage6_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
+    <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false" TimeoutInDays="7">
       <LogText>{=sp_ai_s_success_log}You learned that all of this was a game set up to test your loyalty. It turns out you have just met your friend {Dost_Link}. He gave you 50,000 denars as compensation for the troubles he caused and wished you success in your new service. The rumors of treason have ended.</LogText>
       <Conditions />
       <OnEnterActions>
@@ -78,14 +78,8 @@
         <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
       </OnEnterActions>
       <OnTimeoutActions>
-        <Action Type="ChangeStage" ObjectId="StageSuccess" />
         <Action Type="StartQuest" ObjectId="QLF_KopukBaglar" />
       </OnTimeoutActions>
-    </Stage>
-
-    <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_ai_s_success_final_log}A week has passed since you joined the Pigeons. A new mission awaits.</LogText>
-      <Conditions />
     </Stage>
   </Stages>
 
@@ -342,7 +336,7 @@
       <Text>{=sp_ai_dlg51}Did you want to talk about anything else?</Text>
       <Consequences>
         <Action Type="AddGold" Amount="50000" />
-        <Action Type="ChangeStage" ObjectId="Stage6_Bekleme" />
+        <Action Type="ChangeStage" ObjectId="StageSuccess" />
       </Consequences>
     </DialogNode>
   </CustomDialogs>
