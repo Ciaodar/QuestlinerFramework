@@ -163,7 +163,7 @@ namespace Questliner.Framework.Core
             {
                 TaleWorlds.Core.MBInformationManager.AddQuickInformation(new TextObject($"GÃ¶rev BaÅŸarÄ±sÄ±z: {Title}"));
                 CompleteQuestWithFail(); 
-                Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.CompletedQuestIds.Add(Model.Id);
+                Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
             }
         }
 
@@ -203,7 +203,7 @@ namespace Questliner.Framework.Core
             {
                 TaleWorlds.Core.MBInformationManager.AddQuickInformation(new TextObject($"GÃ¶rev TamamlandÄ±: {Title}"));
                 CompleteQuestWithSuccess(); 
-                Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.CompletedQuestIds.Add(Model.Id);
+                Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
             }
         }
 
@@ -266,12 +266,12 @@ namespace Questliner.Framework.Core
                 if (currentStageModel.IsSuccessNode)
                 {
                     CompleteQuestWithSuccess();
-                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.CompletedQuestIds.Add(Model.Id);
+                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
                 else if (currentStageModel.IsFailNode)
                 {
                     CompleteQuestWithFail();
-                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.CompletedQuestIds.Add(Model.Id);
+                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
                 else if (!string.IsNullOrEmpty(currentStageModel.NextStageId))
                 {
@@ -366,13 +366,13 @@ namespace Questliner.Framework.Core
                 {
                     TaleWorlds.Core.MBInformationManager.AddQuickInformation(new TextObject($"GÃ¶rev TamamlandÄ±: {Title}"));
                     CompleteQuestWithSuccess();
-                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.CompletedQuestIds.Add(Model.Id);
+                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
                 else if (nextStageModel.IsFailNode)
                 {
                     TaleWorlds.Core.MBInformationManager.AddQuickInformation(new TextObject($"GÃ¶rev BaÅŸarÄ±sÄ±z: {Title}"));
                     CompleteQuestWithFail();
-                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.CompletedQuestIds.Add(Model.Id);
+                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
             }
         }

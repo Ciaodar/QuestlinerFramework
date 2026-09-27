@@ -40,19 +40,21 @@ Bu belge, Questliner Framework üzerinde çalışacak, oyuncunun Klan Seviyesine
 - **Oyuncu Cevap 1 (Kanun Yolu):** "Adaletten kaçamazsın. Kılıcını çek!" (Görev `Stage4_Kavga` aşamasına geçer).
 - **Oyuncu Cevap 2 (Suç Yolu):** "Teklifin ilgimi çekti. Tüccarı halledeceğim." (Görev `Stage4_Ihanet` aşamasına geçer, Tüccar ile ilişki -20 düşer).
 
-### Aşama 4A: Kanun Yolu (Stage4_Kavga)
-**Durum:** Oyuncu mafyaya savaş açmıştır. Çete lideri köşeye sıkıştığını anlar ve kaçmaya çalışırken oyuncuya saldırır.
-**Tetiklenen Olay:** Çete lideri diyalog sonlandığında bir parti olarak haritaya spawn edilir (`<Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="40" />`) ve doğrudan oyuncuya saldırı emri verilir (`SetPartyAi Target="Player" Mode="Engage"`). 
-**Sonuç:** Çete partisi yenildiğinde Çete Lideri esir düşer. Tüccara haber verilir. Görev biter. 
-- **Ödüller:** +3000 Denar, Tüccar ile +15 ilişki, Şehir Güvenliği (Security) +5 artar.
-- **Global Flag:** `<Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_KanunAdami" Amount="1" />`
+### Aşama 4A: Kanun Yolu (Stage4_PusuBekleyis ve Stage5_PusuSavas)
+**Durum:** Oyuncu mafyaya boyun eğmeyi ve rüşveti reddeder. Çete lideri şehirden çıkışın tehlikeli olacağını fısıldayarak gizliden oyuncuyu tehdit eder.
+**Tetiklenen Olay:** Şehir içindeki diyalog güvenle kapanır (`Stage4_PusuBekleyis`). Oyuncu yerleşkeden çıkıp açık haritaya adım attığında (`<Condition Type="!IsPlayerInSettlement" />`), 50 kişilik çete grubu aniden belirir (`SpawnBanditParty`) ve oyuncuya saldırır (`SetPartyAi EngageParty`).
+**Özel Diyalog:** Çete mensupları saldırmadan önce oyuncuya çete lideriyle zıtlaşmanın bedelini ödeteceklerini söyler.
+**Sonuç:** Pusu partisi yenildiğinde görev başarıyla tamamlanır.
+- **Ödüller:** +5000 Denar, Tüccar ile +15 ilişki, Çete Lideri ile -30 ilişki.
+- **Global Flag:** `<Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_KanunAdami" Amount="1" />` ve `<Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />`
 
-### Aşama 4B: Suç Yolu - Tüccarın Sonu (Stage4_Ihanet)
-**Durum:** Oyuncu çeteyle anlaşmıştır. Tüccarı ortadan kaldırması gerekir.
-**Hedef:** Tüccarı öldür veya şehirden sür.
-**Sonuç:** Tüccar öldürüldüğünde görev biter.
-- **Ödüller:** +5000 Denar, Çete Lideri ile +20 ilişki, Şehir Güvenliği (Security) -5 düşer.
-- **Global Flag:** `<Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_KaranlikOrtak" Amount="1" />`
+### Aşama 4B: Suç Yolu - Soylu Şantajı (Stage4_TuccarSantaj)
+**Durum:** Oyuncu bir lord olarak sokak ortasında suikast gibi ayak işleri yapmayı reddeder; ancak açgözlülüğüne yenik düşerek çete lideriyle anlaşır. Çete liderine tüccarı haraca bağlama sözü verir.
+**Hedef:** Şehirdeki Tüccar ile konuşarak onu hem çeteye hem de oyuncuya pay vermeye zorla.
+**Özel Diyalog:** Tüccar köşeye sıkışır, dehşet içinde oyuncunun mafyadan bile acımasız olduğunu söyler ve canını kurtarmak için ödemeyi kabul eder.
+**Sonuç:** Tüccar sindirildiğinde görev tamamlanır.
+- **Ödüller:** +10.000 Denar, Tüccar ile -50 ilişki, Çete Lideri ile +20 ilişki.
+- **Global Flag:** `<Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_KaranlikOrtak" Amount="1" />` ve `<Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />`
 
 ---
 
