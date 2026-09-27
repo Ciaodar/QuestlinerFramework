@@ -2,7 +2,7 @@
 <Questline Id="QLF_KaraborsaSavaslari" Title="{=shdw_q2_title}Black Market Wars" TimeLimitInDays="60">
   <TargetResolvers>
     <!-- YozlasmisLord: Cruel veya Devious trait'e sahip bir lord -->
-    <Resolver Alias="YozlasmisLord" TargetType="Hero" Filters="IsLord, Trait(Devious)" Selector="Random" />
+    <Resolver Alias="YozlasmisLord" TargetType="Hero" Filters="Lord, Trait(Devious)" Selector="Random" />
     <!-- Hukumdar: YozlasmisLord'un bulunduğu krallığın lideri -->
     <Resolver Alias="Hukumdar" TargetType="Hero" Filters="KingdomLeader, SameKingdomAs(YozlasmisLord)" Selector="First" />
   </TargetResolvers>

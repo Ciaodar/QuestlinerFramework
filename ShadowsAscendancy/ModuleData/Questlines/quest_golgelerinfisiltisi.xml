@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Questline Id="QLF_GolgelerinFisiltisi" Title="{=shdw_q1_title}Whispers of the Shadows" TimeLimitInDays="45">
   <TargetResolvers>
-    <Resolver Alias="HedefSehir" TargetType="Settlement" Filters="IsTown" Selector="Nearest" />
+    <Resolver Alias="HedefSehir" TargetType="Settlement" Filters="Town" Selector="Nearest" />
     <Resolver Alias="GorevVeren" TargetType="Hero" Filters="Merchant" RequiredSettlementAlias="HedefSehir" Selector="Random" />
     <Resolver Alias="KacakciLideri" TargetType="Hero" Filters="GangLeader" RequiredSettlementAlias="HedefSehir" Selector="Random" />
   </TargetResolvers>
@@ -20,6 +20,7 @@
       <LogText>{=shdw_q1_s1_log}Your clan's name has started to be heard around here. A merchant named {GorevVeren_Link} in {HedefSehir_Link} wants to see you. It seems their caravans have been mysteriously disappearing lately.</LogText>
       <Conditions />
       <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="GorevVeren" />
         <Action Type="ForceConversation" TargetAlias="GorevVeren" />
       </OnEnterActions>
     </Stage>
