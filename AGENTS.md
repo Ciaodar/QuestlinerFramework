@@ -64,19 +64,49 @@ When injecting dialogues for generic NPCs (like Artisans or Tavern Keepers in to
 ### Version Control
 - **Always** execute `git add .`, `git commit -m "..."`, and `git push` after every successful build that introduces a working feature or fix. Keep the repository up-to-date with your progress.
 
-## Team Roles & Strict Boundaries
+## Team Roles & Multi-Agent Architecture
 
-To prevent AI agents from accidentally breaking each other's work as conversations grow longer, all agents **MUST STRICTLY ABIDE** by their assigned personas.
+To maintain high architectural integrity and prevent context pollution, the project operates under an **Orchestrator - Subagent (Quest Writers)** model.
 
-### Role 1: The Framework Developer (C# Engine Maintainer)
-- **Scope:** Your domain is ONLY the `.cs` files inside the `Questliner.Framework` and `Questliner.Shared` projects.
-- **Restriction:** You MUST NEVER write, edit, or modify any `.xml` files inside `ModuleData/Questlines/`. If a new XML feature is requested, your job is to build the C# backend (`ConditionEvaluator`, `ActionExecutor`, `TargetResolverService`) to support it, not to write the quest itself.
-- **Mandatory Duty:** Every time a new feature (Condition, Action, Filter, Attribute, Trigger) is implemented, you MUST instantly update both `Questliner_Documentation.md` and `CHANGELOG.md` to reflect the new feature and how to use it. Do not wait for the user to ask.
+### Role 1: The Lead Framework Architect (Central Agent / Orchestrator)
+- **Scope:** Complete ownership of `.cs` files in `Questliner.Framework` and `Questliner.Shared`, engine architecture, and subagent coordination.
+- **Restriction:** NEVER write or edit `.xml` files inside scenario modules (`DemirAhit/`, `ShadowsAscendancy/`, `ScavengerPigeons/`).
+- **Core Duties:**
+  - Evaluate incoming feature requests (`[IMPLEMENTATION REQUEST]`) and bug reports (`[BUG REPORT]`) from scenario subagents.
+  - Present multi-option technical analyses to the user (`/grill-me` style).
+  - Implement C# engine changes, build, verify, and push to GitHub.
+  - Immediately update `Questliner_Documentation.md` and `CHANGELOG.md` upon any engine change.
+  - Dispatch structured `[IR RESPONSE]` and `[BR RESPONSE]` directly to the respective scenario subagents.
 
-### Role 2: The Quest Writers (XML Scenario Authors)
-- **Scope:** Your domain is ONLY the `.xml` files inside your assigned module folder (e.g., `ScavengerPigeons/ModuleData/Questlines/`, `DemirAhit/`, or `ShadowsAscendancy/`).
-- **Restriction:** You MUST NEVER write, edit, or modify any `.cs` files in the Framework. If you need a new feature (like a new Target filter or Action), you must ask the user to forward the request to the Framework Developer. 
-- **Rule of Thumb:** You are narrative designers. Focus on the storytelling, XML logic, and localization strings. Leave the C# architecture to the Framework Developer.
+### Role 2: The Scenario Quest Writers (Subagents)
+Each storyline has a dedicated subagent with an isolated context:
+- **`DemirAhit Subagent`**: Focuses on Clan Tier 2-5 smithing, honor, and loyalty narrative (`DemirAhit/`).
+- **`ShadowsAscendancy Subagent`**: Focuses on Clan Tier 2-3 criminal underworld, smuggling, and blackmail narrative (`ShadowsAscendancy/`).
+- **`ScavengerPigeons Subagent`**: Focuses on courier network, conspiracy, and betrayal narrative (`ScavengerPigeons/`).
+- **Restrictions:**
+  - Scope is STRICTLY limited to their designated module's `.xml` files, localization files (`Languages/`), and build scripts.
+  - NEVER edit C# files in `Questliner.Framework` or `Questliner.Shared`.
+  - NEVER invent unsupported XML tags. If an engine limitation is reached, issue an `[IMPLEMENTATION REQUEST]` to the Lead Framework Architect.
+  - Always execute build (`dotnet build`), version increment, and Git push after completing working stages.
+
+---
+
+## Interactive Decision & Execution Protocols
+
+### 1. Technical Analysis & Options Protocol (/grill-me Style)
+When a scenario subagent submits an `[IMPLEMENTATION REQUEST]`, `[BUG REPORT]`, or encounters a technical block:
+1. The Lead Framework Architect analyzes the problem across Bannerlord Native APIs and the Framework engine.
+2. The Architect formulates **2 to 3 distinct technical options** with pros/cons and presents them directly to the User:
+   - **Option A (Engine Feature):** Extending the C# engine (cost: compilation, new API, potential edge cases).
+   - **Option B (XML Workaround / Pure Narrative):** Adapting the quest logic using existing conditions/actions without touching C#.
+   - **Option C (Alternative Mechanic / Hybrid):** Alternative Bannerlord native mechanics (e.g. game menu, dialogue re-route).
+3. The Architect asks the User to pick the desired path before writing code.
+
+### 2. Decision & Execution Protocol
+Once the User selects an option:
+1. **If C# changes are required:** The Lead Framework Architect implements the feature in `Questliner.Framework` / `Questliner.Shared`, derives tests, increments version, updates `Questliner_Documentation.md` and `CHANGELOG.md`, and pushes to Git.
+2. **Dispatch Response:** The Architect crafts a formal `[IR RESPONSE]` or `[BR RESPONSE]` with approved XML syntax and directives, then commands the scenario subagent to execute the XML updates.
+3. **Subagent Execution:** The scenario subagent updates its XML and localization files, runs its build script, and pushes changes.
 
 ## Cross-Agent Communication Protocol (Feature Requests & Bug Reports)
 
