@@ -105,7 +105,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Demirci_Teklif_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_tek_secimler" OutputToken="da_tek_sorular" Priority="200">
-      <Text>{=da_tek_1}Aye, warlord. Your name echoes in every mead hall. I knew your forebears well; I helped forge the ancestral steel that carved your house's seat. It is time you carried a true weapon of your lineage. Yet ordinary iron cannot bear such an oath; I require 5 chunks of genuine Star Iron.</Text>
+      <Text>{=da_tek_1}Aye, warlord. Your name echoes across every feast hall. I knew your forebears well; I helped forge the ancestral steel that carved your house's seat. It is time you carried a true weapon of your lineage. Yet ordinary iron cannot bear such an oath; I require 5 chunks of genuine Star Iron.</Text>
       <Conditions />
     </DialogNode>
 

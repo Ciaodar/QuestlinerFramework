@@ -48,17 +48,17 @@
 
     <!-- Görev 2: Kalfa Sınavı (QLF_DemirAhit_Kalfa) -->
     <string id="demirahit2_title" text="Kalfa Sınavı" />
-    <string id="da_log_2_1" text="Kara haber tez ulaştı: Usta demirci {EfsaneviDemirci_Link}, intikam peşindeki tüccar {RakipTuccar_Link}'ın atölyesine gece kundaklaması planladığını öğrendi. Derhal ustanın atölyesine git." />
+    <string id="da_log_2_1" text="Kara haber tez ulaştı: Usta demirci {EfsaneviDemirci_Link}, intikam peşindeki tüccar {RakipTuccar_Link} tarafından atölyesine gece kundaklaması planlandığını öğrendi. Derhal ustanın atölyesine git." />
     <string id="da_log_2_2A" text="Atölyeyi korumak için 5 gün boyunca köyde nöbet tutmayı seçtin. Gözcülerini uyanık, kılıçlarını keskin tut; sabotajcılar gecenin zifiri karanlığında saldıracak." />
     <string id="da_sabotajci" text="Rakip Atölye Sabotajcıları" />
     <string id="da_log_2_2A_savas" text="Meşaleler geceyi yardı! Sabotajcılar atölye sınırına saldırdı. Körükler ateşe verilmeden önce hepsini bertaraf et!" />
-    <string id="da_log_2_2B" text="Alevlerin yükselmesini beklemek yerine yılanın başını kaynağında ezmeye karar verdin. {RakipTuccar_Link}'ı bul ve bu kalleşliğe son ver." />
+    <string id="da_log_2_2B" text="Alevlerin yükselmesini beklemek yerine yılanın başını kaynağında ezmeye karar verdin. {RakipTuccar_Link} denen harisi bul ve bu kalleşliğe son ver." />
     <string id="da_log_2_2B_savas" text="{RakipTuccar_Link} geri adım atmayı reddetti ve kiralık muhafızlarını üzerine saldı. Klanının kudretini göstermek için onları savaşta yere ser." />
     <string id="da_log_2_3" text="Ocak dimdik ayakta kaldı! Gösterdiğin sarsılmaz sadakat ve savaş ustalığının nişanesi olarak {EfsaneviDemirci_Link} sana Kalfa Mührü'nü takdim etti." />
     <string id="da_kalfa_p_giris" text="Kötü dedikodular duydum usta, ocağına ne musallat oldu?" />
     <string id="da_kalfa_dlg_1" text="Örsün üzerine kara bir gölge düştü dostum. {RakipTuccar_Link}, atölyemi yerle bir etmek için haydutlar ve kundakçılar toplamış. Ateş sönerse kılıç asla tamamlanamaz. Bu şerri nasıl defedeceğiz?" />
     <string id="da_kalfa_p1" text="Köyde kalıp nöbet tutacağım, tek bir kundakçı dahi ocağın yakınına nefes alamayacak." />
-    <string id="da_kalfa_p2" text="Savunmada kalmak zaaf doğurur. Doğrudan {RakipTuccar_Link}'ın karşısına dikilip meşaleler yakılmadan hesabını göreceğim." />
+    <string id="da_kalfa_p2" text="Savunmada kalmak zaaf doğurur. Doğrudan {RakipTuccar_Link} karşısına dikilip meşaleler yakılmadan hesabını göreceğim." />
     <string id="da_kalfa_t_p_giris" text="Şu demirci ocağına yolladığın kundakçılar meselesini konuşacağız, tüccar." />
     <string id="da_kalfa_dlg_2" text="Vay, klanın başbuğu kükrüyor demek! Bu diyarlarda ticaret altını olanın hakkıdır, geçmiş krallıkların rüyasını gören paslı morukların değil. Ne cüretle defterimin başına dikildin?" />
     <string id="da_kalfa_t_p1" text="Sana 2.000 altın teklif ediyorum. Adamlarını geri çek de bu dava kârlı bir şekilde kapansın." />
@@ -71,13 +71,13 @@
 
     <!-- Görev 3: Ustanın Yükü (QLF_DemirAhit_Usta) -->
     <string id="demirahit3_title" text="Ustanın Yükü" />
-    <string id="da_log_3_1" text="{EfsaneviDemirci_Link}'in ulağı soluk soluğa, perişan bir halde karargahına vardı. Örs kardeşliğinin başına büyük bir felaket geldi. Vakit kaybetmeden ustanın yanına sür." />
+    <string id="da_log_3_1" text="{EfsaneviDemirci_Link} ulağı soluk soluğa karargahına vardı. Örs kardeşliğinin başına büyük bir felaket geldi. Vakit kaybetmeden ustanın yanına sür." />
     <string id="da_log_3_2" text="Demircinin kardeşi ve usta zanaatkar {Kalan_Link}, {DusmanKale_Link} zindanının rutubetli taşlarında esir tutuluyor. Onun kadim su verme sırları olmadan çeliğin katlanması imkansız. Kaleye sız, kuşat veya fidyeyle onu kurtar." />
     <string id="da_log_3_2B" text="{DusmanKale_Link} surlarında alarmlar çalıyor! Kaçış girişimin fark edildi ve garnizon muhafızları koridorları doldurdu. Kalan'ı kurtarmak için savaşarak çıkmalısın!" />
-    <string id="da_log_3_3" text="Tüm engellere rağmen {Kalan_Link}'ın zincirlerini kırdın! Örsün ikiz ustaları nihayet bir araya geldi; ata yadigarı şaheser için ritüel ateşleri yakılmaya hazır." />
+    <string id="da_log_3_3" text="Tüm engellere rağmen {Kalan_Link} için vurulan zincirleri kırdın! Örsün ikiz ustaları nihayet bir araya geldi; ata yadigarı şaheser için ritüel ateşleri yakılmaya hazır." />
     <string id="da_haber_p_giris" text="Ulağın atını çatlatırcasına sürdü usta, nedir seni bu kadar kederlendiren?" />
     <string id="da_haber_dlg_1" text="Kardeşim, {Kalan_Link}... Dağ geçitlerinden su verme tuzları getirirken esir alınıp {DusmanKale_Link} zindanının dibine atılmış. Kılıcın ağzına o kırılmaz su verme sırrını yalnızca onun elleri bilir. O olmadan bütün emeğimiz çöpe döner. Yalvarırım onu ocağımıza geri getir!" />
-    <string id="da_haber_p1" text="Ahit kardeşliğimizin hiçbir ustası zindanda çürüyemez. {DusmanKale_Link}'e sızıp kardeşini burnu bile kanamadan geri getireceğim." />
+    <string id="da_haber_p1" text="Ahit kardeşliğimizin hiçbir ustası zindanda çürüyemez. {DusmanKale_Link} zindanına sızıp kardeşini burnu bile kanamadan geri getireceğim." />
     <string id="da_kalan_p_giris" text="Sessiz ol usta, sesini alçalt. Ağabeyinin yeminiyle zincirlerini kırmaya geldim." />
     <string id="da_kalan_dlg_1" text="Ağabeyim mi yolladı seni? Şükürler olsun ata tanrılarına! Lakin demir parmaklıklar kapalı ve muhafızlar her çanda avluda devriye geziyor. Buradan nasıl sağ çıkacağız?" />
     <string id="da_kalan_p1" text="Adımlarımı takip et ve yalnızca meşaleler döndüğünde ilerle. Bütün devriye nöbetlerini ezberledim. [Serserilik]" />
@@ -88,11 +88,11 @@
 
     <!-- Görev 4: Mirasın Dövülüşü (QLF_DemirAhit_Miras) -->
     <string id="demirahit4_title" text="Mirasın Dövülüşü" />
-    <string id="da_log_4_1" text="Uzun destan nihayet zirveye ulaşıyor. {Kalan_Link}'ın da körük başına geçmesiyle usta demirci {EfsaneviDemirci_Link}, ata yadigarı kılıcın son dövülüşü için seni atölyeye çağırıyor." />
+    <string id="da_log_4_1" text="Uzun destan nihayet zirveye ulaşıyor. {Kalan_Link} ile birlikte usta demirci {EfsaneviDemirci_Link}, ata yadigarı kılıcın son dövülüşü için seni atölyeye çağırıyor." />
     <string id="da_log_4_2" text="Katlanan Yıldız Demirine ruhunu üflemek için ustaların kadim 'Kalbin Ateşi' ritüelini yakması gerekiyor. Nadir simyevi yağlar ve pota bileşenleri için 50.000 altın toplayıp ustalara teslim et." />
     <string id="da_log_4_3" text="Örsler nihayet sustu, su verme teknesinden göğe dumanlar yükseliyor. Ahit Kılıcı ilahi bir parlaklıkla ışıldıyor! Bu efsanevi silahın kime ait olacağına karar vermek için {EfsaneviDemirci_Link} ile konuş." />
     <string id="da_log_4_4" text="Ahit Kılıcını klanının kutsal yadigarı olarak kuşandın! Onun kusursuz dengesi ve jilet keskinliği, soyunu tüm Kalradya üzerinde mutlak bir kudrete taşıyacak." />
-    <string id="da_log_4_5" text="Eşi benzeri olmayan Ahit Kılıcını hükümdarın Kral {IttifakKrali_Link}'e sundun. Bu jest kraliyet divanını sarstı; sarsılmaz sadakatin ve yiğitliğin tüm diyarda destanlaştı." />
+    <string id="da_log_4_5" text="Eşi benzeri olmayan Ahit Kılıcını hükümdarın Kral {IttifakKrali_Link} huzurunda sundun. Bu jest kraliyet divanını sarstı; sarsılmaz sadakatin ve yiğitliğin tüm diyarda destanlaştı." />
     <string id="da_miras_p_giris" text="Körükler bugün ejderha gibi kükrüyor usta, çelik son katlanışa hazır mı?" />
     <string id="da_miras_dlg_1" text="Hoş geldin soylu savaşçı. Kardeşim {Kalan_Link} ile birlikte haftalardır gökten inen bu çeliği örs üzerinde bin kere katladık. Çelik kusursuz ve dümdüz. Lakin kılıca ebedi bir ruh vermek için 'Kalbin Ateşi'ni tutuşturmalıyız. Bu kadim ritüel için 50.000 altın değerinde nadir pota harçları ve simyevi yağlar gerekiyor." />
     <string id="da_miras_p1" text="Soyumun kaderi için hiçbir bedel çok değildir. 50.000 altını toplayıp döneceğim." />
