@@ -4,6 +4,25 @@ Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sis
 
 ---
 
+## [v1.2.0] - 27 Eylül 2026 (Environment, Spatial Selectors & Political Engine)
+
+### Eklendi (Added)
+- **Yeni Action'lar (Aksiyonlar):**
+  - `ChangeCrimeRating`: Belirtilen hedef fraksiyonunda ve/veya oyuncunun o an içinde bulunduğu yerleşkede suç puanını artırır/azaltır. Yeraltı dünyası ve haydutluk senaryoları için eklenmiştir.
+  - `DeclareWar` & `MakePeace` genişletildi: Artık sadece oyuncu ile hedef arasında değil, `TargetAlias` ve `ObjectId` kullanılarak hedef fraksiyonlar arasında da savaş ve barış başlatılabilir.
+- **Yeni Condition'lar (Koşullar):**
+  - `Environment`: Zaman (Gece/Gündüz) ve Mevsim (Winter/Spring/Summer/Autumn) kontrollerini tek bir koşulda birleştiren esnek çevre kontrolü (`Time="Night" Season="Winter"`).
+  - `IsNight` / `IsDay`: Zamanın gece veya gündüz olduğunu sorgulayan pratik koşullar.
+  - `IsSeason`: Mevcut mevsimi sorgulayan koşul (`Season="Winter"` veya `StringValue="Winter"`).
+  - `IsAtWarWith`: Oyuncunun belirtilen hedefle (veya `ObjectId` ile verilen fraksiyonla) savaşta olup olmadığını sorgulayan diplomasi koşulu.
+- **Yeni TargetResolver Seçicileri (Selectors) & Filtreleri:**
+  - `Selector="NearestTo(Alias)"`: Belirtilen Alias'a (bir şehir, lord veya parti) coğrafi olarak en yakın olan adayı seçer.
+  - `Selector="WithinDistance(Alias, Mesafe)"`: Belirtilen Alias'a verilen harita mesafesi içindeki adaylar arasından seçim yapar (örn: `WithinDistance(HedefSehir, 50)`).
+  - `Filters="Hideout"`: Haydut sığınaklarını Settlement hedefi olarak çözümler.
+  - `DynamicQuest.GetTargetParty(Alias)` metodu motor mimarisine dahil edildi.
+
+---
+
 ## [v1.1.0] - 18 Eylül 2026 (RPG Engine Upgrade)
 
 ### Eklendi (Added)

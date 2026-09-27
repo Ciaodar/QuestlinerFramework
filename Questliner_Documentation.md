@@ -42,6 +42,10 @@ Koşullar `<Prerequisites>` (Görevin başlama şartı), Aşama (Stage) ilerleme
 | **HasPrisoner** | Oyuncunun esirleri arasında belirtilen karakterden istenen sayıda var mı? | `<Condition Type="HasPrisoner" ObjectId="looter" Amount="5" />` |
 | **GlobalFlag** | Kampanya boyunca kalıcı olarak kaydedilen değişkene bakar (1: True, 0: False). | `<Condition Type="GlobalFlag" ObjectId="DemirAhit1_Basarili" Amount="1" />` |
 | **SkillCheck** | Oyuncunun belirtilen yeteneği (Skill) en az belirtilen miktarda mı? | `<Condition Type="SkillCheck" ObjectId="Roguery" Amount="50" />` |
+| **Environment** | Zaman (Gece/Gündüz) ve Mevsim kontrolünü tek koşulda birleştirir. (`Time`: "Night" veya "Day", `Season`: "Winter", "Spring", "Summer", "Autumn") | `<Condition Type="Environment" Time="Night" Season="Winter" />` |
+| **IsNight** / **IsDay** | Zamanın gece veya gündüz olduğunu denetler. | `<Condition Type="IsNight" />` |
+| **IsSeason** | Mevsimi denetler. (`Season` veya `StringValue`: "Winter", "Spring", "Summer", "Autumn") | `<Condition Type="IsSeason" StringValue="Winter" />` |
+| **IsAtWarWith** | Oyuncunun hedefle (veya belirtilen fraksiyonla) savaşta olup olmadığını denetler. | `<Condition Type="IsAtWarWith" TargetAlias="DüşmanLord" />` |
 
 ---
 
@@ -63,6 +67,7 @@ Aksiyonlar, diyalogların sonunda (`Consequences`), aşamalar tamamlandığında
 | **CompleteQuest** | Görevi başarılı olarak sonlandırır. | `<Action Type="CompleteQuest" />` |
 | **ChangeRenown** | Oyuncunun klanına Renown (Ün) ekler/siler. | `<Action Type="ChangeRenown" Amount="50" />` |
 | **ChangeInfluence** | Oyuncunun klanına Influence (Nüfuz) ekler/siler. | `<Action Type="ChangeInfluence" Amount="20" />` |
+| **ChangeCrimeRating** | Belirtilen hedef fraksiyonunda ve/veya oyuncunun o an bulunduğu yerleşkede suç puanını artırır/azaltır. | `<Action Type="ChangeCrimeRating" TargetAlias="HedefSehir" Amount="30" />` |
 | **DeclareWar** | Oyuncunun fraksiyonu ile hedefin fraksiyonu arasında savaş başlatır. | `<Action Type="DeclareWar" TargetAlias="EnemyLord" />` |
 | **MakePeace** | Oyuncunun fraksiyonu ile hedefin fraksiyonu arasında barış ilan eder. | `<Action Type="MakePeace" TargetAlias="EnemyLord" />` |
 | **SetPrisoner** | Belirtilen hedefi direkt oyuncunun esiri yapar. | `<Action Type="SetPrisoner" TargetAlias="QuestTarget" />` |
@@ -105,8 +110,15 @@ Başına `!` konursa tam tersini seçer (Örn: `!IsFemale` -> Sadece Erkekleri s
 **Desteklenen Filtreler:**
 - **Kimlik ve Durum:** `ClanLeader`, `KingdomLeader`, `Artisan`, `RuralNotable`, `Merchant`, `Headman`, `GangLeader`, `IsLord`, `IsHero`, `IsWanderer`, `IsNotable`, `IsPrisoner` (Herhangi bir esir), `IsPrisonerInSettlement` (Sadece şehir/kale zindanındaki esirler).
 - **Cinsiyet:** `IsFemale`, `IsMale`.
-- **Yerleşke Tipleri:** `IsTown`, `IsVillage`, `IsCastle`.
-- **Mesafe ve Rastgelelik:** `Nearest` (En yakın), `Random` (Rastgele), `HighestRelation` (İlişkisi en yüksek olan).
+- **Yerleşke Tipleri:** `Town` (veya `IsTown`), `Village` (veya `IsVillage`), `Castle` (veya `IsCastle`), `Hideout` (Haydut sığınağı).
+- **Mesafe, Seçiciler (Selectors) ve Rastgelelik:** 
+  - `Selector="Random"`: Adaylar arasından rastgele birini seçer.
+  - `Selector="Nearest"`: Oyuncuya en yakın adayı seçer.
+  - `Selector="NearestTo(Alias)"`: Belirtilen Alias'a (bir şehir, lord veya parti) haritada en yakın adayı seçer (Örn: `NearestTo(HedefSehir)`).
+  - `Selector="WithinDistance(Alias, Mesafe)"`: Belirtilen Alias'a verilen harita mesafesi içindeki adaylar arasından seçim yapar (Örn: `WithinDistance(HedefSehir, 50)`).
+  - `Selector="SecondNearest"`: En yakın 2. adayı seçer.
+  - `Selector="Furthest"`: En uzak adayı seçer.
+  - `Selector="HighestRelation"`: İlişkisi en yüksek olanı seçer.
 - **Siyasi ve Sosyal Bağlar:** `PlayerFaction`, `RandomFaction`, `RandomKingdom`, `SameCultureAs(Alias)`.
   - `SameKingdomAs(Alias)`: Hedef ile tamamen aynı krallıkta olan kişileri bulur.
   - `SameClanAs(Alias)`: Hedef ile tamamen aynı ailede/klanda olan kişileri bulur.

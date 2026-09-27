@@ -208,18 +208,71 @@ namespace Questliner.Framework.Engine
                     ChangeClanInfluenceAction.Apply(Clan.PlayerClan, action.Amount);
                     break;
                 }
+                case "ChangeCrimeRating":
+                {
+                    IFaction? targetFaction = null;
+                    if (!string.IsNullOrEmpty(action.TargetAlias) && quest != null)
+                    {
+                        var hero = quest.GetTargetHero(action.TargetAlias);
+                        var settlement = quest.GetTargetSettlement(action.TargetAlias);
+                        var party = quest.GetTargetParty(action.TargetAlias);
+                        targetFaction = hero?.MapFaction ?? settlement?.MapFaction ?? party?.MapFaction;
+                    }
+                    if (targetFaction == null && !string.IsNullOrEmpty(action.ObjectId))
+                    {
+                        targetFaction = Campaign.Current.Factions.FirstOrDefault(f => f.StringId == action.ObjectId);
+                    }
+
+                    if (targetFaction != null)
+                    {
+                        ChangeCrimeRatingAction.Apply(targetFaction, action.Amount, true);
+                    }
+
+                    var currentFaction = TaleWorlds.CampaignSystem.Settlements.Settlement.CurrentSettlement?.MapFaction ?? Hero.MainHero.CurrentSettlement?.MapFaction;
+                    if (currentFaction != null && currentFaction != targetFaction)
+                    {
+                        ChangeCrimeRatingAction.Apply(currentFaction, action.Amount, true);
+                    }
+                    break;
+                }
                 case "DeclareWar":
                 {
-                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
-                    if (target?.Clan?.MapFaction != null)
-                        DeclareWarAction.ApplyByDefault(Clan.PlayerClan.MapFaction, target.Clan.MapFaction);
+                    IFaction? targetFaction = null;
+                    if (!string.IsNullOrEmpty(action.TargetAlias) && quest != null)
+                    {
+                        var hero = quest.GetTargetHero(action.TargetAlias);
+                        var settlement = quest.GetTargetSettlement(action.TargetAlias);
+                        var party = quest.GetTargetParty(action.TargetAlias);
+                        targetFaction = hero?.MapFaction ?? settlement?.MapFaction ?? party?.MapFaction;
+                    }
+                    if (targetFaction == null && !string.IsNullOrEmpty(action.ObjectId))
+                    {
+                        targetFaction = Campaign.Current.Factions.FirstOrDefault(f => f.StringId == action.ObjectId);
+                    }
+                    if (targetFaction != null && Clan.PlayerClan.MapFaction != null && targetFaction != Clan.PlayerClan.MapFaction)
+                    {
+                        DeclareWarAction.ApplyByDefault(Clan.PlayerClan.MapFaction, targetFaction);
+                    }
                     break;
                 }
                 case "MakePeace":
                 {
-                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
-                    if (target?.Clan?.MapFaction != null)
-                        MakePeaceAction.Apply(Clan.PlayerClan.MapFaction, target.Clan.MapFaction);
+                    IFaction? targetFaction = null;
+                    if (!string.IsNullOrEmpty(action.TargetAlias) && quest != null)
+                    {
+                        var hero = quest.GetTargetHero(action.TargetAlias);
+                        var settlement = quest.GetTargetSettlement(action.TargetAlias);
+                        var party = quest.GetTargetParty(action.TargetAlias);
+                        targetFaction = hero?.MapFaction ?? settlement?.MapFaction ?? party?.MapFaction;
+                    }
+                    if (targetFaction == null && !string.IsNullOrEmpty(action.ObjectId))
+                    {
+                        targetFaction = Campaign.Current.Factions.FirstOrDefault(f => f.StringId == action.ObjectId);
+                    }
+                    if (targetFaction != null && Clan.PlayerClan.MapFaction != null && targetFaction != Clan.PlayerClan.MapFaction)
+                    {
+                        MakePeaceAction.Apply(Clan.PlayerClan.MapFaction, targetFaction);
+                    }
                     break;
                 }
                 case "SetPrisoner":

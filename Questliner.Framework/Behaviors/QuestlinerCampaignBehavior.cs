@@ -14,6 +14,14 @@ namespace Questliner.Framework.Behaviors
     {
         public static QuestlinerCampaignBehavior? Instance { get; private set; }
         public System.Collections.Generic.List<string> CompletedQuestIds => _completedQuestIds;
+
+        public void MarkQuestAsCompleted(string questId)
+        {
+            if (!_completedQuestIds.Contains(questId))
+            {
+                _completedQuestIds.Add(questId);
+            }
+        }
         public override void RegisterEvents()
         {
             Instance = this;

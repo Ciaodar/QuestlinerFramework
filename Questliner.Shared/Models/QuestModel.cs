@@ -192,6 +192,12 @@ namespace Questliner.Shared.Models
 
         [XmlAttribute("StringValue")]
         public string StringValue { get; set; } = string.Empty;
+
+        [XmlAttribute("Time")]
+        public string Time { get; set; } = string.Empty; // Night, Day
+
+        [XmlAttribute("Season")]
+        public string Season { get; set; } = string.Empty; // Winter, Spring, Summer, Autumn
     }
 
 

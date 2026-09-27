@@ -73,7 +73,26 @@ namespace Questliner.Framework.Engine
 
             // 2. SELECTOR
             var playerPos = GetPlayerPosition();
-            return model.Selector switch
+            var selector = model.Selector ?? "Random";
+
+            if (selector.StartsWith("NearestTo(") && selector.EndsWith(")"))
+            {
+                var targetAlias = selector.Substring(10, selector.Length - 11).Trim();
+                var refPos = GetAliasPosition(targetAlias, quest) ?? playerPos;
+                return candidates.OrderBy(h => (h.CurrentSettlement?.GetPosition2D ?? h.HomeSettlement?.GetPosition2D ?? TaleWorlds.Library.Vec2.Zero).DistanceSquared(refPos)).FirstOrDefault();
+            }
+            if (selector.StartsWith("WithinDistance(") && selector.EndsWith(")"))
+            {
+                var parts = selector.Substring(15, selector.Length - 16).Split(',');
+                var targetAlias = parts[0].Trim();
+                float maxDist = parts.Length > 1 && float.TryParse(parts[1].Trim(), out var d) ? d : 50f;
+                var refPos = GetAliasPosition(targetAlias, quest) ?? playerPos;
+                var filtered = candidates.Where(h => (h.CurrentSettlement?.GetPosition2D ?? h.HomeSettlement?.GetPosition2D ?? TaleWorlds.Library.Vec2.Zero).Distance(refPos) <= maxDist).ToList();
+                if (filtered.Any()) return filtered.GetRandomElementInefficiently();
+                return candidates.OrderBy(h => (h.CurrentSettlement?.GetPosition2D ?? h.HomeSettlement?.GetPosition2D ?? TaleWorlds.Library.Vec2.Zero).DistanceSquared(refPos)).FirstOrDefault();
+            }
+
+            return selector switch
             {
                 "Random" => candidates.GetRandomElementInefficiently(),
                 "Nearest" => candidates.OrderBy(h => (h.CurrentSettlement?.GetPosition2D ?? h.HomeSettlement?.GetPosition2D ?? TaleWorlds.Library.Vec2.Zero).DistanceSquared(playerPos)).FirstOrDefault(),
@@ -81,6 +100,27 @@ namespace Questliner.Framework.Engine
                 "Furthest" => candidates.OrderByDescending(h => (h.CurrentSettlement?.GetPosition2D ?? h.HomeSettlement?.GetPosition2D ?? TaleWorlds.Library.Vec2.Zero).DistanceSquared(playerPos)).FirstOrDefault(),
                 _ => candidates.GetRandomElementInefficiently()
             };
+        }
+
+        public static TaleWorlds.Library.Vec2? GetAliasPosition(string alias, DynamicQuest? quest)
+        {
+            if (quest != null)
+            {
+                if (quest.TargetSettlements.TryGetValue(alias, out var settlement) && settlement != null)
+                    return settlement.GetPosition2D;
+                if (quest.TargetHeroes.TryGetValue(alias, out var hero) && hero != null)
+                    return hero.CurrentSettlement?.GetPosition2D ?? hero.HomeSettlement?.GetPosition2D ?? hero.PartyBelongedTo?.GetPosition2D;
+                if (quest.TargetParties.TryGetValue(alias, out var party) && party != null)
+                    return party.GetPosition2D;
+            }
+
+            var globalSettlement = Settlement.All.FirstOrDefault(s => s.StringId == alias);
+            if (globalSettlement != null) return globalSettlement.GetPosition2D;
+
+            var globalHero = Campaign.Current.AliveHeroes.FirstOrDefault(h => h.StringId == alias);
+            if (globalHero != null) return globalHero.CurrentSettlement?.GetPosition2D ?? globalHero.HomeSettlement?.GetPosition2D;
+
+            return null;
         }
 
         public static Settlement? ResolveSettlement(TargetResolverModel model, DynamicQuest? quest, Hero? questGiver = null)
@@ -98,6 +138,7 @@ namespace Questliner.Framework.Engine
                     if (filter == "Town") candidates = candidates.Where(s => s.IsTown);
                     else if (filter == "Village") candidates = candidates.Where(s => s.IsVillage);
                     else if (filter == "Castle") candidates = candidates.Where(s => s.IsCastle);
+                    else if (filter == "Hideout") candidates = candidates.Where(s => s.IsHideout);
                     // Same culture as player
                     else if (filter == "SameCultureAsPlayer") candidates = candidates.Where(s => s.Culture == Hero.MainHero.Culture);
                     else if (filter.StartsWith("SameFactionAs("))
@@ -124,7 +165,26 @@ namespace Questliner.Framework.Engine
             if (!candidates.Any()) return null;
 
             var playerPos = GetPlayerPosition();
-            return model.Selector switch
+            var selector = model.Selector ?? "Random";
+
+            if (selector.StartsWith("NearestTo(") && selector.EndsWith(")"))
+            {
+                var targetAlias = selector.Substring(10, selector.Length - 11).Trim();
+                var refPos = GetAliasPosition(targetAlias, quest) ?? playerPos;
+                return candidates.OrderBy(s => s.GetPosition2D.DistanceSquared(refPos)).FirstOrDefault();
+            }
+            if (selector.StartsWith("WithinDistance(") && selector.EndsWith(")"))
+            {
+                var parts = selector.Substring(15, selector.Length - 16).Split(',');
+                var targetAlias = parts[0].Trim();
+                float maxDist = parts.Length > 1 && float.TryParse(parts[1].Trim(), out var d) ? d : 50f;
+                var refPos = GetAliasPosition(targetAlias, quest) ?? playerPos;
+                var filtered = candidates.Where(s => s.GetPosition2D.Distance(refPos) <= maxDist).ToList();
+                if (filtered.Any()) return filtered.GetRandomElementInefficiently();
+                return candidates.OrderBy(s => s.GetPosition2D.DistanceSquared(refPos)).FirstOrDefault();
+            }
+
+            return selector switch
             {
                 "Random" => candidates.GetRandomElementInefficiently(),
                 "Nearest" => candidates.OrderBy(s => s.GetPosition2D.DistanceSquared(playerPos)).FirstOrDefault(),
@@ -147,6 +207,7 @@ namespace Questliner.Framework.Engine
                     if (filter == "Town" && !settlement.IsTown) return false;
                     else if (filter == "Village" && !settlement.IsVillage) return false;
                     else if (filter == "Castle" && !settlement.IsCastle) return false;
+                    else if (filter == "Hideout" && !settlement.IsHideout) return false;
                     else if (filter == "SameCultureAsPlayer" && settlement.Culture != Hero.MainHero.Culture) return false;
                     else if (filter.StartsWith("SameFactionAs("))
                     {

@@ -379,6 +379,7 @@ namespace Questliner.Framework.Core
 
         public Hero? GetTargetHero(string alias) => TargetHeroes.TryGetValue(alias, out var hero) ? hero : null;
         public Settlement? GetTargetSettlement(string alias) => TargetSettlements.TryGetValue(alias, out var st) ? st : null;
+        public TaleWorlds.CampaignSystem.Party.MobileParty? GetTargetParty(string alias) => TargetParties.TryGetValue(alias, out var p) ? p : null;
         public bool GetFlag(string key) => TrackedFlags.TryGetValue(key, out var val) && val;
         public void SetFlag(string key, bool value) => TrackedFlags[key] = value;
 

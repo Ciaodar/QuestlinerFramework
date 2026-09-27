@@ -17,7 +17,16 @@ namespace Questliner.Framework.Engine
         {
             if (condition.ConditionType.StartsWith("!"))
             {
-                var copy = new ConditionModel { ConditionType = condition.ConditionType.Substring(1), TargetAlias = condition.TargetAlias, ObjectId = condition.ObjectId, Amount = condition.Amount, StringValue = condition.StringValue };
+                var copy = new ConditionModel 
+                { 
+                    ConditionType = condition.ConditionType.Substring(1), 
+                    TargetAlias = condition.TargetAlias, 
+                    ObjectId = condition.ObjectId, 
+                    Amount = condition.Amount, 
+                    StringValue = condition.StringValue,
+                    Time = condition.Time,
+                    Season = condition.Season
+                };
                 return !IsConditionMet(copy, quest);
             }
             switch (condition.ConditionType)
@@ -167,6 +176,55 @@ namespace Questliner.Framework.Engine
                     var skill = Campaign.Current.ObjectManager.GetObject<TaleWorlds.Core.SkillObject>(condition.ObjectId);
                     if (skill == null) return false;
                     return Hero.MainHero.GetSkillValue(skill) >= condition.Amount;
+                }
+                case "Environment":
+                {
+                    bool timeOk = true;
+                    if (!string.IsNullOrEmpty(condition.Time))
+                    {
+                        if (condition.Time.Equals("Night", System.StringComparison.OrdinalIgnoreCase))
+                            timeOk = CampaignTime.Now.IsNightTime;
+                        else if (condition.Time.Equals("Day", System.StringComparison.OrdinalIgnoreCase))
+                            timeOk = CampaignTime.Now.IsDayTime;
+                    }
+
+                    bool seasonOk = true;
+                    if (!string.IsNullOrEmpty(condition.Season))
+                    {
+                        seasonOk = CampaignTime.Now.GetSeasonOfYear.ToString().Equals(condition.Season, System.StringComparison.OrdinalIgnoreCase);
+                    }
+
+                    return timeOk && seasonOk;
+                }
+                case "IsNight":
+                {
+                    return CampaignTime.Now.IsNightTime;
+                }
+                case "IsDay":
+                {
+                    return CampaignTime.Now.IsDayTime;
+                }
+                case "IsSeason":
+                {
+                    string targetSeason = !string.IsNullOrEmpty(condition.Season) ? condition.Season : condition.StringValue;
+                    return CampaignTime.Now.GetSeasonOfYear.ToString().Equals(targetSeason, System.StringComparison.OrdinalIgnoreCase);
+                }
+                case "IsAtWarWith":
+                {
+                    IFaction? targetFaction = null;
+                    if (!string.IsNullOrEmpty(condition.TargetAlias) && quest != null)
+                    {
+                        var hero = quest.GetTargetHero(condition.TargetAlias);
+                        var settlement = quest.GetTargetSettlement(condition.TargetAlias);
+                        var party = quest.GetTargetParty(condition.TargetAlias);
+                        targetFaction = hero?.MapFaction ?? settlement?.MapFaction ?? party?.MapFaction;
+                    }
+                    if (targetFaction == null && !string.IsNullOrEmpty(condition.ObjectId))
+                    {
+                        targetFaction = Campaign.Current.Factions.FirstOrDefault(f => f.StringId == condition.ObjectId);
+                    }
+                    if (Hero.MainHero.MapFaction == null || targetFaction == null) return false;
+                    return FactionManager.IsAtWarAgainstFaction(Hero.MainHero.MapFaction, targetFaction);
                 }
                 // Future expansions: HasTroop, SettlementProsperity...
                 default:
