@@ -67,13 +67,10 @@
   <CustomDialogs>
     <!-- Aşama 2: Komutan Sorgusu -->
     <DialogNode Type="Npc" Id="Kom_Giris" TargetAlias="KatilKomutan" InputToken="start" OutputToken="ql_shdw_kom_sorgu" Priority="200">
-      <Text>{=shdw_q2_dlg_kom_intro}Spare me! Put away your weapon, I yield! Ask what you will, just spare my life!</Text>
+      <Text>{=shdw_q2_dlg_kom_intro}Spare me! Put away your weapon, I yield... Ask whatever you want, just don't kill me!</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Sorgu" />
       </Conditions>
-      <Consequences>
-        <Action Type="MakeMet" TargetAlias="KatilKomutan" />
-      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kom_Sorgu" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_sorgu" OutputToken="ql_shdw_kom_1">
@@ -106,7 +103,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kom_Sonuc" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_2" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg4}Get out of here! And give my regards to your lord, I'm coming for him.</Text>
+      <Text>{=shdw_q2_dlg4}Get out of here! Give my regards to your lord, tell him I am coming for him.</Text>
       <Consequences>
         <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="DestroyParty" TargetAlias="KatilKomutan" />
@@ -127,15 +124,15 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Yuzlesme" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_yuzlesme" OutputToken="ql_shdw_lord_1">
-      <Text>{=shdw_q2_dlg5}I slaughtered the dogs you sent. I have your sealed order. If I show this to the rest of the kingdom, your honor will be in ruins!</Text>
+      <Text>{=shdw_q2_dlg5}I slaughtered the dogs you sent. I hold your sealed order. If I reveal this to the realm, your honor is forfeit!</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Cevap1" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_1" OutputToken="ql_shdw_lord_2">
-      <Text>{=shdw_q2_dlg6}(Laughs) I am a nobleman, and you are just a sellsword. Will the king believe me or you? Still, I don't want a headache. What do you want?</Text>
+      <Text>{=shdw_q2_dlg6}(Laughs) I am a noble, and you are merely a mercenary for hire. Who will the king believe, me or you? Still, I care little for headaches. What is your price?</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Karar_Santaj" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg7}Pay me 20,000 Denars, and this matter is closed forever.</Text>
+      <Text>{=shdw_q2_dlg7}Pay me 20,000 denars, and this matter is buried forever.</Text>
       <Consequences>
         <Action Type="AddGold" Amount="20000" />
         <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
@@ -145,7 +142,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Karar_Savas" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg8}My honor cannot be bought. I will cut you down!</Text>
+      <Text>{=shdw_q2_dlg8}My honor cannot be bought with coin. Draw your weapon!</Text>
       <Consequences>
         <Action Type="DeclareWar" TargetAlias="YozlasmisLord" />
         <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
@@ -154,7 +151,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Karar_Politik" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg9}I will take this document straight to the ruler. Justice will be served.</Text>
+      <Text>{=shdw_q2_dlg9}I am taking this order straight to the ruler. Justice will be served.</Text>
       <Consequences>
         <Action Type="ChangeRelation" TargetAlias="YozlasmisLord" Amount="-50" />
         <Action Type="ChangeStage" ObjectId="Stage4_Hukumdar" />
@@ -173,11 +170,11 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Hukumdar_Kanit" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_kanit" OutputToken="ql_shdw_huk_1">
-      <Text>{=shdw_q2_dlg10}My liege, one of your noblemen, {YozlasmisLord_Link}, plotted behind my back and hired assassins to kill me. This sealed order is the proof of his betrayal!</Text>
+      <Text>{=shdw_q2_dlg10}My liege, one of your lords, {YozlasmisLord_Link}, plotted behind your back and hired assassins to murder me. Here is the sealed proof of his treason!</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Hukumdar_Cevap" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_1" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg11}Accusing a nobleman is a great audacity, but the seal is clearly his. This insolence will not go unpunished. Thank you for your loyalty to the kingdom; you will receive the respect you deserve.</Text>
+      <Text>{=shdw_q2_dlg11}Accusing a noble is a grave matter, yet the seal is undeniably his. Such treachery shall not go unpunished. You have the realm's gratitude, and you shall be rewarded accordingly.</Text>
       <Consequences>
         <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="ChangeRelation" TargetAlias="Hukumdar" Amount="30" />
