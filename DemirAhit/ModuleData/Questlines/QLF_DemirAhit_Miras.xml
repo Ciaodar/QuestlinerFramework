@@ -18,7 +18,7 @@
 
   <Stages>
     <Stage Id="Stage1_Haber" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_4_1}There's only one step left to complete the legendary sword. {EfsaneviDemirci_Link} expects you at his workshop.</LogText>
+      <LogText>{=da_log_4_1}The long saga nears its culmination. With {Kalan_Link} restored to the bellows, the master smith {EfsaneviDemirci_Link} bids you hasten to the workshop for the final tempering of the ancestral blade.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit4_Baslatildi" Amount="1" />
@@ -28,7 +28,7 @@
     </Stage>
 
     <Stage Id="Stage2_Kaynak" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_4_2}To finalize the sword's spirit, you need to deliver the 'Heart's Fire', which costs 50,000 gold.</LogText>
+      <LogText>{=da_log_4_2}To awaken the soul of the folded Star Iron, the masters require the sacred 'Heart's Fire' ritual—an alchemical blend of rare oils and crucible catalysts costing 50,000 denars. Deliver the gold to proceed.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -36,7 +36,7 @@
     </Stage>
 
     <Stage Id="Stage3_Sonuc" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_4_3}The Covenant Sword is finally forged! Talk to {EfsaneviDemirci_Link} to decide who the sword will belong to.</LogText>
+      <LogText>{=da_log_4_3}The anvils have fallen silent. Steam rises from the tempering trough. The Covenant Sword shines with celestial brilliance! Speak with {EfsaneviDemirci_Link} to determine who shall bear this legendary weapon.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -44,7 +44,7 @@
     </Stage>
 
     <Stage Id="Stage4_Miras" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=da_log_4_4}The Covenant Sword became your clan's eternal legacy. The power and glory of your clan spread across the whole realm!</LogText>
+      <LogText>{=da_log_4_4}You claimed the Covenant Sword as your clan's sacred heirloom! Its unmatched balance and razor keenness will lead your bloodline to dominion across all Calradia.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="GiveItem" ObjectId="AhitKilici_Efsanevi" Amount="1" />
@@ -57,7 +57,7 @@
     </Stage>
 
     <Stage Id="Stage4_Kral" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=da_log_4_5}You gifted the Covenant Sword to King {IttifakKrali_Link}. Your influence and reputation within the kingdom reached legendary proportions!</LogText>
+      <LogText>{=da_log_4_5}You presented the peerless Covenant Sword to your sovereign, King {IttifakKrali_Link}. The gesture shakes the royal court; songs of your unshakeable chivalry and devotion resound throughout the realm.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="ChangeRenown" Amount="50" />
@@ -71,49 +71,49 @@
   </Stages>
 
   <CustomDialogs>
-    <!-- Stage 1: Ilk Gorusme -->
+    <!-- Stage 1: Initial Meeting -->
     <DialogNode Type="Player" Id="Miras_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_miras_npc_1" Priority="200">
-      <Text>{=da_miras_p_giris}You sent for me, master? Is the sword ready?</Text>
+      <Text>{=da_miras_p_giris}The bellows roar like dragons today, master. Is the steel ready for the final fold?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Haber" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Miras_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_miras_npc_1" OutputToken="da_miras_secimler" Priority="200">
-      <Text>{=da_miras_dlg_1}Child, my brother {Kalan_Link} and I have been working for months. The steel is perfected. But to give it a soul we need the 'Heart's Fire', which costs 50,000 gold.</Text>
+      <Text>{=da_miras_dlg_1}Welcome, noble warlord. For weeks my brother {Kalan_Link} and I have folded the celestial steel a thousand times over the anvil. The blade is straight and flawless. But to breathe an eternal soul into the metal, we must ignite the 'Heart's Fire'—a ritual requiring rare alchemical fluxes and royal crucible catalysts worth 50,000 gold.</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Player" Id="Miras_Kabul" TargetAlias="EfsaneviDemirci" InputToken="da_miras_secimler" OutputToken="close_window">
-      <Text>{=da_miras_p1}I will gather the necessary gold and resources and return.</Text>
+      <Text>{=da_miras_p1}No price is too great for the destiny of my bloodline. I shall gather the 50,000 gold and return.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Kaynak" />
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
-    <!-- Stage 2: Altin Teslimati -->
+    <!-- Stage 2: Delivering Gold -->
     <DialogNode Type="Player" Id="Miras_Kaynak_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_miras_npc_2" Priority="200">
-      <Text>{=da_miras_p_giris_2}Let's finish this sword.</Text>
+      <Text>{=da_miras_p_giris_2}Let the crucible be stoked, master. I have returned with our offering.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Kaynak" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Miras_Kaynak_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_miras_npc_2" OutputToken="da_miras_kaynak_secimler" Priority="200">
-      <Text>{=da_miras_dlg_2}Did you bring what's needed for the ritual fire?</Text>
+      <Text>{=da_miras_dlg_2}Do you bring the gold to kindle the Heart's Fire?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_Kaynak_Ver" TargetAlias="EfsaneviDemirci" InputToken="da_miras_kaynak_secimler" OutputToken="da_miras_npc_3">
-      <Text>{=da_miras_p2}Here is 50,000 gold. Finish the sword.</Text>
+    <DialogNode Type="Player" Id="Miras_Kaynak_Ver" TargetAlias="EfsaneviDemirci" InputToken="da_miras_kaynak_secimler" OutputToken="da_miras_npc_3" ShowWhenDisabled="true" DisabledHint="{=da_hint_heart_gold}50,000 Gold Required">
+      <Text>{=da_miras_p2}Here is the 50,000 gold. Kindle the flame and quench the blade!</Text>
       <Conditions>
         <Condition Type="HasGold" Amount="50000" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Miras_Kaynak_Yok" TargetAlias="EfsaneviDemirci" InputToken="da_miras_kaynak_secimler" OutputToken="close_window">
-      <Text>{=da_miras_p3}I haven't gathered enough resources yet.</Text>
+      <Text>{=da_miras_p3}I have not yet amassed the full sum. Keep the embers banked; I shall return shortly.</Text>
       <Conditions>
         <Condition Type="!HasGold" Amount="50000" />
       </Conditions>
@@ -123,7 +123,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Miras_Kaynak_Bitis" TargetAlias="EfsaneviDemirci" InputToken="da_miras_npc_3" OutputToken="close_window">
-      <Text>{=da_miras_dlg_3}The fire burns! Give me a few hours... (Anvil sounds rise and the sword is completed with a legendary glow) Our masterpiece is ready! Speak to me again to discuss its fate.</Text>
+      <Text>{=da_miras_dlg_3}The flames leap blue and white! Give us but a few hours... (The rhythmic thunder of twin hammers echoes through the valley as incandescent sparks cascade across the workshop floor) It is finished! Behold the Covenant Blade! Speak to me once more, warrior, for a fateful choice remains.</Text>
       <Consequences>
         <Action Type="TakeGold" Amount="50000" />
         <Action Type="GiveItem" ObjectId="KalbinAtesi" Amount="1" />
@@ -133,29 +133,29 @@
       </Consequences>
     </DialogNode>
 
-    <!-- Stage 3: Karar -->
+    <!-- Stage 3: The Destiny of the Blade -->
     <DialogNode Type="Player" Id="Miras_Karar_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_miras_npc_4" Priority="200">
-      <Text>{=da_miras_p_giris_3}What is the final matter we need to discuss?</Text>
+      <Text>{=da_miras_p_giris_3}The blade is breathtaking. What final counsel do you give, master?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Sonuc" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Miras_Karar_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_miras_npc_4" OutputToken="da_miras_karar_secimler" Priority="200">
-      <Text>{=da_miras_dlg_4}The Covenant Sword... The most perfect steel I have forged to this day. Will you wield this power as your own clan's eternal legacy, or will you gift it to the king you serve?</Text>
+      <Text>{=da_miras_dlg_4}The Covenant Sword... The purest, most lethal steel these hands shall ever fashion. A weapon worthy of reshaping empires. Will you bind its glory to your clan's eternal bloodline, or will you offer it as a gift of supreme fealty to your liege lord?</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Player" Id="Miras_Karar_Klan" TargetAlias="EfsaneviDemirci" InputToken="da_miras_karar_secimler" OutputToken="close_window">
-      <Text>{=da_miras_p4}This sword will be the symbol of the unshakable power of my lineage and my clan.</Text>
+      <Text>{=da_miras_p4}This sword was bought with my clan's blood and sweat. It shall remain our eternal heirloom and the standard beneath which my heirs shall conquer!</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage4_Miras" />
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_Karar_Kral" TargetAlias="EfsaneviDemirci" InputToken="da_miras_karar_secimler" OutputToken="close_window">
-      <Text>{=da_miras_p5}I will present this unique sword to King {IttifakKrali_Link}. The glory of our kingdom will increase.</Text>
+    <DialogNode Type="Player" Id="Miras_Karar_Kral" TargetAlias="EfsaneviDemirci" InputToken="da_miras_karar_secimler" OutputToken="close_window" ShowWhenDisabled="true" DisabledHint="{=da_hint_vassal_req}Must be a Vassal of an Empire or Kingdom">
+      <Text>{=da_miras_p5}I shall present this peerless blade to King {IttifakKrali_Link}. In our sovereign's hands, it shall elevate our clan to the right hand of the throne!</Text>
       <Conditions>
         <Condition Type="IsVassalOfTargetFaction" TargetAlias="IttifakKrali" Amount="1" />
       </Conditions>

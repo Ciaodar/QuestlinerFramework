@@ -18,7 +18,7 @@
 
   <Stages>
     <Stage Id="Stage1_Haber" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_3_1}The Legendary Blacksmith {EfsaneviDemirci_Link} hurriedly calls you to his side. He seems to have received very bad news.</LogText>
+      <LogText>{=da_log_3_1}A messenger from {EfsaneviDemirci_Link} rides into your encampment, breathless and distraught. Catastrophe has struck the brotherhood of the anvil. Ride swiftly to the master's side.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit3_Baslatildi" Amount="1" />
@@ -29,7 +29,7 @@
     </Stage>
 
     <Stage Id="Stage2_Kurtarma" NextStageId="Stage3_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_3_2}The blacksmith's brother {Kalan_Link} has fallen prisoner. You need to rescue him from {DusmanKale_Link} or wherever he is held. You can sneak into the dungeon, besiege the castle, or pay his ransom.</LogText>
+      <LogText>{=da_log_3_2}The smith's brother and fellow master craftsman, {Kalan_Link}, rots in the foul dungeon of {DusmanKale_Link}. Without his ancient metallurgical secrets, the final folding of the steel is impossible. Infiltrate the dungeons, raise a siege, or ransom him before his spirit breaks.</LogText>
       <Conditions>
         <Condition Type="!TargetIsPrisoner" TargetAlias="Kalan" />
       </Conditions>
@@ -39,7 +39,7 @@
     </Stage>
 
     <Stage Id="Stage2B_Savunma" NextStageId="Stage3_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_3_2B}Your infiltration attempt at {DusmanKale_Link} was noticed! Patrols swarmed you. If you defeat them, you can take Kalan and escape.</LogText>
+      <LogText>{=da_log_3_2B}Horns blare along the battlements of {DusmanKale_Link}! Your escape attempt was discovered and garrison guards ({GarnizonMuhafizlari_Link}) flood the corridors. You must fight your way out to deliver Kalan to safety!</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="GarnizonMuhafizlari" StringValue="Victory" />
       </Conditions>
@@ -52,7 +52,7 @@
     </Stage>
 
     <Stage Id="Stage3_Zafer" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=da_log_3_3}You rescued {Kalan_Link}! Now the final preparations for the legendary sword can be made.</LogText>
+      <LogText>{=da_log_3_3}Against all odds, you broke the chains of {Kalan_Link}! The twin masters of the anvil are reunited at last, ready to kindle the ritual fires for the ancestral masterpiece.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="20" />
@@ -68,19 +68,19 @@
   <CustomDialogs>
     <!-- Entry via hero_main_options -->
     <DialogNode Type="Player" Id="Usta_Haber_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_haber_npc_1" Priority="200">
-      <Text>{=da_haber_p_giris}You seem troubled, master. What happened?</Text>
+      <Text>{=da_haber_p_giris}Your messenger rode his horse near to death, master. What grief has fallen upon you?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Haber" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Usta_Haber_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_haber_npc_1" OutputToken="da_haber_secimler" Priority="200">
-      <Text>{=da_haber_dlg_1}Child... My brother {Kalan_Link} has fallen prisoner at {DusmanKale_Link}. I cannot finish the sword without him. I beg you, rescue him!</Text>
+      <Text>{=da_haber_dlg_1}My brother, {Kalan_Link}... While traveling the passes with quenching fluxes, he was captured and thrown into the dungeon pit at {DusmanKale_Link}. His hands alone possess the secret temper to bind the blade's edge. Without him, our labor turns to dust. I beg of you, bring him back to the forge!</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Player" Id="Usta_Haber_Kabul" TargetAlias="EfsaneviDemirci" InputToken="da_haber_secimler" OutputToken="close_window">
-      <Text>{=da_haber_p1}I will find your brother and bring him back safe and sound. Do not worry.</Text>
+      <Text>{=da_haber_p1}No cage shall keep a craftsman of our covenant. I will breach {DusmanKale_Link} and return your brother unharmed.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Kurtarma" />
         <Action Type="LeaveEncounter" />
@@ -89,7 +89,7 @@
 
     <!-- Sneaking Dialog with Kalan in Dungeon -->
     <DialogNode Type="Player" Id="Kalan_Sizma_Giris_P" TargetAlias="Kalan" InputToken="hero_main_options" OutputToken="da_kalan_npc_1" Priority="200">
-      <Text>{=da_kalan_p_giris}Quiet. I am here to get you out.</Text>
+      <Text>{=da_kalan_p_giris}Quiet, smith. Keep your voice low. I come under oath from your brother to cut your chains.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Kurtarma" />
         <Condition Type="TargetIsPrisoner" TargetAlias="Kalan" />
@@ -97,19 +97,19 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kalan_Sizma_Giris" TargetAlias="Kalan" InputToken="da_kalan_npc_1" OutputToken="da_kalan_secimler" Priority="200">
-      <Text>{=da_kalan_dlg_1}Who are you? Did my older brother send you? Thank goodness... But {DusmanKale_Link} is heavily guarded, how will we get out?</Text>
+      <Text>{=da_kalan_dlg_1}My brother sent you? Praise the ancestral heavens! But the portcullis is barred and watchmen patrol the courtyard every bell. How can we break through the garrison?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalan_Sizma_Basarili" TargetAlias="Kalan" InputToken="da_kalan_secimler" OutputToken="da_kalan_kacis">
-      <Text>{=da_kalan_p1}Be quiet and follow me. I've memorized the patrols' routes. [Roguery]</Text>
+    <DialogNode Type="Player" Id="Kalan_Sizma_Basarili" TargetAlias="Kalan" InputToken="da_kalan_secimler" OutputToken="da_kalan_kacis" ShowWhenDisabled="true" DisabledHint="{=da_hint_roguery_80}Requires Roguery 80">
+      <Text>{=da_kalan_p1}Follow in my footsteps and step only when the torches shift. I have mapped every guard rotation. [Roguery]</Text>
       <Conditions>
          <Condition Type="SkillCheck" ObjectId="Roguery" Amount="80" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kalan_Sizma_Basarili_Cevap" TargetAlias="Kalan" InputToken="da_kalan_kacis" OutputToken="close_window">
-      <Text>{=da_kalan_dlg_2}Let's go immediately!</Text>
+      <Text>{=da_kalan_dlg_2}Like ghosts through the stone... Lead on, friend, before the relief watch arrives!</Text>
       <Consequences>
          <Action Type="RemovePrisoner" TargetAlias="Kalan" />
          <Action Type="ChangeStage" ObjectId="Stage3_Zafer" />
@@ -118,14 +118,12 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kalan_Sizma_Basarisiz" TargetAlias="Kalan" InputToken="da_kalan_secimler" OutputToken="da_kalan_yakalanma">
-      <Text>{=da_kalan_p2}We will fight our way out. Draw your weapon! (Attack Guards)</Text>
-      <Conditions>
-         <Condition Type="!SkillCheck" ObjectId="Roguery" Amount="80" />
-      </Conditions>
+      <Text>{=da_kalan_p2}There is no slipping past them quietly. Ready your fists or seize a torch—we carve our way to the gate!</Text>
+      <Conditions />
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kalan_Sizma_Basarisiz_Cevap" TargetAlias="Kalan" InputToken="da_kalan_yakalanma" OutputToken="close_window">
-      <Text>{=da_kalan_dlg_3}Careful, there are guards behind you! They noticed us!</Text>
+      <Text>{=da_kalan_dlg_3}Alarms in the keep! The garrison has spotted us! Stand fast!</Text>
       <Consequences>
          <Action Type="SpawnBanditParty" TargetAlias="GarnizonMuhafizlari" Amount="150" PartyTemplateId="looters_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_muhafiz}Garrison Guards" />
          <Action Type="SetPartyAi" TargetAlias="GarnizonMuhafizlari" StringValue="EngageParty" ObjectId="Player" />

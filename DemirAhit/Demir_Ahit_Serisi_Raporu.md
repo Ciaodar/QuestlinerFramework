@@ -1,18 +1,40 @@
-# Demir Ahit (Iron Covenant) Serisi — Kapsamlı Senaryo ve Teknik Tasarım Raporu (Nihai Sürüm)
+# Demir Ahit (Iron Covenant) Serisi — Kapsamlı Senaryo ve Teknik Tasarım Raporu (Güncel ve Nihai Sürüm)
 
-Bu belge, Questliner Framework üzerinde çalışan, **klan Tier ilerlemesine bağlı** 4 aşamalı ana görev zincirinin (Iron Covenant / Demir Ahit) nihai teknik ve senaryo dökümünü içerir.
+Bu belge, Questliner Framework üzerinde çalışan, **klan Tier ilerlemesine bağlı** 4 aşamalı ana görev zincirinin (Iron Covenant / Demir Ahit) nihai teknik, senaryo ve yerelleştirme dökümünü içerir.
 
-Tüm görevler Framework standartlarına, Bannerlord native mekaniklerine ve çift dilli (EN/TR) yerelleştirme mimarisine tam uyumlu olarak uygulanmıştır.
+Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 
 ---
 
-## 0. Altyapı ve Global Durum Yönetimi
+## 0. Altyapı, Dil Mimarisi ve SubModule Yapılandırması
 
-Demir Ahit serisi klan seviyesi ilerledikçe otomatik (`AutoStart`) tetiklenir:
-- Görevler arası karakter sürekliliği `SaveHeroToGlobal` eylemi ve `GlobalHero(Key)` filtresi ile sağlanır (Örn: Çırak görevinde seçilen demirci ve tüccar, sonraki tüm görevlerde aynı kişiler olarak hafızadan çağrılır).
-- Hedeflerin haritada mavi ünlem ile takip edilmesi ve tıklanabilir bağlantı olması için metinlerde `{HedefAlias_Link}` standardı kullanılır.
-- İlk karşılaşma diyaloglarının native "tanışma" ekranlarıyla çakışmaması için oyuncu giriş diyalogları `hero_main_options` token'ı ile ana konuşma menüsüne entegre edilmiştir.
-- Başarısızlık veya zaman aşımında (Timeout) haritada başıboş kalan partiler `DestroyParty` eylemi ile temizlenir.
+### A. SubModule.xml ve Özel Eşyalar (items.xml)
+- Modül adı uluslararası standart gereği İngilizce olarak `<Name value="Iron Covenant" />` şeklinde tanımlanmıştır.
+- TaleWorlds motorunun `ModuleData/items.xml` dosyasındaki özel eşyaları kampanya sözlüğüne başarıyla yüklemesi için `<Xmls>` bloğu eksiksiz yapılandırılmıştır:
+  ```xml
+  <Xmls>
+    <XmlNode>
+      <XmlName id="Items" path="items" />
+    </XmlNode>
+  </Xmls>
+  ```
+- Bu kayıt sayesinde `YildizDemiri`, `GecicilAhitKilici`, `KalfaMuhru`, `KalbinAtesi` ve `AhitKilici_Efsanevi` eşyaları oyuna ve envanter işlemlerine (`GiveItem`, `TakeItem`, `HasItem`) eksiksiz dahil olur.
+
+### B. Çift Dilli Yerelleştirme (Localization) ve language_data.xml
+- TaleWorlds motorunun dil dosyalarını otomatik tanıması için `ModuleData/Languages` hiyerarşisi BUTR/Native standartlarına uygun hale getirilmiştir:
+  - `ModuleData/Languages/language_data.xml` (Türkçe kök yönlendirici)
+  - `ModuleData/Languages/EN/language_data.xml` (İngilizce dil paketi: `std_IronCovenant_en.xml`)
+  - `ModuleData/Languages/TR/language_data.xml` (Türkçe dil paketi: `std_IronCovenant_tr.xml`)
+- Her iki dil dosyasında tam 89 adet string ID birebir örtüşmekte, Kalradya evrenine uygun zengin, edebi ve sürükleyici bir ortaçağ üslubu kullanılmaktadır.
+
+### C. Motor Desteği: Devre Dışı Diyalog İpuçları (ShowWhenDisabled & DisabledHint)
+- C# motorunun sunduğu `ShowWhenDisabled="true"` ve `DisabledHint="{=hint_id}Text"` özelliği tüm görevlerdeki kritik seçeneklere uygulanmıştır:
+  - 10.000 Altın Kestirme Kılıç Alımı (`{=da_hint_gold}10.000 Altın Gerekiyor`)
+  - Köy Muhtarından 2.000 Altına Yedek Maden Satın Alımı (`{=da_hint_muhtar_gold}2.000 Altın Gerekiyor`)
+  - Tüccara 2.000 Altın Rüşvet Verme (`{=da_hint_bribe_gold}2.000 Altın Gerekiyor`)
+  - Serserilik Becerisi Kontrolleri (`{=da_hint_roguery_50}`, `{=da_hint_roguery_80}`)
+  - 50.000 Altınlık Ritüel Ateşi (`{=da_hint_heart_gold}50.000 Altın Gerekiyor`)
+  - Krala Kılıç Sunma Şartı (`{=da_hint_vassal_req}Bir Krallığa Bağlı Vasal Olmalısınız`)
 
 ---
 
@@ -22,16 +44,18 @@ Demir Ahit serisi klan seviyesi ilerledikçe otomatik (`AutoStart`) tetiklenir:
 - **Önkoşul:** `ClanTier >= 2` ve `!GlobalFlag(DemirAhit_Baslatildi)`
 - **Süre Sınırı:** 45 Gün
 - **Hedefler:**
-  - `EfsaneviDemirci` (Artisan, Nearest)
-  - `HammadeKaynagi` (Village, Nearest)
-  - `RakipTuccar` (Merchant, Random)
-- **Akış ve Aşamalar:**
-  1. **Davet (Stage1_Davet):** Oyuncunun şanı demircinin kulağına gider. Demirci klan kılıcını yenilemeyi teklif eder.
-  2. **Toplama (Stage1_Toplama):** Oyuncu nerede bulacağını sorduğunda demirci `{HammadeKaynagi_Link}` civarını işaret eder. 5x Yıldız Demiri (`YildizDemiri`) toplanması istenir.
-  3. **Kestirme Yol Seçeneği (Stage2_KestirmeYol):** Oyuncu 10.000 altın ödeyerek ustanın arkasındaki hazır kılıcı satın alıp görevi anında başarıyla tamamlayabilir.
-  4. **Pusu (Stage2_Pusu):** 2 gün içinde teslim edilmezse Rakip Tüccar'ın kiraladığı 30 kişilik `KiralikKatiller` saldırır. `BattleResolvedAs` kontrolü ile zafer aranır. Kaçılır/yenilinirse 2 maden silinir, parti `DestroyParty` ile yok edilir ve toplama aşamasına dönülür.
-  5. **Teslimat (Stage3_Teslim):** Madenler teslim edilir.
-- **Ödül:** `GecicilAhitKilici`, +50 Renown, +15 İlişki, `DemirAhit1_Basarili=1`.
+  - `EfsaneviDemirci` (`TargetType="Hero" Filters="Artisan" Selector="Nearest"`)
+  - `HammadeKaynagi` (`TargetType="Settlement" Filters="Village" Selector="Nearest"`)
+  - `KoyMuhtari` (`TargetType="Hero" Filters="RuralNotable" RequiredSettlementAlias="HammadeKaynagi" Selector="Nearest"`)
+  - `RakipTuccar` (`TargetType="Hero" Filters="Merchant" Selector="Random"`)
+- **Akış ve Maden Toplama Yolları:**
+  1. **Davet (Stage1_Davet):** Oyuncunun şanı demircinin kulağına gider. Demirci klan kılıcını yenilemeyi teklif eder. 5 parça Yıldız Demiri (`YildizDemiri`) ister.
+  2. **Kestirme Yol:** Demirciyle konuşurken sabırsız oyuncular için 10.000 altın ödeyerek ustanın arkasındaki dövülmüş kılıcı satın alma seçeneği (`Demirci_Teklif_Kestirme`, `ShowWhenDisabled="true"` ve `DisabledHint` ile).
+  3. **Yıldız Demiri Tedariki (Stage1_Toplama):** Demirci, oyuncuyu maden ocağının bulunduğu `{HammadeKaynagi_Link}` köyüne ve köy büyüğü `{KoyMuhtari_Link}`'na yönlendirir. Oyuncu köye vardığında muhtar, madenlerin `{RakipTuccar_Link}`'ın kiraladığı haydutlar tarafından çalındığını söyler:
+     - **Yol A (Savaş ve Ganimet):** Muhtarın yönlendirmesiyle 30 kişilik `KiralikKatiller` pususuna saldırılır. Zafer sonrası (`Stage2_Pusu_Zafer`), 5 adet `YildizDemiri` ganimet olarak heybeye eklenir (`GiveItem Amount="5"`).
+     - **Yol B (Köy Ambarından Satın Alma):** Muhtara madencilerin zararını karşılamak için 2.000 altın ödenerek ocak mahzenindeki 5 adet yedek Yıldız Demiri doğrudan satın alınır (`ShowWhenDisabled="true"`, `DisabledHint`).
+     - **Yol C (Zaman Aşımı Pususu):** Oyuncu 3 gün içinde muhtarla görüşmezse haydutlar açık haritada oyuncuya doğrudan pusu kurar. Zaferde yine madenler ele geçirilir.
+  4. **Teslimat (Stage3_Teslim):** 5 adet Yıldız Demiri `{EfsaneviDemirci_Link}`'e teslim edilir. Demirci madenleri alıp (`TakeItem Amount="5"`), oyuncuya `GecicilAhitKilici`, +50 Renown ve +15 İlişki verir. `DemirAhit1_Basarili=1` bayrağı set edilir.
 
 ---
 
@@ -42,14 +66,13 @@ Demir Ahit serisi klan seviyesi ilerledikçe otomatik (`AutoStart`) tetiklenir:
   - `EfsaneviDemirci` (`GlobalHero(DemirAhit_AnaDemirci)`)
   - `RakipTuccar` (`GlobalHero(DemirAhit_RakipTuccar)`)
 - **Akış ve Aşamalar:**
-  1. **Uyarı (Stage1_Uyari):** Demirci, atölyesine gece baskınları planlandığını ve arkasında rakip tüccarın olduğunu söyler.
-  2. **Yol A - Nöbet (Stage2A_Nobet & Stage2A_Savas):** Köyde 5 gün nöbet tutulur. Süre sonunda 60 kişilik `Sabotajcilar` saldırır. `BattleResolvedAs` zaferi ile aşama geçilir.
-  3. **Yol B - Yüzleşme (Stage2B_Takip & Stage2B_Savas):** Tüccar ile yüzleşilir:
-     - *Rüşvet:* 2.000 altın vererek anlaşma.
-     - *Tehdit:* `SkillCheck(Roguery, 50)` ile tüccarı korkutma.
-     - *Savaş:* Tehdit tutmazsa 40 kişilik `Korumalar` saldırır, yenilmeleri gerekir.
-  4. **Başarı (Stage3_Basari):** Sorun çözülür.
-- **Ödül:** `KalfaMuhru`, +10 İlişki, `DemirAhit2_Basarili=1`.
+  1. **Uyarı (Stage1_Uyari):** Demirci, rakip tüccarın atölyeyi ateşe vermek üzere kundakçılar tuttuğunu bildirir.
+  2. **Yol A - Nöbet (Stage2A_Nobet & Stage2A_Savas):** Atölye çevresinde 5 gün nöbet tutulur. Gece vakti saldıran 60 kişilik `Sabotajcilar` grubu savaşta püskürtülür.
+  3. **Yol B - Yüzleşme (Stage2B_Takip & Stage2B_Savas):** Tüccar ile doğrudan yüzleşilir:
+     - *Rüşvet:* 2.000 altın ödenerek kalleşliğe son verdirilir (`ShowWhenDisabled="true"`).
+     - *Tehdit:* `SkillCheck(Roguery, 50)` ile tüccar korkutulur (`ShowWhenDisabled="true"`).
+     - *Savaş:* 40 kişilik paralı asker grubu (`Korumalar`) darmadağın edilir.
+  4. **Başarı (Stage3_Basari):** Demirci oyuncuya `KalfaMuhru` takdim eder, +10 İlişki ve +30 Renown kazanılır. `DemirAhit2_Basarili=1` set edilir.
 
 ---
 
@@ -61,12 +84,11 @@ Demir Ahit serisi klan seviyesi ilerledikçe otomatik (`AutoStart`) tetiklenir:
   - `Kalan` (Hero, `IsPrisonerInSettlement`, Random)
   - `DusmanKale` (Settlement, `SameSettlementAs(Kalan)`)
 - **Akış ve Aşamalar:**
-  1. **Haber (Stage1_Haber):** Demircinin kardeşi Kalan bir kale zindanına esir düşmüştür.
+  1. **Haber (Stage1_Haber):** Demircinin kardeşi Kalan, kadim su verme tuzlarını taşırken esir düşmüştür.
   2. **Kurtarma (Stage2_Kurtarma):** Oyuncu kaleyi kuşatabilir, fidye ödeyebilir veya zindana sızabilir:
-     - *Gizli Sızma:* `SkillCheck(Roguery, 80)` ile Kalan zindandan kaçırılır (`RemovePrisoner`).
-     - *Yakalanma:* Yetenek yetmezse 150 kişilik `GarnizonMuhafizlari` saldırır. Yenilgi durumunda muhafızlar `DestroyParty` ile temizlenir ve kurtarma tekrar denenebilir.
-  3. **Zafer (Stage3_Zafer):** Kalan özgür kaldığında (`!TargetIsPrisoner`) görev tamamlanır ve Kalan global hafızaya kaydedilir (`DemirAhit_Kalan`).
-- **Ödül:** +20 Demirci İlişkisi, +20 Kalan İlişkisi, +30 Renown, `DemirAhit3_Basarili=1`.
+     - *Gizli Sızma:* `SkillCheck(Roguery, 80)` ile nöbetçiler sessizce atlatılır (`ShowWhenDisabled="true"`). Kalan zindandan çıkarılır (`RemovePrisoner`).
+     - *Açık Savaş:* Zindanda yakalanılırsa 150 kişilik kale garnizonu (`GarnizonMuhafizlari`) ile savaşılır.
+  3. **Zafer (Stage3_Zafer):** Kalan kurtarıldığında (`!TargetIsPrisoner`) görev tamamlanır; Kalan hafızaya alınır (`DemirAhit_Kalan`). +20 Demirci İlişkisi, +20 Kalan İlişkisi, +30 Renown. `DemirAhit3_Basarili=1` set edilir.
 
 ---
 
@@ -78,23 +100,24 @@ Demir Ahit serisi klan seviyesi ilerledikçe otomatik (`AutoStart`) tetiklenir:
   - `Kalan` (`GlobalHero(DemirAhit_Kalan)`)
   - `IttifakKrali` (`KingdomLeader, SameFactionAs(Player)`, `IsOptional="true"`)
 - **Akış ve Aşamalar:**
-  1. **Haber (Stage1_Haber):** Kılıç tamamlanmak üzeredir, son ruhu vermek için "Kalbin Ateşi" ritüeli gerekir.
-  2. **Kaynak (Stage2_Kaynak):** 50.000 altın toplanıp demirciye teslim edilir (`TakeGold Amount="50000"`).
-  3. **Karar (Stage3_Sonuc):** Kılıç dövülür ve oyuncuya yol ayrımı sunulur:
-     - *Klan Mirası:* Kılıcı klanı için saklar → `AhitKilici_Efsanevi`, +150 Renown, +200 Influence.
-     - *Krala Hediye:* Sadece oyuncu bir krallığın vasalıysa (`IsVassalOfTargetFaction`) görünür. Kılıç krala sunulur → +50 Renown, +500 Influence, +50 Kral İlişkisi.
-- **Sonuç:** `DemirAhit4_Basarili=1`, seri başarıyla noktalanır.
+  1. **Haber (Stage1_Haber):** İkiz ustalar çeliği bin kat dövmüştür; kılıca ruh vermek için "Kalbin Ateşi" ritüeli gerekir.
+  2. **Kaynak (Stage2_Kaynak):** 50.000 altın toplanıp demirciye teslim edilir (`TakeGold Amount="50000"`, `ShowWhenDisabled="true"`).
+  3. **Kader Seçimi (Stage3_Sonuc):** Efsanevi kılıç hazır olduğunda nihai yol ayrımı sunulur:
+     - *Klan Mirası:* Kılıç klanın kutsal yadigarı olarak kuşanılır → `AhitKilici_Efsanevi`, +150 Renown, +200 Influence.
+     - *Krala Hediye:* Oyuncu bir krallığın vasalıysa (`IsVassalOfTargetFaction`, `ShowWhenDisabled="true"`) kılıç krala takdim edilir → +50 Renown, +500 Influence, +50 Kral İlişkisi.
+- **Sonuç:** `DemirAhit4_Basarili=1`, tüm seri görkemli bir finalle tamamlanır.
 
 ---
 
 ## 2. Özel Eşyalar (items.xml)
-- `YildizDemiri` (Goods, Value: 100)
-- `GecicilAhitKilici` (OneHandedSword, Cut: 70, Thrust: 35)
-- `KalfaMuhru` (Goods / Amulet, Value: 500)
-- `KalbinAtesi` (Goods, Value: 5000)
-- `AhitKilici_Efsanevi` (OneHandedSword, Cut: 90, Thrust: 45, Speed: 105)
+- `YildizDemiri` (Goods, Value: 100, Mesh: iron_ingot)
+- `GecicilAhitKilici` (OneHandedSword, Cut: 70, Thrust: 35, Speed: 95)
+- `KalfaMuhru` (Goods / Amulet, Value: 500, Mesh: jewelry_amulet)
+- `KalbinAtesi` (Goods, Value: 5000, Mesh: ore_iron)
+- `AhitKilici_Efsanevi` (OneHandedSword, Cut: 90, Thrust: 45, Speed: 105, Value: 20000)
 
 ---
 
-## 3. Bekleyen İstekler (IR)
-- **`IR_DisabledDialogHints.md`**: Şartları sağlanmayan diyalog seçeneklerinin tamamen gizlenmesi yerine gri/tıklanamaz olarak görünmesi ve üzerine gelindiğinde neden seçilemediğini belirten ipucu (`DisabledHint`) göstermesi için C# Framework motoruna iletilen özellik talebi.
+## 3. CI/CD & Derleme Durumu
+- `DemirAhit.csproj` içerisine `D:\SteamLibrary` ve `C:\Program Files (x86)\Steam` çoklu kütüphane desteği entegre edilmiştir.
+- `dotnet build` komutu PreBuild versiyon artırımını (`UpdateVersion.ps1`) ve PostBuild dosya dağıtımını (`xcopy`) sıfır hata ve sıfır uyarıyla tamamlamaktadır.

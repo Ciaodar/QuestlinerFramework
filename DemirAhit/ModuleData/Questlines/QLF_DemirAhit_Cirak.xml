@@ -3,6 +3,7 @@
   <TargetResolvers>
     <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="Artisan" Selector="Nearest" />
     <Resolver Alias="HammadeKaynagi" TargetType="Settlement" Filters="Village" Selector="Nearest" />
+    <Resolver Alias="KoyMuhtari" TargetType="Hero" Filters="RuralNotable" RequiredSettlementAlias="HammadeKaynagi" Selector="Nearest" />
     <Resolver Alias="RakipTuccar" TargetType="Hero" Filters="Merchant" Selector="Random" />
   </TargetResolvers>
 
@@ -17,7 +18,7 @@
 
   <Stages>
     <Stage Id="Stage1_Davet" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_0}Your reputation precedes you in the halls of lords. The legendary blacksmith {EfsaneviDemirci_Link} wants to see you about forging a sword passed down from your ancestors.</LogText>
+      <LogText>{=da_log_0}Your clan's deeds echo across the taverns and keeps of Calradia. The renowned master smith {EfsaneviDemirci_Link} has sent word, seeking you out to reforge an ancient blade bound to your bloodline.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit_Baslatildi" Amount="1" />
@@ -28,8 +29,8 @@
       <OnTimeoutActions />
     </Stage>
 
-    <Stage Id="Stage1_Toplama" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_1}Find 5 Star Iron around {HammadeKaynagi_Link}.</LogText>
+    <Stage Id="Stage1_Toplama" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="3">
+      <LogText>{=da_log_1}Ride to the village of {HammadeKaynagi_Link} and speak with {KoyMuhtari_Link} to procure 5 Star Iron ore. Beware: rumors suggest cutthroats hired by {RakipTuccar_Link} are already circling the quarry.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -40,33 +41,33 @@
       </OnTimeoutActions>
     </Stage>
 
-    <Stage Id="Stage2_Pusu" NextStageId="Stage2_Pusu_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="1">
-      <LogText>{=da_log_2}While gathering ores, bandits hired by the Rival Merchant ambushed you! You must defeat them.</LogText>
+    <Stage Id="Stage2_Pusu" NextStageId="Stage2_Pusu_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=da_log_2}The rival merchant's hired mercenaries ({KiralikKatiller_Link}) are nearby carrying the stolen Star Iron! Defeat them in battle to reclaim the ore.</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="KiralikKatiller" StringValue="Victory" />
       </Conditions>
       <OnEnterActions />
       <OnExitActions />
       <OnTimeoutActions>
-         <Action Type="TakeItem" ObjectId="YildizDemiri" Amount="2" />
          <Action Type="DestroyParty" TargetAlias="KiralikKatiller" />
          <Action Type="ChangeStage" ObjectId="Stage1_Toplama" />
       </OnTimeoutActions>
     </Stage>
 
-    <Stage Id="Stage2_Pusu_Zafer" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=da_log_2_win}You have cleared the ambushers. You can now return to your quest.</LogText>
+    <Stage Id="Stage2_Pusu_Zafer" NextStageId="Stage3_Teslim" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=da_log_2_win}You crushed the hired ambushers and pried 5 Star Iron ore from their baggage! Return to {EfsaneviDemirci_Link} to forge the blade.</LogText>
       <Conditions />
       <OnEnterActions>
+         <Action Type="GiveItem" ObjectId="YildizDemiri" Amount="5" />
          <Action Type="ChangeRelation" TargetAlias="RakipTuccar" Amount="-5" />
-         <Action Type="ChangeStage" ObjectId="Stage1_Toplama" />
+         <Action Type="ChangeStage" ObjectId="Stage3_Teslim" />
       </OnEnterActions>
       <OnExitActions />
       <OnTimeoutActions />
     </Stage>
 
     <Stage Id="Stage2_KestirmeYol" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=da_log_kestirme}You bought the sword from the blacksmith, taking a rather costly shortcut.</LogText>
+      <LogText>{=da_log_kestirme}You bypassed the ore gathering by purchasing the master's ready-forged sword for a steep sum of 10,000 denars.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="GiveItem" ObjectId="GecicilAhitKilici" Amount="1" />
@@ -79,7 +80,7 @@
     </Stage>
 
     <Stage Id="Stage3_Teslim" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=da_log_3}You collected the Star Iron, you can now deliver them to {EfsaneviDemirci_Link}.</LogText>
+      <LogText>{=da_log_3}You hold 5 Star Iron in your packs. Deliver them to {EfsaneviDemirci_Link} so the forging of the Covenant Sword can begin.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -93,39 +94,39 @@
   <CustomDialogs>
     <!-- Entry point via Main Hero Options (skips meeting introductions) -->
     <DialogNode Type="Player" Id="Demirci_Giris" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_tek_secimler" Priority="200">
-      <Text>{=da_giris_p}You sent for me, master?</Text>
+      <Text>{=da_giris_p}You sent word for me, master smith?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Davet" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Demirci_Teklif_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_tek_secimler" OutputToken="da_tek_sorular" Priority="200">
-      <Text>{=da_tek_1}Your clan's name is growing, child. I forged the sword of your ancestors; now it's time I forge a new one for you. But first, I need 5 Star Iron.</Text>
+      <Text>{=da_tek_1}Aye, warlord. Your name echoes in every mead hall. I knew your forebears well; I helped forge the ancestral steel that carved your house's seat. It is time you carried a true weapon of your lineage. Yet ordinary iron cannot bear such an oath—I require 5 chunks of genuine Star Iron.</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Player" Id="Demirci_Teklif_Bilgi" TargetAlias="EfsaneviDemirci" InputToken="da_tek_sorular" OutputToken="da_tek_bilgi_cevap">
-      <Text>{=da_tek_p1}Where can I find this ore?</Text>
+      <Text>{=da_tek_p1}Where can I unearth such a rare ore?</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Demirci_Teklif_Bilgi_Cevap" TargetAlias="EfsaneviDemirci" InputToken="da_tek_bilgi_cevap" OutputToken="close_window">
-      <Text>{=da_tek_npc_bilgi}I am certain you can find some around {HammadeKaynagi_Link}.</Text>
+      <Text>{=da_tek_npc_bilgi}A celestial deposit was uncovered in the deep quarry near {HammadeKaynagi_Link}. Ride to the village and speak with the elder {KoyMuhtari_Link}. But keep your hand on your hilt—a jealous merchant named {RakipTuccar_Link} has placed spies around my workshop and covets the vein.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage1_Toplama" />
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Demirci_Teklif_Kestirme" TargetAlias="EfsaneviDemirci" InputToken="da_tek_sorular" OutputToken="da_tek_kestirme_cevap">
-      <Text>{=da_tek_p2}Master, don't misunderstand, but could the sword you mentioned be the one standing behind you? I don't have much time, can I just buy it from you?</Text>
+    <DialogNode Type="Player" Id="Demirci_Teklif_Kestirme" TargetAlias="EfsaneviDemirci" InputToken="da_tek_sorular" OutputToken="da_tek_kestirme_cevap" ShowWhenDisabled="true" DisabledHint="{=da_hint_gold}10,000 Gold Required">
+      <Text>{=da_tek_p2}Master, don't misunderstand... War waits for no smith. Is that finished blade upon your rack for sale? Can I purchase it here and now for 10,000 gold?</Text>
       <Conditions>
          <Condition Type="HasGold" Amount="10000" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Demirci_Teklif_Kestirme_Cevap" TargetAlias="EfsaneviDemirci" InputToken="da_tek_kestirme_cevap" OutputToken="close_window">
-      <Text>{=da_tek_npc_kestirme}You have not yet grasped the spirit of this craft, child. But of course, the sword is your right. Here, take it. We will meet again...</Text>
+      <Text>{=da_tek_npc_kestirme}You lack the patience of a true swordsman, child. Yet if coin is how you wage war, so be it. Take the blade—it carries the blood of my forge, even if bought rather than earned. We shall see if you are worthy of what comes next...</Text>
       <Consequences>
          <Action Type="TakeGold" Amount="10000" />
          <Action Type="ChangeStage" ObjectId="Stage2_KestirmeYol" />
@@ -133,37 +134,66 @@
       </Consequences>
     </DialogNode>
 
-    <!-- Stage 1 -> 3 Gecis Dialogu -->
-    <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_Giris" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_teslim_gecis_1" Priority="200">
-      <Text>{=da_teslim_p_giris}I brought the iron you requested.</Text>
+    <!-- Dialogue with Village Elder at HammadeKaynagi -->
+    <DialogNode Type="Player" Id="Muhtar_Giris" TargetAlias="KoyMuhtari" InputToken="start" OutputToken="da_muhtar_1" Priority="200">
+      <Text>{=da_muhtar_p_giris}I am here on behalf of {EfsaneviDemirci_Link}. I have come to collect the Star Iron ore from your quarry.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Toplama" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Muhtar_Cevap_1" TargetAlias="KoyMuhtari" InputToken="da_muhtar_1" OutputToken="da_muhtar_secim">
+      <Text>{=da_muhtar_dlg_1}Gods deliver us! You arrive in the shadow of disaster, warrior! We mined five hefty chunks of Star Iron, but just an hour ago, bloodthirsty sellswords bearing the mark of {RakipTuccar_Link} raided our cart just beyond the village ditch! They seized all the ore and are lurking outside our borders, waiting to slay anyone who pursues them!</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Muhtar_Secim_Savas" TargetAlias="KoyMuhtari" InputToken="da_muhtar_secim" OutputToken="da_muhtar_savas_cevap">
+      <Text>{=da_muhtar_p_savas}They picked the wrong quarry to plunder. I will hunt down these dogs and take back our Star Iron in blood.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Muhtar_Savas_Cevap" TargetAlias="KoyMuhtari" InputToken="da_muhtar_savas_cevap" OutputToken="close_window">
+      <Text>{=da_muhtar_dlg_savas}May the heavens strengthen your arm! They cannot have gone far—ride out and strike before they escape with our ore!</Text>
+      <Consequences>
+        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="30" PartyTemplateId="sea_raiders_template" SpawnDistance="2" SpawnRadius="4" StringValue="{=da_katiller}Hired Assassins" />
+        <Action Type="SetPartyAi" TargetAlias="KiralikKatiller" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="ChangeStage" ObjectId="Stage2_Pusu" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Muhtar_Secim_SatinAl" TargetAlias="KoyMuhtari" InputToken="da_muhtar_secim" OutputToken="da_muhtar_satinal_cevap" ShowWhenDisabled="true" DisabledHint="{=da_hint_muhtar_gold}2,000 Gold Required">
+      <Text>{=da_muhtar_p_satinal}Do you have any reserve ore kept in your cellars? I will pay 2,000 gold right now to compensate your miners.</Text>
+      <Conditions>
+        <Condition Type="HasGold" Amount="2000" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Muhtar_SatinAl_Cevap" TargetAlias="KoyMuhtari" InputToken="da_muhtar_satinal_cevap" OutputToken="close_window">
+      <Text>{=da_muhtar_dlg_satinal}Aye, our foreman held five rough ingots in the locked furnace store for emergencies. For two thousand gold, our village can rebuild. Here, take the ore to the smith before more brigands smell it!</Text>
+      <Consequences>
+        <Action Type="TakeGold" Amount="2000" />
+        <Action Type="GiveItem" ObjectId="YildizDemiri" Amount="5" />
+        <Action Type="ChangeStage" ObjectId="Stage3_Teslim" />
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Stage 3 Delivery Dialogues -->
+    <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_Giris" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_teslim_gecis_1" Priority="200">
+      <Text>{=da_teslim_p_giris}Master smith, I hold the five chunks of Star Iron you commanded me to fetch.</Text>
+      <Conditions>
         <Condition Type="HasItem" ObjectId="YildizDemiri" Amount="5" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Demirci_Teslim_Gecis" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_1" OutputToken="da_teslim_gecis_2" Priority="200">
-      <Text>{=da_teslim_ready}My eyes aren't deceiving me, are they? You brought the Star Iron!</Text>
+      <Text>{=da_teslim_ready}By the anvil of the ancients! That dark, starlit sheen... It is genuine fallen star-metal! You survived the merchant's cutthroats and claimed what is rightfully yours.</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_P" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_2" OutputToken="close_window">
-      <Text>{=da_teslim_p1}Yes master, here you go.</Text>
-      <Consequences>
-        <Action Type="ChangeStage" ObjectId="Stage3_Teslim" />
-      </Consequences>
-    </DialogNode>
-
-    <!-- Stage 3: Nihai Teslim Dialogu -->
-    <DialogNode Type="Npc" Id="Demirci_Teslim_Son" TargetAlias="EfsaneviDemirci" InputToken="start" OutputToken="da_teslim_son_1" Priority="200">
-      <Text>{=da_teslim_2}This is it! Now to the fire — the sword is starting to take shape. Take this sword for now, we will meet again when your name is heard even further.</Text>
-      <Conditions>
-        <Condition Type="IsStageActive" ObjectId="Stage3_Teslim" />
-      </Conditions>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Demirci_Teslim_Son_P" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_son_1" OutputToken="close_window">
-      <Text>{=da_teslim_p2}Thank you master. I will be waiting.</Text>
+      <Text>{=da_teslim_p1}Take the ore, master. Kindle your coals and let us forge our oath in steel.</Text>
       <Consequences>
         <Action Type="TakeItem" ObjectId="YildizDemiri" Amount="5" />
         <Action Type="GiveItem" ObjectId="GecicilAhitKilici" Amount="1" />

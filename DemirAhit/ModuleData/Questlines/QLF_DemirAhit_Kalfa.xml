@@ -17,7 +17,7 @@
 
   <Stages>
     <Stage Id="Stage1_Uyari" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_2_1}{EfsaneviDemirci_Link} received word that night raids are planned on his workshop. He wants to speak with you about an important matter.</LogText>
+      <LogText>{=da_log_2_1}Grim tidings reach your camp: the master smith {EfsaneviDemirci_Link} has caught wind of an arson plot against his workshop, orchestrated by the vengeful merchant {RakipTuccar_Link}. Ride to his forge at once.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit2_Baslatildi" Amount="1" />
@@ -27,7 +27,7 @@
     </Stage>
 
     <Stage Id="Stage2A_Nobet" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="5">
-      <LogText>{=da_log_2_2A}You decided to stay in the village and stand guard against the ambush for 5 days. Be careful, the attack could come at any moment.</LogText>
+      <LogText>{=da_log_2_2A}You chose to stand vigilant over the workshop for 5 days. Keep your scouts posted and blades sharpened; the saboteurs will strike under cover of darkness.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -39,7 +39,7 @@
     </Stage>
 
     <Stage Id="Stage2A_Savas" NextStageId="Stage3_Basari" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_2_2A_savas}The expected saboteurs attacked the village! You must defeat them to protect the workshop.</LogText>
+      <LogText>{=da_log_2_2A_savas}Torches pierce the night! The saboteurs ({Sabotajcilar_Link}) have assaulted the workshop perimeter. Crush them before the bellows are put to the torch!</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="Sabotajcilar" StringValue="Victory" />
       </Conditions>
@@ -53,7 +53,7 @@
     </Stage>
 
     <Stage Id="Stage2B_Takip" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_2_2B}Instead of waiting on the defense, you decided to solve the problem at its source. You must confront {RakipTuccar_Link}.</LogText>
+      <LogText>{=da_log_2_2B}Rather than wait for flames to rise, you decided to sever the snake's head. Track down {RakipTuccar_Link} and put an end to this conspiracy.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -61,7 +61,7 @@
     </Stage>
 
     <Stage Id="Stage2B_Savas" NextStageId="Stage3_Basari" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_2_2B_savas}{RakipTuccar_Link} did not submit to your threats and unleashed his guards on you. Defeat them to survive.</LogText>
+      <LogText>{=da_log_2_2B_savas}{RakipTuccar_Link} refused to back down and unleashed his hired bodyguards ({Korumalar_Link}) upon you. Cut them down to assert your clan's will.</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="Korumalar" StringValue="Victory" />
       </Conditions>
@@ -74,11 +74,12 @@
     </Stage>
 
     <Stage Id="Stage3_Basari" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=da_log_2_3}You successfully resolved the issue and the Legendary Blacksmith honored you as a Journeyman!</LogText>
+      <LogText>{=da_log_2_3}The forge stands triumphant! In recognition of your steadfast protection and martial cunning, {EfsaneviDemirci_Link} confers upon you the Journeyman's Seal.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="GiveItem" ObjectId="KalfaMuhru" Amount="1" />
         <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="10" />
+        <Action Type="ChangeRenown" Amount="30" />
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit2_Basarili" Amount="1" />
         <Action Type="CompleteQuest" />
       </OnEnterActions>
@@ -89,19 +90,19 @@
   <CustomDialogs>
     <!-- Stage 1 Dialog: Entry via hero_main_options -->
     <DialogNode Type="Player" Id="Kalfa_Uyari_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_kalfa_npc_1" Priority="200">
-      <Text>{=da_kalfa_p_giris}I am here to see you, master. Is everything alright?</Text>
+      <Text>{=da_kalfa_p_giris}I heard alarming rumors, master. What troubles your forge?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Uyari" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kalfa_Uyari_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_kalfa_npc_1" OutputToken="da_kalfa_secimler" Priority="200">
-      <Text>{=da_kalfa_dlg_1}Child, I've learned that night raids are planned on our workshop. The merchant {RakipTuccar_Link} is behind this. If we can't protect the workshop, we can't move to the final stages of the sword.</Text>
+      <Text>{=da_kalfa_dlg_1}A shadow hangs over the anvil, my friend. {RakipTuccar_Link} has gathered brigands and cutthroats to burn my workshop to the ground. If the hearth turns cold, the great blade shall never be finished. How shall we meet this malice?</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kalfa_Uyari_Savunma" TargetAlias="EfsaneviDemirci" InputToken="da_kalfa_secimler" OutputToken="close_window">
-      <Text>{=da_kalfa_p1}I will stay in the village and keep guard, they won't be able to step foot here.</Text>
+      <Text>{=da_kalfa_p1}I shall post guards and keep watch over your workshop. No arsonist shall breathe within our perimeter.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2A_Nobet" />
         <Action Type="LeaveEncounter" />
@@ -109,7 +110,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kalfa_Uyari_Saldiri" TargetAlias="EfsaneviDemirci" InputToken="da_kalfa_secimler" OutputToken="close_window">
-      <Text>{=da_kalfa_p2}I'll solve the problem at its source. I will find the merchant and teach him a lesson.</Text>
+      <Text>{=da_kalfa_p2}Defense invites hesitation. I shall hunt down {RakipTuccar_Link} directly and break his will before the torches are lit.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2B_Takip" />
         <Action Type="LeaveEncounter" />
@@ -118,26 +119,26 @@
 
     <!-- Stage 2B Dialog with Rival Merchant -->
     <DialogNode Type="Player" Id="Kalfa_Takip_Giris_P" TargetAlias="RakipTuccar" InputToken="hero_main_options" OutputToken="da_kalfa_t_npc_1" Priority="200">
-      <Text>{=da_kalfa_t_p_giris}We need to talk about your plans for the blacksmith's workshop.</Text>
+      <Text>{=da_kalfa_t_p_giris}We must settle the matter of your arsonists and the blacksmith's forge, merchant.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2B_Takip" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kalfa_Takip_Giris" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_npc_1" OutputToken="da_kalfa_t_secimler" Priority="200">
-      <Text>{=da_kalfa_dlg_2}Trade in these lands is my right, not that old blacksmith's! What do you want?</Text>
+      <Text>{=da_kalfa_dlg_2}Ah, the clan warlord barks! Commerce in this district belongs to those with coin, not ancient fossil smiths dreaming of bygone kingdoms. What brings you to my ledger?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_Takip_Rusvet" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_secimler" OutputToken="da_kalfa_t_kabul">
-      <Text>{=da_kalfa_t_p1}I offer you 2000 gold. Let this go.</Text>
+    <DialogNode Type="Player" Id="Kalfa_Takip_Rusvet" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_secimler" OutputToken="da_kalfa_t_kabul" ShowWhenDisabled="true" DisabledHint="{=da_hint_bribe_gold}2,000 Gold Required">
+      <Text>{=da_kalfa_t_p1}I offer you 2,000 gold. Call off your arsonists and let this feud end in profit.</Text>
       <Conditions>
          <Condition Type="HasGold" Amount="2000" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kalfa_Takip_Rusvet_Cevap" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_kabul" OutputToken="close_window">
-      <Text>{=da_kalfa_dlg_3_altin}Gold always speaks louder. Fine, I will leave the geezer alone.</Text>
+      <Text>{=da_kalfa_dlg_3_altin}Gold always speaks with greater eloquence than pride. Very well, I shall recall my mercenaries. The old fool may hammer in peace.</Text>
       <Consequences>
          <Action Type="TakeGold" Amount="2000" />
          <Action Type="ChangeStage" ObjectId="Stage3_Basari" />
@@ -145,15 +146,15 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_Takip_Tehdit" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_secimler" OutputToken="da_kalfa_t_korku">
-      <Text>{=da_kalfa_t_p2}If you don't pull your men from the workshop, I'll visit you in your sleep tonight. [Roguery]</Text>
+    <DialogNode Type="Player" Id="Kalfa_Takip_Tehdit" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_secimler" OutputToken="da_kalfa_t_korku" ShowWhenDisabled="true" DisabledHint="{=da_hint_roguery_50}Requires Roguery 50">
+      <Text>{=da_kalfa_t_p2}If you don't recall your cutthroats this instant, your own bedchamber will taste cold steel before sunrise. [Roguery]</Text>
       <Conditions>
          <Condition Type="SkillCheck" ObjectId="Roguery" Amount="50" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kalfa_Takip_Tehdit_Cevap" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_korku" OutputToken="close_window">
-      <Text>{=da_kalfa_dlg_3}O-okay, calm down! I'm done with that geezer's workshop, leave me alone.</Text>
+      <Text>{=da_kalfa_dlg_3}B-by the gods, stay back! Lower your blade... I want no quarrel with bloodthirsty sellswords. The contract is canceled, I swear it!</Text>
       <Consequences>
          <Action Type="ChangeStage" ObjectId="Stage3_Basari" />
          <Action Type="LeaveEncounter" />
@@ -161,14 +162,12 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kalfa_Takip_Savas" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_secimler" OutputToken="da_kalfa_t_savas_cevap">
-      <Text>{=da_kalfa_t_p3}You crossed the line. I'll make sure you never threaten anyone again!</Text>
-      <Conditions>
-         <Condition Type="!SkillCheck" ObjectId="Roguery" Amount="50" />
-      </Conditions>
+      <Text>{=da_kalfa_t_p3}Words are wasted on treacherous vultures like you. Call your mercenaries—let steel decide who governs this land!</Text>
+      <Conditions />
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kalfa_Takip_Savas_Cevap" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_savas_cevap" OutputToken="close_window">
-      <Text>{=da_kalfa_dlg_4}Who are you threatening, punk? Guards, kill this fool!</Text>
+      <Text>{=da_kalfa_dlg_4}Insolent dog! Guards, seize this meddler and toss their corpse into the gutters!</Text>
       <Consequences>
          <Action Type="SpawnBanditParty" TargetAlias="Korumalar" Amount="40" PartyTemplateId="mercenary_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_koruma}Merchant Guards" />
          <Action Type="SetPartyAi" TargetAlias="Korumalar" StringValue="EngageParty" ObjectId="Player" />

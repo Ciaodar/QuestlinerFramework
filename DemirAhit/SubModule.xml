@@ -1,7 +1,7 @@
-<Module>
+﻿<Module>
   <Name value="Iron Covenant" />
   <Id value="DemirAhit" />
-  <Version value="v1.0.0.1" />
+  <Version value="v1.0.0.4" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
   <DependedModules>
@@ -23,5 +23,8 @@
     </SubModule>
   </SubModules>
   <Xmls>
+    <XmlNode>
+      <XmlName id="Items" path="items" />
+    </XmlNode>
   </Xmls>
 </Module>
