@@ -2,6 +2,26 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.3.0] - 28 Eylül 2026 (Battle Tracking, Dialogue Isolation & MobileParty Engine Polish)
+
+### Düzeltildi & İyileştirildi (Fixed & Improved)
+- **Diyalog İzolasyonu & Duplicate Berber Hatası Giderildi:**
+  - `_currentConversationQuestId` oturum bazlı takip sistemi eklendi. `ql_` ile başlayan dâhili diyalog token'larının diğer aktif veya tamamlanmış görevlerin diyaloglarıyla çakışması ve berberde çift seçenek çıkması engellendi.
+  - Tamamlanmış (`_completedQuestIds`) görevlerin diyaloglarının haritada tekrar tetiklenmesi tamamen engellendi.
+- **Savaş Takibi & Hedef Parti İlerlemesi (`DefeatedParties`):**
+  - `OnMapEventEnded` içerisinde oyuncu savaşı kazandığında `quest.TargetParties` taranarak `Defeated_{alias}_Parties` sayaçları otomatik artırılır hale getirildi. Artık `<Condition Type="DefeatedParties" TargetAlias="HedefKervan" Amount="1" />` harita savaşlarında sorunsuz çalışmaktadır.
+- **Konsol / Aşama Atlama (`ForceCompleteCurrentStage` & `ForceSuccess`):**
+  - Aşama zorla geçildiğinde veya tamamlandığında atlanan `OnExitActions` listesi (eşya verme, bayrak atama vs.) artık eksiksiz çalıştırılır.
+- **Mobil Parti Harita Takibi & Günlük Değişkenleri:**
+  - `TargetParties` içindeki hedefler artık `{Alias}`, `{Alias.Name}` ve `{Alias_Link}` olarak log ve diyaloglarda çözümlenir.
+  - Haritada `AddTrackedObject` ile görev işareti (mavi ünlem) partilerin üzerine otomatik olarak yerleştirilir.
+- **`SpawnBanditParty` & `SetPartyAi` Geliştirmeleri:**
+  - Parti spawn edildiğinde `action.StringValue` "Hold", "PatrolAroundSettlement", "GoToSettlement" değerlerini destekler; haritada oyuncuyu körlemesine kovalamak yerine durması veya devriye gezmesi sağlanabilir.
+  - Şablon (`PartyTemplateId`) belirtildiğinde birlik tipi şablondan otomatik seçilir (sadece çapulcu basma zorunluluğu kalktı).
+  - `SetPartyAi` eylemi `ObjectId="Player"` hedefini destekleyecek şekilde güncellendi.
+- **Bozuk Bildirim Temizliği:**
+  - UTF-8 bozulması içeren ve Native bildirimlerle çakışan `MBInformationManager.AddQuickInformation` çağrıları temizlendi.
+
 ---
 
 ## [v1.2.0] - 27 Eylül 2026 (Environment, Spatial Selectors & Political Engine)

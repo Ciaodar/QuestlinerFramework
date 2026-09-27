@@ -39,6 +39,7 @@ namespace Questliner.Framework.Behaviors
         private Dictionary<string, Hero> _pendingResolvedHeroes = new Dictionary<string, Hero>();
         private Dictionary<string, Settlement> _pendingResolvedSettlements = new Dictionary<string, Settlement>();
         private List<DynamicQuest> _questsStartedInThisConversation = new List<DynamicQuest>();
+        private string? _currentConversationQuestId = null;
         
         [TaleWorlds.SaveSystem.SaveableField(10)]
         private System.Collections.Generic.List<string> _completedQuestIds = new System.Collections.Generic.List<string>();
@@ -155,6 +156,26 @@ namespace Questliner.Framework.Behaviors
             // Find ongoing dynamic quest matching QuestId (may be null if quest hasn't started yet)
             var quest = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(q => q.Model?.Id == questModel.Id && q.IsOngoing);
 
+            // If this quest has already been completed, do not re-evaluate its dialogs
+            if (quest == null && _completedQuestIds.Contains(questModel.Id))
+            {
+                return false;
+            }
+
+            // Internal token scoping: prevents cross-quest leakage
+            if (dialogNode.InputToken.StartsWith("ql_"))
+            {
+                if (!string.IsNullOrEmpty(_currentConversationQuestId) && _currentConversationQuestId != questModel.Id)
+                {
+                    return false;
+                }
+
+                if (quest == null && _currentConversationQuestId != questModel.Id)
+                {
+                    return false;
+                }
+            }
+
             if (quest == null && questModel.Prerequisites != null && questModel.Prerequisites.Count > 0)
             {
                 foreach (var prereq in questModel.Prerequisites)
@@ -213,13 +234,23 @@ namespace Questliner.Framework.Behaviors
                 if (!TaleWorlds.CampaignSystem.CharacterObject.OneToOneConversationCharacter.StringId.Contains(dialogNode.SpeakerStringId))
                     return false;
 
-                // Only require an active quest if this is entering from an outside/native token
-                if (!dialogNode.InputToken.StartsWith("ql_") && quest == null) return false;
-                
-                if (!string.IsNullOrEmpty(dialogNode.RequiredSettlementAlias) && quest != null)
+                if (!string.IsNullOrEmpty(dialogNode.RequiredSettlementAlias))
                 {
-                    var reqSettlement = quest.GetTargetSettlement(dialogNode.RequiredSettlementAlias);
-                    if (reqSettlement == null || TaleWorlds.CampaignSystem.Settlements.Settlement.CurrentSettlement != reqSettlement)
+                    Settlement? reqSettlement = null;
+                    if (quest != null)
+                    {
+                        reqSettlement = quest.GetTargetSettlement(dialogNode.RequiredSettlementAlias);
+                    }
+                    else
+                    {
+                        var resolver = questModel.TargetResolvers.FirstOrDefault(r => r.Alias == dialogNode.RequiredSettlementAlias);
+                        if (resolver != null && Settlement.CurrentSettlement != null && Engine.TargetResolverService.IsSettlementMatch(resolver, Settlement.CurrentSettlement, null))
+                        {
+                            reqSettlement = Settlement.CurrentSettlement;
+                        }
+                    }
+
+                    if (reqSettlement == null || Settlement.CurrentSettlement != reqSettlement)
                         return false;
                 }
             }
@@ -296,10 +327,16 @@ namespace Questliner.Framework.Behaviors
 
         private void DynamicDialogConsequence(QuestModel questModel, CustomDialogModel dialogNode)
         {
+            _currentConversationQuestId = questModel.Id;
             var quest = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(q => q.Model?.Id == questModel.Id && q.IsOngoing);
             foreach (var action in dialogNode.Consequences)
             {
                 Questliner.Framework.Engine.ActionExecutor.Execute(action, quest);
+            }
+
+            if (dialogNode.OutputToken == "close_window")
+            {
+                _currentConversationQuestId = null;
             }
         }
 
@@ -510,6 +547,7 @@ namespace Questliner.Framework.Behaviors
             }
 
             _questsStartedInThisConversation.Clear();
+            _currentConversationQuestId = null;
         }
 
         private void OnSettlementEntered(MobileParty party, Settlement settlement, Hero hero)
@@ -626,6 +664,12 @@ namespace Questliner.Framework.Behaviors
                         {
                             quest.IncrementCounter($"Defeated_{dp.MobileParty.Party.Culture.StringId}_Parties", 1);
                         }
+
+                        if (dp.MobileParty != null && (dp.MobileParty.IsBandit || dp.MobileParty.Party?.Culture?.StringId == "looters"))
+                        {
+                            quest.IncrementCounter("Defeated_looters_Parties", 1);
+                            quest.IncrementCounter("Defeated_BanditParty_Parties", 1);
+                        }
                     }
                 }
 
@@ -667,6 +711,10 @@ namespace Questliner.Framework.Behaviors
                         if (!string.IsNullOrEmpty(result))
                         {
                             quest.SetStringVariable($"BattleResult_{alias}", result);
+                            if (result == "Victory" && isPlayerInvolved)
+                            {
+                                quest.IncrementCounter($"Defeated_{alias}_Parties", 1);
+                            }
                         }
                     }
                 }

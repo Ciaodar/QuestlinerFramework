@@ -166,27 +166,70 @@ namespace Questliner.Framework.Engine
                             quest.TargetParties[action.TargetAlias] = party;
                         }
                         
-                        string customName = !string.IsNullOrEmpty(action.StringValue) ? action.StringValue : "{=!}Looters";
-                        party.Party.SetCustomName(new TaleWorlds.Localization.TextObject(customName));
+                        string partyName = "{=!}Bandits";
+                        if (!string.IsNullOrEmpty(action.StringValue) && 
+                            !action.StringValue.Equals("Hold", System.StringComparison.OrdinalIgnoreCase) &&
+                            !action.StringValue.Equals("PatrolAroundSettlement", System.StringComparison.OrdinalIgnoreCase) &&
+                            !action.StringValue.Equals("GoToSettlement", System.StringComparison.OrdinalIgnoreCase) &&
+                            !action.StringValue.Equals("EngagePlayer", System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            partyName = action.StringValue;
+                        }
+                        else if (!string.IsNullOrEmpty(action.TargetAlias))
+                        {
+                            partyName = action.TargetAlias;
+                        }
+                        party.Party.SetCustomName(new TaleWorlds.Localization.TextObject(partyName));
 
                         // Set troop count
                         int targetAmount = action.Amount > 0 ? action.Amount : 15;
-                        var looterCharacter = TaleWorlds.CampaignSystem.Campaign.Current.ObjectManager.GetObject<TaleWorlds.CampaignSystem.CharacterObject>("looter");
-                        if (looterCharacter != null && party.MemberRoster.TotalManCount < targetAmount)
+                        TaleWorlds.CampaignSystem.CharacterObject? fillCharacter = null;
+                        if (looterTemplate.Stacks != null && looterTemplate.Stacks.Count > 0)
                         {
-                            party.MemberRoster.AddToCounts(looterCharacter, targetAmount - party.MemberRoster.TotalManCount);
+                            fillCharacter = looterTemplate.Stacks[0].Character;
+                        }
+                        if (fillCharacter == null)
+                        {
+                            fillCharacter = TaleWorlds.CampaignSystem.Campaign.Current.ObjectManager.GetObject<TaleWorlds.CampaignSystem.CharacterObject>("looter");
+                        }
+
+                        if (fillCharacter != null && party.MemberRoster.TotalManCount < targetAmount)
+                        {
+                            party.MemberRoster.AddToCounts(fillCharacter, targetAmount - party.MemberRoster.TotalManCount);
                         }
                         
                         // Prevent AI from attacking them for 24 hours
                         party.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.HoursFromNow(24));
                         
-                        // Force them to engage the player
-                        
                         party.Ai.SetDoNotMakeNewDecisions(true);
-                        
-                        // Force attack player
-                        party.Ai.SetDoNotMakeNewDecisions(true);
-                        party.SetMoveEngageParty(TaleWorlds.CampaignSystem.Party.MobileParty.MainParty, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
+
+                        // AI Movement
+                        string aiBehavior = action.StringValue ?? "";
+                        if (aiBehavior.Equals("Hold", System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            party.SetMoveModeHold();
+                        }
+                        else if (aiBehavior.Equals("PatrolAroundSettlement", System.StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(action.ObjectId))
+                        {
+                            var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
+                            if (targetSettlement != null)
+                                party.SetMovePatrolAroundSettlement(targetSettlement, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default, false);
+                            else
+                                party.SetMoveModeHold();
+                        }
+                        else if (aiBehavior.Equals("GoToSettlement", System.StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(action.ObjectId))
+                        {
+                            var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
+                            if (targetSettlement != null)
+                                party.SetMoveGoToSettlement(targetSettlement, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default, false);
+                            else
+                                party.SetMoveModeHold();
+                        }
+                        else
+                        {
+                            // Default: engage player
+                            party.SetMoveEngageParty(TaleWorlds.CampaignSystem.Party.MobileParty.MainParty, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
+                        }
                     }
                     break;
                 case "MakeMet":
@@ -317,8 +360,13 @@ namespace Questliner.Framework.Engine
                         else if (action.StringValue == "Hold") p.SetMoveModeHold();
                         else if (!string.IsNullOrEmpty(action.ObjectId))
                         {
-                            if (action.StringValue == "EngageParty" && quest.TargetParties.TryGetValue(action.ObjectId, out var targetP) && targetP != null)
-                                p.SetMoveEngageParty(targetP, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
+                            if (action.StringValue == "EngageParty")
+                            {
+                                if (action.ObjectId.Equals("Player", System.StringComparison.OrdinalIgnoreCase))
+                                    p.SetMoveEngageParty(TaleWorlds.CampaignSystem.Party.MobileParty.MainParty, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
+                                else if (quest.TargetParties.TryGetValue(action.ObjectId, out var targetP) && targetP != null)
+                                    p.SetMoveEngageParty(targetP, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
+                            }
                             else if (action.StringValue == "EscortParty" && quest.TargetParties.TryGetValue(action.ObjectId, out var escortP) && escortP != null)
                                 p.SetMoveEscortParty(escortP, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default, false);
                             else

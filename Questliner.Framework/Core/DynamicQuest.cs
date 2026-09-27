@@ -121,6 +121,15 @@ namespace Questliner.Framework.Core
                     TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
                 }
             }
+            foreach (var kvp in TargetParties)
+            {
+                if (kvp.Value != null)
+                {
+                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key, kvp.Value.Name);
+                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
+                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.Name);
+                }
+            }
             foreach (var kvp in TrackedCounters)
             {
                 TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key, kvp.Value);
@@ -161,7 +170,6 @@ namespace Questliner.Framework.Core
             }
             else
             {
-                TaleWorlds.Core.MBInformationManager.AddQuickInformation(new TextObject($"GÃ¶rev BaÅŸarÄ±sÄ±z: {Title}"));
                 CompleteQuestWithFail(); 
                 Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
             }
@@ -173,6 +181,11 @@ namespace Questliner.Framework.Core
             var currentStageModel = Model.Stages.FirstOrDefault(s => s.Id == CurrentStageId);
             if (currentStageModel != null)
             {
+                foreach (var action in currentStageModel.OnExitActions)
+                {
+                    Questliner.Framework.Engine.ActionExecutor.Execute(action, this);
+                }
+
                 if (currentStageModel.IsSuccessNode)
                 {
                     ForceSuccess();
@@ -197,11 +210,18 @@ namespace Questliner.Framework.Core
             var successStage = Model.Stages.FirstOrDefault(s => s.IsSuccessNode);
             if (successStage != null && CurrentStageId != successStage.Id)
             {
+                var currentStageModel = Model.Stages.FirstOrDefault(s => s.Id == CurrentStageId);
+                if (currentStageModel != null)
+                {
+                    foreach (var action in currentStageModel.OnExitActions)
+                    {
+                        Questliner.Framework.Engine.ActionExecutor.Execute(action, this);
+                    }
+                }
                 TransitionToStage(successStage.Id);
             }
             else
             {
-                TaleWorlds.Core.MBInformationManager.AddQuickInformation(new TextObject($"GÃ¶rev TamamlandÄ±: {Title}"));
                 CompleteQuestWithSuccess(); 
                 Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
             }
@@ -308,6 +328,15 @@ namespace Questliner.Framework.Core
                         parsedLogText.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
                         parsedLogText.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
                     }
+                    foreach (var kvp in TargetParties)
+                    {
+                        if (kvp.Value != null)
+                        {
+                            parsedLogText.SetTextVariable(kvp.Key, kvp.Value.Name);
+                            parsedLogText.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
+                            parsedLogText.SetTextVariable(kvp.Key + "_Link", kvp.Value.Name);
+                        }
+                    }
                     foreach (var kvp in TrackedCounters)
                     {
                         parsedLogText.SetTextVariable(kvp.Key, kvp.Value);
@@ -331,6 +360,11 @@ namespace Questliner.Framework.Core
                         if (nextStageModel.LogText.Contains("{" + kvp.Key) && !IsTracked(kvp.Value))
                             AddTrackedObject(kvp.Value);
                     }
+                    foreach (var kvp in TargetParties)
+                    {
+                        if (nextStageModel.LogText.Contains("{" + kvp.Key) && kvp.Value != null && !IsTracked(kvp.Value))
+                            AddTrackedObject(kvp.Value);
+                    }
 
                     foreach (var cond in nextStageModel.Conditions)
                     {
@@ -341,6 +375,9 @@ namespace Questliner.Framework.Core
 
                             var targetSettlement = GetTargetSettlement(cond.TargetAlias);
                             if (targetSettlement != null && !IsTracked(targetSettlement)) AddTrackedObject(targetSettlement);
+
+                            var targetParty = GetTargetParty(cond.TargetAlias);
+                            if (targetParty != null && !IsTracked(targetParty)) AddTrackedObject(targetParty);
                         }
                     }
 
@@ -364,13 +401,11 @@ namespace Questliner.Framework.Core
 
                 if (nextStageModel.IsSuccessNode)
                 {
-                    TaleWorlds.Core.MBInformationManager.AddQuickInformation(new TextObject($"GÃ¶rev TamamlandÄ±: {Title}"));
                     CompleteQuestWithSuccess();
                     Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
                 else if (nextStageModel.IsFailNode)
                 {
-                    TaleWorlds.Core.MBInformationManager.AddQuickInformation(new TextObject($"GÃ¶rev BaÅŸarÄ±sÄ±z: {Title}"));
                     CompleteQuestWithFail();
                     Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
