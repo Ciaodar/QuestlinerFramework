@@ -101,9 +101,7 @@
     <Stage Id="Stage_Zanaatkar_Infaz" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
       <LogText>{=sp_ai_s_infaz_log}You saw through the treachery of {ArtisanTarget_Link} and executed him on the spot. Searching his corpse, you discovered the mysterious Raven Bone Cipher. The chapter of the motherland has closed in blood, but the eyes of the Shadow Roost are now upon you.</LogText>
       <Conditions />
-      <OnEnterActions>
-        <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />
-      </OnEnterActions>
+      <OnEnterActions />
     </Stage>
   </Stages>
 
@@ -157,7 +155,7 @@
     </DialogNode>
 
     <!-- 2. ARTISAN (ZANAATKAR) DIYALOGLARI -->
-    <DialogNode Type="Player" Id="Art_B_Giris" TargetAlias="ArtisanTarget" InputToken="hero_main_options" OutputToken="ql_art_a1" Priority="100">
+    <DialogNode Type="Player" Id="Art_B_Giris" TargetAlias="ArtisanTarget" InputToken="hero_main_options" OutputToken="ql_art_a1" Priority="200">
       <Text>{=sp_ai_dlg11}A pigeon sent you this leather.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Zanaatkar" />
@@ -237,7 +235,7 @@
     </DialogNode>
 
     <!-- 3. DOST ILE YUZLESME (SUIKAST EMRI SONRASI) -->
-      <DialogNode Type="Player" Id="Dost_Player_Giris_Kabul" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_npc_giris" Priority="100">
+      <DialogNode Type="Player" Id="Dost_Player_Giris_Kabul" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_npc_giris" Priority="200">
         <Text>{=sp_ai_dlg27}I have a special matter to discuss with you.</Text>
         <Conditions>
           <Condition Type="IsStageActive" ObjectId="Stage3_SuikastKabul" />

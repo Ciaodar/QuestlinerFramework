@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item id="pigeon_secret_dagger" name="{=sp_item_pigeon_secret_dagger}Gizli Güvercin Hançeri" mesh="dagger_1" Type="OneHandedWeapon" is_merchandise="false" value="1500" weight="0.8">
+  <Item id="pigeon_secret_dagger" name="{=sp_item_pigeon_secret_dagger}Secret Pigeon Dagger" mesh="dagger_1" Type="OneHandedWeapon" is_merchandise="false" value="1500" weight="0.8">
     <ItemComponent>
       <Weapon weapon_class="Dagger" thrust_speed="95" speed_rating="100" missile_speed="0" weapon_length="45" thrust_damage="28" swing_damage="22" thrust_damage_type="Pierce" swing_damage_type="Cut" item_usage="onehanded" />
     </ItemComponent>
     <Flags />
   </Item>
-  <Item id="raven_bone_cipher" name="{=sp_item_raven_bone_cipher}Kuzgun Kemiği Şifresi" mesh="scroll_a" Type="Goods" is_merchandise="false" value="2500" weight="0.2">
+  <Item id="raven_bone_cipher" name="{=sp_item_raven_bone_cipher}Raven Bone Cipher" mesh="scroll_a" Type="Goods" is_merchandise="false" value="2500" weight="0.2">
     <ItemComponent>
       <Trade value="2500" />
     </ItemComponent>
     <Flags />
   </Item>
-  <Item id="shadow_bone_dagger" name="{=sp_item_shadow_bone_dagger}Gölge Kemiği Hançeri" mesh="dagger_2" Type="OneHandedWeapon" is_merchandise="false" value="3000" weight="0.7">
+  <Item id="shadow_bone_dagger" name="{=sp_item_shadow_bone_dagger}Shadow Bone Dagger" mesh="dagger_2" Type="OneHandedWeapon" is_merchandise="false" value="3000" weight="0.7">
     <ItemComponent>
       <Weapon weapon_class="Dagger" thrust_speed="98" speed_rating="105" missile_speed="0" weapon_length="50" thrust_damage="34" swing_damage="26" thrust_damage_type="Pierce" swing_damage_type="Cut" item_usage="onehanded" />
     </ItemComponent>
     <Flags />
   </Item>
-  <Item id="shadow_master_ring" name="{=sp_item_shadow_master_ring}Gölge Ustası Mührü" mesh="jewelry_ring" Type="Goods" is_merchandise="false" value="4000" weight="0.1">
+  <Item id="shadow_master_ring" name="{=sp_item_shadow_master_ring}Shadow Master Ring" mesh="jewelry_ring" Type="Goods" is_merchandise="false" value="4000" weight="0.1">
     <ItemComponent>
       <Trade value="4000" />
     </ItemComponent>
     <Flags />
   </Item>
-  <Item id="pigeon_blood_claymore" name="{=sp_item_pigeon_blood_claymore}Güvercin Kanı Kılıcı" mesh="sword_2" Type="TwoHandedWeapon" is_merchandise="false" value="7500" weight="2.4">
+  <Item id="pigeon_blood_claymore" name="{=sp_item_pigeon_blood_claymore}Pigeon Blood Claymore" mesh="sword_2" Type="TwoHandedWeapon" is_merchandise="false" value="7500" weight="2.4">
     <ItemComponent>
       <Weapon weapon_class="TwoHandedSword" thrust_speed="85" speed_rating="92" missile_speed="0" weapon_length="120" thrust_damage="42" swing_damage="92" thrust_damage_type="Pierce" swing_damage_type="Cut" item_usage="twohanded" />
     </ItemComponent>
