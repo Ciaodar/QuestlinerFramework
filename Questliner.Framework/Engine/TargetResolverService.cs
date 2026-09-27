@@ -429,6 +429,12 @@ namespace Questliner.Framework.Engine
                     if (filter == "BanditParty") step = candidates.Where(p => p.IsBandit);
                     else if (filter == "Caravan") step = candidates.Where(p => p.IsCaravan);
                     else if (filter == "LordParty") step = candidates.Where(p => p.IsLordParty);
+                    else if (filter.StartsWith("PartyOf(") && filter.EndsWith(")"))
+                    {
+                        var heroAlias = filter.Substring(8, filter.Length - 9);
+                        var hero = quest?.GetTargetHero(heroAlias);
+                        step = candidates.Where(p => hero != null && (p.LeaderHero == hero || p == hero.PartyBelongedTo));
+                    }
                     else if (filter.StartsWith("Faction("))
                     {
                         var factionStr = filter.Substring(8, filter.Length - 9);
@@ -441,6 +447,30 @@ namespace Questliner.Framework.Engine
 
             var finalList = candidates.ToList();
             if (!finalList.Any()) return null;
+
+            if (model.Selector.StartsWith("PartyOf(") && model.Selector.EndsWith(")"))
+            {
+                var heroAlias = model.Selector.Substring(8, model.Selector.Length - 9);
+                var hero = quest?.GetTargetHero(heroAlias);
+                if (hero != null && hero.PartyBelongedTo != null && hero.PartyBelongedTo.IsActive)
+                    return hero.PartyBelongedTo;
+            }
+            if (model.Selector.StartsWith("NearestTo(") && model.Selector.EndsWith(")"))
+            {
+                var refAlias = model.Selector.Substring(10, model.Selector.Length - 11);
+                TaleWorlds.Library.Vec2 refPos = MobileParty.MainParty.GetPosition2D;
+                if (quest != null)
+                {
+                    var targetHero = quest.GetTargetHero(refAlias);
+                    var targetSettlement = quest.GetTargetSettlement(refAlias);
+                    var targetParty = quest.GetTargetParty(refAlias);
+                    if (targetParty != null && targetParty.IsActive) refPos = targetParty.GetPosition2D;
+                    else if (targetHero?.PartyBelongedTo != null && targetHero.PartyBelongedTo.IsActive) refPos = targetHero.PartyBelongedTo.GetPosition2D;
+                    else if (targetHero?.CurrentSettlement != null) refPos = targetHero.CurrentSettlement.GetPosition2D;
+                    else if (targetSettlement != null) refPos = targetSettlement.GetPosition2D;
+                }
+                return finalList.OrderBy(p => p.GetPosition2D.DistanceSquared(refPos)).FirstOrDefault();
+            }
 
             if (model.Selector == "Random")
                 return finalList[TaleWorlds.Core.MBRandom.RandomInt(finalList.Count)];

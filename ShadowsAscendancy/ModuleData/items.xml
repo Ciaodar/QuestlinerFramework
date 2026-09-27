@@ -6,4 +6,10 @@
     </ItemComponent>
     <Flags />
   </Item>
+  <Item id="lordun_muhurlu_emri" name="{=shdw_item_order}Lord's Sealed Order" mesh="scroll_a" Type="Goods" is_merchandise="false" value="1500" weight="0.5">
+    <ItemComponent>
+      <Trade value="1500" />
+    </ItemComponent>
+    <Flags />
+  </Item>
 </Items>

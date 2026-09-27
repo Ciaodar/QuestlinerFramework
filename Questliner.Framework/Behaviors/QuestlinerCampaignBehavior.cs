@@ -128,19 +128,22 @@ namespace Questliner.Framework.Behaviors
                     var capturedQuestModel = questModel;
                     var capturedDialogNode = dialogNode;
 
+                    int nodePriority = dialogNode.Priority > 0 ? dialogNode.Priority : 100;
+
                     if (dialogNode.Type == "Player")
                     {
                         starter.AddPlayerLine(globalDialogId, dialogNode.InputToken, dialogNode.OutputToken, textId,
                             () => DynamicDialogCondition(capturedQuestModel, capturedDialogNode),
                             () => DynamicDialogConsequence(capturedQuestModel, capturedDialogNode),
-                            100,
+                            nodePriority,
                             (out TaleWorlds.Localization.TextObject explanation) => DynamicClickableCondition(capturedQuestModel, capturedDialogNode, out explanation));
                     }
                     else
                     {
                         starter.AddDialogLine(globalDialogId, dialogNode.InputToken, dialogNode.OutputToken, textId,
                             () => DynamicDialogCondition(capturedQuestModel, capturedDialogNode),
-                            () => DynamicDialogConsequence(capturedQuestModel, capturedDialogNode));
+                            () => DynamicDialogConsequence(capturedQuestModel, capturedDialogNode),
+                            nodePriority);
                     }
                 }
             }

@@ -209,6 +209,9 @@ namespace Questliner.Shared.Models
         [XmlAttribute("Id")]
         public string Id { get; set; } = string.Empty; // Must be unique per quest
 
+        [XmlAttribute("Priority")]
+        public int Priority { get; set; } = 100;
+
         [XmlAttribute("ShowWhenDisabled")]
         public bool ShowWhenDisabled { get; set; } = false;
 

@@ -265,6 +265,12 @@ namespace Questliner.Framework.Engine
                     {
                         targetFaction = Campaign.Current.Factions.FirstOrDefault(f => f.StringId == action.ObjectId);
                     }
+                    if (targetFaction == null)
+                    {
+                        targetFaction = TaleWorlds.CampaignSystem.Settlements.Settlement.CurrentSettlement?.MapFaction ?? 
+                                        Hero.MainHero.CurrentSettlement?.MapFaction ?? 
+                                        Hero.MainHero.MapFaction;
+                    }
 
                     if (targetFaction != null)
                     {
@@ -281,6 +287,8 @@ namespace Questliner.Framework.Engine
                 case "DeclareWar":
                 {
                     IFaction? targetFaction = null;
+                    IFaction? sourceFaction = null;
+
                     if (!string.IsNullOrEmpty(action.TargetAlias) && quest != null)
                     {
                         var hero = quest.GetTargetHero(action.TargetAlias);
@@ -288,19 +296,35 @@ namespace Questliner.Framework.Engine
                         var party = quest.GetTargetParty(action.TargetAlias);
                         targetFaction = hero?.MapFaction ?? settlement?.MapFaction ?? party?.MapFaction;
                     }
-                    if (targetFaction == null && !string.IsNullOrEmpty(action.ObjectId))
+                    if (!string.IsNullOrEmpty(action.ObjectId))
                     {
-                        targetFaction = Campaign.Current.Factions.FirstOrDefault(f => f.StringId == action.ObjectId);
+                        var objFaction = Campaign.Current.Factions.FirstOrDefault(f => f.StringId.Equals(action.ObjectId, System.StringComparison.OrdinalIgnoreCase));
+                        if (targetFaction == null)
+                        {
+                            targetFaction = objFaction;
+                        }
+                        else
+                        {
+                            sourceFaction = objFaction;
+                        }
                     }
-                    if (targetFaction != null && Clan.PlayerClan.MapFaction != null && targetFaction != Clan.PlayerClan.MapFaction)
+
+                    if (sourceFaction == null)
                     {
-                        DeclareWarAction.ApplyByDefault(Clan.PlayerClan.MapFaction, targetFaction);
+                        sourceFaction = Clan.PlayerClan.MapFaction;
+                    }
+
+                    if (targetFaction != null && sourceFaction != null && targetFaction != sourceFaction)
+                    {
+                        DeclareWarAction.ApplyByDefault(sourceFaction, targetFaction);
                     }
                     break;
                 }
                 case "MakePeace":
                 {
                     IFaction? targetFaction = null;
+                    IFaction? sourceFaction = null;
+
                     if (!string.IsNullOrEmpty(action.TargetAlias) && quest != null)
                     {
                         var hero = quest.GetTargetHero(action.TargetAlias);
@@ -308,13 +332,27 @@ namespace Questliner.Framework.Engine
                         var party = quest.GetTargetParty(action.TargetAlias);
                         targetFaction = hero?.MapFaction ?? settlement?.MapFaction ?? party?.MapFaction;
                     }
-                    if (targetFaction == null && !string.IsNullOrEmpty(action.ObjectId))
+                    if (!string.IsNullOrEmpty(action.ObjectId))
                     {
-                        targetFaction = Campaign.Current.Factions.FirstOrDefault(f => f.StringId == action.ObjectId);
+                        var objFaction = Campaign.Current.Factions.FirstOrDefault(f => f.StringId.Equals(action.ObjectId, System.StringComparison.OrdinalIgnoreCase));
+                        if (targetFaction == null)
+                        {
+                            targetFaction = objFaction;
+                        }
+                        else
+                        {
+                            sourceFaction = objFaction;
+                        }
                     }
-                    if (targetFaction != null && Clan.PlayerClan.MapFaction != null && targetFaction != Clan.PlayerClan.MapFaction)
+
+                    if (sourceFaction == null)
                     {
-                        MakePeaceAction.Apply(Clan.PlayerClan.MapFaction, targetFaction);
+                        sourceFaction = Clan.PlayerClan.MapFaction;
+                    }
+
+                    if (targetFaction != null && sourceFaction != null && targetFaction != sourceFaction)
+                    {
+                        MakePeaceAction.Apply(sourceFaction, targetFaction);
                     }
                     break;
                 }

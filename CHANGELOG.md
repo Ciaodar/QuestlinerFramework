@@ -2,6 +2,22 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.4.0] - 28 Eylül 2026 (Dialogue Priority, AI vs AI Warfare & MobileParty Resolving)
+
+### Eklendi & İyileştirildi (Added & Improved)
+- **Diyalog Öncelik Sistemi (Dialogue Priority):**
+  - `CustomDialogModel` içine `Priority` (`[XmlAttribute("Priority")]`) niteliği eklendi.
+  - `starter.AddPlayerLine` ve `starter.AddDialogLine` metodlarına XML'den gelen `dialogNode.Priority` değeri bağlandı. Artık XML'de tanımlanan `Priority="200"` değeri Native TaleWorlds diyaloglarının (varsayılan 100) önüne geçerek görev diyaloglarının öncelikle açılmasını garantiler.
+- **Yapay Zeka Krallıkları Arası Savaş/Barış (AI vs AI Diplomacy):**
+  - `DeclareWar` ve `MakePeace` aksiyonları geliştirildi. `TargetAlias` ve `ObjectId` aynı anda verildiğinde artık iki yapay zeka krallığı/fraksiyonu birbiriyle savaşa sokulabilir veya barıştırılabilir (`sourceFaction` ve `targetFaction`).
+- **Mobil Parti Dinamik Hedef Çözümleyici (MobileParty Resolver):**
+  - `ResolveMobileParty` metoduna `PartyOf(HeroAlias)` filtresi ve seçicisi eklendi; belirtilen bir lordun ordusu doğrudan parti hedefi olarak çözümlenebilir.
+  - `NearestTo(Alias)` seçicisi MobileParty için de aktif edildi.
+- **Suç Puanı Güvenliği (Crime Rating Fallback):**
+  - `ChangeCrimeRating` aksiyonunda hedef fraksiyon belirtilmediğinde açık haritada veya sığınakta çökme/etkisizlik yaşanmaması için oyuncunun o anki yerleşkesi veya ana fraksiyonu güvenli yedek olarak atandı.
+
+---
+
 ## [v1.3.0] - 28 Eylül 2026 (Battle Tracking, Dialogue Isolation & MobileParty Engine Polish)
 
 ### Düzeltildi & İyileştirildi (Fixed & Improved)
