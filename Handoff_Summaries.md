@@ -59,3 +59,55 @@
 3. **Disiplin Kuralları:**
    - C# kodlarına müdahale edilmemeli (XML yazarı yetki alanı dışındadır).
    - Her başarılı derleme ve testin ardından `dotnet build`, `git add .`, `git commit -m "..."` ve `git push` adımları eksiksiz yürütülmelidir.
+
+---
+
+## 2. Demir Ahit (Iron Covenant) Quest Writer -> Framework Agent
+- **Tarih:** 27 Eylül 2026
+- **Görevi Devreden:** Demir Ahit Senaryo & XML Geliştirme Ajanı
+- **Görevi Devralacak:** Framework Geliştirme Ajanı / Subagent
+- **İlgili Modül:** `DemirAhit` (Launcher Adı: **Iron Covenant**)
+- **Mevcut Mod Versiyonu:** `v1.0.0.1`
+
+### Tamamlanan Çalışmalar ve Modül Mimarisi
+
+#### A. Görev Zinciri Dosyaları (`DemirAhit/ModuleData/Questlines/`)
+Klan seviyesi ilerlemesine bağlı 4 aşamalı ana hikaye zinciri tamamlanmıştır:
+1. `QLF_DemirAhit_Cirak.xml` (Apprentice's Oath - Clan Tier 2):
+   - Davet ve toplama aşamaları bölünerek doğal diyalog akışı kuruldu (`Stage1_Davet` -> `Stage1_Toplama`).
+   - 10.000 Altınlık alternatif kestirme satın alma yolu eklendi (`Stage2_KestirmeYol`).
+   - Pusu savaşı (`KiralikKatiller`), `BattleResolvedAs` zafer kontrolü ve başarısızlıkta partinin `DestroyParty` ile silinmesi sağlandı.
+2. `QLF_DemirAhit_Kalfa.xml` (Journeyman's Trial - Clan Tier 3):
+   - `Stage2A_Nobet`: Köyde nöbet tutma ve gelen 60 kişilik `Sabotajcilar` haydut grubunu savuşturma.
+   - `Stage2B_Takip`: Rakip tüccarla yüzleşme; 2.000 altın rüşvet verme, `SkillCheck(Roguery, 50)` ile tehdit etme veya korumalarla (`Korumalar`) savaşma dallanmaları.
+3. `QLF_DemirAhit_Usta.xml` (Master's Burden - Clan Tier 4):
+   - Demircinin kardeşi Kalan'ı düşman yerleşkesinin zindanından kurtarma operasyonu.
+   - Gizli sızma (`SkillCheck(Roguery, 80)`), yakalanma durumunda 150 kişilik muhafız pususu (`GarnizonMuhafizlari`), kuşatma veya fidye ödeme seçenekleri.
+4. `QLF_DemirAhit_Miras.xml` (Forging the Legacy - Clan Tier 5):
+   - 50.000 altın değerindeki "Kalbin Ateşi" ritüelinin tamamlanması ve efsanevi kılıcın dövülmesi.
+   - Nihai seçim: Kılıcı klan mirası olarak saklama (`AhitKilici_Efsanevi`) VEYA krala sunma (`IsVassalOfTargetFaction` koşuluna bağlı, bağımsız klanlarda gizlenir).
+5. `DemirAhit/ModuleData/items.xml`:
+   - `YildizDemiri`, `GecicilAhitKilici`, `KalfaMuhru`, `KalbinAtesi` ve `AhitKilici_Efsanevi` eşyaları tanımlandı.
+
+#### B. Uluslararasılaştırma ve Yerelleştirme (Localization)
+- Tüm görev ve eşya XML dosyalarındaki ham metinler standart İngilizceye dönüştürüldü.
+- İki dilli dil paketleri oluşturuldu:
+  - `DemirAhit/ModuleData/Languages/EN/std_IronCovenant_en.xml` (İngilizce)
+  - `DemirAhit/ModuleData/Languages/TR/std_IronCovenant_tr.xml` (Türkçe)
+
+#### C. Otomasyon, Derleme ve Dağıtım (CI/CD Pipeline)
+- `DemirAhit/Build/UpdateVersion.ps1`: `vMAJOR.UPDATE.HOTFIX.DEBUG` formatında versiyonlama scripti.
+- `DemirAhit.csproj`: PreBuild ile versiyon artırımı; PostBuild ile `SubModule.xml`, `ModuleData/` ve derlenen `.dll` dosyalarının Bannerlord `Modules/DemirAhit` klasörüne `xcopy` ile otomatik aktarımı.
+- `SubModule.xml`: Eksik olan `<DependedModule Id="QuestlinerFramework" />` bağımlılığı eklendi, Launcher adı "Iron Covenant" olarak güncellendi.
+
+### Motor Seviyesinde Talep Edilen & Tamamlanan Özellikler (IR Geçmişi)
+1. `BattleResolvedAs` Koşulu: Mobil parti savaş sonuçlarını (`Victory`, `Defeat`, `Retreat`, `DestroyedByAI`) doğrulamak için eklendi.
+2. `SaveHeroToGlobal` & `GlobalHero(Key)`: Demirci, tüccar ve Kalan karakterlerinin görevler boyunca kalıcı ve tutarlı olarak seçilmesini sağladı.
+3. `IsOptional="true"` (TargetResolver): Kral gibi opsiyonel hedeflerin bağımsız klanlarda null dönmesi halinde görevin kilitlenmesini önledi.
+4. `IsPrisonerInSettlement` Filtresi: Hedefin sadece esir değil, kale/şehir zindanında tutulmasını garanti ederek `SameSettlementAs` null hatasını engelledi.
+5. `DestroyParty` Aksiyonu: Kaçılan veya zaman aşımına uğrayan pusu partilerinin haritadan silinmesini sağladı.
+
+### Framework Ajanına Notlar ve Bekleyen İstek (Pending IR)
+- **Bekleyen Özellik Talebi (`IR_DisabledDialogHints.md`):** Koşulu sağlanmayan diyalog seçeneklerinin tamamen gizlenmesi yerine gri/tıklanamaz olarak görünmesi ve üzerine gelindiğinde neden seçilemediğini belirten ipucu (`DisabledHint`) göstermesi için C# tarafında geliştirme beklenmektedir.
+- **Diyalog Başlangıçları:** Oyundaki tanışma (`MakeMet`) pencerelerinin görev başlangıcını ezmesini engellemek için diyalog girişleri `InputToken="hero_main_options"` olarak ayarlanmıştır.
+- **Hedef Takibi:** Metinlerde `{HedefAlias_Link}` formatı kullanılarak otomatik harita/ansiklopedi takibi (mavi ünlem) sağlanmıştır.
