@@ -5,7 +5,7 @@
 - **Görevi Devreden:** Shadows' Ascendancy Senaryo & XML Geliştirme Ajanı
 - **Görevi Devralacak:** Framework Geliştirme Ajanı / Yeni Subagent
 - **İlgili Modül:** `ShadowsAscendancy` (Launcher Adı: **Shadows' Ascendancy**)
-- **Mevcut Mod Versiyonu:** `v1.0.0.5`
+- **Mevcut Mod Versiyonu:** `v1.0.0.9`
 
 ### Tamamlanan Çalışmalar ve Modül Mimarisi
 

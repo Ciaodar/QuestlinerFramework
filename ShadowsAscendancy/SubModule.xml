@@ -1,7 +1,7 @@
 ﻿<Module>
   <Name value="Questliner - Shadows' Ascendancy" />
   <Id value="ShadowsAscendancy" />
-  <Version value="v1.0.0.6" />
+  <Version value="v1.0.0.9" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
   <DependedModules>
@@ -10,6 +10,7 @@
     <DependedModule Id="Sandbox" />
     <DependedModule Id="CustomBattle" />
     <DependedModule Id="StoryMode" />
+    <DependedModule Id="QuestlinerFramework" />
   </DependedModules>
   <SubModules>
     <SubModule>
@@ -24,9 +25,3 @@
   <Xmls>
   </Xmls>
 </Module>
-
-
-
-
-
-

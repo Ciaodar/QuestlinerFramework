@@ -159,6 +159,9 @@
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage4_Hukumdar" />
       </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="Hukumdar" />
+      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Hukumdar_Cevap" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_1" OutputToken="close_window">

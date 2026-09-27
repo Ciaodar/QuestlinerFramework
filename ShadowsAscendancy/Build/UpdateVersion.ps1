@@ -37,7 +37,7 @@ if ($content -match '<Version\s+value="v?(\d+)\.(\d+)\.(\d+)(?:\.(\d+))?"\s*/>')
 
     $newVersion = "v${major}.${update}.${hotfix}.${debug}"
     $newContent = $content -replace '<Version\s+value="[^"]+"\s*/>', "<Version value=`"$newVersion`" />"
-    Set-Content -Path $xmlPath -Value $newContent -Encoding UTF8
+    [System.IO.File]::WriteAllText((Resolve-Path $xmlPath).Path, $newContent.TrimEnd() + "`r`n", [System.Text.Encoding]::UTF8)
     Write-Host "Version updated to $newVersion"
     exit 0
 } else {
