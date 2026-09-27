@@ -3,7 +3,7 @@
   <TargetResolvers>
     <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="GlobalHero(DemirAhit_AnaDemirci)" Selector="Nearest" />
     <Resolver Alias="Kalan" TargetType="Hero" Filters="GlobalHero(DemirAhit_Kalan)" Selector="Nearest" />
-    <Resolver Alias="IttifakKrali" TargetType="Hero" Filters="KingdomLeader, SameFactionAs(Player)" Selector="Nearest" IsOptional="true" />
+    <Resolver Alias="IttifakKrali" TargetType="Hero" Filters="KingdomLeader, PlayerFaction" Selector="Nearest" IsOptional="true" />
   </TargetResolvers>
 
   <Prerequisites>
@@ -51,7 +51,6 @@
         <Action Type="ChangeRenown" Amount="150" />
         <Action Type="ChangeInfluence" Amount="200" />
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit4_Basarili" Amount="1" />
-        <Action Type="CompleteQuest" />
       </OnEnterActions>
       <OnExitActions />
     </Stage>
@@ -64,7 +63,6 @@
         <Action Type="ChangeInfluence" Amount="500" />
         <Action Type="ChangeRelation" TargetAlias="IttifakKrali" Amount="50" />
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit4_Basarili" Amount="1" />
-        <Action Type="CompleteQuest" />
       </OnEnterActions>
       <OnExitActions />
     </Stage>
@@ -155,7 +153,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Miras_Karar_Kral" TargetAlias="EfsaneviDemirci" InputToken="da_miras_karar_secimler" OutputToken="close_window" ShowWhenDisabled="true" DisabledHint="{=da_hint_vassal_req}Must be a Vassal of an Empire or Kingdom">
-      <Text>{=da_miras_p5}I shall present this peerless blade to King {IttifakKrali_Link}. In our sovereign's hands, it shall elevate our clan to the right hand of the throne!</Text>
+      <Text>{=da_miras_p5}I shall present this peerless blade to my sovereign king. In the monarch's hands, it shall elevate our clan to the right hand of the throne!</Text>
       <Conditions>
         <Condition Type="IsVassalOfTargetFaction" TargetAlias="IttifakKrali" Amount="1" />
       </Conditions>

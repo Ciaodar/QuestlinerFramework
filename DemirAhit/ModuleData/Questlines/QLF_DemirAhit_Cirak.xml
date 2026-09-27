@@ -41,39 +41,29 @@
       </OnTimeoutActions>
     </Stage>
 
-    <Stage Id="Stage2_Pusu" NextStageId="Stage2_Pusu_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_2}The rival merchant's hired mercenaries ({KiralikKatiller_Link}) are nearby carrying the stolen Star Iron! Defeat them in battle to reclaim the ore.</LogText>
+    <Stage Id="Stage2_Pusu" NextStageId="Stage3_Teslim" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=da_log_2}The rival merchant's hired mercenaries are nearby carrying the stolen Star Iron! Defeat them in battle to reclaim the ore.</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="KiralikKatiller" StringValue="Victory" />
       </Conditions>
       <OnEnterActions />
-      <OnExitActions />
+      <OnExitActions>
+        <Action Type="GiveItem" ObjectId="YildizDemiri" Amount="5" />
+        <Action Type="ChangeRelation" TargetAlias="RakipTuccar" Amount="-5" />
+      </OnExitActions>
       <OnTimeoutActions>
          <Action Type="DestroyParty" TargetAlias="KiralikKatiller" />
          <Action Type="ChangeStage" ObjectId="Stage1_Toplama" />
       </OnTimeoutActions>
     </Stage>
 
-    <Stage Id="Stage2_Pusu_Zafer" NextStageId="Stage3_Teslim" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=da_log_2_win}You crushed the hired ambushers and pried 5 Star Iron ore from their baggage! Return to {EfsaneviDemirci_Link} to forge the blade.</LogText>
-      <Conditions />
-      <OnEnterActions>
-         <Action Type="GiveItem" ObjectId="YildizDemiri" Amount="5" />
-         <Action Type="ChangeRelation" TargetAlias="RakipTuccar" Amount="-5" />
-         <Action Type="ChangeStage" ObjectId="Stage3_Teslim" />
-      </OnEnterActions>
-      <OnExitActions />
-      <OnTimeoutActions />
-    </Stage>
-
     <Stage Id="Stage2_KestirmeYol" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
       <LogText>{=da_log_kestirme}You bypassed the ore gathering by purchasing the master's ready-forged sword for a steep sum of 10,000 denars.</LogText>
       <Conditions />
       <OnEnterActions>
-        <Action Type="GiveItem" ObjectId="GecicilAhitKilici" Amount="1" />
+        <Action Type="GiveItem" ObjectId="GeciciAhitKilici" Amount="1" />
         <Action Type="ChangeRenown" Amount="25" />
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit1_Basarili" Amount="1" />
-        <Action Type="CompleteQuest" />
       </OnEnterActions>
       <OnExitActions />
       <OnTimeoutActions />
@@ -88,6 +78,20 @@
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit1_Basarisiz" Amount="1" />
         <Action Type="FailQuest" />
       </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage3_Basari_Normal" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=da_log_1_success}You delivered the 5 Star Iron ore to {EfsaneviDemirci_Link}. With ancient craft and roaring coals, the master forged your bloodline's Covenant Sword!</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="TakeItem" ObjectId="YildizDemiri" Amount="5" />
+        <Action Type="GiveItem" ObjectId="GeciciAhitKilici" Amount="1" />
+        <Action Type="ChangeRenown" Amount="50" />
+        <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="15" />
+        <Action Type="SetGlobalFlag" ObjectId="DemirAhit1_Basarili" Amount="1" />
+      </OnEnterActions>
+      <OnExitActions />
+      <OnTimeoutActions />
     </Stage>
   </Stages>
 
@@ -135,7 +139,7 @@
     </DialogNode>
 
     <!-- Dialogue with Village Elder at HammadeKaynagi -->
-    <DialogNode Type="Player" Id="Muhtar_Giris" TargetAlias="KoyMuhtari" InputToken="start" OutputToken="da_muhtar_1" Priority="200">
+    <DialogNode Type="Player" Id="Muhtar_Giris" TargetAlias="KoyMuhtari" InputToken="hero_main_options" OutputToken="da_muhtar_1" Priority="200">
       <Text>{=da_muhtar_p_giris}I am here on behalf of {EfsaneviDemirci_Link}. I have come to collect the Star Iron ore from your quarry.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Toplama" />
@@ -183,6 +187,7 @@
     <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_Giris" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_teslim_gecis_1" Priority="200">
       <Text>{=da_teslim_p_giris}Master smith, I hold the five chunks of Star Iron you commanded me to fetch.</Text>
       <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_Teslim" />
         <Condition Type="HasItem" ObjectId="YildizDemiri" Amount="5" />
       </Conditions>
     </DialogNode>
@@ -195,12 +200,7 @@
     <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_P" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_2" OutputToken="close_window">
       <Text>{=da_teslim_p1}Take the ore, master. Kindle your coals and let us forge our oath in steel.</Text>
       <Consequences>
-        <Action Type="TakeItem" ObjectId="YildizDemiri" Amount="5" />
-        <Action Type="GiveItem" ObjectId="GecicilAhitKilici" Amount="1" />
-        <Action Type="ChangeRenown" Amount="50" />
-        <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="15" />
-        <Action Type="SetGlobalFlag" ObjectId="DemirAhit1_Basarili" Amount="1" />
-        <Action Type="CompleteQuest" />
+        <Action Type="ChangeStage" ObjectId="Stage3_Basari_Normal" />
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>

@@ -10,22 +10,25 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 
 ### A. SubModule.xml ve Özel Eşyalar (items.xml)
 - Modül adı uluslararası standart gereği İngilizce olarak `<Name value="Iron Covenant" />` şeklinde tanımlanmıştır.
-- TaleWorlds motorunun `ModuleData/items.xml` dosyasındaki özel eşyaları kampanya sözlüğüne başarıyla yüklemesi için `<Xmls>` bloğu eksiksiz yapılandırılmıştır:
+- TaleWorlds motorunun `ModuleData/items.xml` dosyasındaki özel eşyaları kampanya sözlüğüne başarıyla yüklemesi için `<Xmls>` bloğu `<IncludedGameTypes>` ile eksiksiz yapılandırılmıştır:
   ```xml
   <Xmls>
     <XmlNode>
       <XmlName id="Items" path="items" />
+      <IncludedGameTypes>
+        <GameType value="Campaign" />
+        <GameType value="CampaignStoryMode" />
+      </IncludedGameTypes>
     </XmlNode>
   </Xmls>
   ```
-- Bu kayıt sayesinde `YildizDemiri`, `GecicilAhitKilici`, `KalfaMuhru`, `KalbinAtesi` ve `AhitKilici_Efsanevi` eşyaları oyuna ve envanter işlemlerine (`GiveItem`, `TakeItem`, `HasItem`) eksiksiz dahil olur.
+- Bu kayıt sayesinde `YildizDemiri`, `GeciciAhitKilici`, `KalfaMuhru`, `KalbinAtesi` ve `AhitKilici_Efsanevi` eşyaları oyuna ve envanter işlemlerine (`GiveItem`, `TakeItem`, `HasItem`) eksiksiz dahil olur. Eşyalarda `is_merchandise="false"` kullanılarak pazarlarda rastgele satılmaları engellenmiştir. Silah hasarları Bannerlord native standardına uygun olarak `swing_damage` / `swing_damage_type` şeklinde tanımlanmıştır.
 
 ### B. Çift Dilli Yerelleştirme (Localization) ve language_data.xml
 - TaleWorlds motorunun dil dosyalarını otomatik tanıması için `ModuleData/Languages` hiyerarşisi BUTR/Native standartlarına uygun hale getirilmiştir:
-  - `ModuleData/Languages/language_data.xml` (Türkçe kök yönlendirici)
   - `ModuleData/Languages/EN/language_data.xml` (İngilizce dil paketi: `std_IronCovenant_en.xml`)
   - `ModuleData/Languages/TR/language_data.xml` (Türkçe dil paketi: `std_IronCovenant_tr.xml`)
-- Her iki dil dosyasında tam 89 adet string ID birebir örtüşmekte, Kalradya evrenine uygun zengin, edebi ve sürükleyici bir ortaçağ üslubu kullanılmaktadır.
+- Her iki dil dosyasında tam 90 adet string ID birebir örtüşmekte, Kalradya evrenine uygun zengin, edebi ve sürükleyici bir ortaçağ üslubu kullanılmaktadır.
 
 ### C. Motor Desteği: Devre Dışı Diyalog İpuçları (ShowWhenDisabled & DisabledHint)
 - C# motorunun sunduğu `ShowWhenDisabled="true"` ve `DisabledHint="{=hint_id}Text"` özelliği tüm görevlerdeki kritik seçeneklere uygulanmıştır:
@@ -55,7 +58,7 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
      - **Yol A (Savaş ve Ganimet):** Muhtarın yönlendirmesiyle 30 kişilik `KiralikKatiller` pususuna saldırılır. Zafer sonrası (`Stage2_Pusu_Zafer`), 5 adet `YildizDemiri` ganimet olarak heybeye eklenir (`GiveItem Amount="5"`).
      - **Yol B (Köy Ambarından Satın Alma):** Muhtara madencilerin zararını karşılamak için 2.000 altın ödenerek ocak mahzenindeki 5 adet yedek Yıldız Demiri doğrudan satın alınır (`ShowWhenDisabled="true"`, `DisabledHint`).
      - **Yol C (Zaman Aşımı Pususu):** Oyuncu 3 gün içinde muhtarla görüşmezse haydutlar açık haritada oyuncuya doğrudan pusu kurar. Zaferde yine madenler ele geçirilir.
-  4. **Teslimat (Stage3_Teslim):** 5 adet Yıldız Demiri `{EfsaneviDemirci_Link}`'e teslim edilir. Demirci madenleri alıp (`TakeItem Amount="5"`), oyuncuya `GecicilAhitKilici`, +50 Renown ve +15 İlişki verir. `DemirAhit1_Basarili=1` bayrağı set edilir.
+  4. **Teslimat ve Başarı (Stage3_Teslim & Stage3_Basari_Normal):** 5 adet Yıldız Demiri `{EfsaneviDemirci_Link}`'e teslim edilir. Diyalog sonucunda doğrudan `Stage3_Basari_Normal` aşamasına geçilir (`IsSuccessNode="true"`). Demirci madenleri alıp (`TakeItem Amount="5"`), oyuncuya `GeciciAhitKilici`, +50 Renown ve +15 İlişki verir. `DemirAhit1_Basarili=1` bayrağı set edilir ve görev başarıyla noktalanır.
 
 ---
 
@@ -86,7 +89,7 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 - **Akış ve Aşamalar:**
   1. **Haber (Stage1_Haber):** Demircinin kardeşi Kalan, kadim su verme tuzlarını taşırken esir düşmüştür.
   2. **Kurtarma (Stage2_Kurtarma):** Oyuncu kaleyi kuşatabilir, fidye ödeyebilir veya zindana sızabilir:
-     - *Gizli Sızma:* `SkillCheck(Roguery, 80)` ile nöbetçiler sessizce atlatılır (`ShowWhenDisabled="true"`). Kalan zindandan çıkarılır (`RemovePrisoner`).
+     - *Gizli Sızma:* `SkillCheck(Roguery, 80)` ile nöbetçiler sessizce atlatılır (`ShowWhenDisabled="true"`). Başarılı sızma doğrudan `Stage3_Zafer`'e ulaştırır.
      - *Açık Savaş:* Zindanda yakalanılırsa 150 kişilik kale garnizonu (`GarnizonMuhafizlari`) ile savaşılır.
   3. **Zafer (Stage3_Zafer):** Kalan kurtarıldığında (`!TargetIsPrisoner`) görev tamamlanır; Kalan hafızaya alınır (`DemirAhit_Kalan`). +20 Demirci İlişkisi, +20 Kalan İlişkisi, +30 Renown. `DemirAhit3_Basarili=1` set edilir.
 
@@ -98,7 +101,7 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 - **Hedefler:**
   - `EfsaneviDemirci` (`GlobalHero(DemirAhit_AnaDemirci)`)
   - `Kalan` (`GlobalHero(DemirAhit_Kalan)`)
-  - `IttifakKrali` (`KingdomLeader, SameFactionAs(Player)`, `IsOptional="true"`)
+  - `IttifakKrali` (`KingdomLeader, PlayerFaction`, `IsOptional="true"`)
 - **Akış ve Aşamalar:**
   1. **Haber (Stage1_Haber):** İkiz ustalar çeliği bin kat dövmüştür; kılıca ruh vermek için "Kalbin Ateşi" ritüeli gerekir.
   2. **Kaynak (Stage2_Kaynak):** 50.000 altın toplanıp demirciye teslim edilir (`TakeGold Amount="50000"`, `ShowWhenDisabled="true"`).
@@ -110,11 +113,11 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 ---
 
 ## 2. Özel Eşyalar (items.xml)
-- `YildizDemiri` (Goods, Value: 100, Mesh: iron_ingot)
-- `GecicilAhitKilici` (OneHandedSword, Cut: 70, Thrust: 35, Speed: 95)
-- `KalfaMuhru` (Goods / Amulet, Value: 500, Mesh: jewelry_amulet)
-- `KalbinAtesi` (Goods, Value: 5000, Mesh: ore_iron)
-- `AhitKilici_Efsanevi` (OneHandedSword, Cut: 90, Thrust: 45, Speed: 105, Value: 20000)
+- `YildizDemiri` (Goods, Value: 100, Mesh: iron_ingot, `is_merchandise="false"`)
+- `GeciciAhitKilici` (OneHandedSword, Swing: 70, Thrust: 35, Speed: 95, `is_merchandise="false"`)
+- `KalfaMuhru` (Goods / Amulet, Value: 500, Mesh: jewelry_amulet, `is_merchandise="false"`)
+- `KalbinAtesi` (Goods, Value: 5000, Mesh: ore_iron, `is_merchandise="false"`)
+- `AhitKilici_Efsanevi` (OneHandedSword, Swing: 90, Thrust: 45, Speed: 105, Value: 20000, `is_merchandise="false"`)
 
 ---
 

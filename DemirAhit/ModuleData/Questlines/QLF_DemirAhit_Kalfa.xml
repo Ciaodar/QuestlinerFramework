@@ -39,7 +39,7 @@
     </Stage>
 
     <Stage Id="Stage2A_Savas" NextStageId="Stage3_Basari" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_2_2A_savas}Torches pierce the night! The saboteurs ({Sabotajcilar_Link}) have assaulted the workshop perimeter. Crush them before the bellows are put to the torch!</LogText>
+      <LogText>{=da_log_2_2A_savas}Torches pierce the night! The rival saboteurs have assaulted the workshop perimeter. Crush them before the bellows are put to the torch!</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="Sabotajcilar" StringValue="Victory" />
       </Conditions>
@@ -61,7 +61,7 @@
     </Stage>
 
     <Stage Id="Stage2B_Savas" NextStageId="Stage3_Basari" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_2_2B_savas}{RakipTuccar_Link} refused to back down and unleashed his hired bodyguards ({Korumalar_Link}) upon you. Cut them down to assert your clan's will.</LogText>
+      <LogText>{=da_log_2_2B_savas}{RakipTuccar_Link} refused to back down and unleashed his hired bodyguards upon you. Cut them down to assert your clan's will.</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="Korumalar" StringValue="Victory" />
       </Conditions>
@@ -81,7 +81,6 @@
         <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="10" />
         <Action Type="ChangeRenown" Amount="30" />
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit2_Basarili" Amount="1" />
-        <Action Type="CompleteQuest" />
       </OnEnterActions>
       <OnExitActions />
     </Stage>

@@ -39,7 +39,7 @@
     </Stage>
 
     <Stage Id="Stage2B_Savunma" NextStageId="Stage3_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_3_2B}Horns blare along the battlements of {DusmanKale_Link}! Your escape attempt was discovered and garrison guards ({GarnizonMuhafizlari_Link}) flood the corridors. You must fight your way out to deliver Kalan to safety!</LogText>
+      <LogText>{=da_log_3_2B}Horns blare along the battlements of {DusmanKale_Link}! Your escape attempt was discovered and garrison guards flood the corridors. You must fight your way out to deliver Kalan to safety!</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="GarnizonMuhafizlari" StringValue="Victory" />
       </Conditions>
@@ -59,7 +59,6 @@
         <Action Type="ChangeRelation" TargetAlias="Kalan" Amount="20" />
         <Action Type="ChangeRenown" Amount="30" />
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit3_Basarili" Amount="1" />
-        <Action Type="CompleteQuest" />
       </OnEnterActions>
       <OnExitActions />
     </Stage>
@@ -111,7 +110,6 @@
     <DialogNode Type="Npc" Id="Kalan_Sizma_Basarili_Cevap" TargetAlias="Kalan" InputToken="da_kalan_kacis" OutputToken="close_window">
       <Text>{=da_kalan_dlg_2}Like ghosts through the stone... Lead on, friend, before the relief watch arrives!</Text>
       <Consequences>
-         <Action Type="RemovePrisoner" TargetAlias="Kalan" />
          <Action Type="ChangeStage" ObjectId="Stage3_Zafer" />
          <Action Type="LeaveEncounter" />
       </Consequences>
