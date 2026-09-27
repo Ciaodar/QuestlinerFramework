@@ -31,15 +31,15 @@
     <string id="da_log_1_success" text="You delivered the 5 Star Iron ore to {EfsaneviDemirci_Link}. With ancient craft and roaring coals, the master forged your bloodline's Covenant Sword!" />
     <string id="da_log_3" text="You hold 5 Star Iron in your packs. Deliver them to {EfsaneviDemirci_Link} so the forging of the Covenant Sword can begin." />
     <string id="da_giris_p" text="You sent word for me, master smith?" />
-    <string id="da_tek_1" text="Aye, warlord. Your name echoes in every mead hall. I knew your forebears well; I helped forge the ancestral steel that carved your house's seat. It is time you carried a true weapon of your lineage. Yet ordinary iron cannot bear such an oath—I require 5 chunks of genuine Star Iron." />
+    <string id="da_tek_1" text="Aye, warlord. Your name echoes in every mead hall. I knew your forebears well; I helped forge the ancestral steel that carved your house's seat. It is time you carried a true weapon of your lineage. Yet ordinary iron cannot bear such an oath; I require 5 chunks of genuine Star Iron." />
     <string id="da_tek_p1" text="Where can I unearth such a rare ore?" />
-    <string id="da_tek_npc_bilgi" text="A celestial deposit was uncovered in the deep quarry near {HammadeKaynagi_Link}. Ride to the village and speak with the elder {KoyMuhtari_Link}. But keep your hand on your hilt—a jealous merchant named {RakipTuccar_Link} has placed spies around my workshop and covets the vein." />
+    <string id="da_tek_npc_bilgi" text="A celestial deposit was uncovered in the deep quarry near {HammadeKaynagi_Link}. Ride to the village and speak with the elder {KoyMuhtari_Link}. But keep your hand on your hilt, for a jealous merchant named {RakipTuccar_Link} has placed spies around my workshop and covets the vein." />
     <string id="da_tek_p2" text="Master, don't misunderstand... War waits for no smith. Is that finished blade upon your rack for sale? Can I purchase it here and now for 10,000 gold?" />
-    <string id="da_tek_npc_kestirme" text="You lack the patience of a true swordsman, child. Yet if coin is how you wage war, so be it. Take the blade—it carries the blood of my forge, even if bought rather than earned. We shall see if you are worthy of what comes next..." />
+    <string id="da_tek_npc_kestirme" text="You lack the patience of a true swordsman, child. Yet if coin is how you wage war, so be it. Take the blade; it carries the blood of my forge, even if bought rather than earned. We shall see if you are worthy of what comes next..." />
     <string id="da_muhtar_p_giris" text="I am here on behalf of {EfsaneviDemirci_Link}. I have come to collect the Star Iron ore from your quarry." />
     <string id="da_muhtar_dlg_1" text="Gods deliver us! You arrive in the shadow of disaster, warrior! We mined five hefty chunks of Star Iron, but just an hour ago, bloodthirsty sellswords bearing the mark of {RakipTuccar_Link} raided our cart just beyond the village ditch! They seized all the ore and are lurking outside our borders, waiting to slay anyone who pursues them!" />
     <string id="da_muhtar_p_savas" text="They picked the wrong quarry to plunder. I will hunt down these dogs and take back our Star Iron in blood." />
-    <string id="da_muhtar_dlg_savas" text="May the heavens strengthen your arm! They cannot have gone far—ride out and strike before they escape with our ore!" />
+    <string id="da_muhtar_dlg_savas" text="May the heavens strengthen your arm! They cannot have gone far, so ride out and strike before they escape with our ore!" />
     <string id="da_muhtar_p_satinal" text="Do you have any reserve ore kept in your cellars? I will pay 2,000 gold right now to compensate your miners." />
     <string id="da_muhtar_dlg_satinal" text="Aye, our foreman held five rough ingots in the locked furnace store for emergencies. For two thousand gold, our village can rebuild. Here, take the ore to the smith before more brigands smell it!" />
     <string id="da_teslim_p_giris" text="Master smith, I hold the five chunks of Star Iron you commanded me to fetch." />
@@ -65,7 +65,7 @@
     <string id="da_kalfa_dlg_3_altin" text="Gold always speaks with greater eloquence than pride. Very well, I shall recall my mercenaries. The old fool may hammer in peace." />
     <string id="da_kalfa_t_p2" text="If you don't recall your cutthroats this instant, your own bedchamber will taste cold steel before sunrise. [Roguery]" />
     <string id="da_kalfa_dlg_3" text="B-by the gods, stay back! Lower your blade... I want no quarrel with bloodthirsty sellswords. The contract is canceled, I swear it!" />
-    <string id="da_kalfa_t_p3" text="Words are wasted on treacherous vultures like you. Call your mercenaries—let steel decide who governs this land!" />
+    <string id="da_kalfa_t_p3" text="Words are wasted on treacherous vultures like you. Call your mercenaries, and let steel decide who governs this land!" />
     <string id="da_kalfa_dlg_4" text="Insolent dog! Guards, seize this meddler and toss their corpse into the gutters!" />
     <string id="da_koruma" text="Merchant Guards" />
 
@@ -82,19 +82,19 @@
     <string id="da_kalan_dlg_1" text="My brother sent you? Praise the ancestral heavens! But the portcullis is barred and watchmen patrol the courtyard every bell. How can we break through the garrison?" />
     <string id="da_kalan_p1" text="Follow in my footsteps and step only when the torches shift. I have mapped every guard rotation. [Roguery]" />
     <string id="da_kalan_dlg_2" text="Like ghosts through the stone... Lead on, friend, before the relief watch arrives!" />
-    <string id="da_kalan_p2" text="There is no slipping past them quietly. Ready your fists or seize a torch—we carve our way to the gate!" />
+    <string id="da_kalan_p2" text="There is no slipping past them quietly. Ready your fists or seize a torch; we carve our way to the gate!" />
     <string id="da_kalan_dlg_3" text="Alarms in the keep! The garrison has spotted us! Stand fast!" />
     <string id="da_muhafiz" text="Garrison Guards" />
 
     <!-- Quest 4: Forging the Legacy (QLF_DemirAhit_Miras) -->
     <string id="demirahit4_title" text="Forging the Legacy" />
     <string id="da_log_4_1" text="The long saga nears its culmination. With {Kalan_Link} restored to the bellows, the master smith {EfsaneviDemirci_Link} bids you hasten to the workshop for the final tempering of the ancestral blade." />
-    <string id="da_log_4_2" text="To awaken the soul of the folded Star Iron, the masters require the sacred 'Heart's Fire' ritual—an alchemical blend of rare oils and crucible catalysts costing 50,000 denars. Deliver the gold to proceed." />
+    <string id="da_log_4_2" text="To awaken the soul of the folded Star Iron, the masters require the sacred 'Heart's Fire' ritual. Procure 50,000 denars for the rare oils and crucible catalysts, then deliver the sum to the smiths." />
     <string id="da_log_4_3" text="The anvils have fallen silent. Steam rises from the tempering trough. The Covenant Sword shines with celestial brilliance! Speak with {EfsaneviDemirci_Link} to determine who shall bear this legendary weapon." />
     <string id="da_log_4_4" text="You claimed the Covenant Sword as your clan's sacred heirloom! Its unmatched balance and razor keenness will lead your bloodline to dominion across all Calradia." />
     <string id="da_log_4_5" text="You presented the peerless Covenant Sword to your sovereign, King {IttifakKrali_Link}. The gesture shakes the royal court; songs of your unshakeable chivalry and devotion resound throughout the realm." />
     <string id="da_miras_p_giris" text="The bellows roar like dragons today, master. Is the steel ready for the final fold?" />
-    <string id="da_miras_dlg_1" text="Welcome, noble warlord. For weeks my brother {Kalan_Link} and I have folded the celestial steel a thousand times over the anvil. The blade is straight and flawless. But to breathe an eternal soul into the metal, we must ignite the 'Heart's Fire'—a ritual requiring rare alchemical fluxes and royal crucible catalysts worth 50,000 gold." />
+    <string id="da_miras_dlg_1" text="Welcome, noble warlord. For weeks my brother {Kalan_Link} and I have folded the celestial steel a thousand times over the anvil. The blade is straight and flawless. But to breathe an eternal soul into the metal, we must ignite the 'Heart's Fire'. This sacred ritual requires rare alchemical fluxes and royal crucible catalysts worth 50,000 gold." />
     <string id="da_miras_p1" text="No price is too great for the destiny of my bloodline. I shall gather the 50,000 gold and return." />
     <string id="da_miras_p_giris_2" text="Let the crucible be stoked, master. I have returned with our offering." />
     <string id="da_miras_dlg_2" text="Do you bring the gold to kindle the Heart's Fire?" />

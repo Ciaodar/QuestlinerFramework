@@ -14,21 +14,34 @@
       <Conditions>
         <Condition Type="HasTroopCount" Amount="70" />
       </Conditions>
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="Stage2_Zanaatkar" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_ai_s2_log}You spoke with the village elder {KoyBuyugu_Link}. As expected, this was no ordinary task. He gave you a piece of leather with secret ciphers on it and told you to deliver it to the artisan {ArtisanTarget_Link} in the city of {UzakSehir_Link} without wasting any time.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="ArtisanTarget" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="Stage3_SuikastKabul" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_ai_s3a_log}The Scavenger Pigeons' sage, {ArtisanTarget_Link}, gave you an assassination mission. You accepted it without question. Your target: {Dost_Link}.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="Dost" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="Stage3_SuikastRed" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
       <LogText>{=sp_ai_s3b_log}The Pigeons have asked you to kill {Dost_Link}, the person they previously said was your friend. Inconsistent and strange things are happening. You objected to the mission during your conversation with {ArtisanTarget_Link}. You might want to urgently speak to someone about your suspicions.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="Dost" />
+        <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
+      </OnEnterActions>
       <OnTimeoutActions>
         <Action Type="StartQuest" ObjectId="QLF_HainGuvercin" />
         <Action Type="ChangeStage" ObjectId="Stage_Bekleme_Guvercin" />
@@ -60,6 +73,9 @@
       <Conditions>
         <Condition Type="HasPledgedAllegiance" TargetAlias="Kral" />
       </Conditions>
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="Kral" />
+      </OnEnterActions>
       <OnExitActions>
         <Action Type="ChangeStage" ObjectId="Stage5_KralligaKatil" />
       </OnExitActions>
@@ -68,6 +84,9 @@
     <Stage Id="Stage5_KralligaKatil" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_ai_s5_katil_log}You proved yourself and joined the kingdom. Now it is time to find the person who slandered you and take your revenge. {Dost_Link} is waiting to speak with you. Talk to him and learn the details.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="Dost" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">

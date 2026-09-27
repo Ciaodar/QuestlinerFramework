@@ -161,7 +161,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kalfa_Takip_Savas" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_secimler" OutputToken="da_kalfa_t_savas_cevap">
-      <Text>{=da_kalfa_t_p3}Words are wasted on treacherous vultures like you. Call your mercenaries—let steel decide who governs this land!</Text>
+      <Text>{=da_kalfa_t_p3}Words are wasted on treacherous vultures like you. Call your mercenaries, and let steel decide who governs this land!</Text>
       <Conditions />
     </DialogNode>
 

@@ -1,4 +1,4 @@
-# Demir Ahit (Iron Covenant) Serisi — Kapsamlı Senaryo ve Teknik Tasarım Raporu (Güncel ve Nihai Sürüm)
+# Demir Ahit (Iron Covenant) Serisi - Kapsamlı Senaryo ve Teknik Tasarım Raporu (Güncel ve Nihai Sürüm)
 
 Bu belge, Questliner Framework üzerinde çalışan, **klan Tier ilerlemesine bağlı** 4 aşamalı ana görev zincirinin (Iron Covenant / Demir Ahit) nihai teknik, senaryo ve yerelleştirme dökümünü içerir.
 

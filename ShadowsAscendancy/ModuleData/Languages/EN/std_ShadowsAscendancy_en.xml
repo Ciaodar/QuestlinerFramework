@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+    <!-- Whispers of the Shadows (Quest 1) -->
+    <string id="shdw_q1_title" text="Whispers of the Shadows" />
+    
+    <string id="shdw_q1_s1_log" text="Your clan's name has started to be heard around here. A merchant named {GorevVeren_Link} in {HedefSehir_Link} wants to see you. It seems their caravans have been mysteriously disappearing lately." />
+    <string id="shdw_q1_s2_log" text="You spoke with the merchant {GorevVeren_Link} and agreed to track down the bandits attacking their caravans. Find the Smuggler Caravan on the map and defeat them." />
+    <string id="shdw_q1_s3_log" text="You destroyed the caravan and obtained the Encrypted Ledger. Now you must head to the back alleys of {HedefSehir_Link} and confront the Gang Leader {KacakciLideri_Link}." />
+    <string id="shdw_q1_s4_pusu_log" text="You defied the gang leader. They threatened you and warned that the outside of the city is dangerous. Be prepared for an ambush as soon as you leave the settlement." />
+    <string id="shdw_q1_s5_savas_log" text="The gang's assassins have ambushed you outside the city! Defeat them to secure the merchant's routes." />
+    <string id="shdw_q1_s4_santaj_log" text="You made a deal with the gang leader. Now go back to the merchant {GorevVeren_Link} and force them to pay tribute to the gang, while you take your own hefty cut." />
+    <string id="shdw_q1_s5a_log" text="You ignored the whispers of the shadows and brought justice. The caravan routes are safer now, but the underworld has marked your name." />
+    <string id="shdw_q1_s5b_log" text="The gleam of gold covered the color of blood. You forced the merchant into submission and became a partner of the shadows. The underworld routes are now under your protection." />
+
+    <string id="shdw_q1_dlg1" text="How can I help you, merchant?" />
+    <string id="shdw_q1_dlg2" text="My caravans... Someone is attacking them! Bandits are stealing my goods, but this is no ordinary robbery; it's as if they know our routes. Please find them and finish them off." />
+    <string id="shdw_q1_dlg3" text="I'll track down your caravans. Have my gold ready." />
+    <string id="shdw_q1_dlg_tuccar_red" text="I don't have time to chase after bandits right now. Find someone else." />
+    <string id="shdw_q1_dlg_kervan1" text="What do you want, stranger? Turn back before things get ugly!" />
+    <string id="shdw_q1_dlg_kervan2" text="I am here for the stolen goods and the merchant's ledger. Draw your steel!" />
+    <string id="shdw_q1_dlg_cete_intro" text="Who do you think you are, barging into my territory? Speak quickly before my men gut you." />
+    <string id="shdw_q1_dlg4" text="I found the dogs plundering the caravans and seized this encrypted ledger. You're no common bandit, who is behind this?" />
+    <string id="shdw_q1_dlg5" text="(Laughs) You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market." />
+    <string id="shdw_q1_dlg6" text="Instead of causing me so much trouble, let's make a deal. Eliminate that merchant, and I'll give you a cut. The city streets are ours, and you'll profit too." />
+    <string id="shdw_q1_dlg7" text="You can't escape justice. I will see you hang." />
+    <string id="shdw_q1_dlg_tehdit" text="Is that so? The outside of the city can be very dangerous these days. Watch your back on the roads, fool." />
+    <string id="shdw_q1_dlg8" text="I am a noble, I don't do dirty work like assassinations. But pay me a hefty cut, and I'll force the merchant to pay you your tribute." />
+    <string id="shdw_q1_dlg_anlasma" text="Now you are talking like a true noble. Go convince him to pay up, and the underworld routes will welcome you." />
+    <string id="shdw_q1_dlg_tuccar_santaj_intro" text="You have returned! Tell me, did you deal with the bandits? Are my goods and caravans safe?" />
+    <string id="shdw_q1_dlg9" text="Your hands are tied, merchant. Pay the gang their tribute and give me my cut, or I will let them butcher you." />
+    <string id="shdw_q1_dlg10" text="You... you are worse than them! Fine, take the gold. I have no choice. Leave me alone!" />
+    
+    <string id="shdw_q1_dlg_pusu1" text="Who are you? Stand down!" />
+    <string id="shdw_q1_dlg_pusu2" text="So you think crossing {KacakciLideri_Link} is a good idea? Prepare to die! We will send you and that talkative merchant to your ancestors!" />
+    <string id="shdw_q1_dlg_pusu_saldir" text="Come on then, gang scum! Taste my steel!" />
+
+    <string id="shdw_q1_kervan" text="Smuggler Caravan" />
+    <string id="shdw_q1_cetepartisi" text="Gang Members" />
+    <string id="shdw_q1_korumalar" text="Merchant Guards" />
+    <string id="shdw_item_ledger" text="Encrypted Ledger" />
+
+    <!-- Black Market Wars (Quest 2) -->
+    <string id="shdw_q2_title" text="Black Market Wars" />
+
+    <string id="shdw_q2_s1_log" text="Your clan is now known throughout the realm (Tier 3). However, your past isn't letting you go. A large bounty has been placed on your head, and hired assassins are after you. Defeat them and survive!" />
+    <string id="shdw_q2_s2_log" text="You defeated the hired assassins and survived. Find the Wounded Commander waiting on the map and interrogate him." />
+    <string id="shdw_q2_s3_log" text="You learned that {YozlasmisLord_Link} was behind the assassination attempt and secured the evidence (Lord's Sealed Order). Now it's time to confront him." />
+    <string id="shdw_q2_s4_log" text="You rejected the lord's bribe. Now you must speak with {Hukumdar_Link} to prove his betrayal." />
+    <string id="shdw_q2_s5a_log" text="You took a hefty hush money payment from the corrupt lord and covered up the incident. It might have been a dishonorable move, but your purse is quite full." />
+    <string id="shdw_q2_s5b_log" text="Even at the cost of declaring war on a kingdom, you delivered your own justice with your sword. All of Calradia should fear your wrath!" />
+    <string id="shdw_q2_s5c_log" text="By presenting the documents to the kingdom leader, you ensured the corrupt lord's exile. You gained favor with the ruler and achieved a great political victory in the kingdom." />
+
+    <string id="shdw_q2_dlg1" text="Who sent you? Speak, or I'll take your head!" />
+    <string id="shdw_q2_dlg2" text="Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you dead because you crushed the gang and ruined his income in the past. If you want proof, his sealed order is inside my armor." />
+    <string id="shdw_q2_dlg3" text="Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you eliminated because he couldn't get his cut in that dark deal you made with the gang. If you want proof, his sealed order is inside my armor." />
+    <string id="shdw_q2_dlg2_fallback" text="Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you eliminated because you stood in the way of his black market interests. The sealed order is inside my armor." />
+    <string id="shdw_q2_dlg4" text="Get out of here! Give my regards to your lord, tell him I am coming for him." />
+    <string id="shdw_q2_dlg5" text="I slaughtered the dogs you sent. I hold your sealed order. If I reveal this to the realm, your honor is forfeit!" />
+    <string id="shdw_q2_dlg6" text="(Laughs) I am a noble, and you are merely a mercenary for hire. Who will the king believe, me or you? Still, I care little for headaches. What is your price?" />
+    <string id="shdw_q2_dlg7" text="Pay me 20,000 denars, and this matter is buried forever." />
+    <string id="shdw_q2_dlg8" text="My honor cannot be bought with coin. Draw your weapon!" />
+    <string id="shdw_q2_dlg9" text="I am taking this order straight to the ruler. Justice will be served." />
+    <string id="shdw_q2_dlg10" text="My liege, one of your lords, {YozlasmisLord_Link}, plotted behind your back and hired assassins to murder me. Here is the sealed proof of his treason!" />
+    <string id="shdw_q2_dlg11" text="Accusing a noble is a grave matter, yet the seal is undeniably his. Such treachery shall not go unpunished. You have the realm's gratitude, and you shall be rewarded accordingly." />
+
+    <string id="shdw_q2_katiller" text="Hired Assassins" />
+    <string id="shdw_q2_komutan" text="Wounded Commander" />
+
+  </strings>
+</base>

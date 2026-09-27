@@ -5,6 +5,16 @@
   </TargetResolvers>
 
   <Stages>
+    <Stage Id="Stage0_Tahkikat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="1">
+      <LogText>{=sp_hg_s0_log}You suspected the assassination mission and started an investigation. You are waiting for reports from your scouts to locate the looter parties carrying out provocations in your name... (1 Day)</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions>
+        <Action Type="ChangeStage" ObjectId="Stage1_CapulcuAvla" />
+      </OnTimeoutActions>
+    </Stage>
+
     <Stage Id="Stage1_CapulcuAvla" NextStageId="Stage2_Bekleme" LogType="Progress" TargetAmount="3" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_hg_s1_log}You suspected the assassination mission and started investigating. You must find and defeat 3 different looter parties wandering around using the name {PlayerName}. The truth will be revealed when you interrogate their scouts.</LogText>
       <Conditions>
@@ -14,8 +24,8 @@
       <OnExitActions />
     </Stage>
 
-    <Stage Id="Stage2_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInHours="2">
-      <LogText>{=sp_hg_s2_log}You are interrogating the captured looters... (wait a bit)</LogText>
+    <Stage Id="Stage2_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="1">
+      <LogText>{=sp_hg_s2_log}You are interrogating the captured looters in isolation... Wait for them to break and reveal the location of their ringleader. (1 Day)</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />

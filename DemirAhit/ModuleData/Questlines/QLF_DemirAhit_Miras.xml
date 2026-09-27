@@ -28,7 +28,7 @@
     </Stage>
 
     <Stage Id="Stage2_Kaynak" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_4_2}To awaken the soul of the folded Star Iron, the masters require the sacred 'Heart's Fire' ritual—an alchemical blend of rare oils and crucible catalysts costing 50,000 denars. Deliver the gold to proceed.</LogText>
+      <LogText>{=da_log_4_2}To awaken the soul of the folded Star Iron, the masters require the sacred 'Heart's Fire' ritual. Procure 50,000 denars for the rare oils and crucible catalysts, then deliver the sum to the smiths.</LogText>
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
@@ -78,7 +78,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Miras_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_miras_npc_1" OutputToken="da_miras_secimler" Priority="200">
-      <Text>{=da_miras_dlg_1}Welcome, noble warlord. For weeks my brother {Kalan_Link} and I have folded the celestial steel a thousand times over the anvil. The blade is straight and flawless. But to breathe an eternal soul into the metal, we must ignite the 'Heart's Fire'—a ritual requiring rare alchemical fluxes and royal crucible catalysts worth 50,000 gold.</Text>
+      <Text>{=da_miras_dlg_1}Welcome, noble warlord. For weeks my brother {Kalan_Link} and I have folded the celestial steel a thousand times over the anvil. The blade is straight and flawless. But to breathe an eternal soul into the metal, we must ignite the 'Heart's Fire'. This sacred ritual requires rare alchemical fluxes and royal crucible catalysts worth 50,000 gold.</Text>
       <Conditions />
     </DialogNode>
 

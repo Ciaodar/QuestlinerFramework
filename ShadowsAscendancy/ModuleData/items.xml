@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item id="sifreli_defter" name="{=shdw_item_ledger}Encrypted Ledger" mesh="book_closed_a" Type="Goods" is_merchandise="false" value="1000" weight="0.5">
+    <ItemComponent>
+      <Trade value="1000" />
+    </ItemComponent>
+    <Flags />
+  </Item>
+</Items>

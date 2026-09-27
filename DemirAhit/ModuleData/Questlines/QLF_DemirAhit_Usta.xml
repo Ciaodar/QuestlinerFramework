@@ -116,7 +116,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kalan_Sizma_Basarisiz" TargetAlias="Kalan" InputToken="da_kalan_secimler" OutputToken="da_kalan_yakalanma">
-      <Text>{=da_kalan_p2}There is no slipping past them quietly. Ready your fists or seize a torch—we carve our way to the gate!</Text>
+      <Text>{=da_kalan_p2}There is no slipping past them quietly. Ready your fists or seize a torch; we carve our way to the gate!</Text>
       <Conditions />
     </DialogNode>
 

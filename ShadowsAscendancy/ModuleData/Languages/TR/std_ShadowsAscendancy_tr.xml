@@ -19,6 +19,10 @@
     <string id="shdw_q1_dlg1" text="Sana nasıl yardımcı olabilirim, tüccar?" />
     <string id="shdw_q1_dlg2" text="Kervanlarım... Biri onlara saldırıyor! Haydutlar mallarımı çalıyor ama bu sıradan bir soygun değil, sanki yollarımızı biliyorlar. Lütfen onları bul ve işlerini bitir." />
     <string id="shdw_q1_dlg3" text="Kervanlarının peşine düşeceğim. Altınlarımı hazırla." />
+    <string id="shdw_q1_dlg_tuccar_red" text="Şu anda haydutların peşine düşecek vaktim yok. Başka birini bul." />
+    <string id="shdw_q1_dlg_kervan1" text="Ne istiyorsun yabancı? İşler çirkinleşmeden geri dön!" />
+    <string id="shdw_q1_dlg_kervan2" text="Çalınan mallar ve tüccarın defteri için geldim. Çekin kılıçlarınızı!" />
+    <string id="shdw_q1_dlg_cete_intro" text="Bölgeme öylece dalabileceğini mi sandın yabancı? Adamlarım seni deşmeden önce ne istediğini söyle!" />
     <string id="shdw_q1_dlg4" text="Kervanını yağmalayan köpekleri buldum ve bu şifreli defteri ele geçirdim. Sen bir haydut değilsin, arkanda kim var?" />
     <string id="shdw_q1_dlg5" text="(Güler) Sen sadece kılıç sallamayı bilen bir ahmaksın. O defter benim, ve o tüccar sandığın masum adam aslında pazarın tekelini kurmak için bize haraç vermeyi kesen açgözlünün teki." />
     <string id="shdw_q1_dlg6" text="Bana bu kadar sorun çıkarmak yerine, gel anlaşalım. O tüccarı ortadan kaldır, sana payını vereyim. Şehrin sokakları bizim, sen de kazançlı çık." />
@@ -26,15 +30,18 @@
     <string id="shdw_q1_dlg_tehdit" text="Öyle mi? Şehrin dışı bu aralar çok tehlikeli olabiliyor. Yollarda kendine dikkat et, ahmak." />
     <string id="shdw_q1_dlg8" text="Ben bir soyluyum, suikast gibi ayak işleri yapmam. Ancak bana yüklü bir komisyon öde, tüccarı sana haraç vermesi için zorlayayım." />
     <string id="shdw_q1_dlg_anlasma" text="İşte şimdi gerçek bir soylu gibi konuşuyorsun. Git onu ödeme yapmaya ikna et, yeraltı yolları sana kucak açacak." />
+    <string id="shdw_q1_dlg_tuccar_santaj_intro" text="Geri döndün! Söyle, haydutların icabına baktın mı? Mallarım ve kervanlarım güvende mi?" />
     <string id="shdw_q1_dlg9" text="Ellerin bağlı, tüccar. Çeteye haracını öde ve benim payımı ver, yoksa seni doğramalarına izin veririm." />
     <string id="shdw_q1_dlg10" text="Sen... sen onlardan bile betersin! Tamam, altını al. Başka seçeneğim yok. Beni rahat bırak!" />
     
     <string id="shdw_q1_dlg_pusu1" text="Kimsiniz siz? Geri çekilin!" />
     <string id="shdw_q1_dlg_pusu2" text="Demek {KacakciLideri_Link} ile zıtlaşmayı iyi bir şey sanıyorsun he? Ölmeye hazırlan! Seni de o çok konuşan tüccarı da atalarınızın yanına göndereceğiz!" />
+    <string id="shdw_q1_dlg_pusu_saldir" text="Gelin bakalım çete pislikleri! Kılıcımın tadına bakın!" />
 
     <string id="shdw_q1_kervan" text="Kaçakçı Kervanı" />
     <string id="shdw_q1_cetepartisi" text="Çete Mensupları" />
     <string id="shdw_q1_korumalar" text="Tüccar Korumaları" />
+    <string id="shdw_item_ledger" text="Şifreli Defter" />
 
     <!-- Karaborsa Savaşları (Quest 2) -->
     <string id="shdw_q2_title" text="Karaborsa Savaşları" />

@@ -105,7 +105,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Demirci_Teklif_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_tek_secimler" OutputToken="da_tek_sorular" Priority="200">
-      <Text>{=da_tek_1}Aye, warlord. Your name echoes in every mead hall. I knew your forebears well; I helped forge the ancestral steel that carved your house's seat. It is time you carried a true weapon of your lineage. Yet ordinary iron cannot bear such an oath—I require 5 chunks of genuine Star Iron.</Text>
+      <Text>{=da_tek_1}Aye, warlord. Your name echoes in every mead hall. I knew your forebears well; I helped forge the ancestral steel that carved your house's seat. It is time you carried a true weapon of your lineage. Yet ordinary iron cannot bear such an oath; I require 5 chunks of genuine Star Iron.</Text>
       <Conditions />
     </DialogNode>
 
@@ -115,7 +115,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Demirci_Teklif_Bilgi_Cevap" TargetAlias="EfsaneviDemirci" InputToken="da_tek_bilgi_cevap" OutputToken="close_window">
-      <Text>{=da_tek_npc_bilgi}A celestial deposit was uncovered in the deep quarry near {HammadeKaynagi_Link}. Ride to the village and speak with the elder {KoyMuhtari_Link}. But keep your hand on your hilt—a jealous merchant named {RakipTuccar_Link} has placed spies around my workshop and covets the vein.</Text>
+      <Text>{=da_tek_npc_bilgi}A celestial deposit was uncovered in the deep quarry near {HammadeKaynagi_Link}. Ride to the village and speak with the elder {KoyMuhtari_Link}. But keep your hand on your hilt, for a jealous merchant named {RakipTuccar_Link} has placed spies around my workshop and covets the vein.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage1_Toplama" />
         <Action Type="LeaveEncounter" />
@@ -130,7 +130,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Demirci_Teklif_Kestirme_Cevap" TargetAlias="EfsaneviDemirci" InputToken="da_tek_kestirme_cevap" OutputToken="close_window">
-      <Text>{=da_tek_npc_kestirme}You lack the patience of a true swordsman, child. Yet if coin is how you wage war, so be it. Take the blade—it carries the blood of my forge, even if bought rather than earned. We shall see if you are worthy of what comes next...</Text>
+      <Text>{=da_tek_npc_kestirme}You lack the patience of a true swordsman, child. Yet if coin is how you wage war, so be it. Take the blade; it carries the blood of my forge, even if bought rather than earned. We shall see if you are worthy of what comes next...</Text>
       <Consequences>
          <Action Type="TakeGold" Amount="10000" />
          <Action Type="ChangeStage" ObjectId="Stage2_KestirmeYol" />
@@ -157,7 +157,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Muhtar_Savas_Cevap" TargetAlias="KoyMuhtari" InputToken="da_muhtar_savas_cevap" OutputToken="close_window">
-      <Text>{=da_muhtar_dlg_savas}May the heavens strengthen your arm! They cannot have gone far—ride out and strike before they escape with our ore!</Text>
+      <Text>{=da_muhtar_dlg_savas}May the heavens strengthen your arm! They cannot have gone far, so ride out and strike before they escape with our ore!</Text>
       <Consequences>
         <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="30" PartyTemplateId="sea_raiders_template" SpawnDistance="2" SpawnRadius="4" StringValue="{=da_katiller}Hired Assassins" />
         <Action Type="SetPartyAi" TargetAlias="KiralikKatiller" StringValue="EngageParty" ObjectId="Player" />
