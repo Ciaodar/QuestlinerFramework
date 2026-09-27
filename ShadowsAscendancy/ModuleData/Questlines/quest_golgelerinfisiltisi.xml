@@ -38,6 +38,9 @@
     <Stage Id="Stage3_Kanit" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=shdw_q1_s3_log}You destroyed the caravan and obtained the Encrypted Ledger. Now you must head to the back alleys of {HedefSehir_Link} and confront the Gang Leader {KacakciLideri_Link}.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="KacakciLideri" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="Stage4_PusuBekleyis" NextStageId="Stage5_PusuSavas" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
