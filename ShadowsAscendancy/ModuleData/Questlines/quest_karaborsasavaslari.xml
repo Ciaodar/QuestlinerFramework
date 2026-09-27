@@ -66,14 +66,18 @@
 
   <CustomDialogs>
     <!-- Aşama 2: Komutan Sorgusu -->
-    <DialogNode Type="Player" Id="Kom_Giris" TargetAlias="KatilKomutan" InputToken="start" OutputToken="ql_shdw_kom_1" Priority="200">
-      <Text>{=shdw_q2_dlg1}Who sent you? Speak, or I'll take your head!</Text>
+    <DialogNode Type="Npc" Id="Kom_Giris" TargetAlias="KatilKomutan" InputToken="start" OutputToken="ql_shdw_kom_sorgu" Priority="200">
+      <Text>{=shdw_q2_dlg_kom_intro}Spare me! Put away your weapon, I yield! Ask what you will, just spare my life!</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Sorgu" />
       </Conditions>
       <Consequences>
         <Action Type="MakeMet" TargetAlias="KatilKomutan" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kom_Sorgu" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_sorgu" OutputToken="ql_shdw_kom_1">
+      <Text>{=shdw_q2_dlg1}Who sent you? Speak, or I'll take your head!</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kom_Cevap_Kanun" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_1" OutputToken="ql_shdw_kom_2">
@@ -112,14 +116,18 @@
     </DialogNode>
 
     <!-- Aşama 3: Lord ile Yüzleşme -->
-    <DialogNode Type="Player" Id="Lord_Giris" TargetAlias="YozlasmisLord" InputToken="start" OutputToken="ql_shdw_lord_1" Priority="200">
-      <Text>{=shdw_q2_dlg5}I slaughtered the dogs you sent. I have your sealed order. If I show this to the rest of the kingdom, your honor will be in ruins!</Text>
+    <DialogNode Type="Npc" Id="Lord_Giris" TargetAlias="YozlasmisLord" InputToken="start" OutputToken="ql_shdw_lord_yuzlesme" Priority="200">
+      <Text>{=shdw_q2_dlg_lord_intro}You... So you are still breathing? What insolence brings you before me?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Intikam" />
       </Conditions>
       <Consequences>
         <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Lord_Yuzlesme" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_yuzlesme" OutputToken="ql_shdw_lord_1">
+      <Text>{=shdw_q2_dlg5}I slaughtered the dogs you sent. I have your sealed order. If I show this to the rest of the kingdom, your honor will be in ruins!</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Cevap1" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_1" OutputToken="ql_shdw_lord_2">
@@ -154,14 +162,18 @@
     </DialogNode>
 
     <!-- Aşama 4: Hükümdar ile Görüşme -->
-    <DialogNode Type="Player" Id="Hukumdar_Giris" TargetAlias="Hukumdar" InputToken="start" OutputToken="ql_shdw_huk_1" Priority="200">
-      <Text>{=shdw_q2_dlg10}My liege, one of your noblemen, {YozlasmisLord_Link}, plotted behind my back and hired assassins to kill me. This sealed order is the proof of his betrayal!</Text>
+    <DialogNode Type="Npc" Id="Hukumdar_Giris" TargetAlias="Hukumdar" InputToken="start" OutputToken="ql_shdw_huk_kanit" Priority="200">
+      <Text>{=shdw_q2_dlg_huk_intro}Welcome to our court. What urgent matter brings you before the throne?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage4_Hukumdar" />
       </Conditions>
       <Consequences>
         <Action Type="MakeMet" TargetAlias="Hukumdar" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Hukumdar_Kanit" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_kanit" OutputToken="ql_shdw_huk_1">
+      <Text>{=shdw_q2_dlg10}My liege, one of your noblemen, {YozlasmisLord_Link}, plotted behind my back and hired assassins to kill me. This sealed order is the proof of his betrayal!</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Hukumdar_Cevap" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_1" OutputToken="close_window">

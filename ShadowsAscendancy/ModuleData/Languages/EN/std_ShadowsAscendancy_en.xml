@@ -69,6 +69,10 @@
 
     <string id="shdw_q2_katiller" text="Hired Assassins" />
     <string id="shdw_q2_komutan" text="Wounded Commander" />
+    <string id="shdw_item_order" text="Lord's Sealed Order" />
+    <string id="shdw_q2_dlg_kom_intro" text="Spare me! Put away your weapon, I yield... Ask whatever you want, just don't kill me!" />
+    <string id="shdw_q2_dlg_lord_intro" text="You... So you are still breathing? What insolence brings you before me?" />
+    <string id="shdw_q2_dlg_huk_intro" text="Welcome to our court. What urgent matter brings you before the throne?" />
 
   </strings>
 </base>
