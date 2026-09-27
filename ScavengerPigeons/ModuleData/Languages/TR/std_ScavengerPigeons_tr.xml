@@ -38,6 +38,7 @@
     <string id="sp_ai_s4_inandi_log" text="Çapulcu ile konuştun ve asıl görevini öğrendin. Hain Zanaatkar ile onlar ilgilenecek. Şimdi ise Krallık Lideri olan {Kral_Link} ile konuşup ona hizmetlerini sunmanın bir yolunu bulmalısın." />
     <string id="sp_ai_s5_katil_log" text="Kendini kanıtladın ve krallığa katıldın. Şimdi sıra sana iftira atan kişiyi bulup intikamını almada. {Dost_Link} Seninle konuşmayı bekliyor. Onunla konuş ve ayrıntıları öğren." />
     <string id="sp_ai_s_success_log" text="Tüm bunların sadakatini test etmek için kurulmuş bir oyun olduğunu öğrendin. Dostun {Dost_Link} ile ise yeni tanışıyormuşsunuz. Sana başına açtığı belaların telafisi ve hizmetinde yardımcı olması için 50.000 dinar hediye etti ve yeni hizmetinde başarılar diledi. İhanet söylentileri son buldu." />
+    <string id="sp_ai_s_infaz_log" text="{ArtisanTarget_Link} isimli zanaatkarın entrikalarını sezerek örgütün mutlak kanununu uyguladın ve onu oracıkta infaz ettin. Cesedini aradığında gizemli Kuzgun Kemiği Şifresi'ni ele geçirdin. Anavatan defteri kanla kapandı, ancak Gölge Tüneği'nin gözleri artık senin üzerinde." />
     
     <string id="sp_ai_dlg1" text="Sizinle konuşmam gereken özel bir konu var." />
     <string id="sp_ai_dlg2" text="Adın {PlayerName} olmalı, değil mi?" />
@@ -66,6 +67,7 @@
     <string id="sp_ai_dlg24" text="Pekala, Seninle bir sonuca vardık. Anavatanın İhaneti senin demir yumruğun ile son bulacaktır. Şimdiki görevin ise {Dost_Link} isimli kişiyi idam etmek." />
     <string id="sp_ai_dlg25" text="Ne?! Bu adamın dostum olduğu söylenmişti. Bu çok saçma, siz bir şeyler saklıyorsunuz. Bunu yapmayacağım!" />
     <string id="sp_ai_dlg26" text="Başüstüne! Çapulcunun emri, güvercinin görevidir, İzninizle..." />
+    <string id="sp_ai_dlg26c" text="Yuvayı kirleten kuşun kanadı kırılmaz, boynu vurulur! (Zanaatkar'ı infaz et)" />
     
     <string id="sp_ai_dlg27" text="Sizinle konuşmam gereken özel bir konu var." />
     <string id="sp_ai_dlg28" text="Sizinle konuşmam gereken özel bir konu var." />
@@ -165,5 +167,12 @@
     <string id="sp_kb_dlg10" text="Bir hainin yalanları benim için bir şey ifade etmez. Askerler, hücum! (Saldır)" />
     <string id="sp_kb_dlg11" text="Sahte bayrak savaşı mı? Altınları ve hançeri ver, gözümün önünden kaybol." />
     <string id="sp_kb_dlg12" text="Akıllıca bir seçim. Güvercinler aptaldır. Elveda, {PlayerName}." />
+
+    <!-- Items -->
+    <string id="sp_item_pigeon_secret_dagger" text="Gizli Güvercin Hançeri" />
+    <string id="sp_item_raven_bone_cipher" text="Kuzgun Kemiği Şifresi" />
+    <string id="sp_item_shadow_bone_dagger" text="Gölge Kemiği Hançeri" />
+    <string id="sp_item_shadow_master_ring" text="Gölge Ustası Mührü" />
+    <string id="sp_item_pigeon_blood_claymore" text="Güvercin Kanı Kılıcı" />
   </strings>
 </base>

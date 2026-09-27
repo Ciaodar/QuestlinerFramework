@@ -97,6 +97,14 @@
         <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
       </OnEnterActions>
     </Stage>
+
+    <Stage Id="Stage_Zanaatkar_Infaz" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_ai_s_infaz_log}You saw through the treachery of {ArtisanTarget_Link} and executed him on the spot. Searching his corpse, you discovered the mysterious Raven Bone Cipher. The chapter of the motherland has closed in blood, but the eyes of the Shadow Roost are now upon you.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />
+      </OnEnterActions>
+    </Stage>
   </Stages>
 
   <CustomDialogs>
@@ -213,6 +221,18 @@
       <Text>{=sp_ai_dlg26}At your command! The looter's order is the pigeon's duty, if you'll excuse me...</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage3_SuikastKabul" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Art_B4c" TargetAlias="ArtisanTarget" InputToken="ql_art_b4" OutputToken="close_window">
+      <Text>{=sp_ai_dlg26c}The bird that fouls its nest doesn't get its wings clipped, it gets its neck snapped! (Execute the Artisan)</Text>
+      <Consequences>
+        <Action Type="KillHero" TargetAlias="ArtisanTarget" />
+        <Action Type="SetGlobalFlag" ObjectId="SP_Zanaatkar_Olduruldu" Amount="1" />
+        <Action Type="SetGlobalFlag" ObjectId="SP_Zanaatkar_Katledildi" Amount="1" />
+        <Action Type="GiveItem" ObjectId="raven_bone_cipher" Amount="1" />
+        <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />
+        <Action Type="ChangeStage" ObjectId="Stage_Zanaatkar_Infaz" />
       </Consequences>
     </DialogNode>
 
