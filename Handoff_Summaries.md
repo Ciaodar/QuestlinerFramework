@@ -111,3 +111,29 @@ Klan seviyesi ilerlemesine bağlı 4 aşamalı ana hikaye zinciri tamamlanmışt
 - **Bekleyen Özellik Talebi (`IR_DisabledDialogHints.md`):** Koşulu sağlanmayan diyalog seçeneklerinin tamamen gizlenmesi yerine gri/tıklanamaz olarak görünmesi ve üzerine gelindiğinde neden seçilemediğini belirten ipucu (`DisabledHint`) göstermesi için C# tarafında geliştirme beklenmektedir.
 - **Diyalog Başlangıçları:** Oyundaki tanışma (`MakeMet`) pencerelerinin görev başlangıcını ezmesini engellemek için diyalog girişleri `InputToken="hero_main_options"` olarak ayarlanmıştır.
 - **Hedef Takibi:** Metinlerde `{HedefAlias_Link}` formatı kullanılarak otomatik harita/ansiklopedi takibi (mavi ünlem) sağlanmıştır.
+
+---
+
+## 3. Scavenger Pigeons (Çapulcu Güvercinler) Quest Writer -> Framework Agent
+- **Tarih:** 27 Eylül 2026
+- **Görevi Devreden:** Scavenger Pigeons Senaryo & XML Geliştirme Ajanı
+- **Görevi Devralacak:** Framework Geliştirme Ajanı / Subagent
+- **İlgili Modül:** ScavengerPigeons
+- **Mevcut Mod Versiyonu:** 1.0.0.4
+
+### Tamamlanan Çalışmalar ve Modül Mimarisi
+
+#### A. Görev Zinciri
+1. QLF_HainGuvercin: Örgütle ilk temas, kaçan kuryeyi koruma veya satma.
+2. QLF_ItibarDersi: Tüccarı döverek veya rüşvet alarak örgütü kandırma.
+3. QLF_YaDogruysa: Masum rahibi öldürme veya gerçeği araştırma (Sadakat testi başlangıcı).
+4. QLF_AnavataninIhaneti: İhanetle suçlanma ve "Dost" ile "Zanaatkar" aracılığıyla büyük final testi. SaveHeroToGlobal ile bu iki anahtar karakter hafızaya kaydedilir.
+5. QLF_KopukBaglar: Bir önceki görevden 1 hafta sonra gizlice başlar (AutoStart + İlk aşamada 7 günlük TimeoutInDays beklemesi). Gerçek hain olan Zanaatkar'ın 100 kişilik sahte konvoyu (Konvoy) ile savaşılır (BattleResolvedAs kontrolü).
+
+#### B. Motor Seviyesinde Kritik Kullanımlar (Notlar)
+- SaveHeroToGlobal / GlobalHero(Key): 4. Görevde yaratılan anahtar karakterlerin 5. Görevde de aynı kişiler olması bu sistemle güvenceye alınmıştır.
+- TimeoutInDays Bekleme Sistemi: Save dosyasını şişirmemek için, 4. görev anında başarıyla kapatılırken, 1 haftalık zaman atlaması 5. görevin (QLF_KopukBaglar) Stage0_Bekleme aşamasının başında çalıştırılmıştır.
+- ChangeRelation: Bannerlord'daki Charm (Cazibe) çarpanı nedeniyle çok yüksek (+120) sayılara ulaştığından Amount="5" gibi düşük tutulmuştur.
+
+#### C. Otomasyon ve Dağıtım (CI/CD)
+- ScavengerPigeons/Build/UpdateVersion.ps1 kullanılarak PreBuild event üzerinden versiyonlama (1.0.0.4) ve Bannerlord Modules klasörüne Deployment süreçleri .csproj içerisinde otomatikleştirildi.
