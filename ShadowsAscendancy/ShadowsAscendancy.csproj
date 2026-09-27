@@ -4,7 +4,8 @@
     <TargetFramework>net472</TargetFramework>
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
-    <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
+    <GameFolder Condition="Exists('D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord')">D:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
+    <GameFolder Condition="'$(GameFolder)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
   </PropertyGroup>
 
   <ItemGroup>
