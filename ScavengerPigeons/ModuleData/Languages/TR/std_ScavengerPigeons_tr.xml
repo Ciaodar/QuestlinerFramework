@@ -168,6 +168,48 @@
     <string id="sp_kb_dlg11" text="Sahte bayrak savaşı mı? Altınları ve hançeri ver, gözümün önünden kaybol." />
     <string id="sp_kb_dlg12" text="Akıllıca bir seçim. Güvercinler aptaldır. Elveda, {PlayerName}." />
 
+    <!-- Golge Tunegi: Golge Tuneginin Cagri -->
+    <string id="sp_gt1_title" text="Gölge Tüneği'nin Çağrısı" />
+    <string id="sp_gt1_s0_log" text="Zanaatkarı atölyesinde cansız bıraktın. Şehir muhafızları katili ararken bir süre kuytuda kalıp izini kaybettirmelisin. Sokakların sakinleşmesini bekle... (1 Gün)" />
+    <string id="sp_gt1_s1_log" text="Sokaklar durulduğunda pelerininin altına siyah tüylü bir güvercin kondu. Zanaatkarın cesedinden aldığın kemik mührü bilen biri var. {GolgeSiginagi_Link} yakınlarındaki gizli temas noktasına git ve Gölge Ulağı {GolgeUlagi_Link} ile konuş." />
+    <string id="sp_gt1_s2_log" text="Ulak, zanaatkarın örgüt sırlarını Calradia krallıklarına sızdıran bir köstebek olduğunu doğruladı. Ancak senin kör sadakatini kanıtlaman gerek: Zanaatkarın kaçırdığı şifreleri satın almak için bekleyen 50 kişilik yabancı muhafız müfrezesini {GolgeSiginagi_Link} eteklerinde pusuya düşür ve yok et." />
+    <string id="sp_gt1_s_success_log" text="Yabancı casusları kılıçtan geçirdin. Gölge Tüneği senin acımasızlığını ve sorgusuz sadakatini onayladı. Artık örgütün dış kapısındaki bir çapulcu değil, gölgelerin içindeki bir cellatsın. Sana 'Gölge Kemik Hançeri' ve 30.000 altın sunuldu." />
+    <string id="sp_gt1_dlg1" text="Öldürülen zanaatkardan aldığın kuzgun kemiği mührünü taşıyorsun... Gölge Tüneği ne yaptığını biliyor." />
+    <string id="sp_gt1_dlg1_p" text="Burada birinin bu kuzgun kemiği şifresini tanıdığı söylendi." />
+    <string id="sp_gt1_dlg2" text="Zanaatkar sadece bir çıbanbaşı değildi; en derin şifre arşivlerimizi yabancı krallıklara satıyordu. Nefesini kestin, fakat kör sadakatini kanla kanıtlaman gerek. {GolgeSiginagi_Link} yakınlarında çalınan şifreleri satın almak için bekleyen 50 kişilik bir yabancı firari birliği var. Hepsini kılıçtan geçir. Geride anlatacak tek bir dil bile kalmasın." />
+    <string id="sp_gt1_dlg3" text="Kör sadakat tereddüt tanımaz. Kanları dağı sulayacak." />
+
+    <!-- Golge Tunegi: Kanli Sifreler ve Buyuk Tasfiye -->
+    <string id="sp_gt2_title" text="Kanlı Şifreler ve Büyük Tasfiye" />
+    <string id="sp_gt2_s1_log" text="Zanaatkarın ölümü ılımlıları dehşete düşürdü. Gölge Tüneği ele geçen tüm kanalların koparılmasını emrediyor. Tüccar muhbir {Muhbir1_Link}'ı bul ve onu sonsuza dek sustur." />
+    <string id="sp_gt2_s2_log" text="{Muhbir1_Link} artık konuşamayacak. Şimdi arka sokaklardaki yeraltı çete lideri {Muhbir2_Link}'ı bul, onu ve şebekesini ortadan kaldır." />
+    <string id="sp_gt2_s2_fight_log" text="{Muhbir2_Link}'ın 30 sokak haydutu arka sokaklarda pusu kurdu! Yeraltı tasfiyesini tamamlamak için hepsini kılıçtan geçir." />
+    <string id="sp_gt2_s3_log" text="Eski müttefikin {Dost_Link}, seni kana susamış bir canavar olarak görüp peşine bir ordu ({DostOrdusu_Link}) taktı. Savaş meydanında ordusuyla yüzleş ve bu işi bitir!" />
+    <string id="sp_gt2_s_success_log" text="{Dost_Link}'ın ordusunu darmadağın ettin ve onu soğukkanlılıkla idam ettin. Anavatan tasfiyesi tamamlandı. Gölge Tüneği sana 50.000 altın ve 50 nam gönderdi." />
+    <string id="sp_gt2_dlg1" text="Sen... Zanaatkarı katleden o uğursuz gölgesin! Benden ne istiyorsun? Bütün defterleri yaktım, yemin ederim!" />
+    <string id="sp_gt2_dlg1_p" text="Satın aldığın şifreler için buradayım." />
+    <string id="sp_gt2_dlg2" text="Kör Sadakat af tanımaz. Gölge Tüneği selamını iletti. (Tüccarı İnfaz Et)" />
+    <string id="sp_gt2_dlg3" text="Önce kasanın anahtarlarını ver, sonra ecelinle tanış. (15.000 Altın Al ve İnfaz Et)" />
+    <string id="sp_gt2_dlg4" text="Sokakları temizleyebileceğini mi sanırsın Güvercin? Tüccarı katletmiş olabilirsin ama bu inimizden sağ çıkamayacaksın! Çocuklar, deşin şu köpeği!" />
+    <string id="sp_gt2_dlg4_p" text="Gölge Tüneği senin sessizliğini emrediyor, çete başı." />
+    <string id="sp_gt2_dlg5" text="Gölgeler sokakları yutar. Geber! (Saldır)" />
+    <string id="sp_gt2_dlg6" text="{PLAYER.NAME}... Sana baktığımda eski bir müttefik değil, kana susamış bir tarikat canavarı görüyorum! Zanaatkar bir haindi ama mahkemede yargılanacaktı. Sen onu bir köpek gibi boğazladın ve o iğrenç Gölge Tüneği'ne kul oldun! Seni bu topraklardan sileceğim!" />
+    <string id="sp_gt2_dlg6_p" text="Tekrar karşılaştık, Dost. Görünüşe göre yollarımız burada ayrılıyor." />
+    <string id="sp_gt2_dlg7" text="Sen zayıfsın Dost. Mahkemeleriniz, krallarınız ve yalanlarınız sadece zayıfları korur. Güvercinler göklerde değil, mezarların üzerinde uçar. Kılıcını çek!" />
+
+    <!-- Golge Tunegi: Calradia'nin Kuklacisi (Nihai Son) -->
+    <string id="sp_gt3_title" text="Calradia'nın Kuklacısı" />
+    <string id="sp_gt3_s1_log" text="Bütün şahitler susturuldu. Gölgelerin efendisi seni {GolgeSiginagi_Link} sığınağına çağırıyor. Kör Usta {KorUsta_Link} ile buluş ve Çapulcu Güvercinlerin nihai kaderine karar ver." />
+    <string id="sp_gt3_s2_kirikkukla_log" text="Tüneği ateşe verdin! {KorUsta_Link}'nın 40 fanatik muhafızı öfkeyle etrafını sardı. Hepsini yok et ve tarikatın zincirlerini kır!" />
+    <string id="sp_gt3_s_bas_efendi_log" text="Kör Usta'nın nefesi senin ellerinde tükendi. Gölge Ustası Mührü artık senin parmağında. Calradia kralları tahtlarında gururla otururken, her gece yastıklarının altına bırakılan siyah tüylerle kimin gerçek efendi olduğunu bilecekler. Sen Gölge Tüneği'nin mutlak hükümdarısın." />
+    <string id="sp_gt3_s_kirik_kukla_log" text="Gölge Tüneği alevler içinde çökerken arkana bile bakmadın. Şifreler küle döndü, efendiler can verdi. Artık hiçbir tarikata, hiçbir krala boyun eğmeyen; Calradia bozkırlarında adı sadece fısıltıyla anılan yalnız bir hayaletsin." />
+    <string id="sp_gt3_s_kaos_log" text="Aynı gece üç kraliyet sarayında da sahte güvercinler öttü. Sabah olduğunda imparatorluklar birbirine savaş ilan etti. Şehirler kuşatıldı, köyler yakıldı. Sen ise servetin ve ordunla bu devasa yangının ortasında tahtları dilediğin gibi deviriyorsun." />
+    <string id="sp_gt3_dlg1" text="Bunca kan, bunca sadakat... Şimdi bana mı kılıç çekiyorsun yavru güvercin? Calradia önümüzde diz çökmeye hazır. Son arzun nedir?" />
+    <string id="sp_gt3_dlg1_p" text="Tüneğin efendisi ile yüzleşmeye geldim." />
+    <string id="sp_gt3_dlg2" text="Bana öğrettiğin ilk kuralı unuttun Usta: 'En keskin gaga, en yaşlı tüneği parçalar.' Artık emirleri sen değil, ben vereceğim. (Kör Usta'yı Zehirle &amp; Tahtı Ele Geçir)" />
+    <string id="sp_gt3_dlg3" text="Sen bir deha değilsin. Sadece karanlık deliklerde yaşayan bir lağım faresisin! Ne Anavatan var ne de onur. Sadece kan ve yalanlar. Bu tünek bu gece yanacak! (Tüneği Yak &amp; Fanatiklerle Savaş)" />
+    <string id="sp_gt3_dlg4" text="Dünya düzen istemiyor Usta. Dünya yangın istiyor! Bütün krallara diğerinin kendisini öldürmek istediğini gösteren sahte mektupları gönderdim. Şafakta borazanlar çalacak. (Calradia'yı Ateşe Ver)" />
+
     <!-- Items -->
     <string id="sp_item_pigeon_secret_dagger" text="Gizli Güvercin Hançeri" />
     <string id="sp_item_raven_bone_cipher" text="Kuzgun Kemiği Şifresi" />

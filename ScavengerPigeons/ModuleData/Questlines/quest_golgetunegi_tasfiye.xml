@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_GolgeTunegi_Tasfiye" Title="{=sp_gt2_title}Blood Ciphers &amp; The Great Purge" TimeLimitInDays="60">
+
+  <Prerequisites>
+    <Condition Type="IsQuestCompleted" ObjectId="QLF_GolgeTunegi_Cagri" Amount="1" />
+    <Condition Type="ClanTier" Amount="3" />
+  </Prerequisites>
+
+  <Triggers>
+    <Trigger EventType="AutoStart" />
+  </Triggers>
+
+  <TargetResolvers>
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
+    <Resolver Alias="Muhbir1" TargetType="Hero" Filters="Merchant, SameKingdomAs(Dost)" Selector="Nearest" />
+    <Resolver Alias="Muhbir2" TargetType="Hero" Filters="GangLeader, SameKingdomAs(Dost)" Selector="Random" />
+    <Resolver Alias="DostOrdusu" TargetType="MobileParty" Filters="LordParty, PartyOf(Dost)" Selector="NearestTo(Dost)" />
+    <Resolver Alias="CeteMuhafizlari" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
+  </TargetResolvers>
+
+  <Stages>
+    <Stage Id="Stage1_Muhbir1" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_gt2_s1_log}The death of the artisan alarmed the moderates. The Shadow Roost demands all compromised channels severed. Track down the merchant informant {Muhbir1_Link} and silence him forever.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="Muhbir1" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage2_Muhbir2" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_gt2_s2_log}{Muhbir1_Link} will speak no more. Now seek out the underworld gang leader {Muhbir2_Link} in the slums and eliminate him and his network.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="Muhbir2" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage2_CeteSavasi" NextStageId="Stage3_DostYuzlesme" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_gt2_s2_fight_log}{Muhbir2_Link}'s 30 cutthroats have ambushed you in the back streets! Cut through them to complete the underworld purge.</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="CeteMuhafizlari" Amount="1" />
+      </Conditions>
+      <OnExitActions>
+        <Action Type="MakeMet" TargetAlias="Dost" />
+      </OnExitActions>
+    </Stage>
+
+    <Stage Id="Stage3_DostYuzlesme" NextStageId="StageSuccess" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_gt2_s3_log}Your former ally {Dost_Link} has raised an army ({DostOrdusu_Link}) to hunt you down as a rogue monster. Confront his host on the battlefield and finish this!</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="DostOrdusu" Amount="1" />
+      </Conditions>
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="Dost" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_gt2_s_success_log}You broke {Dost_Link}'s army and executed him in cold blood. The Motherland's purge is complete. The Shadow Roost sends you 50,000 denars and 50 renown.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="KillHero" TargetAlias="Dost" />
+        <Action Type="SetGlobalFlag" ObjectId="SP_Dost_Ortadan_Kalkti" Amount="1" />
+        <Action Type="AddGold" Amount="50000" />
+        <Action Type="ChangeRenown" Amount="50" />
+        <Action Type="StartQuest" ObjectId="QLF_GolgeTunegi_NihaiSon" />
+      </OnEnterActions>
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- Muhbir 1 (Tuccar) Diyaloglari -->
+    <DialogNode Type="Npc" Id="GT2_M1_Npc" TargetAlias="Muhbir1" InputToken="start" OutputToken="ql_gt2_m1_intro" Priority="200">
+      <Text>{=sp_gt2_dlg1}You... You are that omen who slaughtered the artisan! What do you want from me? I burned all the ledgers, I swear it!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_Muhbir1" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT2_M1_Player" TargetAlias="Muhbir1" InputToken="hero_main_options" OutputToken="ql_gt2_m1_intro" Priority="200">
+      <Text>{=sp_gt2_dlg1_p}I am here regarding the ciphers you purchased.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_Muhbir1" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT2_M1_ChoiceA" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_intro" OutputToken="close_window">
+      <Text>{=sp_gt2_dlg2}Blind Loyalty knows no mercy. The Shadow Roost sends its regards. (Execute the Merchant)</Text>
+      <Consequences>
+        <Action Type="KillHero" TargetAlias="Muhbir1" />
+        <Action Type="ChangeStage" ObjectId="Stage2_Muhbir2" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT2_M1_ChoiceB" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_intro" OutputToken="close_window">
+      <Text>{=sp_gt2_dlg3}Hand over the vault keys first, then face your doom. (Extort 15,000 denars &amp; Execute)</Text>
+      <Consequences>
+        <Action Type="AddGold" Amount="15000" />
+        <Action Type="KillHero" TargetAlias="Muhbir1" />
+        <Action Type="ChangeStage" ObjectId="Stage2_Muhbir2" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Muhbir 2 (Cete Lideri) Diyaloglari -->
+    <DialogNode Type="Npc" Id="GT2_M2_Npc" TargetAlias="Muhbir2" InputToken="start" OutputToken="ql_gt2_m2_intro" Priority="200">
+      <Text>{=sp_gt2_dlg4}You think you can purge the alleys, Pigeon? You murdered the merchant, but you won't leave this den breathing! Boys, gut this dog!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_Muhbir2" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT2_M2_Player" TargetAlias="Muhbir2" InputToken="hero_main_options" OutputToken="ql_gt2_m2_intro" Priority="200">
+      <Text>{=sp_gt2_dlg4_p}The Shadow Roost requires your silence, gang master.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_Muhbir2" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT2_M2_Choice" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_intro" OutputToken="close_window">
+      <Text>{=sp_gt2_dlg5}Shadows swallow the alleys. Die! (Attack)</Text>
+      <Consequences>
+        <Action Type="KillHero" TargetAlias="Muhbir2" />
+        <Action Type="SpawnBanditParty" TargetAlias="CeteMuhafizlari" Amount="30" PartyTemplateId="deserters_template" StringValue="EngagePlayer" />
+        <Action Type="SetPartyAi" TargetAlias="CeteMuhafizlari" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="ChangeStage" ObjectId="Stage2_CeteSavasi" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Dost ile Yuzlesme -->
+    <DialogNode Type="Npc" Id="GT2_Dost_Npc" TargetAlias="Dost" InputToken="start" OutputToken="ql_gt2_dost_intro" Priority="200">
+      <Text>{=sp_gt2_dlg6}{PLAYER.NAME}... When I look at you, I no longer see an ally, but a bloodthirsty cult monster! The artisan was a traitor, but he was to face a court of law. You butchered him like a dog and became a slave to the Shadow Roost! I will wipe you from these lands!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_DostYuzlesme" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT2_Dost_Player" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_gt2_dost_intro" Priority="200">
+      <Text>{=sp_gt2_dlg6_p}We meet again, Dost. It seems our paths end here.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_DostYuzlesme" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT2_Dost_Fight" TargetAlias="Dost" InputToken="ql_gt2_dost_intro" OutputToken="close_window">
+      <Text>{=sp_gt2_dlg7}You are weak, Dost. Your courts, your kings, and your lies only protect the weak. Pigeons do not soar in the skies, they feast above tombs. Draw your sword!</Text>
+      <Consequences>
+        <Action Type="DeclareWar" TargetAlias="Dost" />
+        <Action Type="SetPartyAi" TargetAlias="DostOrdusu" StringValue="EngageParty" ObjectId="Player" />
+      </Consequences>
+    </DialogNode>
+  </CustomDialogs>
+
+</Questline>

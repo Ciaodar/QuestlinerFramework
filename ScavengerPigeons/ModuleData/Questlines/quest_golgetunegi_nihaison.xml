@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_GolgeTunegi_NihaiSon" Title="{=sp_gt3_title}Puppeteer of Calradia" TimeLimitInDays="90">
+
+  <Prerequisites>
+    <Condition Type="IsQuestCompleted" ObjectId="QLF_GolgeTunegi_Tasfiye" Amount="1" />
+    <Condition Type="ClanTier" Amount="4" />
+  </Prerequisites>
+
+  <Triggers>
+    <Trigger EventType="AutoStart" />
+  </Triggers>
+
+  <TargetResolvers>
+    <Resolver Alias="KorUsta" TargetType="Hero" Filters="Artisan, SameCultureAsPlayer" Selector="First" />
+    <Resolver Alias="HedefKral" TargetType="Hero" Filters="KingdomLeader, !PlayerClan" Selector="Nearest" />
+    <Resolver Alias="GolgeSiginagi" TargetType="Settlement" Filters="Hideout" Selector="Nearest" />
+    <Resolver Alias="FanatikMuhafizlar" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
+  </TargetResolvers>
+
+  <Stages>
+    <Stage Id="Stage1_UstaBulusma" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_gt3_s1_log}Calradia's obstacles have been cleared in blood. Travel to {GolgeSiginagi_Link} to meet the Blind Master {KorUsta_Link}, founder of the Shadow Roost, and choose the ultimate fate of the realm.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="KorUsta" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage2_KirikKukla_Savas" NextStageId="StageSuccess_KirikKukla" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_gt3_s2_kirikkukla_log}You set the roost ablaze! {KorUsta_Link}'s 40 fanatic guards {FanatikMuhafizlar_Link} surround you in fury. Annihilate them and break the chains of the cult!</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="FanatikMuhafizlar" Amount="1" />
+      </Conditions>
+    </Stage>
+
+    <!-- Son 1: Golge Bas Efendi -->
+    <Stage Id="StageSuccess_GolgeBasEfendi" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_gt3_s_bas_efendi_log}The Blind Master's breath ceased under your fingers. The Shadow Master Ring now gleams upon your hand. While Calradia's kings sit pompously upon their thrones, each morning they will wake to a raven feather beneath their pillow—reminding them who truly rules Calradia from the dark.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="KillHero" TargetAlias="KorUsta" />
+        <Action Type="GiveItem" ObjectId="shadow_master_ring" Amount="1" />
+        <Action Type="AddGold" Amount="100000" />
+        <Action Type="ChangeRenown" Amount="100" />
+      </OnEnterActions>
+    </Stage>
+
+    <!-- Son 2: Kirik Kukla -->
+    <Stage Id="StageSuccess_KirikKukla" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_gt3_s_kirik_kukla_log}As the Shadow Roost collapsed in flames, you walked away without looking back. The ciphers turned to ash, the masters perished. Now, bound to no cult and no crown, you wander the Calradian plains as a feared ghost whose name is only whispered in terror.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="KillHero" TargetAlias="KorUsta" />
+        <Action Type="ChangeCrimeRating" Amount="60" />
+        <Action Type="GiveItem" ObjectId="pigeon_blood_claymore" Amount="1" />
+      </OnEnterActions>
+    </Stage>
+
+    <!-- Son 3: Kuller Imparatorlugu (Kaos) -->
+    <Stage Id="StageSuccess_Kaos" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_gt3_s_kaos_log}That very night, false pigeons cooed inside imperial palaces. By morning, empires declared war upon one another. Cities fell to siege, villages burned, and across this continental inferno, you hold the gold and armies to tear down dynasties as you please.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DeclareWar" TargetAlias="HedefKral" ObjectId="empire" />
+        <Action Type="AddGold" Amount="250000" />
+        <Action Type="ChangeRenown" Amount="150" />
+      </OnEnterActions>
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- Kor Usta ile Yuzlesme -->
+    <DialogNode Type="Npc" Id="GT3_Usta_Npc" TargetAlias="KorUsta" InputToken="start" OutputToken="ql_gt3_usta_choices" Priority="200">
+      <Text>{=sp_gt3_dlg1}So much blood, such unfaltering blind loyalty... You have arrived at the summit, little pigeon. Calradia's crowns tremble before us. What is your will?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT3_Usta_Player" TargetAlias="KorUsta" InputToken="hero_main_options" OutputToken="ql_gt3_usta_choices" Priority="200">
+      <Text>{=sp_gt3_dlg1_p}I have come to face the master of the roost.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
+      </Conditions>
+    </DialogNode>
+
+    <!-- Secenek 1: Golge Bas Efendi -->
+    <DialogNode Type="Player" Id="GT3_Choice_BasEfendi" TargetAlias="KorUsta" InputToken="ql_gt3_usta_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_dlg2}You forgot the first rule you taught me, Master: 'The sharpest beak cracks the oldest roost.' From now on, I give the orders! (Poison the Blind Master &amp; Claim the Shadow Throne)</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="StageSuccess_GolgeBasEfendi" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Secenek 2: Kirik Kukla -->
+    <DialogNode Type="Player" Id="GT3_Choice_KirikKukla" TargetAlias="KorUsta" InputToken="ql_gt3_usta_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_dlg3}You are no mastermind; you are a sewer rat lurking in the dark! No motherland, no honor—only lies and slaughter. This roost burns tonight! (Torch the Roost &amp; Slaughter the Fanatics)</Text>
+      <Consequences>
+        <Action Type="SpawnBanditParty" TargetAlias="FanatikMuhafizlar" Amount="40" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="EngagePlayer" />
+        <Action Type="SetPartyAi" TargetAlias="FanatikMuhafizlar" StringValue="EngagePlayer" ObjectId="Player" />
+        <Action Type="ChangeStage" ObjectId="Stage2_KirikKukla_Savas" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Secenek 3: Kuller Imparatorlugu (Kaos) -->
+    <DialogNode Type="Player" Id="GT3_Choice_Kaos" TargetAlias="KorUsta" InputToken="ql_gt3_usta_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_dlg4}The world does not seek order, Master. The world hungers for fire! I have dispatched the forged decrees to the monarchs of Calradia. At dawn, war horns shall sound! (Unleash Continental War)</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="StageSuccess_Kaos" />
+      </Consequences>
+    </DialogNode>
+  </CustomDialogs>
+
+</Questline>

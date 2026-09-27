@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScavengerPigeons")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c6dbcc22b53104311813bdf78f6e9388397d8daa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dda71854c8c7f90536098902d765c10784ec1608")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScavengerPigeons")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScavengerPigeons")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

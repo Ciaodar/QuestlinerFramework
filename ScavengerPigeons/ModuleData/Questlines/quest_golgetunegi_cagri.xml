@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_GolgeTunegi_Cagri" Title="{=sp_gt1_title}Call of the Shadow Roost" TimeLimitInDays="45">
+
+  <Prerequisites>
+    <Condition Type="ClanTier" Amount="3" />
+    <Condition Type="GlobalFlag" ObjectId="SP_Zanaatkar_Katledildi" Amount="1" />
+  </Prerequisites>
+
+  <Triggers>
+    <Trigger EventType="AutoStart" />
+  </Triggers>
+
+  <TargetResolvers>
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
+    <Resolver Alias="GolgeUlagi" TargetType="Hero" Filters="Artisan, SameCultureAsPlayer" Selector="Nearest" />
+    <Resolver Alias="GolgeSiginagi" TargetType="Settlement" Filters="Hideout" Selector="Nearest" />
+    <Resolver Alias="RakipAjanlar" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
+  </TargetResolvers>
+
+  <Stages>
+    <Stage Id="Stage0_Soguma" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="1">
+      <LogText>{=sp_gt1_s0_log}You left the artisan lifeless in his workshop. With city guards scouring the streets, you must lay low and blend into the shadows. Wait for the heat to die down... (1 Day)</LogText>
+      <Conditions />
+      <OnTimeoutActions>
+        <Action Type="ChangeStage" ObjectId="Stage1_UlakBulusma" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage1_UlakBulusma" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_gt1_s1_log}As the alert faded, a black-feathered pigeon landed under your cloak. Someone recognized the bone seal you claimed from the artisan's corpse. Travel near {GolgeSiginagi_Link} and speak with the Shadow Courier {GolgeUlagi_Link}.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="GolgeUlagi" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage2_AjanBaskini" NextStageId="StageSuccess" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_gt1_s2_log}The courier confirmed the artisan was leaking the Pigeon archives to rival kingdoms. Prove your blind loyalty: Ambush and eliminate the 50-man foreign guard detachment {RakipAjanlar_Link} awaiting the ciphers near {GolgeSiginagi_Link}.</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="RakipAjanlar" Amount="1" />
+      </Conditions>
+    </Stage>
+
+    <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_gt1_s_success_log}You butchered the foreign spies. The Shadow Roost approved your ruthlessness and blind devotion. You are no longer a mere pawn; you are now an executioner of the shadows. You received the 'Shadow Bone Dagger' and 30,000 denars.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="GiveItem" ObjectId="shadow_bone_dagger" Amount="1" />
+        <Action Type="AddGold" Amount="30000" />
+        <Action Type="ChangeRenown" Amount="40" />
+        <Action Type="StartQuest" ObjectId="QLF_GolgeTunegi_Tasfiye" />
+      </OnEnterActions>
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- Golge Ulagi ile Bulusma -->
+    <DialogNode Type="Npc" Id="GT1_Ulak_Giris_Npc" TargetAlias="GolgeUlagi" InputToken="start" OutputToken="ql_gt1_ulak_1" Priority="200">
+      <Text>{=sp_gt1_dlg1}You bear the raven bone seal taken from the slain artisan... The Shadow Roost knows what you did.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_UlakBulusma" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT1_Ulak_Giris_Player" TargetAlias="GolgeUlagi" InputToken="hero_main_options" OutputToken="ql_gt1_ulak_1" Priority="200">
+      <Text>{=sp_gt1_dlg1_p}I was told someone here recognizes this raven bone cipher.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_UlakBulusma" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="GT1_Ulak_Branch1" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_1" OutputToken="ql_gt1_ulak_choices">
+      <Text>{=sp_gt1_dlg2}The artisan was not merely a thorn; he was selling our deepest cipher archives to foreign kingdoms. You ended his breath, yet your blind loyalty must be proven by blood. A detachment of 50 foreign deserters waits near {GolgeSiginagi_Link} to purchase the stolen ciphers. Slay them all. Leave no tongue to tell the tale.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT1_Ulak_Choice1" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_choices" OutputToken="close_window">
+      <Text>{=sp_gt1_dlg3}Blind loyalty knows no hesitation. Their blood will water the mountain.</Text>
+      <Consequences>
+        <Action Type="SpawnBanditParty" TargetAlias="RakipAjanlar" Amount="50" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="Hold" />
+        <Action Type="SetPartyAi" TargetAlias="RakipAjanlar" StringValue="Hold" />
+        <Action Type="ChangeStage" ObjectId="Stage2_AjanBaskini" />
+      </Consequences>
+    </DialogNode>
+  </CustomDialogs>
+
+</Questline>
