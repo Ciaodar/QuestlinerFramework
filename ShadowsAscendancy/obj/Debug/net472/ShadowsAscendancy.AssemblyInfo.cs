@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ShadowsAscendancy")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c7c2b1d24e4c0cc3abe21b5016b67b020c880aa4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe818a65b4c1289788845c39f74e59520a91c60f")]
 [assembly: System.Reflection.AssemblyProductAttribute("ShadowsAscendancy")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ShadowsAscendancy")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

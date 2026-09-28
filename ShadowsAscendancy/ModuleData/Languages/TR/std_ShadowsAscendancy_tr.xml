@@ -20,15 +20,22 @@
     <string id="shdw_q1_dlg2" text="Kervanlarım... Biri onlara saldırıyor! Haydutlar mallarımı çalıyor ama bu sıradan bir soygun değil, sanki yollarımızı biliyorlar. Lütfen onları bul ve işlerini bitir." />
     <string id="shdw_q1_dlg3" text="Kervanlarının peşine düşeceğim. Altınlarımı hazırla." />
     <string id="shdw_q1_dlg_t_sorgu_guard" text="Muhafızların ticaret yollarını koruması gerekmez mi? Şehir nöbetçileri bu yağmalara neden göz yumuyor?" />
+    <string id="shdw_q1_dlg_t_sorgu_tehdit" text="Beni kirli bir tüccar oyununa alet ediyorsan bu pazar yeri mezarın olur. Gerçekte kiminle savaşıyorsun?" />
     <string id="shdw_q1_dlg_t_pay" text="Tüccarların derdi hiç bitmez. Bu işten benim payıma ne düşecek? Kılıcımı çekmeme değecek mi?" />
     <string id="shdw_q1_dlg_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="shdw_q1_dlg_tuccar_red" text="Şu anda haydutların peşine düşecek vaktim yok. Başka birini bul." />
     <string id="shdw_q1_dlg_t_guard_cevap" text="Nöbetçi komutanları her ay gümüş dolu keseler alıyor. Şehir kapılarının ötesinde Calradia sadece çeliğin kanununu tanır. Bu haydutlar alelade çapulcular değil; askeri bir disiplinle pusu kuruyorlar." />
+    <string id="shdw_q1_dlg_t_tehdit_cevap" text="Sakin ol savaşçı! Göklere yemin ederim ki doğruyu söylüyorum. Sütten çıkmış ak kaşık değilim ama bu haydutlar askeri bir disiplinle vuruyor ve ekmeğim elimden gidiyor!" />
+    <string id="shdw_q1_dlg_t_pazarlik_cevap" text="Sonuç getiren herkese cömertçe ödeme yaparım! Defterimi kurtar ve ticaretime sahip çık, beş bin denar saf gümüş senin olacak." />
     <string id="shdw_q1_dlg_t_sorgu_cargo" text="Kervan tam olarak ne taşıyordu ve bu haydutlar nerede konaklıyor?" />
     <string id="shdw_q1_dlg_t_sorgu_suspect" text="Şüphelendiğin özel birileri var mı? Rakip bir tüccar loncası mı, yoksa sokak çeteleri mi?" />
     <string id="shdw_q1_dlg_t_cargo_cevap" text="İthal ipeklerin arasına gizlenmiş şifreli bir defter vardı; şehrin tüm karaborsa borçlarını ve gizli sevkiyatlarını tuttuğum bir defter! O defter düşmanların eline geçerse kellem gider. Haydutlar şehrin dışındaki geçitte pusu kurmuş bekliyor." />
     <string id="shdw_q1_dlg_t_suspect_cevap" text="Arka sokakların çetesi! Çete lideri depolarımdan astronomik koruma haraçları talep ediyordu. Son isteklerini reddettiğimde kervanlarım gizemli bir şekilde kaybolmaya başladı." />
-    <string id="shdw_q1_dlg_t_pazarlik_cevap" text="Sonuç getiren herkese cömertçe ödeme yaparım! Defterimi kurtar ve ticaretime sahip çık, altınla dolu bir kese senin olacak." />
+    <string id="shdw_q1_dlg_t_sorgu_moral" text="Karaborsa borçlarının tutulduğu şifreli bir defter mi? Anlaşılan senin ellerin de en az o haydutlarınki kadar kirli. Neden senin bu şahsi pisliğini temizleyeyim?" />
+    <string id="shdw_q1_dlg_t_sorgu_taktik" text="Şehrin dışındaki kayalık geçidi tutmaları onlara taktiksel üstünlük sağlar. Kaç kılıç kuşanmışlar?" />
+    <string id="shdw_q1_dlg_t_moral_cevap" text="Calradia'da ayakta kalmak isteyen her tüccar gölgelerle dans etmek zorundadır! O defteri getirip geçidi temizlersen beş bin denar saf gümüş senin olur. Reddedersen tüm ticaret çetelerin eline geçer!" />
+    <string id="shdw_q1_dlg_t_taktik_cevap" text="Yaklaşık iki düzine iyi silahlanmış kaçak ve kesici. Yükümle birlikte dağların derinliklerine kaçmadan önce onlara sertçe vur!" />
+    <string id="shdw_q1_dlg_t_kabul_adalet" text="Yolların güvenliği için o haydutları avlayacağım tüccar. Ancak o defteri elime aldığımda senin bu karanlık işlerini de konuşacağız." />
 
     <string id="shdw_q1_dlg_kervan1" text="Ne istiyorsun yabancı? İşler çirkinleşmeden geri dön!" />
     <string id="shdw_q1_dlg_kervan2" text="Çalınan mallar ve tüccarın defteri için geldim. Çekin kılıçlarınızı!" />
@@ -36,19 +43,28 @@
     <string id="shdw_q1_dlg_kervan_tehdit" text="Bana yalan söylerseniz bu kumlar mezarınız olur. Kimin adına kaçakçılık yapıyorsunuz?" />
     <string id="shdw_q1_dlg_kervan_sorgu_c" text="(Güler) O korkak tüccarın gönderdiği paralı asker köpeği demek! O defter artık arka sokakların efendilerine ait! Onu istiyorsan kanını dökeceksin!" />
     <string id="shdw_q1_dlg_kervan_tehdit_c" text="(Güler) Sayıca azken büyük laflar ediyorsun! Efendimizin adını öğrenemeden cesedin kumlara karışacak! Gebertin şunları!" />
+    <string id="shdw_q1_dlg_kervan_sorgu2" text="Arka sokak çetesi mi? Yani şehrin çete lideri için kaçak mal taşıdığınızı itiraf ediyorsunuz?" />
+    <string id="shdw_q1_dlg_kervan_sorgu2_c" text="Biz emirleri bizzat {KacakciLideri_Link}'den alırız! Buradan canlı çıkıp kimseye bir şey anlatamayacaksın! Gebertin şunları!" />
 
     <string id="shdw_q1_cete_turn1" text="(Kadehi kenara iter ve seni soğuk bakışlarla süzer) Bölgeme öylece elini kolunu sallayarak girebileceğini mi sandın yabancı? Nöbetçilerimi atlatmış olabilirsin ama bu mahzenden canlı çıkıp çıkamayacağın henüz belli değil. Konuş, kılıcım boğazını tatmadan önce ne aradığını anlat." />
     <string id="shdw_q1_dlg_cete_intro" text="Bölgeme öylece dalabileceğini mi sandın yabancı? Adamlarım seni deşmeden önce ne istediğini söyle!" />
     <string id="shdw_q1_dlg_cete_threat" text="Bana yalan söylersen bu han mezarın olur. Kervanındaki köpekleri kestim ve bu şifreli defteri aldım. Arkanda kim var?" />
     <string id="shdw_q1_dlg4" text="Kervanını yağmalayan köpekleri buldum ve bu şifreli defteri ele geçirdim. Sen bir haydut değilsin, arkanda kim var?" />
+    <string id="shdw_q1_dlg_cete_cunning" text="Kervanını dağıttım, defter elimde. Kimin safında olacağıma karar vermeden önce bu şehirdeki ipleri kimin tuttuğunu bilmek isterim." />
     <string id="shdw_q1_dlg5" text="(Güler) Sen sadece kılıç sallamayı bilen bir ahmaksın. O defter benim, ve o tüccar sandığın masum adam aslında pazarın tekelini kurmak için bize haraç vermeyi kesen açgözlünün teki." />
     <string id="shdw_q1_dlg_cete_lore" text="Şehir muhafızları ve soylular bu kaçakçılığa nasıl göz yumuyor? Bu suç çarkı nerelere kadar uzanıyor?" />
     <string id="shdw_q1_dlg_cete_pay" text="Bu karanlık işten benim payıma ne düşecek? Yüklü bir kazanç olmadan ellerimi kirletmem." />
     <string id="shdw_q1_dlg_cete_lore_c" text="Calradia'nın asilzadeleri vergiden muaf şarapları içerken, kale muhafızları ceplerine gümüşlerimizi indirir. Bu diyarda kanun, yalnızca fakirin sırtında şaklayan bir kırbaçtır. Altını olan kuralı koyar, diğerleri boyun eğer." />
     <string id="shdw_q1_dlg_cete_pay_c" text="Tüccarın kasalarından on bin denar koparacağız. Onu iyice sıkıştır, yarısı senin olsun. Şimdi söyle bakalım, ortak mıyız yoksa kılıcımı mı tatmak istersin?" />
+    <string id="shdw_q1_dlg_cete_teklif_sor" text="Acımasız bir çark ama kârlı... Masaya tam olarak ne teklif koyuyorsun?" />
+    <string id="shdw_q1_dlg_cete_teklif_pratik" text="Büyük lafları bir kenara bırak. Tüccar meselesini nasıl çözmeyi öneriyorsun?" />
     <string id="shdw_q1_dlg6" text="Bana bu kadar sorun çıkarmak yerine, gel anlaşalım. O tüccarı ortadan kaldır, sana payını vereyim. Şehrin sokakları bizim, sen de kazançlı çık." />
     <string id="shdw_q1_dlg_cete_phil" text="Gölgelerde merhamet arayanın mezarı çakallara yem olur derler... Peki ya hem sana hem o tüccara boyun eğmeyi reddedersem?" />
+    <string id="shdw_q1_dlg_cete_sinir" text="Kârdan pay vermekten bahsediyorsun ama haraç ve kılıç işleri daima kan döker. Ya tüccar şehir nöbetçilerini çağırırsa?" />
+    <string id="shdw_q1_dlg_cete_guvence" text="Beş bin denar cazip bir teklif. Ancak parayı aldıktan sonra suikastçılarının sırtıma bir hançer saplamayacağının güvencesi nedir?" />
     <string id="shdw_q1_dlg_cete_phil_c" text="(Elini kılıcının kabzasına koyarak) O halde bu sokakların yazısız kanunları seni çizmelerimizin altında ezer yabancı. Ya altınla dost olursun ya da soğuk çelikle düşman. Şimdi seçimini yap!" />
+    <string id="shdw_q1_dlg_cete_sinir_c" text="Muhafızlar mı? Sana söyledim ya, muhafızlar avucumuzun içinden beslenir. Onu yeterince sıkıştırırsan nöbetçilere fısıldamaya bile cesaret edemez. Şimdi kararını ver!" />
+    <string id="shdw_q1_dlg_cete_guvence_c" text="Bu sokaklardaki tek kanun benim sözümdür! Ölü bir ortak altın getirmez ama sadık bir ortak yolları açık tutar. Kararını ver yabancı!" />
     <string id="shdw_q1_dlg7" text="Adaletten kaçamazsın. Boynuna ilmeği geçireceğim." />
     <string id="shdw_q1_dlg_tehdit" text="Öyle mi? Şehrin dışı bu aralar çok tehlikeli olabiliyor. Yollarda kendine dikkat et, ahmak." />
     <string id="shdw_q1_dlg8" text="Ben bir soyluyum, suikast gibi ayak işleri yapmam. Ancak bana yüklü bir komisyon öde, tüccarı sana haraç vermesi için zorlayayım." />
@@ -57,6 +73,8 @@
     <string id="shdw_q1_dlg_tuccar_santaj_intro" text="Geri döndün! Söyle, haydutların icabına baktın mı? Mallarım ve kervanlarım güvende mi?" />
     <string id="shdw_q1_dlg9" text="Ellerin bağlı, tüccar. Çeteye haracını öde ve benim payımı ver, yoksa seni doğramalarına izin veririm." />
     <string id="shdw_q1_dlg_t_kurnaz" text="O şifreli defteri okudum dostum. Senin ellerin de en az çeteninkiler kadar kirli. Masum ayağına yatmayı bırak ve payımızı öde, yoksa bu şehri başına yıkarım." />
+    <string id="shdw_q1_dlg_t_santaj_direnis" text="Beni koruman gerekiyordu! Çete depolarımı kurutursa bu şehrin ticaretine ne olacağını sanıyorsun? Yargıcı çağıracağım!" />
+    <string id="shdw_q1_dlg_t_santaj_baski" text="Yargıç çetenin cebinde, bu defter de senin kirli işlerini kanıtlıyor. Altınları hemen ver, yoksa kılıcım konuşur." />
     <string id="shdw_q1_dlg10" text="Sen... sen onlardan bile betersin! Tamam, altını al. Başka seçeneğim yok. Beni rahat bırak!" />
     
     <string id="shdw_q1_dlg_pusu1" text="Kimsiniz siz? Geri çekilin!" />
@@ -91,9 +109,14 @@
     <string id="shdw_q2_dlg3" text="Canımı bağışla! Emri {YozlasmisLord_Link} verdi. Çeteyle yaptığın o karanlık anlaşmada kendi payını alamadığı için seni ortadan kaldırmak istedi. Kanıt istersen, mühürlü emri zırhımın içindedir." />
     <string id="shdw_q2_dlg2_fallback" text="Canımı bağışla! Emri {YozlasmisLord_Link} verdi. Karaborsa çıkarlarına mani olduğun için seni ortadan kaldırmak istedi. Mühürlü emri zırhımın içindedir." />
     <string id="shdw_q2_dlg_kom_lore" text="Bu mühürlü emirde tam olarak ne yazıyor? Saray soylularından başka kimlerin bu kanda parmağı var?" />
+    <string id="shdw_q2_dlg_kom_savunma" text="Bu lord nerede saklanıyor ve kalesinde kaç kılıç var? Canını seviyorsan doğruyu söyle." />
+    <string id="shdw_q2_dlg_kom_lore_c" text="Ferman cesedini akbabalara bırakmamızı ve karaborsa kayıtlarını geri getirmemizi emrediyor! Kırmızı balmumu mühür bizzat lordun mühür yüzüğüne ait. Bu belge onun için kesin bir ihanet kanıtıdır!" />
+    <string id="shdw_q2_dlg_kom_savunma_c" text="Kalesinde güçlü bir garnizon var ama gündüz divanlarında yalnızca yakın muhafızlarıyla tahtında oturur. Kanıt olarak bu mühürlü fermanı al!" />
+    <string id="shdw_q2_dlg_kom_moral" text="Soylu bir asilzadenin karanlıkta rakiplerini boğazlatmak için kiralık katillere para dökmesi... Calradia'da şövalyelik sahiden ölmüş." />
+    <string id="shdw_q2_dlg_kom_cunning" text="Bu balmumu mühür şantaj ya da siyasi koz olarak krallara layık bir servet değerinde. Onu bana ver, belki yarına sağ çıkarsın." />
+    <string id="shdw_q2_dlg_kom_teslim" text="(Titreyerek parşömeni uzatır) Al, al bunu! Üzerinde lordun şahsi arması var. Kırmızı balmumu mührü kırılmadı! İzcileri beni bulmadan önce buradan yok olmama izin ver yeter!" />
     <string id="shdw_q2_dlg4" text="Defol git buradan! Lorduna da selamımı söyle, onun için geliyorum." />
     <string id="shdw_q2_dlg_kom_al" text="Mühürlü emri bana ver ve deliğine geri sürün. Yüzünü bir daha buralarda görürsem canını alırım." />
-    <string id="shdw_q2_dlg_kom_lore_c" text="Ferman cesedini akbabalara bırakmamızı ve karaborsa kayıtlarını geri getirmemizi emrediyor! Kırmızı balmumu mühür bizzat lordun mühür yüzüğüne ait. Bu belge onun için kesin bir ihanet kanıtıdır!" />
     <string id="shdw_q2_dlg_kom_final" text="Kanıtı aldım. Şimdi deliğine dön ve efendine, adaletin hisarına doğru at sürdüğünü söyle." />
 
     <string id="shdw_q2_lord_turn1" text="(Gümüş kadehinden bir yudum alır ve asilce bir kibirle sırıtır) Sen... Hâlâ nefes alıyorsun demek? Topraklarıma ve huzuruma hangi cüretle adım atabiliyorsun paralı asker? Muhafızlarım seni kapıda doğramalıydı." />
@@ -103,17 +126,31 @@
     <string id="shdw_q2_dlg_lord_kurnaz" text="Birkaç sokak çapulcusuyla beni alt edebileceğini mi sandın lordum? Zırhlarının içinden çıkan bu balmumu mührü tanırsın herhalde." />
     <string id="shdw_q2_dlg6" text="(Güler) Ben bir asilzadeyim, sen ise sadece kılıcını kiralayan birisin. Kral bana mı inanacak sana mı? Yine de baş ağrısı istemiyorum. Ne istiyorsun?" />
     <string id="shdw_q2_dlg_lord_motiv" text="Soylu bir krallık lordu neden sokak çetelerine ve katillere altın akıtır? Toprakların, kalelerin açgözlülüğüne yetmiyor mu?" />
+    <string id="shdw_q2_dlg_lord_sendika" text="Karaborsa ağın ne kadar derinlere uzanıyor? Kral kendi vassallarının kaçak mal ve kan ticareti yaptığını biliyor mu?" />
     <string id="shdw_q2_dlg_lord_pay_q" text="Sus payı mı? Böyle bir ihaneti örtbas etmemi bekliyorsan kesen kibirli asaletine denk olmalı." />
     <string id="shdw_q2_dlg_lord_lore_c" text="Savaşlar yalnızca köylü vergileriyle kazanılmaz paralı asker! Vassalları sadık tutmak ve garnizonları beslemek nehir gibi altın ister. Aptallar inkar etse de karaborsa Calradia tahtlarını ayakta tutar. Sen klanının boyunu aşan çarklara çomak soktun." />
+    <string id="shdw_q2_dlg_lord_sendika_c" text="Kral ordularını neyin ayakta tuttuğunu çok iyi bilir! Rüşvetler hanlardan şatolara akar, diyardaki her muhafız komutanının kınını altınla doldurur." />
     <string id="shdw_q2_dlg_lord_pay_c" text="Yirmi bin denar! Şövalye bölükleri tutmaya yetecek kadar saf imparatorluk gümüşü. O mühürlü parşömeni bana ver ve zengin bir adam olarak buradan ayrıl." />
+    <string id="shdw_q2_dlg_lord_moral" text="Altının kanı temizlediğini söylerler ama samur kürklere bürünmüş bir hain hâlâ bir haindir. Adaleti satın alabileceğini sana düşündüren nedir?" />
+    <string id="shdw_q2_dlg_lord_tehdit_2" text="Böylesi bir ihanet için yirmi bin denar devede kulak kalır. Seni son dinarına kadar soyup yine de bu parşömeni saraya sunabilirim." />
+    <string id="shdw_q2_dlg_lord_ders" text="(Kadehini masaya çarpar, gözlerini kısar) Calradia'da adalet, en büyük orduya sahip adamın dediğidir! Bir avuç parşömen tutan bir paralı asker bir lorda şart dayatamaz. Ya yirmi bin denarı alıp gidersin ya da tüm garnizonumun gazabıyla yüzleşirsin. Kararın nedir?!" />
     <string id="shdw_q2_dlg7" text="Bana 20.000 Denar öde, bu konu sonsuza dek kapansın." />
     <string id="shdw_q2_dlg8" text="Benim onurum parayla satılmaz. Seni keseceğim!" />
     <string id="shdw_q2_dlg9" text="Bu belgeyi doğrudan hükümdara götüreceğim. Adalet yerini bulacak." />
+    <string id="shdw_q2_dlg_lord_santaj_c" text="(Kibirle sırıtır ve ayaklarının dibine demir kaplı ağır bir sandık fırlatır) Akıllıca seçim. Altın asla yalan söylemez. Gümüşünü al ve topraklarımda yüzünü bir daha görmeyeyim." />
+    <string id="shdw_q2_dlg_lord_savas_c" text="(Yaldızlı kılıcını çeker, muhafızlarına kükrer) Küstah köpek! Kendi çatımın altında beni tehdit etmeye nasıl cüret edersin?! Muhafızlar, parçalayın bu sefili!" />
+    <string id="shdw_q2_dlg_lord_politik_c" text="(Öfkeden yüzü solar) Hükümdar mı?! Saraya asla canlı ulaşamayacaksın paralı asker! Cüretin varsa krala koş, ama Calradia divanlarının zindanlarımdan daha soğuk olduğunu göreceksin!" />
 
     <string id="shdw_q2_dlg_huk_intro" text="Huzurumuza hoş geldin. Tahtımızın önüne hangi mühim meseleyi getirdin?" />
     <string id="shdw_q2_dlg10" text="Yüce hükümdarım, asilzadelerinizden {YozlasmisLord_Link} arkamdan iş çevirip beni öldürtmek için suikastçılar tuttu. İhanetinin kanıtı bu mühürlü emirdir!" />
     <string id="shdw_q2_dlg_huk_diplomasi" text="Krallığınızın huzurunu tehdit eden büyük bir ihanet haberi getirdim yüce hükümdarım. Bu mühürlü ferman, {YozlasmisLord_Link}'un gölgelerden kiralık katiller yönettiğinin kanıtıdır." />
     <string id="shdw_q2_dlg_huk_justice" text="Bazı lordlar soylu kanlarının onları kanunların üstüne koyduğunu sanıyor. Size açık bir ihanetin kanıtını getirdim ve adaletin tavizsiz işlemesini bekliyorum." />
+    <string id="shdw_q2_dlg_huk_inceleme" text="(Parşömeni alır, balmumu mührü dikkatle inceler) Hanedanımıza karşı ihanet mi? {YozlasmisLord_Link} nesillerdir hanemize hizmet eder. Fakat bu kırmızı mühür açıkça onun mührü... Söyle bana, bu belge eline nasıl geçti? Bunun sahte bir tuzak olmadığını kanıtlayabilir misin?" />
+    <string id="shdw_q2_dlg_huk_kanit_pusu" text="Ana yolda kiralık katillerinin pususuna uğradım. Onları mağlup etmeden önce komutanları bu mühürlü emri zırhının altında taşıyordu." />
+    <string id="shdw_q2_dlg_huk_kanit_sendika" text="Bu ferman, lordu doğrudan karaborsa haraç şebekesine bağlayan şifreli bir defteri geri almak için verilmişti." />
+    <string id="shdw_q2_dlg_huk_hukum" text="Kanıtlar su götürmez. Yasa dışı haraç şebekeleri yönetmek ve krallığın tebaasına karşı kiralık katiller salmak hükümdarlığımızın meşruiyetini zedeler. Soyu ne olursa olsun böylesi bir yozlaşmaya göz yumulamaz." />
+    <string id="shdw_q2_dlg_huk_talep_adalet" text="Soyu ne kadar yüce olursa olsun hiçbir hainin adaletinizden kaçamayacağını tüm Calradia görsün." />
+    <string id="shdw_q2_dlg_huk_talep_odul" text="Bu hakikati tahtın önüne getirmek için canımı ve klanımı tehlikeye attım yüce hükümdarım. Yalnızca sadakatimin hak ettiği onur ve itibarı talep ediyorum." />
     <string id="shdw_q2_dlg11" text="Bir asilzadeyi suçlamak büyük bir cürettir, ancak mühür açıkça onun. Bu küstahlığı cezasız kalmayacak. Krallığa olan sadakatin için teşekkürler, hak ettiğin değeri göreceksin." />
 
     <string id="shdw_q2_katiller" text="Kiralık Katiller" />

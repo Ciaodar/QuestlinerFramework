@@ -20,15 +20,22 @@
     <string id="shdw_q1_dlg2" text="My caravans... Someone is attacking them! Bandits are stealing my goods, but this is no ordinary robbery; it's as if they know our routes. Please find them and finish them off." />
     <string id="shdw_q1_dlg3" text="I'll track down your caravans. Have my gold ready." />
     <string id="shdw_q1_dlg_t_sorgu_guard" text="Aren't the town guards meant to protect the trade routes? Why are the watch turning a blind eye?" />
+    <string id="shdw_q1_dlg_t_sorgu_tehdit" text="If you are using me for some dirty mercantile scheme, this market will be your grave. Who are you really fighting?" />
     <string id="shdw_q1_dlg_t_pay" text="Merchants always have woes. What is my share in this? Is it worth my blade?" />
     <string id="shdw_q1_dlg_ertele" text="I cannot deal with this right now. We will speak later." />
     <string id="shdw_q1_dlg_tuccar_red" text="I don't have time to chase after bandits right now. Find someone else." />
     <string id="shdw_q1_dlg_t_guard_cevap" text="The watch commanders receive silver-stuffed pouches each month. Beyond the city gates, Calradia knows only the law of steel. These raiders are not common scum; they strike with military precision." />
+    <string id="shdw_q1_dlg_t_tehdit_cevap" text="Peace, warrior! I swear by the heavens I speak true. I am no saint, but these raiders strike with military discipline, and my livelihood is crumbling!" />
+    <string id="shdw_q1_dlg_t_pazarlik_cevap" text="I pay handsomely for results! Retrieve my ledger and protect my enterprise, and a purse brimming with five thousand denars shall be yours." />
     <string id="shdw_q1_dlg_t_sorgu_cargo" text="What cargo was the caravan carrying, and where do these cutthroats make their camp?" />
     <string id="shdw_q1_dlg_t_sorgu_suspect" text="Do you suspect anyone in particular? A rival merchant guild, or the alley gangs?" />
     <string id="shdw_q1_dlg_t_cargo_cevap" text="Concealed within bolts of imported silk was an encrypted ledger recording all black-market debts and discreet transactions in the city! If that ledger falls into enemy hands, my head is forfeit. The raiders were last sighted holding the pass outside the city." />
     <string id="shdw_q1_dlg_t_suspect_cevap" text="The back-alley syndicate! Their gang master has been extorting ruinous protection coin from my warehouses. When I refused their latest demands, my caravans began vanishing into thin air." />
-    <string id="shdw_q1_dlg_t_pazarlik_cevap" text="I pay handsomely for results! Retrieve my ledger and protect my enterprise, and a purse brimming with gold shall be yours." />
+    <string id="shdw_q1_dlg_t_sorgu_moral" text="An encrypted ledger of black-market debts? Sounds like your hands are just as dirty as the raiders. Why should I fight your private war?" />
+    <string id="shdw_q1_dlg_t_sorgu_taktik" text="Holding the rocky pass outside the city gives them the tactical advantage. How many blades do they command?" />
+    <string id="shdw_q1_dlg_t_moral_cevap" text="In Calradia, every merchant who wants to survive must dance with the shadows! If you bring back that ledger and purge the pass, 5,000 denars in pure silver is yours. Refuse, and the gang rules the trade routes!" />
+    <string id="shdw_q1_dlg_t_taktik_cevap" text="Around two dozen well-armed deserters and cutthroats. Strike them hard before they slip into the deep hills with my cargo!" />
+    <string id="shdw_q1_dlg_t_kabul_adalet" text="I will hunt down those raiders for the safety of the roads, merchant. But once I hold that ledger, we will have words about your transactions." />
 
     <string id="shdw_q1_dlg_kervan1" text="What do you want, stranger? Turn back before things get ugly!" />
     <string id="shdw_q1_dlg_kervan2" text="I am here for the stolen goods and the merchant's ledger. Draw your steel!" />
@@ -36,19 +43,28 @@
     <string id="shdw_q1_dlg_kervan_tehdit" text="If you lie to me, this sand will be your grave. Whose orders are you carrying out?" />
     <string id="shdw_q1_dlg_kervan_sorgu_c" text="(Laughs) A mercenary dog sent by that coward merchant! That ledger belongs to the masters of the back alleys now. If you want it, bleed for it!" />
     <string id="shdw_q1_dlg_kervan_tehdit_c" text="(Laughs) Big words for someone outnumbered! You will rot in the dirt before we reveal our masters! Cut them down!" />
+    <string id="shdw_q1_dlg_kervan_sorgu2" text="The back-alley syndicate? So you admit you're running smuggled contraband for the city gang leader?" />
+    <string id="shdw_q1_dlg_kervan_sorgu2_c" text="We take orders from {KacakciLideri_Link}! You won't leave this valley alive to tell anyone! Kill them!" />
 
     <string id="shdw_q1_cete_turn1" text="(Pushes his goblet aside and studies you cold-eyed) Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat." />
     <string id="shdw_q1_dlg_cete_intro" text="Who do you think you are, barging into my territory? Speak quickly before my men gut you." />
     <string id="shdw_q1_dlg_cete_threat" text="If you lie to me, this tavern will be your tomb. I butchered your caravan dogs and took this encrypted ledger. Who is behind you?" />
     <string id="shdw_q1_dlg4" text="I found the dogs plundering the caravans and seized this encrypted ledger. You're no common bandit, who is behind this?" />
+    <string id="shdw_q1_dlg_cete_cunning" text="I routed your caravan and hold your encrypted ledger. I want to know who pulls the strings in this city before I decide whose side I am on." />
     <string id="shdw_q1_dlg5" text="(Laughs) You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market." />
     <string id="shdw_q1_dlg_cete_lore" text="How do the town guards and nobility overlook this smuggling? How deep does this syndicate run?" />
     <string id="shdw_q1_dlg_cete_pay" text="What is my share in this dark business? I do not dirty my hands without substantial coin." />
     <string id="shdw_q1_dlg_cete_lore_c" text="Nobles feast on untaxed wine while their castellans pocket our silver. The law in Calradia is merely a whip cracked across the backs of the weak. Those with gold make the rules, and the rest obey." />
     <string id="shdw_q1_dlg_cete_pay_c" text="Ten thousand denars from the merchant's vaults. Squeeze him dry and half is yours. Now, are you in or do you wish to test my steel?" />
+    <string id="shdw_q1_dlg_cete_teklif_sor" text="A ruthless system, but profitable. What exact proposition are you putting on the table?" />
+    <string id="shdw_q1_dlg_cete_teklif_pratik" text="Spare me the grand speeches. How do you propose we deal with the merchant?" />
     <string id="shdw_q1_dlg6" text="Instead of causing me so much trouble, let's make a deal. Eliminate that merchant, and I'll give you a cut. The city streets are ours, and you'll profit too." />
     <string id="shdw_q1_dlg_cete_phil" text="They say those who seek mercy in the shadows become food for jackals... But what if I refuse to bow to either you or the merchant?" />
+    <string id="shdw_q1_dlg_cete_sinir" text="You talk of sharing profits, but extortion and blade-work always spill blood. What happens if the merchant calls the town guard?" />
+    <string id="shdw_q1_dlg_cete_guvence" text="Five thousand denars is tempting, but what guarantees do I have that your assassins won't slip a dagger between my ribs once the coin is collected?" />
     <string id="shdw_q1_dlg_cete_phil_c" text="(Resting his hand on his pommel) Then the unwritten laws of these alleys shall crush you beneath our boots, stranger. You either ally with gold or bleed under cold steel. Choose now!" />
+    <string id="shdw_q1_dlg_cete_sinir_c" text="The guards? I already told you, the guards eat from our hand. Squeeze him hard enough and he won't dare whisper a word to the watch. Choose now!" />
+    <string id="shdw_q1_dlg_cete_guvence_c" text="My word is the only law in these alleys! A dead partner brings no gold, but a loyal one keeps the routes flowing. Make your decision, stranger!" />
     <string id="shdw_q1_dlg7" text="You can't escape justice. I will see you hang." />
     <string id="shdw_q1_dlg_tehdit" text="Is that so? The outside of the city can be very dangerous these days. Watch your back on the roads, fool." />
     <string id="shdw_q1_dlg8" text="I am a noble, I don't do dirty work like assassinations. But pay me a hefty cut, and I'll force the merchant to pay you your tribute." />
@@ -57,6 +73,8 @@
     <string id="shdw_q1_dlg_tuccar_santaj_intro" text="You have returned! Tell me, did you deal with the bandits? Are my goods and caravans safe?" />
     <string id="shdw_q1_dlg9" text="Your hands are tied, merchant. Pay the gang their tribute and give me my cut, or I will let them butcher you." />
     <string id="shdw_q1_dlg_t_kurnaz" text="I read that encrypted ledger, my friend. Your hands are just as dirty as the gang's. Drop the innocent act and pay our share, or watch your empire burn." />
+    <string id="shdw_q1_dlg_t_santaj_direnis" text="You were supposed to protect me! Do you realize what will happen to this city's trade if the syndicate bleeds my warehouses dry? I'll call the magistrate!" />
+    <string id="shdw_q1_dlg_t_santaj_baski" text="The magistrate is in the syndicate's pocket, and this ledger proves your own guilt. Hand over the gold now, or my blade will do the talking." />
     <string id="shdw_q1_dlg10" text="You... you are worse than them! Fine, take the gold. I have no choice. Leave me alone!" />
     
     <string id="shdw_q1_dlg_pusu1" text="Who are you? Stand down!" />
@@ -91,9 +109,14 @@
     <string id="shdw_q2_dlg3" text="Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you eliminated because he couldn't get his cut in that dark deal you made with the gang. If you want proof, his sealed order is inside my armor." />
     <string id="shdw_q2_dlg2_fallback" text="Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you eliminated because you stood in the way of his black market interests. The sealed order is inside my armor." />
     <string id="shdw_q2_dlg_kom_lore" text="What exactly does this decree order you to do? Who else among the court nobility is tied to this blood contract?" />
+    <string id="shdw_q2_dlg_kom_savunma" text="Where does this lord hide, and how many men garrison his hall? Answer truly if you value your skin." />
+    <string id="shdw_q2_dlg_kom_lore_c" text="The decree explicitly commands us to feed your body to the vultures and reclaim the black-market ledgers! The crimson seal belongs to his lordship's signet ring. It is undeniable proof of treason!" />
+    <string id="shdw_q2_dlg_kom_savunma_c" text="His castle is heavily garrisoned, but during daytime audiences he sits upon his dais guarded only by personal retainers. Take the sealed order as proof!" />
+    <string id="shdw_q2_dlg_kom_moral" text="A highborn nobleman paying cutthroats to butcher his rivals in the dark... Calradia's chivalry is truly dead." />
+    <string id="shdw_q2_dlg_kom_cunning" text="This wax seal is worth a king's ransom in blackmail or political leverage. Hand it over, and maybe you'll live to see tomorrow." />
+    <string id="shdw_q2_dlg_kom_teslim" text="(Trembling, handing over the parchment) Here, take it! It has his personal coat of arms. The red seal is unbroken! Just let me vanish before his scouts find me!" />
     <string id="shdw_q2_dlg4" text="Get out of here! Give my regards to your lord, tell him I am coming for him." />
     <string id="shdw_q2_dlg_kom_al" text="Give me the sealed order and crawl back to your hole. If I ever lay eyes on you again, you will lose more than your pride." />
-    <string id="shdw_q2_dlg_kom_lore_c" text="The decree explicitly commands us to feed your body to the vultures and reclaim the black-market ledgers! The crimson seal belongs to his lordship's signet ring. It is undeniable proof of treason!" />
     <string id="shdw_q2_dlg_kom_final" text="I have the proof. Now crawl back to your hole and tell your master that justice is riding toward his keep." />
 
     <string id="shdw_q2_lord_turn1" text="(Takes a sip from his silver goblet and scoffs with aristocratic arrogance) You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate." />
@@ -103,17 +126,31 @@
     <string id="shdw_q2_dlg_lord_kurnaz" text="Did you honestly believe a handful of gutter cutthroats could slay me, my lord? Look closely at this wax seal." />
     <string id="shdw_q2_dlg6" text="(Laughs) I am a noble, and you are merely a mercenary for hire. Who will the king believe, me or you? Still, I care little for headaches. What is your price?" />
     <string id="shdw_q2_dlg_lord_motiv" text="Why does a highborn lord of the realm stoop to funding cutthroats and dirty street syndicates? Are your fiefs not enough for your greed?" />
+    <string id="shdw_q2_dlg_lord_sendika" text="How far does your black-market network extend? Does the king know his own vassals trade in contraband and blood?" />
     <string id="shdw_q2_dlg_lord_pay_q" text="Hush money? If you expect me to bury high treason, your purse had better match your noble arrogance." />
     <string id="shdw_q2_dlg_lord_lore_c" text="Wars are not won on peasant tithes alone, mercenary! Keeping vassals loyal and armies garrisoned demands rivers of gold. The black market fuels the thrones of Calradia whether fools admit it or not. You stumbled into gears far larger than your petty clan." />
+    <string id="shdw_q2_dlg_lord_sendika_c" text="The king knows what keeps his armies marching! Bribes flow from taverns to castles, lining the scabbards of every captain in the realm." />
     <string id="shdw_q2_dlg_lord_pay_c" text="Twenty thousand denars! Pure imperial silver, enough to hire companies of knights. Hand over that sealed parchment and ride away rich." />
+    <string id="shdw_q2_dlg_lord_moral" text="They say gold washes away blood, but a traitor wrapped in ermine is still a traitor. What makes you think you can buy justice?" />
+    <string id="shdw_q2_dlg_lord_tehdit_2" text="Twenty thousand denars is pocket change for a lord of high treason. I could bleed you dry and still give this parchment to the realm." />
+    <string id="shdw_q2_dlg_lord_ders" text="(Slams his goblet on the table, eyes narrowing) In Calradia, justice is whatever the man with the largest army says it is! A mercenary with a scrap of parchment does not dictate terms to a lord. Either take the twenty thousand denars and leave, or face the wrath of my entire garrison. What is your choice?!" />
     <string id="shdw_q2_dlg7" text="Pay me 20,000 denars, and this matter is buried forever." />
     <string id="shdw_q2_dlg8" text="My honor cannot be bought with coin. Draw your weapon!" />
     <string id="shdw_q2_dlg9" text="I am taking this order straight to the ruler. Justice will be served." />
+    <string id="shdw_q2_dlg_lord_santaj_c" text="(Grins arrogantly and tosses a heavy iron-bound chest at your feet) Smart choice. Gold never lies. Take your silver and never let me see your face in my domain again." />
+    <string id="shdw_q2_dlg_lord_savas_c" text="(Draws his gilded sword, roaring to his guards) Insolent dog! You dare threaten me under my own roof?! Guards, slay this wretch!" />
+    <string id="shdw_q2_dlg_lord_politik_c" text="(His face turns pale with fury) The ruler?! You will never reach the court alive, mercenary! Run to the king if you dare, but you will find Calradia's courts colder than my dungeons!" />
 
     <string id="shdw_q2_dlg_huk_intro" text="Welcome to our court. What urgent matter brings you before the throne?" />
     <string id="shdw_q2_dlg10" text="My liege, one of your lords, {YozlasmisLord_Link}, plotted behind your back and hired assassins to murder me. Here is the sealed proof of his treason!" />
     <string id="shdw_q2_dlg_huk_diplomasi" text="I bring grave news of betrayal threatening the realm's stability, my liege. This royal decree proves {YozlasmisLord_Link} commands cutthroats from the shadows." />
     <string id="shdw_q2_dlg_huk_justice" text="Certain lords believe noble blood places them above the realm's laws. I bring proof of high treason, and I expect Calradian justice to be unyielding." />
+    <string id="shdw_q2_dlg_huk_inceleme" text="(Takes the parchment, inspecting the wax seal with intense scrutiny) Treason against the crown? {YozlasmisLord_Link} has served our house for generations. Yet this crimson seal bears his signet... Tell me, how did this document come into your possession? Can you prove this is not a forged fabrication?" />
+    <string id="shdw_q2_dlg_huk_kanit_pusu" text="I was ambushed by his hired assassins on the high road. Their commander carried this sealed order inside his armor before I defeated them." />
+    <string id="shdw_q2_dlg_huk_kanit_sendika" text="This decree was dispatched to recover an encrypted ledger tying the lord directly to the black-market extortion syndicate." />
+    <string id="shdw_q2_dlg_huk_hukum" text="The evidence is damning. Running illegal extortion syndicates and deploying cutthroats against fellow subjects strikes at the very legitimacy of our crown. Such corruption cannot be tolerated, regardless of bloodline." />
+    <string id="shdw_q2_dlg_huk_talep_adalet" text="Let all Calradia see that no traitor, no matter how highborn, escapes your royal justice." />
+    <string id="shdw_q2_dlg_huk_talep_odul" text="I have risked life and clan to bring this truth to the throne, my liege. I ask only for the honor and standing my loyalty deserves." />
     <string id="shdw_q2_dlg11" text="Accusing a noble is a grave matter, yet the seal is undeniably his. Such treachery shall not go unpunished. You have the realm's gratitude, and you shall be rewarded accordingly." />
 
     <string id="shdw_q2_katiller" text="Hired Assassins" />
