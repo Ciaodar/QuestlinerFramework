@@ -36,15 +36,18 @@
     <string id="da_tek_npc_bilgi" text="{HammadeKaynagi_Link} civarındaki derin taş ocağında gökten düşme bir damar çatladı. Köye sür ve köy büyüğü {KoyMuhtari_Link} ile konuş. Lakin elin kabzanda olsun; {RakipTuccar_Link} adındaki haset bir tüccar ocağın etrafına gözcüler dikti, madeni ele geçirmek için fırsat kolluyor." />
     <string id="da_tek_p2" text="Usta yanlış anlama ama... Savaş beklemeye gelmez. Arkandaki rafta duran şu dövülmüş kılıcı 10.000 altına doğrudan senden satın alabilir miyim?" />
     <string id="da_tek_npc_kestirme" text="Gerçek bir kılıç ustasının sabrından uzaksın evlat. Lakin savaşını altınla vermek istiyorsan, öyle olsun. Al bu kılıcı; alın teriyle hak edilmemiş olsa da ocağımın kanını taşır. Bakalım bundan sonra gelecek olanlara göğüs gerebilecek misin..." />
+    <string id="da_cirak_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="da_muhtar_p_giris" text="Usta demirci {EfsaneviDemirci_Link}'in selamıyla geldim. Taş ocağınızdan çıkarılan Yıldız Demiri filizlerini teslim almaya geldim." />
     <string id="da_muhtar_dlg_1" text="Tanrılar yardımcımız olsun! Tam bir felaketin ortasına geldin yiğit! Taş ocağından beş parça som Yıldız Demiri çıkarmıştık lakin daha bir saat önce {RakipTuccar_Link}'ın altınını yiyen gözü dönmüş paralı haydutlar köy çıkışında arabamızı bastı! Madenlerin hepsine el koydular, peşlerine düşecek olanı boğazlamak için hemen köy sınırında pusuya yattılar!" />
     <string id="da_muhtar_p_savas" text="Yanlış kervana musallat olmuşlar. O çakalların peşine düşüp Yıldız Demirlerimizi kanla geri alacağım." />
     <string id="da_muhtar_dlg_savas" text="Kılıcın keskin, bileğin bükülmez olsun! Çok uzaklaşmış olamazlar, madenlerimizle birlikte kaçmadan önce sür atını üstlerine!" />
     <string id="da_muhtar_p_satinal" text="Köy ambarında sakladığınız bir yedek maden yok mudur? Madencilerinizin zararını karşılamak için hemen şimdi 2.000 altın ödemeye hazırım." />
     <string id="da_muhtar_dlg_satinal" text="Vardır yiğit, usta başı ne olur ne olmaz diye ocak mahzeninde beş parça kaba külçe saklamıştı. İki bin altınla bu köy kışı çıkarır, ocağını tüttürür. Al madenleri, haydutlar kokusunu almadan ustanın ocağına yetiştir!" />
+    <string id="da_cirak_muhtar_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="da_teslim_p_giris" text="Usta, emrettiğin gibi beş parça Yıldız Demirini sağ salim getirdim." />
     <string id="da_teslim_ready" text="Kadimlerin örsü hakkı için! Şu karanlık, yıldız parıltısına bak... Bu hakiki göktaşından başkası değil! Tüccarın çakallarına boyun eğmeyip hakkın olanı almışsın." />
     <string id="da_teslim_p1" text="Al madenini usta. Körüklerini canlandır da yeminimizi çeliğe nakşedelim." />
+    <string id="da_cirak_teslim_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
 
     <!-- Görev 2: Kalfa Sınavı (QLF_DemirAhit_Kalfa) -->
     <string id="demirahit2_title" text="Kalfa Sınavı" />
@@ -59,6 +62,7 @@
     <string id="da_kalfa_dlg_1" text="Örsün üzerine kara bir gölge düştü dostum. {RakipTuccar_Link}, atölyemi yerle bir etmek için haydutlar ve kundakçılar toplamış. Ateş sönerse kılıç asla tamamlanamaz. Bu şerri nasıl defedeceğiz?" />
     <string id="da_kalfa_p1" text="Köyde kalıp nöbet tutacağım, tek bir kundakçı dahi ocağın yakınına nefes alamayacak." />
     <string id="da_kalfa_p2" text="Savunmada kalmak zaaf doğurur. Doğrudan {RakipTuccar_Link} karşısına dikilip meşaleler yakılmadan hesabını göreceğim." />
+    <string id="da_kalfa_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="da_kalfa_t_p_giris" text="Şu demirci ocağına yolladığın kundakçılar meselesini konuşacağız, tüccar." />
     <string id="da_kalfa_dlg_2" text="Vay, klanın başbuğu kükrüyor demek! Bu diyarlarda ticaret altını olanın hakkıdır, geçmiş krallıkların rüyasını gören paslı morukların değil. Ne cüretle defterimin başına dikildin?" />
     <string id="da_kalfa_t_p1" text="Sana 2.000 altın teklif ediyorum. Adamlarını geri çek de bu dava kârlı bir şekilde kapansın." />
@@ -68,6 +72,7 @@
     <string id="da_kalfa_t_p3" text="Senin gibi kalleş akbabalara söz kâr etmez. Çağır adamlarını; bu topraklarda kimin hükmünün geçeceğine çelik karar versin!" />
     <string id="da_kalfa_dlg_4" text="Hadsiz küstah! Muhafızlar, paralayın şunu ve leşini hendeğe atın!" />
     <string id="da_koruma" text="Tüccar Korumaları" />
+    <string id="da_kalfa_takip_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
 
     <!-- Görev 3: Ustanın Yükü (QLF_DemirAhit_Usta) -->
     <string id="demirahit3_title" text="Ustanın Yükü" />
@@ -78,6 +83,7 @@
     <string id="da_haber_p_giris" text="Ulağın atını çatlatırcasına sürdü usta, nedir seni bu kadar kederlendiren?" />
     <string id="da_haber_dlg_1" text="Kardeşim, {Kalan_Link}... Dağ geçitlerinden su verme tuzları getirirken esir alınıp {DusmanKale_Link} zindanının dibine atılmış. Kılıcın ağzına o kırılmaz su verme sırrını yalnızca onun elleri bilir. O olmadan bütün emeğimiz çöpe döner. Yalvarırım onu ocağımıza geri getir!" />
     <string id="da_haber_p1" text="Ahit kardeşliğimizin hiçbir ustası zindanda çürüyemez. {DusmanKale_Link} zindanına sızıp kardeşini burnu bile kanamadan geri getireceğim." />
+    <string id="da_usta_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="da_kalan_p_giris" text="Sessiz ol usta, sesini alçalt. Ağabeyinin yeminiyle zincirlerini kırmaya geldim." />
     <string id="da_kalan_dlg_1" text="Ağabeyim mi yolladı seni? Şükürler olsun ata tanrılarına! Lakin demir parmaklıklar kapalı ve muhafızlar her çanda avluda devriye geziyor. Buradan nasıl sağ çıkacağız?" />
     <string id="da_kalan_p1" text="Adımlarımı takip et ve yalnızca meşaleler döndüğünde ilerle. Bütün devriye nöbetlerini ezberledim. [Serserilik]" />
@@ -85,6 +91,7 @@
     <string id="da_kalan_p2" text="Buradan sessizce sıyrılamayız. Kılıcını çek ya da bir meşale kap; kapıya kadar kanla yolumuzu açacağız!" />
     <string id="da_kalan_dlg_3" text="Kalede alarmlar çalıyor! Muhafızlar bizi fark etti! Dayan!" />
     <string id="da_muhafiz" text="Garnizon Muhafızları" />
+    <string id="da_usta_kalan_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
 
     <!-- Görev 4: Mirasın Dövülüşü (QLF_DemirAhit_Miras) -->
     <string id="demirahit4_title" text="Mirasın Dövülüşü" />
@@ -96,14 +103,17 @@
     <string id="da_miras_p_giris" text="Körükler bugün ejderha gibi kükrüyor usta, çelik son katlanışa hazır mı?" />
     <string id="da_miras_dlg_1" text="Hoş geldin soylu savaşçı. Kardeşim {Kalan_Link} ile birlikte haftalardır gökten inen bu çeliği örs üzerinde bin kere katladık. Çelik kusursuz ve dümdüz. Lakin kılıca ebedi bir ruh vermek için 'Kalbin Ateşi'ni tutuşturmalıyız. Bu kadim ritüel için 50.000 altın değerinde nadir pota harçları ve simyevi yağlar gerekiyor." />
     <string id="da_miras_p1" text="Soyumun kaderi için hiçbir bedel çok değildir. 50.000 altını toplayıp döneceğim." />
+    <string id="da_miras_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="da_miras_p_giris_2" text="Ocağı harlayın ustalar, gereken adakla geri döndüm." />
     <string id="da_miras_dlg_2" text="Kalbin Ateşi'ni tutuşturacak altını getirdin mi?" />
     <string id="da_miras_p2" text="İşte 50.000 altın. Alevi harlayın ve kılıca suyunu verin!" />
     <string id="da_miras_p3" text="Henüz meblağın tamamını toparlayamadım. Külleri sıcak tutun, tez zamanda döneceğim." />
+    <string id="da_miras_kaynak_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="da_miras_dlg_3" text="Alevler mavi ve ak renkte şahlandı! Bize birkaç saat verin... (Çift çekicin ritmik gök gürültüsü vadiyi inletirken akkor kıvılcımlar ocağın tabanına dökülür) Tamamlandı! Ahit Kılıcı'na bir bak! Benimle bir kez daha konuş savaşçı, zira geriye kaderi belirleyecek son bir seçim kaldı." />
     <string id="da_miras_p_giris_3" text="Kılıç nefes kesiyor usta. Bana vereceğin son öğüt nedir?" />
     <string id="da_miras_dlg_4" text="Ahit Kılıcı... Bu ellerin şimdiye kadar biçimlendirdiği en kusursuz, en ölümcül çelik. İmparatorlukların kaderini değiştirecek bir kudret. Bu şanı kendi klanının ebedi soyuna mı bağlayacaksın, yoksa hizmet ettiğin hükümdara en yüce sadakat nişanesi olarak mı sunacaksın?" />
     <string id="da_miras_p4" text="Bu kılıç klanımın kanı ve teriyle yoğruldu. Soyumun ebedi yadigarı ve ardıllarımın zafer sancağı olarak kalacaktır!" />
     <string id="da_miras_p5" text="Bu eşsiz kılıcı hükümdarıma sunacağım. Kralımızın elinde bu kılıç klanımızı tahtın sağ koluna yükseltecektir!" />
+    <string id="da_miras_karar_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
   </strings>
 </base>

@@ -36,15 +36,18 @@
     <string id="da_tek_npc_bilgi" text="A celestial deposit was uncovered in the deep quarry near {HammadeKaynagi_Link}. Ride to the village and speak with the elder {KoyMuhtari_Link}. But keep your hand on your hilt, for a jealous merchant named {RakipTuccar_Link} has placed spies around my workshop and covets the vein." />
     <string id="da_tek_p2" text="Master, don't misunderstand... War waits for no smith. Is that finished blade upon your rack for sale? Can I purchase it here and now for 10,000 gold?" />
     <string id="da_tek_npc_kestirme" text="You lack the patience of a true swordsman, child. Yet if coin is how you wage war, so be it. Take the blade; it carries the blood of my forge, even if bought rather than earned. We shall see if you are worthy of what comes next..." />
+    <string id="da_cirak_ertele" text="I cannot deal with this right now. We will speak later." />
     <string id="da_muhtar_p_giris" text="I am here on behalf of {EfsaneviDemirci_Link}. I have come to collect the Star Iron ore from your quarry." />
     <string id="da_muhtar_dlg_1" text="Gods deliver us! You arrive in the shadow of disaster, warrior! We mined five hefty chunks of Star Iron, but just an hour ago, bloodthirsty sellswords bearing the mark of {RakipTuccar_Link} raided our cart just beyond the village ditch! They seized all the ore and are lurking outside our borders, waiting to slay anyone who pursues them!" />
     <string id="da_muhtar_p_savas" text="They picked the wrong quarry to plunder. I will hunt down these dogs and take back our Star Iron in blood." />
     <string id="da_muhtar_dlg_savas" text="May the heavens strengthen your arm! They cannot have gone far, so ride out and strike before they escape with our ore!" />
     <string id="da_muhtar_p_satinal" text="Do you have any reserve ore kept in your cellars? I will pay 2,000 gold right now to compensate your miners." />
     <string id="da_muhtar_dlg_satinal" text="Aye, our foreman held five rough ingots in the locked furnace store for emergencies. For two thousand gold, our village can rebuild. Here, take the ore to the smith before more brigands smell it!" />
+    <string id="da_cirak_muhtar_ertele" text="I cannot deal with this right now. We will speak later." />
     <string id="da_teslim_p_giris" text="Master smith, I hold the five chunks of Star Iron you commanded me to fetch." />
     <string id="da_teslim_ready" text="By the anvil of the ancients! That dark, starlit sheen... It is genuine fallen star-metal! You survived the merchant's cutthroats and claimed what is rightfully yours." />
     <string id="da_teslim_p1" text="Take the ore, master. Kindle your coals and let us forge our oath in steel." />
+    <string id="da_cirak_teslim_ertele" text="I cannot deal with this right now. We will speak later." />
 
     <!-- Quest 2: Journeyman's Trial (QLF_DemirAhit_Kalfa) -->
     <string id="demirahit2_title" text="Journeyman's Trial" />
@@ -59,6 +62,7 @@
     <string id="da_kalfa_dlg_1" text="A shadow hangs over the anvil, my friend. {RakipTuccar_Link} has gathered brigands and cutthroats to burn my workshop to the ground. If the hearth turns cold, the great blade shall never be finished. How shall we meet this malice?" />
     <string id="da_kalfa_p1" text="I shall post guards and keep watch over your workshop. No arsonist shall breathe within our perimeter." />
     <string id="da_kalfa_p2" text="Defense invites hesitation. I shall hunt down {RakipTuccar_Link} directly and break his will before the torches are lit." />
+    <string id="da_kalfa_ertele" text="I cannot deal with this right now. We will speak later." />
     <string id="da_kalfa_t_p_giris" text="We must settle the matter of your arsonists and the blacksmith's forge, merchant." />
     <string id="da_kalfa_dlg_2" text="Ah, the clan warlord barks! Commerce in this district belongs to those with coin, not ancient fossil smiths dreaming of bygone kingdoms. What brings you to my ledger?" />
     <string id="da_kalfa_t_p1" text="I offer you 2,000 gold. Call off your arsonists and let this feud end in profit." />
@@ -68,6 +72,7 @@
     <string id="da_kalfa_t_p3" text="Words are wasted on treacherous vultures like you. Call your mercenaries, and let steel decide who governs this land!" />
     <string id="da_kalfa_dlg_4" text="Insolent dog! Guards, seize this meddler and toss their corpse into the gutters!" />
     <string id="da_koruma" text="Merchant Guards" />
+    <string id="da_kalfa_takip_ertele" text="I cannot deal with this right now. We will speak later." />
 
     <!-- Quest 3: Master's Burden (QLF_DemirAhit_Usta) -->
     <string id="demirahit3_title" text="Master's Burden" />
@@ -78,6 +83,7 @@
     <string id="da_haber_p_giris" text="Your messenger rode his horse near to death, master. What grief has fallen upon you?" />
     <string id="da_haber_dlg_1" text="My brother, {Kalan_Link}... While traveling the passes with quenching fluxes, he was captured and thrown into the dungeon pit at {DusmanKale_Link}. His hands alone possess the secret temper to bind the blade's edge. Without him, our labor turns to dust. I beg of you, bring him back to the forge!" />
     <string id="da_haber_p1" text="No cage shall keep a craftsman of our covenant. I will breach {DusmanKale_Link} and return your brother unharmed." />
+    <string id="da_usta_ertele" text="I cannot deal with this right now. We will speak later." />
     <string id="da_kalan_p_giris" text="Quiet, smith. Keep your voice low. I come under oath from your brother to cut your chains." />
     <string id="da_kalan_dlg_1" text="My brother sent you? Praise the ancestral heavens! But the portcullis is barred and watchmen patrol the courtyard every bell. How can we break through the garrison?" />
     <string id="da_kalan_p1" text="Follow in my footsteps and step only when the torches shift. I have mapped every guard rotation. [Roguery]" />
@@ -85,6 +91,7 @@
     <string id="da_kalan_p2" text="There is no slipping past them quietly. Ready your fists or seize a torch; we carve our way to the gate!" />
     <string id="da_kalan_dlg_3" text="Alarms in the keep! The garrison has spotted us! Stand fast!" />
     <string id="da_muhafiz" text="Garrison Guards" />
+    <string id="da_usta_kalan_ertele" text="I cannot deal with this right now. We will speak later." />
 
     <!-- Quest 4: Forging the Legacy (QLF_DemirAhit_Miras) -->
     <string id="demirahit4_title" text="Forging the Legacy" />
@@ -96,14 +103,17 @@
     <string id="da_miras_p_giris" text="The bellows roar like dragons today, master. Is the steel ready for the final fold?" />
     <string id="da_miras_dlg_1" text="Welcome, noble warlord. For weeks my brother {Kalan_Link} and I have folded the celestial steel a thousand times over the anvil. The blade is straight and flawless. But to breathe an eternal soul into the metal, we must ignite the 'Heart's Fire'. This sacred ritual requires rare alchemical fluxes and royal crucible catalysts worth 50,000 gold." />
     <string id="da_miras_p1" text="No price is too great for the destiny of my bloodline. I shall gather the 50,000 gold and return." />
+    <string id="da_miras_ertele" text="I cannot deal with this right now. We will speak later." />
     <string id="da_miras_p_giris_2" text="Let the crucible be stoked, master. I have returned with our offering." />
     <string id="da_miras_dlg_2" text="Do you bring the gold to kindle the Heart's Fire?" />
     <string id="da_miras_p2" text="Here is the 50,000 gold. Kindle the flame and quench the blade!" />
     <string id="da_miras_p3" text="I have not yet amassed the full sum. Keep the embers banked; I shall return shortly." />
+    <string id="da_miras_kaynak_ertele" text="I cannot deal with this right now. We will speak later." />
     <string id="da_miras_dlg_3" text="The flames leap blue and white! Give us but a few hours... (The rhythmic thunder of twin hammers echoes through the valley as incandescent sparks cascade across the workshop floor) It is finished! Behold the Covenant Blade! Speak to me once more, warrior, for a fateful choice remains." />
     <string id="da_miras_p_giris_3" text="The blade is breathtaking. What final counsel do you give, master?" />
     <string id="da_miras_dlg_4" text="The Covenant Sword... The purest, most lethal steel these hands shall ever fashion. A weapon worthy of reshaping empires. Will you bind its glory to your clan's eternal bloodline, or will you offer it as a gift of supreme fealty to your liege lord?" />
     <string id="da_miras_p4" text="This sword was bought with my clan's blood and sweat. It shall remain our eternal heirloom and the standard beneath which my heirs shall conquer!" />
     <string id="da_miras_p5" text="I shall present this peerless blade to my sovereign king. In the monarch's hands, it shall elevate our clan to the right hand of the throne!" />
+    <string id="da_miras_karar_ertele" text="I cannot deal with this right now. We will speak later." />
   </strings>
 </base>

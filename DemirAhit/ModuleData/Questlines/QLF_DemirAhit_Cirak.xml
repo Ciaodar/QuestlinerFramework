@@ -138,6 +138,10 @@
       </Consequences>
     </DialogNode>
 
+    <DialogNode Type="Player" Id="Demirci_Teklif_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_tek_sorular" OutputToken="close_window">
+      <Text>{=da_cirak_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
     <!-- Dialogue with Village Elder at HammadeKaynagi -->
     <DialogNode Type="Player" Id="Muhtar_Giris" TargetAlias="KoyMuhtari" InputToken="hero_main_options" OutputToken="da_muhtar_1" Priority="200">
       <Text>{=da_muhtar_p_giris}I am here on behalf of {EfsaneviDemirci_Link}. I have come to collect the Star Iron ore from your quarry.</Text>
@@ -183,6 +187,10 @@
       </Consequences>
     </DialogNode>
 
+    <DialogNode Type="Player" Id="Muhtar_Secim_Ertele" TargetAlias="KoyMuhtari" InputToken="da_muhtar_secim" OutputToken="close_window">
+      <Text>{=da_cirak_muhtar_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
     <!-- Stage 3 Delivery Dialogues -->
     <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_Giris" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_teslim_gecis_1" Priority="200">
       <Text>{=da_teslim_p_giris}Master smith, I hold the five chunks of Star Iron you commanded me to fetch.</Text>
@@ -203,6 +211,10 @@
         <Action Type="ChangeStage" ObjectId="Stage3_Basari_Normal" />
         <Action Type="LeaveEncounter" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_Teslim_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_2" OutputToken="close_window">
+      <Text>{=da_cirak_teslim_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
   </CustomDialogs>
 </Questline>

@@ -116,6 +116,10 @@
       </Consequences>
     </DialogNode>
 
+    <DialogNode Type="Player" Id="Kalfa_Uyari_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_kalfa_secimler" OutputToken="close_window">
+      <Text>{=da_kalfa_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
     <!-- Stage 2B Dialog with Rival Merchant -->
     <DialogNode Type="Player" Id="Kalfa_Takip_Giris_P" TargetAlias="RakipTuccar" InputToken="hero_main_options" OutputToken="da_kalfa_t_npc_1" Priority="200">
       <Text>{=da_kalfa_t_p_giris}We must settle the matter of your arsonists and the blacksmith's forge, merchant.</Text>
@@ -173,6 +177,10 @@
          <Action Type="ChangeStage" ObjectId="Stage2B_Savas" />
          <Action Type="LeaveEncounter" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kalfa_Takip_Ertele" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_secimler" OutputToken="close_window">
+      <Text>{=da_kalfa_takip_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
   </CustomDialogs>
 </Questline>

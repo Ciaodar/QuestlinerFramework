@@ -28,7 +28,7 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 - TaleWorlds motorunun dil dosyalarını otomatik tanıması için `ModuleData/Languages` hiyerarşisi BUTR/Native standartlarına uygun hale getirilmiştir:
   - `ModuleData/Languages/EN/language_data.xml` (İngilizce dil paketi: `std_IronCovenant_en.xml`)
   - `ModuleData/Languages/TR/language_data.xml` (Türkçe dil paketi: `std_IronCovenant_tr.xml`)
-- Her iki dil dosyasında tam 90 adet string ID birebir örtüşmekte, Kalradya evrenine uygun zengin, edebi ve sürükleyici bir ortaçağ üslubu kullanılmaktadır.
+- Her iki dil dosyasında tam 100 adet string ID birebir örtüşmekte, Kalradya evrenine uygun zengin, edebi ve sürükleyici bir ortaçağ üslubu kullanılmaktadır.
 
 ### C. Motor Desteği: Devre Dışı Diyalog İpuçları (ShowWhenDisabled & DisabledHint)
 - C# motorunun sunduğu `ShowWhenDisabled="true"` ve `DisabledHint="{=hint_id}Text"` özelliği tüm görevlerdeki kritik seçeneklere uygulanmıştır:
@@ -38,6 +38,10 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
   - Serserilik Becerisi Kontrolleri (`{=da_hint_roguery_50}`, `{=da_hint_roguery_80}`)
   - 50.000 Altınlık Ritüel Ateşi (`{=da_hint_heart_gold}50.000 Altın Gerekiyor`)
   - Krala Kılıç Sunma Şartı (`{=da_hint_vassal_req}Bir Krallığa Bağlı Vasal Olmalısınız`)
+
+### D. Oyuncu Özgürlüğü: Erteleme Seçenekleri (close_window)
+- Tüm görevlerde teklif, başlangıç ve yol ayrımı diyaloglarına `_Ertele` seçenekleri (`OutputToken="close_window"`) eklenmiştir.
+- Oyuncuya zorla görev başlatma veya hazırlıksız aşama geçişi yaptırılmaz; diyalog penceresi kapanır ve görev durumu bozulmadan sonraki etkileşimde kaldığı yerden devam eder.
 
 ---
 

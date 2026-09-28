@@ -86,6 +86,10 @@
       </Consequences>
     </DialogNode>
 
+    <DialogNode Type="Player" Id="Usta_Haber_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_haber_secimler" OutputToken="close_window">
+      <Text>{=da_usta_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
     <!-- Sneaking Dialog with Kalan in Dungeon -->
     <DialogNode Type="Player" Id="Kalan_Sizma_Giris_P" TargetAlias="Kalan" InputToken="hero_main_options" OutputToken="da_kalan_npc_1" Priority="200">
       <Text>{=da_kalan_p_giris}Quiet, smith. Keep your voice low. I come under oath from your brother to cut your chains.</Text>
@@ -128,6 +132,10 @@
          <Action Type="ChangeStage" ObjectId="Stage2B_Savunma" />
          <Action Type="LeaveEncounter" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kalan_Sizma_Ertele" TargetAlias="Kalan" InputToken="da_kalan_secimler" OutputToken="close_window">
+      <Text>{=da_usta_kalan_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
   </CustomDialogs>
 </Questline>

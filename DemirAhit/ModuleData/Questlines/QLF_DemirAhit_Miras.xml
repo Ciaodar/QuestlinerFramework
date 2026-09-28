@@ -90,6 +90,10 @@
       </Consequences>
     </DialogNode>
 
+    <DialogNode Type="Player" Id="Miras_Kabul_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_miras_secimler" OutputToken="close_window">
+      <Text>{=da_miras_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
     <!-- Stage 2: Delivering Gold -->
     <DialogNode Type="Player" Id="Miras_Kaynak_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_miras_npc_2" Priority="200">
       <Text>{=da_miras_p_giris_2}Let the crucible be stoked, master. I have returned with our offering.</Text>
@@ -118,6 +122,10 @@
       <Consequences>
         <Action Type="LeaveEncounter" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Kaynak_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_miras_kaynak_secimler" OutputToken="close_window">
+      <Text>{=da_miras_kaynak_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Miras_Kaynak_Bitis" TargetAlias="EfsaneviDemirci" InputToken="da_miras_npc_3" OutputToken="close_window">
@@ -161,6 +169,10 @@
         <Action Type="ChangeStage" ObjectId="Stage4_Kral" />
         <Action Type="LeaveEncounter" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Karar_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_miras_karar_secimler" OutputToken="close_window">
+      <Text>{=da_miras_karar_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
   </CustomDialogs>
 </Questline>
