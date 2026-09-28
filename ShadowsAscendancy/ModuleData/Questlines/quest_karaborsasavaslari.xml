@@ -65,7 +65,7 @@
   </Stages>
 
   <CustomDialogs>
-    <!-- Aşama 2: Komutan Sorgusu -->
+    <!-- Aşama 2: Komutan Sorgusu (KatilKomutan) -->
     <DialogNode Type="Npc" Id="Kom_Giris" TargetAlias="KatilKomutan" InputToken="start" OutputToken="ql_shdw_kom_sorgu" Priority="200">
       <Text>{=shdw_q2_dlg_kom_intro}Spare me! Put away your weapon, I yield... Ask whatever you want, just don't kill me!</Text>
       <Conditions>
@@ -73,14 +73,27 @@
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kom_Sorgu" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_sorgu" OutputToken="ql_shdw_kom_1">
-      <Text>{=shdw_q2_dlg1}Who sent you? Speak, or I'll take your head!</Text>
+    <!-- Tur 2: Oyuncu Seçenekleri -->
+    <DialogNode Type="Player" Id="Kom_Tehdit" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_sorgu" OutputToken="ql_shdw_kom_1">
+      <Text>{=shdw_q2_dlg_kom_tehdit}If you lie to me, this field will be your tomb! Who gave the order? Speak, or I'll take your head!</Text>
     </DialogNode>
 
+    <DialogNode Type="Player" Id="Kom_Sorgu_Kurnaz" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_sorgu" OutputToken="ql_shdw_kom_1">
+      <Text>{=shdw_q2_dlg_kom_kurnaz}Such a well-armed band does not move without a hefty purse. Which nobleman financed this ambush?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kom_Sorgu_Motiv" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_sorgu" OutputToken="ql_shdw_kom_1">
+      <Text>{=shdw_q2_dlg_kom_motiv}Hired cutthroats do not risk royal patrols without a heavy purse. What grudge drove this contract?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kom_Giris_Ertele" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_sorgu" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 3: NPC İtirafları (Dinamik Bayrak Kontrolleri) -->
     <DialogNode Type="Npc" Id="Kom_Cevap_Kanun" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_1" OutputToken="ql_shdw_kom_2">
       <Text>{=shdw_q2_dlg2}Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you dead because you crushed the gang and ruined his income in the past. If you want proof, his sealed order is inside my armor.</Text>
       <Conditions>
-        <!-- Eğer oyuncu mafyayı çökerterek iyi yol seçmişse -->
         <Condition Type="GlobalFlag" ObjectId="GolgelerinFisiltisi_KanunAdami" Amount="1" />
       </Conditions>
     </DialogNode>
@@ -88,12 +101,10 @@
     <DialogNode Type="Npc" Id="Kom_Cevap_Ihanet" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_1" OutputToken="ql_shdw_kom_2">
       <Text>{=shdw_q2_dlg3}Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you eliminated because he couldn't get his cut in that dark deal you made with the gang. If you want proof, his sealed order is inside my armor.</Text>
       <Conditions>
-        <!-- Eğer oyuncu çeteyle anlaşıp tüccarı öldürdüyse -->
         <Condition Type="GlobalFlag" ObjectId="GolgelerinFisiltisi_KaranlikOrtak" Amount="1" />
       </Conditions>
     </DialogNode>
 
-    <!-- Fallback if no flag matched for some reason -->
     <DialogNode Type="Npc" Id="Kom_Cevap_Fallback" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_1" OutputToken="ql_shdw_kom_2">
       <Text>{=shdw_q2_dlg2_fallback}Spare my life! The order was given by {YozlasmisLord_Link}. He wanted you eliminated because you stood in the way of his black market interests. The sealed order is inside my armor.</Text>
       <Conditions>
@@ -102,7 +113,12 @@
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kom_Sonuc" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_2" OutputToken="close_window">
+    <!-- Tur 4: Oyuncu Derinlemesine Soruşturma & İnfaz/Kovma Seçenekleri -->
+    <DialogNode Type="Player" Id="Kom_Sorgu_Lore" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_2" OutputToken="ql_shdw_kom_lore">
+      <Text>{=shdw_q2_dlg_kom_lore}What exactly does this decree order you to do? Who else among the court nobility is tied to this blood contract?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kom_Sonuc_Direct" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_2" OutputToken="close_window">
       <Text>{=shdw_q2_dlg4}Get out of here! Give my regards to your lord, tell him I am coming for him.</Text>
       <Consequences>
         <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
@@ -112,9 +128,44 @@
       </Consequences>
     </DialogNode>
 
-    <!-- Aşama 3: Lord ile Yüzleşme -->
+    <DialogNode Type="Player" Id="Kom_Sonuc_Kurnaz" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_2" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_kom_al}Give me the sealed order and crawl back to your hole. If I ever lay eyes on you again, you will lose more than your pride.</Text>
+      <Consequences>
+        <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
+        <Action Type="DestroyParty" TargetAlias="KatilKomutan" />
+        <Action Type="LeaveEncounter" />
+        <Action Type="ChangeStage" ObjectId="Stage3_Intikam" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kom_Secim_Ertele" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_2" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 5: Komutanın Mührün Ayrıntılarını Açıklaması -->
+    <DialogNode Type="Npc" Id="Kom_Lore_Cevap" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_lore" OutputToken="ql_shdw_kom_karar">
+      <Text>{=shdw_q2_dlg_kom_lore_c}The decree explicitly commands us to feed your body to the vultures and reclaim the black-market ledgers! The crimson seal belongs to his lordship's signet ring. It is undeniable proof of treason!</Text>
+    </DialogNode>
+
+    <!-- Tur 6: Soruşturma Sonrası Nihai Ayrılış -->
+    <DialogNode Type="Player" Id="Kom_Karar_Sonuc" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_karar" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_kom_final}I have the proof. Now crawl back to your hole and tell your master that justice is riding toward his keep.</Text>
+      <Consequences>
+        <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
+        <Action Type="DestroyParty" TargetAlias="KatilKomutan" />
+        <Action Type="LeaveEncounter" />
+        <Action Type="ChangeStage" ObjectId="Stage3_Intikam" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kom_Karar_Ertele" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_karar" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Aşama 3: Lord ile Yüzleşme (YozlasmisLord - 8 Adımlı Asilzade Çatışması) -->
+    <!-- Tur 1: Lordun Kibirli Girişi -->
     <DialogNode Type="Npc" Id="Lord_Giris" TargetAlias="YozlasmisLord" InputToken="start" OutputToken="ql_shdw_lord_yuzlesme" Priority="200">
-      <Text>{=shdw_q2_dlg_lord_intro}You... So you are still breathing? What insolence brings you before me?</Text>
+      <Text>{=shdw_q2_lord_turn1}(Takes a sip from his silver goblet and scoffs with aristocratic arrogance) You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Intikam" />
       </Conditions>
@@ -123,15 +174,52 @@
       </Consequences>
     </DialogNode>
 
+    <!-- Tur 2: Oyuncu Karşılığı (Tehditkar, Yüzleşme, Alaycı) -->
+    <DialogNode Type="Player" Id="Lord_Tehdit" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_yuzlesme" OutputToken="ql_shdw_lord_1">
+      <Text>{=shdw_q2_dlg_lord_tehdit}If you lie to me, this castle will be your tomb! I slaughtered the assassins you sent, and I hold your sealed treason in my grasp!</Text>
+    </DialogNode>
+
     <DialogNode Type="Player" Id="Lord_Yuzlesme" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_yuzlesme" OutputToken="ql_shdw_lord_1">
       <Text>{=shdw_q2_dlg5}I slaughtered the dogs you sent. I hold your sealed order. If I reveal this to the realm, your honor is forfeit!</Text>
     </DialogNode>
 
+    <DialogNode Type="Player" Id="Lord_Kurnaz" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_yuzlesme" OutputToken="ql_shdw_lord_1">
+      <Text>{=shdw_q2_dlg_lord_kurnaz}Did you honestly believe a handful of gutter cutthroats could slay me, my lord? Look closely at this wax seal.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Lord_Giris_Ertele" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_yuzlesme" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 3: Lordun Yanıtı (Kibir ve Rüşvet Teklifi) -->
     <DialogNode Type="Npc" Id="Lord_Cevap1" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_1" OutputToken="ql_shdw_lord_2">
       <Text>{=shdw_q2_dlg6}(Laughs) I am a noble, and you are merely a mercenary for hire. Who will the king believe, me or you? Still, I care little for headaches. What is your price?</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Lord_Karar_Santaj" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
+    <!-- Tur 4: Oyuncu Soruşturması & Pazarlık -->
+    <DialogNode Type="Player" Id="Lord_Sorgu_Motiv" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="ql_shdw_lord_lore1">
+      <Text>{=shdw_q2_dlg_lord_motiv}Why does a highborn lord of the realm stoop to funding cutthroats and dirty street syndicates? Are your fiefs not enough for your greed?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Lord_Sorgu_Pazarlik" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="ql_shdw_lord_pay1">
+      <Text>{=shdw_q2_dlg_lord_pay_q}Hush money? If you expect me to bury high treason, your purse had better match your noble arrogance.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Lord_Ertele_2" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 5: Lord Calradia Entrikalarını Açıklar & Fiyatı Belirler -->
+    <DialogNode Type="Npc" Id="Lord_Lore1_Cevap" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_lore1" OutputToken="ql_shdw_lord_karar">
+      <Text>{=shdw_q2_dlg_lord_lore_c}Wars are not won on peasant tithes alone, mercenary! Keeping vassals loyal and armies garrisoned demands rivers of gold. The black market fuels the thrones of Calradia whether fools admit it or not. You stumbled into gears far larger than your petty clan.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Lord_Pay1_Cevap" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_pay1" OutputToken="ql_shdw_lord_karar">
+      <Text>{=shdw_q2_dlg_lord_pay_c}Twenty thousand denars! Pure imperial silver, enough to hire companies of knights. Hand over that sealed parchment and ride away rich.</Text>
+    </DialogNode>
+
+    <!-- Tur 6 & 7: Nihai Kararlar (Şantaj / Savaş / Politika / Erteleme) -->
+    <DialogNode Type="Player" Id="Lord_Karar_Santaj" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_karar" OutputToken="close_window">
       <Text>{=shdw_q2_dlg7}Pay me 20,000 denars, and this matter is buried forever.</Text>
       <Consequences>
         <Action Type="AddGold" Amount="20000" />
@@ -141,7 +229,7 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Lord_Karar_Savas" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Lord_Karar_Savas" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_karar" OutputToken="close_window">
       <Text>{=shdw_q2_dlg8}My honor cannot be bought with coin. Draw your weapon!</Text>
       <Consequences>
         <Action Type="DeclareWar" TargetAlias="YozlasmisLord" />
@@ -150,7 +238,7 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Lord_Karar_Politik" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Lord_Karar_Politik" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_karar" OutputToken="close_window">
       <Text>{=shdw_q2_dlg9}I am taking this order straight to the ruler. Justice will be served.</Text>
       <Consequences>
         <Action Type="ChangeRelation" TargetAlias="YozlasmisLord" Amount="-50" />
@@ -158,7 +246,11 @@
       </Consequences>
     </DialogNode>
 
-    <!-- Aşama 4: Hükümdar ile Görüşme -->
+    <DialogNode Type="Player" Id="Lord_Karar_Ertele" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_karar" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Aşama 4: Hükümdar ile Görüşme (Hukumdar - Saray Yargılaması) -->
     <DialogNode Type="Npc" Id="Hukumdar_Giris" TargetAlias="Hukumdar" InputToken="start" OutputToken="ql_shdw_huk_kanit" Priority="200">
       <Text>{=shdw_q2_dlg_huk_intro}Welcome to our court. What urgent matter brings you before the throne?</Text>
       <Conditions>
@@ -171,6 +263,18 @@
 
     <DialogNode Type="Player" Id="Hukumdar_Kanit" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_kanit" OutputToken="ql_shdw_huk_1">
       <Text>{=shdw_q2_dlg10}My liege, one of your lords, {YozlasmisLord_Link}, plotted behind your back and hired assassins to murder me. Here is the sealed proof of his treason!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Hukumdar_Diplomasi" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_kanit" OutputToken="ql_shdw_huk_1">
+      <Text>{=shdw_q2_dlg_huk_diplomasi}I bring grave news of betrayal threatening the realm's stability, my liege. This royal decree proves {YozlasmisLord_Link} commands cutthroats from the shadows.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Hukumdar_Adalet" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_kanit" OutputToken="ql_shdw_huk_1">
+      <Text>{=shdw_q2_dlg_huk_justice}Certain lords believe noble blood places them above the realm's laws. I bring proof of high treason, and I expect Calradian justice to be unyielding.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Hukumdar_Ertele" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_kanit" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Hukumdar_Cevap" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_1" OutputToken="close_window">

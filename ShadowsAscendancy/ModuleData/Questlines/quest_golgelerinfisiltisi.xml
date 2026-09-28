@@ -92,7 +92,7 @@
   </Stages>
 
   <CustomDialogs>
-    <!-- Tüccar İlk Görüşme Diyaloğu -->
+    <!-- Tüccar İlk Görüşme Diyaloğu (GorevVeren) -->
     <DialogNode Type="Npc" Id="Tuccar_Giris" TargetAlias="GorevVeren" InputToken="start" OutputToken="ql_shdw_t1" Priority="200">
       <Text>{=shdw_q1_dlg2}My caravans... Someone is attacking them! Bandits are stealing my goods, but this is no ordinary robbery; it's as if they know our routes. Please find them and finish them off.</Text>
       <Conditions>
@@ -103,7 +103,8 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Tuccar_Kabul" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="close_window">
+    <!-- Tüccar Tur 2: Oyuncu Seçenekleri -->
+    <DialogNode Type="Player" Id="Tuccar_Kabul_Hizli" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="close_window">
       <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
       <Consequences>
         <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="Hold" />
@@ -111,11 +112,64 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Tuccar_Red" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg_tuccar_red}I don't have time to chase after bandits right now. Find someone else.</Text>
+    <DialogNode Type="Player" Id="Tuccar_Sorgu_1" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="ql_shdw_t_lore1">
+      <Text>{=shdw_q1_dlg_t_sorgu_guard}Aren't the town guards meant to protect the trade routes? Why are the watch turning a blind eye?</Text>
     </DialogNode>
 
-    <!-- Hedef Kervan Diyaloğu -->
+    <DialogNode Type="Player" Id="Tuccar_Sorgu_2" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="ql_shdw_t_pay">
+      <Text>{=shdw_q1_dlg_t_pay}Merchants always have woes. What is my share in this? Is it worth my blade?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Tuccar_Ertele_1" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tüccar Tur 3: NPC Muhafız Yanıtı -->
+    <DialogNode Type="Npc" Id="Tuccar_Lore1_Cevap" TargetAlias="GorevVeren" InputToken="ql_shdw_t_lore1" OutputToken="ql_shdw_t_lore2">
+      <Text>{=shdw_q1_dlg_t_guard_cevap}The watch commanders receive silver-stuffed pouches each month. Beyond the city gates, Calradia knows only the law of steel. These raiders are not common scum; they strike with military precision.</Text>
+    </DialogNode>
+
+    <!-- Tüccar Tur 4: Oyuncu Derin Soruşturma -->
+    <DialogNode Type="Player" Id="Tuccar_Sorgu_3" TargetAlias="GorevVeren" InputToken="ql_shdw_t_lore2" OutputToken="ql_shdw_t_lore3">
+      <Text>{=shdw_q1_dlg_t_sorgu_cargo}What cargo was the caravan carrying, and where do these cutthroats make their camp?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Tuccar_Sorgu_4" TargetAlias="GorevVeren" InputToken="ql_shdw_t_lore2" OutputToken="ql_shdw_t_lore4">
+      <Text>{=shdw_q1_dlg_t_sorgu_suspect}Do you suspect anyone in particular? A rival merchant guild, or the alley gangs?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Tuccar_Ertele_2" TargetAlias="GorevVeren" InputToken="ql_shdw_t_lore2" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tüccar Tur 5: Gizli Defter & Çete İpuçları -->
+    <DialogNode Type="Npc" Id="Tuccar_Lore3_Cevap" TargetAlias="GorevVeren" InputToken="ql_shdw_t_lore3" OutputToken="ql_shdw_t_karar">
+      <Text>{=shdw_q1_dlg_t_cargo_cevap}Concealed within bolts of imported silk was an encrypted ledger recording all black-market debts and discreet transactions in the city! If that ledger falls into enemy hands, my head is forfeit. The raiders were last sighted holding the pass outside the city.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Tuccar_Lore4_Cevap" TargetAlias="GorevVeren" InputToken="ql_shdw_t_lore4" OutputToken="ql_shdw_t_karar">
+      <Text>{=shdw_q1_dlg_t_suspect_cevap}The back-alley syndicate! Their gang master has been extorting ruinous protection coin from my warehouses. When I refused their latest demands, my caravans began vanishing into thin air.</Text>
+    </DialogNode>
+
+    <!-- Tüccar Pazarlık Yanıtı -->
+    <DialogNode Type="Npc" Id="Tuccar_Pay_Cevap" TargetAlias="GorevVeren" InputToken="ql_shdw_t_pay" OutputToken="ql_shdw_t_karar">
+      <Text>{=shdw_q1_dlg_t_pazarlik_cevap}I pay handsomely for results! Retrieve my ledger and protect my enterprise, and a purse brimming with gold shall be yours.</Text>
+    </DialogNode>
+
+    <!-- Tüccar Tur 6: Nihai Karar -->
+    <DialogNode Type="Player" Id="Tuccar_Kabul_Detayli" TargetAlias="GorevVeren" InputToken="ql_shdw_t_karar" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
+      <Consequences>
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="Hold" />
+        <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Tuccar_Ertele_Karar" TargetAlias="GorevVeren" InputToken="ql_shdw_t_karar" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Hedef Kervan Diyaloğu (HedefKervan) -->
     <DialogNode Type="Npc" Id="Kervan_Giris" TargetAlias="HedefKervan" InputToken="start" OutputToken="ql_shdw_kervan_1" Priority="200">
       <Text>{=shdw_q1_dlg_kervan1}What do you want, stranger? Turn back before things get ugly!</Text>
       <Conditions>
@@ -127,9 +181,38 @@
       <Text>{=shdw_q1_dlg_kervan2}I am here for the stolen goods and the merchant's ledger. Draw your steel!</Text>
     </DialogNode>
 
-    <!-- Çete Lideri Yüzleşme Diyaloğu -->
+    <DialogNode Type="Player" Id="Kervan_Sorgu" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_1" OutputToken="ql_shdw_kervan_2">
+      <Text>{=shdw_q1_dlg_kervan_sorgu}Whose orders are you carrying out? Whose seal is stamped on those contraband crates?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kervan_Tehdit" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_1" OutputToken="ql_shdw_kervan_tehdit">
+      <Text>{=shdw_q1_dlg_kervan_tehdit}If you lie to me, this sand will be your grave. Whose orders are you carrying out?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kervan_Ertele_1" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_1" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Kervan_Cevap_2" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_2" OutputToken="ql_shdw_kervan_fight">
+      <Text>{=shdw_q1_dlg_kervan_sorgu_c}(Laughs) A mercenary dog sent by that coward merchant! That ledger belongs to the masters of the back alleys now. If you want it, bleed for it!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Kervan_Tehdit_Cevap" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_tehdit" OutputToken="ql_shdw_kervan_fight">
+      <Text>{=shdw_q1_dlg_kervan_tehdit_c}(Laughs) Big words for someone outnumbered! You will rot in the dirt before we reveal our masters! Cut them down!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kervan_Savas_Final" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_fight" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_pusu_saldir}Come on then, gang scum! Taste my steel!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kervan_Ertele_2" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_fight" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Çete Lideri Yüzleşme Diyaloğu (KacakciLideri - 8 Adımlı Yeraltı Sohbeti) -->
+    <!-- Tur 1: NPC Açılış (Tehditkar/Fısıltılı Giriş) -->
     <DialogNode Type="Npc" Id="Cete_Giris" TargetAlias="KacakciLideri" InputToken="start" OutputToken="ql_shdw_c1" Priority="200">
-      <Text>{=shdw_q1_dlg_cete_intro}Who do you think you are, barging into my territory? Speak quickly before my men gut you.</Text>
+      <Text>{=shdw_q1_cete_turn1}(Pushes his goblet aside and studies you cold-eyed) Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Kanit" />
       </Conditions>
@@ -138,44 +221,98 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Cete_Sorgu" TargetAlias="KacakciLideri" InputToken="ql_shdw_c1" OutputToken="ql_shdw_c2">
+    <!-- Tur 2: Oyuncu Sorgusu & Tehdidi -->
+    <DialogNode Type="Player" Id="Cete_P_Threat" TargetAlias="KacakciLideri" InputToken="ql_shdw_c1" OutputToken="ql_shdw_c2_threat">
+      <Text>{=shdw_q1_dlg_cete_threat}If you lie to me, this tavern will be your tomb. I butchered your caravan dogs and took this encrypted ledger. Who is behind you?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Cete_P_Sorgu" TargetAlias="KacakciLideri" InputToken="ql_shdw_c1" OutputToken="ql_shdw_c2_calm">
       <Text>{=shdw_q1_dlg4}I found the dogs plundering the caravans and seized this encrypted ledger. You're no common bandit, who is behind this?</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Cete_Aciklama" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2" OutputToken="ql_shdw_c3">
+    <DialogNode Type="Player" Id="Cete_P_Ertele_1" TargetAlias="KacakciLideri" InputToken="ql_shdw_c1" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 3: NPC Gerçeği İtiraf Eder (Defteri Alır) -->
+    <DialogNode Type="Npc" Id="Cete_Aciklama_Threat" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2_threat" OutputToken="ql_shdw_c3">
       <Text>{=shdw_q1_dlg5}(Laughs) You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market.</Text>
       <Consequences>
         <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Cete_Teklif" TargetAlias="KacakciLideri" InputToken="ql_shdw_c3" OutputToken="ql_shdw_c4">
+    <DialogNode Type="Npc" Id="Cete_Aciklama_Calm" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2_calm" OutputToken="ql_shdw_c3">
+      <Text>{=shdw_q1_dlg5}(Laughs) You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market.</Text>
+      <Consequences>
+        <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Tur 4: Oyuncu Şehrin Rüşvet Çarkını & Kazancını Sorgular -->
+    <DialogNode Type="Player" Id="Cete_P_Sorgu_Lore" TargetAlias="KacakciLideri" InputToken="ql_shdw_c3" OutputToken="ql_shdw_c4_lore">
+      <Text>{=shdw_q1_dlg_cete_lore}How do the town guards and nobility overlook this smuggling? How deep does this syndicate run?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Cete_P_Sorgu_Pay" TargetAlias="KacakciLideri" InputToken="ql_shdw_c3" OutputToken="ql_shdw_c4_pay">
+      <Text>{=shdw_q1_dlg_cete_pay}What is my share in this dark business? I do not dirty my hands without substantial coin.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Cete_P_Ertele_2" TargetAlias="KacakciLideri" InputToken="ql_shdw_c3" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 5: NPC Calradia Yeraltı Dünyasını Detaylandırır -->
+    <DialogNode Type="Npc" Id="Cete_Lore_Detay" TargetAlias="KacakciLideri" InputToken="ql_shdw_c4_lore" OutputToken="ql_shdw_c5_teklif">
+      <Text>{=shdw_q1_dlg_cete_lore_c}Nobles feast on untaxed wine while their castellans pocket our silver. The law in Calradia is merely a whip cracked across the backs of the weak. Those with gold make the rules, and the rest obey.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Cete_Pay_Detay" TargetAlias="KacakciLideri" InputToken="ql_shdw_c4_pay" OutputToken="ql_shdw_c5_teklif">
+      <Text>{=shdw_q1_dlg_cete_pay_c}Ten thousand denars from the merchant's vaults. Squeeze him dry and half is yours. Now, are you in or do you wish to test my steel?</Text>
+    </DialogNode>
+
+    <!-- Tur 6: NPC Teklifini Masaya Koyar -->
+    <DialogNode Type="Npc" Id="Cete_Teklif_Sunum" TargetAlias="KacakciLideri" InputToken="ql_shdw_c5_teklif" OutputToken="ql_shdw_c6_karar">
       <Text>{=shdw_q1_dlg6}Instead of causing me so much trouble, let's make a deal. Eliminate that merchant, and I'll give you a cut. The city streets are ours, and you'll profit too.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Cete_Karar_Kanun" TargetAlias="KacakciLideri" InputToken="ql_shdw_c4" OutputToken="ql_shdw_c5_kanun">
+    <!-- Tur 7: Oyuncu Felsefi/Ahlaki Sınır Koyar VEYA Nihai Karar Verir -->
+    <DialogNode Type="Player" Id="Cete_P_Felsefe" TargetAlias="KacakciLideri" InputToken="ql_shdw_c6_karar" OutputToken="ql_shdw_c7_felsefe">
+      <Text>{=shdw_q1_dlg_cete_phil}They say those who seek mercy in the shadows become food for jackals... But what if I refuse to bow to either you or the merchant?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Cete_P_Karar_Kanun" TargetAlias="KacakciLideri" InputToken="ql_shdw_c6_karar" OutputToken="ql_shdw_c_kanun_son">
       <Text>{=shdw_q1_dlg7}You can't escape justice. I will see you hang.</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Cete_Tehdit" TargetAlias="KacakciLideri" InputToken="ql_shdw_c5_kanun" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Cete_P_Karar_Karanlik" TargetAlias="KacakciLideri" InputToken="ql_shdw_c6_karar" OutputToken="ql_shdw_c_karanlik_son">
+      <Text>{=shdw_q1_dlg8}I am a noble, I don't do dirty work like assassinations. But pay me a hefty cut, and I'll force the merchant to pay you your tribute.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Cete_P_Ertele_3" TargetAlias="KacakciLideri" InputToken="ql_shdw_c6_karar" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 8: Çete Lideri Soğukkanlı Ders & Nihai Sonuçlar -->
+    <DialogNode Type="Npc" Id="Cete_Ders_Son" TargetAlias="KacakciLideri" InputToken="ql_shdw_c7_felsefe" OutputToken="ql_shdw_c6_karar">
+      <Text>{=shdw_q1_dlg_cete_phil_c}(Resting his hand on his pommel) Then the unwritten laws of these alleys shall crush you beneath our boots, stranger. You either ally with gold or bleed under cold steel. Choose now!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Cete_Tehdit" TargetAlias="KacakciLideri" InputToken="ql_shdw_c_kanun_son" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_tehdit}Is that so? The outside of the city can be very dangerous these days. Watch your back on the roads, fool.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage4_PusuBekleyis" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Cete_Karar_Karanlik" TargetAlias="KacakciLideri" InputToken="ql_shdw_c4" OutputToken="ql_shdw_c5_karanlik">
-      <Text>{=shdw_q1_dlg8}I am a noble, I don't do dirty work like assassinations. But pay me a hefty cut, and I'll force the merchant to pay you your tribute.</Text>
-    </DialogNode>
-
-    <DialogNode Type="Npc" Id="Cete_Anlasma" TargetAlias="KacakciLideri" InputToken="ql_shdw_c5_karanlik" OutputToken="close_window">
+    <DialogNode Type="Npc" Id="Cete_Anlasma" TargetAlias="KacakciLideri" InputToken="ql_shdw_c_karanlik_son" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_anlasma}Now you are talking like a true noble. Go convince him to pay up, and the underworld routes will welcome you.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage4_TuccarSantaj" />
       </Consequences>
     </DialogNode>
 
-    <!-- Tüccar Şantaj Diyaloğu -->
+    <!-- Tüccar Şantaj Diyaloğu (Stage 4) -->
     <DialogNode Type="Npc" Id="Tuccar_Santaj_Giris" TargetAlias="GorevVeren" InputToken="start" OutputToken="ql_shdw_t4" Priority="200">
       <Text>{=shdw_q1_dlg_tuccar_santaj_intro}You have returned! Tell me, did you deal with the bandits? Are my goods and caravans safe?</Text>
       <Conditions>
@@ -185,6 +322,14 @@
 
     <DialogNode Type="Player" Id="Tuccar_Santaj_Tehdit" TargetAlias="GorevVeren" InputToken="ql_shdw_t4" OutputToken="ql_shdw_t5">
       <Text>{=shdw_q1_dlg9}Your hands are tied, merchant. Pay the gang their tribute and give me my cut, or I will let them butcher you.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Tuccar_Santaj_Kurnaz" TargetAlias="GorevVeren" InputToken="ql_shdw_t4" OutputToken="ql_shdw_t5">
+      <Text>{=shdw_q1_dlg_t_kurnaz}I read that encrypted ledger, my friend. Your hands are just as dirty as the gang's. Drop the innocent act and pay our share, or watch your empire burn.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Tuccar_Santaj_Ertele" TargetAlias="GorevVeren" InputToken="ql_shdw_t4" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Tuccar_Santaj_Cevap" TargetAlias="GorevVeren" InputToken="ql_shdw_t5" OutputToken="close_window">
@@ -199,7 +344,7 @@
       </Consequences>
     </DialogNode>
 
-    <!-- Haydut Pususu Diyaloğu -->
+    <!-- Haydut Pususu Diyaloğu (Stage 5) -->
     <DialogNode Type="Npc" Id="Pusu_Giris" TargetAlias="CetePartisi" InputToken="start" OutputToken="ql_shdw_pusu1" Priority="200">
       <Text>{=shdw_q1_dlg_pusu2}So you think crossing {KacakciLideri_Link} is a good idea? Prepare to die! We will send you and that talkative merchant to your ancestors!</Text>
       <Conditions>
@@ -209,6 +354,18 @@
 
     <DialogNode Type="Player" Id="Pusu_Savas" TargetAlias="CetePartisi" InputToken="ql_shdw_pusu1" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_pusu_saldir}Come on then, gang scum! Taste my steel!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Pusu_Gozdagi" TargetAlias="CetePartisi" InputToken="ql_shdw_pusu1" OutputToken="ql_shdw_pusu_yanit">
+      <Text>{=shdw_q1_dlg_pusu_gozdagi}If you lie to me or think you can frighten me, this field will be your grave! Flee before I cut you all down!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Pusu_Yanit" TargetAlias="CetePartisi" InputToken="ql_shdw_pusu_yanit" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_pusu_yanit_c}Empty threats from a dead man walking! Kill them all!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Pusu_Ertele" TargetAlias="CetePartisi" InputToken="ql_shdw_pusu1" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
   </CustomDialogs>
