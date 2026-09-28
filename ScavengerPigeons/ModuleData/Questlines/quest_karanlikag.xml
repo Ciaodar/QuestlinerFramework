@@ -57,6 +57,7 @@
       <LogText>{=sp_ka_s_success_log}The Black Ledger (The Black Ledger) is now in your hands! Its blackened pages expose Dost and the Scavenger Pigeons as the architects behind endless border conflicts across Calradia. Armed with the realm's deadliest blackmail, you gained 60,000 denars, 60 renown, and cemented your feared standing in the shadows.</LogText>
       <Conditions />
       <OnEnterActions>
+        <Action Type="GiveItem" ObjectId="black_ledger" Amount="1" />
         <Action Type="GiveItem" ObjectId="raven_bone_cipher" Amount="1" />
         <Action Type="AddGold" Amount="60000" />
         <Action Type="ChangeRenown" Amount="60" />

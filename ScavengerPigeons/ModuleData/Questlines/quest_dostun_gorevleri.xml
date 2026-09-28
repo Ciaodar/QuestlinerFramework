@@ -18,7 +18,7 @@
     <Resolver Alias="YazKuryesi" TargetType="Hero" Filters="Merchant" RequiredSettlementAlias="YazSehir" Selector="Random" />
     <Resolver Alias="SonbaharHaydutlar" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
     <Resolver Alias="KisSehir" TargetType="Settlement" Filters="Town, SameKingdomAs(Dost)" Selector="Furthest" />
-    <Resolver Alias="KisSarayli" TargetType="Hero" Filters="Headman, SameKingdomAs(Dost)" Selector="Nearest" />
+    <Resolver Alias="KisSarayli" TargetType="Hero" Filters="Merchant" RequiredSettlementAlias="KisSehir" Selector="Random" />
     <Resolver Alias="DerinKanatUlagi" TargetType="Hero" Filters="Artisan, !Target(BaharOperatifi)" Selector="Random" />
   </TargetResolvers>
 

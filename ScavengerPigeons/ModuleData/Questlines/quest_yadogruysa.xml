@@ -45,6 +45,12 @@
     <DialogNode Type="Player" Id="B1_Sorgu" TargetAlias="looters" InputToken="ql_prequel_player_1" OutputToken="ql_capulcu_aciklama">
       <Text>{=sp_yd_dlg2}What is this nonsense, how do you know my name, you honorless scum?!</Text>
     </DialogNode>
+    <DialogNode Type="Player" Id="YD_Prequel_P1_Ertele" TargetAlias="looters" InputToken="ql_prequel_player_1" OutputToken="close_window">
+      <Text>{=sp_yd_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
 
     <DialogNode Type="Npc" Id="A2_Aciklama" TargetAlias="looters" InputToken="ql_capulcu_aciklama" OutputToken="ql_prequel_choices">
       <Text>{=sp_yd_dlg3}Listen, this isn't some ordinary looter's foolish deception attempt, alright? Your reputation is in danger. I am a friend of a friend from your motherland. If you value your reputation, go to the barber of the second nearest city and ask 'What is the name of the looter?'. He will provide you with intel.</Text>
@@ -120,6 +126,9 @@
     <DialogNode Type="Player" Id="Berber_B1b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b1" OutputToken="ql_berber_itibar_a2">
       <Text>{=sp_yd_dlg13}The looter told me my reputation is in danger. What does this mean?</Text>
     </DialogNode>
+    <DialogNode Type="Player" Id="Berber_B1_Ertele" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b1" OutputToken="close_window">
+      <Text>{=sp_yd_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
 
     <DialogNode Type="Npc" Id="Berber_A2_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a2" OutputToken="ql_berber_itibar_b2">
       <Text>{=sp_yd_dlg14}Ahh, {PlayerName}... Your suspicious behavior is, of course, very justified. Don't worry. You did very well to believe him and come here. A friend from your motherland contacted us. He mentioned that they started spreading rumors behind your back that could declare you a traitor.</Text>
@@ -131,6 +140,9 @@
     <DialogNode Type="Player" Id="Berber_B2b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b2" OutputToken="ql_berber_itibar_a3">
       <Text>{=sp_yd_dlg16}You? Are you a secret society? What is your problem?</Text>
     </DialogNode>
+    <DialogNode Type="Player" Id="Berber_B2_Ertele" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b2" OutputToken="close_window">
+      <Text>{=sp_yd_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
 
     <DialogNode Type="Npc" Id="Berber_A3_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a3" OutputToken="ql_berber_itibar_b3">
       <Text>{=sp_yd_dlg17}Don't worry friend. We are the Scavenger Pigeons, serving for centuries. We are faster than any messenger, stronger than any servant. Your friend is a brave man who has helped us a lot. He vouched for you and asked us to save you from this conspiracy.</Text>
@@ -138,6 +150,9 @@
 
     <DialogNode Type="Player" Id="Berber_B3_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b3" OutputToken="ql_berber_itibar_a4">
       <Text>{=sp_yd_dlg18}What do you want from me?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Berber_B3_Ertele" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b3" OutputToken="close_window">
+      <Text>{=sp_yd_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Berber_A4_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a4" OutputToken="ql_berber_itibar_b4">

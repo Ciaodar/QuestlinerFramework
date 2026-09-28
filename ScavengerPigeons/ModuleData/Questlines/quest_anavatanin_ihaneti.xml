@@ -101,7 +101,7 @@
 
   <CustomDialogs>
     <!-- 1. KOY BUYUGU DIYALOGLARI (GIRIS) -->
-    <DialogNode Type="Player" Id="KB_Player_Giris" TargetAlias="KoyBuyugu" InputToken="start" OutputToken="ql_kb_npc_giris" Priority="150">
+    <DialogNode Type="Player" Id="KB_Player_Giris" TargetAlias="KoyBuyugu" InputToken="hero_main_options" OutputToken="ql_kb_npc_giris" Priority="150">
       <Text>{=sp_ai_dlg1}I have a special matter to discuss with you.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_KoyBuyugu" />
@@ -109,6 +109,13 @@
       <Consequences>
         <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_Npc_Giris_Map" TargetAlias="KoyBuyugu" InputToken="start" OutputToken="ql_kb_b1" Priority="150">
+      <Text>{=sp_ai_dlg2}Your name must be {PlayerName}, isn't it?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_KoyBuyugu" />
+      </Conditions>
     </DialogNode>
     
     <DialogNode Type="Npc" Id="KB_Giris" TargetAlias="KoyBuyugu" InputToken="ql_kb_npc_giris" OutputToken="ql_kb_b1">
@@ -152,6 +159,9 @@
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Zanaatkar" />
       </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_B3_Ertele" TargetAlias="KoyBuyugu" InputToken="ql_kb_b3" OutputToken="close_window">
+      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <!-- 2. ARTISAN (ZANAATKAR) DIYALOGLARI -->
@@ -243,8 +253,25 @@
         </Conditions>
       </DialogNode>
       
-      <DialogNode Type="Player" Id="Dost_Player_Giris_Red" TargetAlias="Dost" InputToken="start" OutputToken="ql_dost_npc_giris" Priority="150">
+      <DialogNode Type="Player" Id="Dost_Player_Giris_Red" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_npc_giris" Priority="150">
         <Text>{=sp_ai_dlg28}I have a special matter to discuss with you.</Text>
+        <Conditions>
+          <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
+        </Conditions>
+        <Consequences>
+          <Action Type="MakeMet" TargetAlias="Dost" />
+        </Consequences>
+      </DialogNode>
+
+      <DialogNode Type="Npc" Id="Dost_Npc_Giris_Map" TargetAlias="Dost" InputToken="start" OutputToken="ql_dost_b1" Priority="150">
+        <Text>{=sp_ai_dlg29}My friend, you're early. You haven't even entered the service of the Motherland yet.</Text>
+        <Conditions>
+          <Condition Type="IsStageActive" ObjectId="Stage3_SuikastKabul" />
+        </Conditions>
+      </DialogNode>
+
+      <DialogNode Type="Npc" Id="Dost_Npc_Giris_Red_Map" TargetAlias="Dost" InputToken="start" OutputToken="ql_dost_b1" Priority="150">
+        <Text>{=sp_ai_dlg29}My friend, you're early. You haven't even entered the service of the Motherland yet.</Text>
         <Conditions>
           <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
         </Conditions>
@@ -299,8 +326,18 @@
     </DialogNode>
 
     <!-- 4. KOY YASLISI ILE YUZLESME (SUIKAST REDDI SONRASI) -->
-    <DialogNode Type="Player" Id="KB_Ihbar_Giris" TargetAlias="KoyBuyugu" InputToken="start" OutputToken="ql_kb_ihbar_a1" Priority="150">
+    <DialogNode Type="Player" Id="KB_Ihbar_Giris" TargetAlias="KoyBuyugu" InputToken="hero_main_options" OutputToken="ql_kb_ihbar_a1" Priority="150">
       <Text>{=sp_ai_dlg36}We need to talk about {ArtisanTarget_Link}.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
+      </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KB_Ihbar_Npc_Map" TargetAlias="KoyBuyugu" InputToken="start" OutputToken="ql_kb_ihbar_b1" Priority="150">
+      <Text>{=sp_ai_dlg37}Your return is an unexpected development. Is there a problem?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_SuikastRed" />
       </Conditions>
@@ -401,8 +438,18 @@
       <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Dost_Final_A2" TargetAlias="Dost" InputToken="ql_dost_final_a2" OutputToken="ql_dost_final_a3">
+    <DialogNode Type="Npc" Id="Dost_Final_A2" TargetAlias="Dost" InputToken="ql_dost_final_a2" OutputToken="ql_dost_final_step2_choices">
       <Text>{=sp_ai_dlg50}Thank you. The donation I'm about to make will compensate for the trouble I've caused you and help you in your new service.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Dost_Final_P2_Acc" TargetAlias="Dost" InputToken="ql_dost_final_step2_choices" OutputToken="ql_dost_final_a3">
+      <Text>{=sp_ai_dlg50_acc}The Motherland's honor is preserved, and 50,000 denars is a fitting recompense. I accept. (Accept 50,000 Gold)</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Dost_Final_P2_Prag" TargetAlias="Dost" InputToken="ql_dost_final_step2_choices" OutputToken="ql_dost_final_a3">
+      <Text>{=sp_ai_dlg50_prag}Gold seals our pact. May our alliance bring fortune to both of us. (Accept 50,000 Gold)</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Dost_Final_P2_Ertele" TargetAlias="Dost" InputToken="ql_dost_final_step2_choices" OutputToken="close_window">
+      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Dost_Final_A3" TargetAlias="Dost" InputToken="ql_dost_final_a3" OutputToken="hero_main_options">

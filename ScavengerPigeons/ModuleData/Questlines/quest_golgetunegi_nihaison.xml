@@ -15,6 +15,7 @@
     <Resolver Alias="HedefKral" TargetType="Hero" Filters="KingdomLeader, !PlayerClan" Selector="Nearest" />
     <Resolver Alias="GolgeSiginagi" TargetType="Settlement" Filters="Hideout" Selector="Nearest" />
     <Resolver Alias="FanatikMuhafizlar" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" IsOptional="true" />
   </TargetResolvers>
 
   <Stages>
@@ -23,6 +24,7 @@
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="KorUsta" />
+        <Action Type="MakeMet" TargetAlias="Dost" />
       </OnEnterActions>
     </Stage>
 
@@ -69,6 +71,85 @@
   </Stages>
 
   <CustomDialogs>
+    <!-- DOST ILE YUZLESME: GOLGE TUNEGI GIRISI -->
+    <!-- Turn 1 (NPC/Dost): Entry via hero_main_options -->
+    <DialogNode Type="Player" Id="GT3_Dost_Player_Entry" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_gt3_dost_a1" Priority="250">
+      <Text>{=sp_gt3_dost_p_entry}So you have finally come out of the shadows, Dost.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
+        <Condition Type="GlobalFlag" ObjectId="SP_Zanaatkar_Kacti" Amount="1" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="GT3_Dost_A1" TargetAlias="Dost" InputToken="ql_gt3_dost_a1" OutputToken="ql_gt3_dost_step1_choices">
+      <Text>{=sp_gt3_dost_a1}Ever since you refused to cut down that traitor artisan, my eyes have never left you... You will pay for your betrayal with your life!</Text>
+    </DialogNode>
+
+    <!-- Turn 2 (Player choices) -->
+    <DialogNode Type="Player" Id="GT3_Dost_P1_Defiant" TargetAlias="Dost" InputToken="ql_gt3_dost_step1_choices" OutputToken="ql_gt3_dost_a2">
+      <Text>{=sp_gt3_dost_p1_defiant}Your surveillance ends here, Dost. The Motherland was never your puppet stage!</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_Dost_P1_Cunning" TargetAlias="Dost" InputToken="ql_gt3_dost_step1_choices" OutputToken="ql_gt3_dost_a2">
+      <Text>{=sp_gt3_dost_p1_cunning}You speak of betrayal, yet you manufactured wars for profit and called it patriotism.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_Dost_P1_Prag" TargetAlias="Dost" InputToken="ql_gt3_dost_step1_choices" OutputToken="ql_gt3_dost_a2">
+      <Text>{=sp_gt3_dost_p1_prag}Then let us end this. No more games, no more false ravens. Come at me, if you dare.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_Dost_P1_Ertele" TargetAlias="Dost" InputToken="ql_gt3_dost_step1_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 3 (NPC/Dost) -->
+    <DialogNode Type="Npc" Id="GT3_Dost_A2" TargetAlias="Dost" InputToken="ql_gt3_dost_a2" OutputToken="ql_gt3_dost_step2_choices">
+      <Text>{=sp_gt3_dost_a2}Profit? No, you blind fool! ORDER! While kings played their games of crowns, I kept Calradia from tearing itself apart! And you—you threw away everything for the word of a runaway artisan and a pack of shadow fanatics!</Text>
+    </DialogNode>
+
+    <!-- Turn 4 (Player choices) -->
+    <DialogNode Type="Player" Id="GT3_Dost_P2_Accuse" TargetAlias="Dost" InputToken="ql_gt3_dost_step2_choices" OutputToken="ql_gt3_dost_a3">
+      <Text>{=sp_gt3_dost_p2_accuse}The Black Ledger tells a different story. Village massacres under false banners. Grain hoards built on fabricated famines. This is your 'order'.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_Dost_P2_Question" TargetAlias="Dost" InputToken="ql_gt3_dost_step2_choices" OutputToken="ql_gt3_dost_a3">
+      <Text>{=sp_gt3_dost_p2_question}If you truly served the realm, why did you need me to kill your own artisan? What was he going to expose?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_Dost_P2_Ertele" TargetAlias="Dost" InputToken="ql_gt3_dost_step2_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 5 (NPC/Dost) -->
+    <DialogNode Type="Npc" Id="GT3_Dost_A3" TargetAlias="Dost" InputToken="ql_gt3_dost_a3" OutputToken="ql_gt3_dost_step3_choices">
+      <Text>{=sp_gt3_dost_a3}He saw too much! A craftsman playing at philosophy, imagining himself the conscience of the realm. I built this network with blood and sleepless decades—no artisan's sentimentality was going to unravel it! And now you stand in the threshold of my roost, blade in hand, thinking yourself a hero? You are nothing but the last loose thread I must trim.</Text>
+    </DialogNode>
+
+    <!-- Turn 6 (Player choices — both lead to Dost dying) -->
+    <DialogNode Type="Player" Id="GT3_Dost_P3_Fight" TargetAlias="Dost" InputToken="ql_gt3_dost_step3_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_dost_p3_fight}Then trim it, Dost. Or die trying!</Text>
+      <Consequences>
+        <Action Type="KillHero" TargetAlias="Dost" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_Dost_P3_Negotiate" TargetAlias="Dost" InputToken="ql_gt3_dost_step3_choices" OutputToken="ql_gt3_dost_a4">
+      <Text>{=sp_gt3_dost_p3_negotiate}Dost. Stand down. You are outnumbered and your network is exposed. This ends without more bloodshed.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_Dost_P3_Ertele" TargetAlias="Dost" InputToken="ql_gt3_dost_step3_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 7 (NPC/Dost — negotiate path) -->
+    <DialogNode Type="Npc" Id="GT3_Dost_A4" TargetAlias="Dost" InputToken="ql_gt3_dost_a4" OutputToken="ql_gt3_dost_final_choices">
+      <Text>{=sp_gt3_dost_a4}Trial? Ha! I taught those council lords everything they know about surviving a trial. But perhaps... perhaps there is a final move on this board. Forgive me, old friend. Some games have only one ending.</Text>
+    </DialogNode>
+
+    <!-- Turn 8 (Player — negotiate path conclusion) -->
+    <DialogNode Type="Player" Id="GT3_Dost_Final_Kill" TargetAlias="Dost" InputToken="ql_gt3_dost_final_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_dost_p4_final}It is over, Dost. The roost falls with you.</Text>
+      <Consequences>
+        <Action Type="KillHero" TargetAlias="Dost" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_Dost_Final_Ertele" TargetAlias="Dost" InputToken="ql_gt3_dost_final_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
     <!-- KOR USTA ILE YUZLESME: 8 ADIMLI FELSEFI DIALOG VE 3 BUYUK FINAL -->
     <DialogNode Type="Player" Id="GT3_Usta_Player" TargetAlias="KorUsta" InputToken="hero_main_options" OutputToken="ql_gt3_usta_a1" Priority="200">
       <Text>{=sp_gt3_dlg1_p}I have come to face the master of the roost.</Text>

@@ -54,27 +54,81 @@
   </Stages>
 
   <CustomDialogs>
-    <!-- Golge Ulagi ile Bulusma: Cok Adimli & Rol Yapma Secenekleri -->
-    <DialogNode Type="Npc" Id="GT1_Ulak_Giris_Npc" TargetAlias="GolgeUlagi" InputToken="start" OutputToken="ql_gt1_ulak_1" Priority="200">
-      <Text>{=sp_gt1_dlg1}You spared the courier who ordered Dost's execution... The Shadow Roost watched your choice closely.</Text>
-      <Conditions>
-        <Condition Type="IsStageActive" ObjectId="Stage1_UlakBulusma" />
-      </Conditions>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="GT1_Ulak_Giris_Player" TargetAlias="GolgeUlagi" InputToken="hero_main_options" OutputToken="ql_gt1_ulak_1" Priority="200">
+    <!-- Golge Ulagi ile Bulusma: 7-8 Adimli Derin Edebi Sohbet Agaci -->
+    <!-- Giris: Menuden Erisim (Player) -->
+    <DialogNode Type="Player" Id="GT1_Ulak_Giris_Player" TargetAlias="GolgeUlagi" InputToken="hero_main_options" OutputToken="ql_gt1_ulak_a1" Priority="200">
       <Text>{=sp_gt1_dlg1_p}I was guided here by a black pigeon after sparing the inner courier.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_UlakBulusma" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="GT1_Ulak_Branch1" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_1" OutputToken="ql_gt1_ulak_step1_choices">
-      <Text>{=sp_gt1_dlg2}Dost has corrupted the Scavenger Pigeons. He manufactures fake border skirmishes and trades secret dispatches to foreign kingdoms to enrich his cabal. But the Shadow Roost will not admit a novice without proof of cold resolve. A 50-man foreign detachment waits near {GolgeSiginagi_Link} to purchase his latest intelligence. Slay them all. Leave no tongue to tell the tale.</Text>
+    <!-- Giris: Harita/Dogrudan Karsilasma (Npc) -->
+    <DialogNode Type="Npc" Id="GT1_Ulak_Giris_Npc" TargetAlias="GolgeUlagi" InputToken="start" OutputToken="ql_gt1_step1_choices" Priority="200">
+      <Text>{=sp_gt1_dlg1}You spared the courier who ordered Dost's execution... The Shadow Roost watched your choice closely.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_UlakBulusma" />
+      </Conditions>
     </DialogNode>
 
-    <!-- Adım 2: Oyuncu Yanıtı (3 Farklı Rol Yapma Tonu + Erteleme) -->
-    <DialogNode Type="Player" Id="GT1_Ulak_Choice_Resolute" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_step1_choices" OutputToken="close_window">
+    <!-- Menuden girdikten sonraki NPC karsiligi -->
+    <DialogNode Type="Npc" Id="GT1_Ulak_A1" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_a1" OutputToken="ql_gt1_step1_choices">
+      <Text>{=sp_gt1_dlg1}You spared the courier who ordered Dost's execution... The Shadow Roost watched your choice closely.</Text>
+    </DialogNode>
+
+    <!-- Tur 1: Oyuncu Tepkisi / Sorgulama -->
+    <DialogNode Type="Player" Id="GT1_P1_Inq" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step1_choices" OutputToken="ql_gt1_ulak_a2">
+      <Text>{=sp_gt1_dlg_p1_inq}Who are you, and why do you hide in the shadows while Dost parades as the savior of the Motherland?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT1_P1_Skep" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step1_choices" OutputToken="ql_gt1_ulak_a2">
+      <Text>{=sp_gt1_dlg_p1_skep}The courier claimed you seek truth, yet here I find another ring of spies. Why should I trust your words?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT1_P1_Prag" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step1_choices" OutputToken="ql_gt1_ulak_a2">
+      <Text>{=sp_gt1_dlg_p1_prag}I spared him because his documents were genuine. Where does the true power lie in this conspiracy?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT1_P1_Ertele" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step1_choices" OutputToken="close_window">
+      <Text>{=sp_gt1_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 2: Ulak Gölge Tüneği'nin Kökenini Açar -->
+    <DialogNode Type="Npc" Id="GT1_Ulak_A2" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_a2" OutputToken="ql_gt1_step2_choices">
+      <Text>{=sp_gt1_dlg_u_origin}We are the Shadow Roost—the ancient circle that founded the Scavenger Pigeons a century ago. We were born to keep greedy kings from destroying Calradia. But Dost turned our brotherhood into his personal slaughterhouse and profit engine!</Text>
+    </DialogNode>
+
+    <!-- Tur 3: Oyuncu Sahte Savaşları ve Loncanın Sessizliğini Sorgular -->
+    <DialogNode Type="Player" Id="GT1_P2_Wars" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step2_choices" OutputToken="ql_gt1_ulak_a3">
+      <Text>{=sp_gt1_dlg_p2_wars}Manufactured wars... Can a single lord truly manipulate entire kingdoms into mutual slaughter for gold?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT1_P2_Complicity" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step2_choices" OutputToken="ql_gt1_ulak_a3">
+      <Text>{=sp_gt1_dlg_p2_comp}And where was this exalted Roost while Dost traded lives? Were you blind, or simply complicit?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT1_P2_Ertele" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step2_choices" OutputToken="close_window">
+      <Text>{=sp_gt1_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 4: Ulak Dost'un Şebekesini ve İhanetini Açar -->
+    <DialogNode Type="Npc" Id="GT1_Ulak_A3" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_a3" OutputToken="ql_gt1_step3_choices">
+      <Text>{=sp_gt1_dlg_u_mechanics}Dost systematically isolated our cells and poisoned the elders who questioned his blood taxes. He hired deserters to raid frontier villages under enemy banners, forcing kings into panic so they pay fortunes for Pigeon intelligence!</Text>
+    </DialogNode>
+
+    <!-- Tur 5: Oyuncu Görevin Detaylarını ve Tehlikesini Sorgular -->
+    <DialogNode Type="Player" Id="GT1_P3_Task" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step3_choices" OutputToken="ql_gt1_ulak_a4">
+      <Text>{=sp_gt1_dlg_p3_task}The courier spoke of a foreign force. What is their role in Dost's grand design?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT1_P3_Risk" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step3_choices" OutputToken="ql_gt1_ulak_a4">
+      <Text>{=sp_gt1_dlg_p3_risk}Attacking an armed foreign detachment near a mountain hideout could spark an open war with the local garrison.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT1_P3_Ertele" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step3_choices" OutputToken="close_window">
+      <Text>{=sp_gt1_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 6: Ulak 50 Kişilik Yabancı Müfrezenin Tehlikesini Açıklar -->
+    <DialogNode Type="Npc" Id="GT1_Ulak_A4" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_a4" OutputToken="ql_gt1_step4_choices">
+      <Text>{=sp_gt1_dlg_u_test}A 50-man foreign detachment waits near {GolgeSiginagi_Link} to purchase Dost's stolen realm defense blueprints! If that intelligence crosses the frontier, thousands will burn. Slay them all. Let Dost find only cold steel where he expected gold!</Text>
+    </DialogNode>
+
+    <!-- Tur 7: NİHAİ KARAR VE GÖREVİ KABUL -->
+    <DialogNode Type="Player" Id="GT1_Ulak_Choice_Resolute" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step4_choices" OutputToken="close_window">
       <Text>{=sp_gt1_dlg3}Dost's lies end now. Their blood will water the mountain. (Accept Mission)</Text>
       <Consequences>
         <Action Type="SpawnBanditParty" TargetAlias="RakipAjanlar" Amount="50" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="Hold" />
@@ -83,7 +137,7 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="GT1_Ulak_Choice_Pragmatic" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_step1_choices" OutputToken="close_window">
+    <DialogNode Type="Player" Id="GT1_Ulak_Choice_Pragmatic" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step4_choices" OutputToken="close_window">
       <Text>{=sp_gt1_dlg3_prag}Fifty foreign deserters will fall beneath my steel. The Shadow Roost better have gold ready when I return. (Accept Mission)</Text>
       <Consequences>
         <Action Type="SpawnBanditParty" TargetAlias="RakipAjanlar" Amount="50" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="Hold" />
@@ -92,7 +146,7 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="GT1_Ulak_Choice_Inquisitive" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_step1_choices" OutputToken="close_window">
+    <DialogNode Type="Player" Id="GT1_Ulak_Choice_Inquisitive" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step4_choices" OutputToken="close_window">
       <Text>{=sp_gt1_dlg3_inq}If Dost is trading with foreign powers, destroying this detachment will strike at his core. I will ride immediately. (Accept Mission)</Text>
       <Consequences>
         <Action Type="SpawnBanditParty" TargetAlias="RakipAjanlar" Amount="50" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="Hold" />
@@ -101,7 +155,7 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="GT1_Ulak_Choice_Ertele" TargetAlias="GolgeUlagi" InputToken="ql_gt1_ulak_step1_choices" OutputToken="close_window">
+    <DialogNode Type="Player" Id="GT1_Ulak_Choice_Ertele" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step4_choices" OutputToken="close_window">
       <Text>{=sp_gt1_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
   </CustomDialogs>

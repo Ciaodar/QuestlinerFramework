@@ -215,6 +215,20 @@
     <string id="sp_gt3_dlg3" text="You are no mastermind; you are a sewer rat lurking in the dark! No motherland, no honor—only lies and slaughter. This roost burns tonight! (Torch the Roost &amp; Slaughter the Fanatics)" />
     <string id="sp_gt3_dlg4" text="The world does not seek order, Master. The world hungers for fire! I have dispatched the forged decrees to the monarchs of Calradia. At dawn, war horns shall sound! (Unleash Continental War)" />
 
+    <string id="sp_gt3_dost_p_entry" text="So you have finally come out of the shadows, Dost." />
+    <string id="sp_gt3_dost_a1" text="Ever since you refused to cut down that traitor artisan, my eyes have never left you... You will pay for your betrayal with your life!" />
+    <string id="sp_gt3_dost_p1_defiant" text="Your surveillance ends here, Dost. The Motherland was never your puppet stage!" />
+    <string id="sp_gt3_dost_p1_cunning" text="You speak of betrayal, yet you manufactured wars for profit and called it patriotism." />
+    <string id="sp_gt3_dost_p1_prag" text="Then let us end this. No more games, no more false ravens. Come at me, if you dare." />
+    <string id="sp_gt3_dost_a2" text="Profit? No, you blind fool! Order! While kings played their games of crowns, I kept Calradia from tearing itself apart! And you—you threw away everything for the word of a runaway artisan and a pack of shadow fanatics!" />
+    <string id="sp_gt3_dost_p2_accuse" text="The Black Ledger tells a different story. Village massacres under false banners. Grain hoards built on fabricated famines. This is your 'order'." />
+    <string id="sp_gt3_dost_p2_question" text="If you truly served the realm, why did you need me to kill your own artisan? What was he going to expose?" />
+    <string id="sp_gt3_dost_a3" text="He saw too much! A craftsman playing at philosophy, imagining himself the conscience of the realm. I built this network with blood and sleepless decades—no artisan's sentimentality was going to unravel it! And now you stand in the threshold of my roost, blade in hand, thinking yourself a hero? You are nothing but the last loose thread I must trim." />
+    <string id="sp_gt3_dost_p3_fight" text="Then trim it, Dost. Or die trying!" />
+    <string id="sp_gt3_dost_p3_negotiate" text="Dost. Stand down. You are outnumbered and your network is exposed. This ends without more bloodshed." />
+    <string id="sp_gt3_dost_a4" text="Trial? Ha! I taught those council lords everything they know about surviving a trial. But perhaps... perhaps there is a final move on this board. Forgive me, old friend. Some games have only one ending." />
+    <string id="sp_gt3_dost_p4_final" text="It is over, Dost. The roost falls with you." />
+
     <!-- Items -->
     <string id="sp_item_pigeon_secret_dagger" text="Secret Pigeon Dagger" />
     <string id="sp_item_raven_bone_cipher" text="Raven Bone Cipher" />
@@ -368,5 +382,21 @@
     <string id="sp_gt3_dlg_p3_burn" text="Every brick of this roost was laid with innocent blood. It deserves nothing but flame." />
     <string id="sp_gt3_dlg_p3_fire" text="Why settle for ruling shadows when the entire world can be engulfed in glorious fire?" />
     <string id="sp_gt3_dlg_u_final_prompt" text="Speak your verdict, little pigeon. Calradia's crowns tremble in silence for your choice." />
+
+    <!-- Overhaul Revisions & Additions -->
+    <string id="sp_ai_dlg50_acc" text="The Motherland's honor is preserved, and 50,000 denars is a fitting recompense. I accept. (Accept 50,000 Gold)" />
+    <string id="sp_ai_dlg50_prag" text="Gold seals our pact. May our alliance bring fortune to both of us. (Accept 50,000 Gold)" />
+    <string id="sp_hg_dlg_p2_inq" text="So the assassination was never an official order from the realm? I was merely a pawn in his power struggle?" />
+    <string id="sp_hg_dlg_p2_prag" text="I knew something smelled foul. The artisan will pay for trying to deceive me." />
+    <string id="sp_gt1_dlg_p1_inq" text="Who are you, and why do you hide in the shadows while Dost parades as the savior of the Motherland?" />
+    <string id="sp_gt1_dlg_p1_skep" text="The courier claimed you seek truth, yet here I find another ring of spies. Why should I trust your words?" />
+    <string id="sp_gt1_dlg_p1_prag" text="I spared him because his documents were genuine. Where does the true power lie in this conspiracy?" />
+    <string id="sp_gt1_dlg_u_origin" text="We are the Shadow Roost—the ancient circle that founded the Scavenger Pigeons a century ago. We were born to keep greedy kings from destroying Calradia. But Dost turned our brotherhood into his personal slaughterhouse and profit engine!" />
+    <string id="sp_gt1_dlg_p2_wars" text="Manufactured wars... Can a single lord truly manipulate entire kingdoms into mutual slaughter for gold?" />
+    <string id="sp_gt1_dlg_p2_comp" text="And where was this exalted Roost while Dost traded lives? Were you blind, or simply complicit?" />
+    <string id="sp_gt1_dlg_u_mechanics" text="Dost systematically isolated our cells and poisoned the elders who questioned his blood taxes. He hired deserters to raid frontier villages under enemy banners, forcing kings into panic so they pay fortunes for Pigeon intelligence!" />
+    <string id="sp_gt1_dlg_p3_task" text="The courier spoke of a foreign force. What is their role in Dost's grand design?" />
+    <string id="sp_gt1_dlg_p3_risk" text="Attacking an armed foreign detachment near a mountain hideout could spark an open war with the local garrison." />
+    <string id="sp_gt1_dlg_u_test" text="A 50-man foreign detachment waits near {GolgeSiginagi_Link} to purchase Dost's stolen realm defense blueprints! If that intelligence crosses the frontier, thousands will burn. Slay them all. Let Dost find only cold steel where he expected gold!" />
   </strings>
 </base>

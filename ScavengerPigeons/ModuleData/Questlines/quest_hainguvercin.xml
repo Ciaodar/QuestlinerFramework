@@ -2,6 +2,7 @@
 <Questline Id="QLF_HainGuvercin" Title="{=sp_hg_title}Traitor Pigeon" TimeLimitInDays="30">
   <TargetResolvers>
     <Resolver Alias="looters" TargetType="MobileParty" Filters="BanditParty, Faction(looters)" Selector="Random" />
+    <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="Artisan" Selector="Random" IsOptional="true" />
   </TargetResolvers>
 
   <Stages>
@@ -73,6 +74,13 @@
       <Text>{=sp_hg_dlg2}Tell me what you know, or I will put you all to the sword!</Text>
     </DialogNode>
     
+    <DialogNode Type="Player" Id="Esir_Ertele1" TargetAlias="looters" InputToken="ql_esir_a1" OutputToken="close_window">
+      <Text>{=sp_hg_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+    
     <DialogNode Type="Npc" Id="Esir_N2" TargetAlias="looters" InputToken="ql_esir_a2" OutputToken="ql_esir_p2">
       <Text>{=sp_hg_dlg3}We are just field operatives. The artisan tells us who to target. But the real boss will be here soon. Let us bring him to you!</Text>
     </DialogNode>
@@ -116,8 +124,21 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Elebasi_N2" TargetAlias="looters" InputToken="ql_elebasi_a2" OutputToken="ql_elebasi_a3">
+    <DialogNode Type="Npc" Id="Elebasi_N2" TargetAlias="looters" InputToken="ql_elebasi_a2" OutputToken="ql_elebasi_step2_choices">
       <Text>{=sp_hg_dlg8}Kill? Then you are not the traitor among us... The real traitor is that rabid dog {ArtisanTarget_Link} who gave you the order. Your true mission should have been to return to the Motherland and offer your services.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Elebasi_P2_Inq" TargetAlias="looters" InputToken="ql_elebasi_step2_choices" OutputToken="ql_elebasi_a3">
+      <Text>{=sp_hg_dlg_p2_inq}So the assassination was never an official order from the realm? I was merely a pawn in his power struggle?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Elebasi_P2_Prag" TargetAlias="looters" InputToken="ql_elebasi_step2_choices" OutputToken="ql_elebasi_a3">
+      <Text>{=sp_hg_dlg_p2_prag}I knew something smelled foul. The artisan will pay for trying to deceive me.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Elebasi_P2_Ertele" TargetAlias="looters" InputToken="ql_elebasi_step2_choices" OutputToken="close_window">
+      <Text>{=sp_hg_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
     
     <DialogNode Type="Npc" Id="Elebasi_N3" TargetAlias="looters" InputToken="ql_elebasi_a3" OutputToken="close_window">
