@@ -97,52 +97,129 @@
 
   <CustomDialogs>
     <!-- Entry point via Main Hero Options (skips meeting introductions) -->
-    <DialogNode Type="Player" Id="Demirci_Giris" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_tek_secimler" Priority="200">
+    <!-- Turn 1: Player arrives at forge -->
+    <DialogNode Type="Player" Id="Demirci_Giris" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_c1_t1" Priority="200">
       <Text>{=da_giris_p}You sent word for me, master smith?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Davet" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Demirci_Teklif_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_tek_secimler" OutputToken="da_tek_sorular" Priority="200">
-      <Text>{=da_tek_1}Aye, warlord. Your name echoes across every feast hall. I knew your forebears well; I helped forge the ancestral steel that carved your house's seat. It is time you carried a true weapon of your lineage. Yet ordinary iron cannot bear such an oath; I require 5 chunks of genuine Star Iron.</Text>
+    <!-- Turn 2: NPC sets hammer down and speaks of bloodline & Covenant -->
+    <DialogNode Type="Npc" Id="Demirci_Giris_Yanit" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t1" OutputToken="da_c1_t2" Priority="200">
+      <Text>{=da_c1_intro_npc}Welcome, warrior. Hear you the deep breath of the bellows? For generations, this hearth has burned in kinship with your bloodline. I knew your forebears well; these hands shaped the ancient steel that laid your house's seat. Yet centuries have passed, and banners have fallen. It is time you carried a Covenant Sword worthy of your lineage.</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Demirci_Teklif_Bilgi" TargetAlias="EfsaneviDemirci" InputToken="da_tek_sorular" OutputToken="da_tek_bilgi_cevap">
-      <Text>{=da_tek_p1}Where can I unearth such a rare ore?</Text>
+    <!-- Turn 3: Player Choices (Lore / Impatient Warrior / Shortcut / Defer) -->
+    <DialogNode Type="Player" Id="Demirci_P_Soru_Ahit" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t2" OutputToken="da_c1_t3_ahit">
+      <Text>{=da_c1_p_lore_ahit}You spoke of my ancestors' vow, master. What is this Iron Covenant? Whence comes the bond between your forge and my bloodline?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Demirci_Teklif_Bilgi_Cevap" TargetAlias="EfsaneviDemirci" InputToken="da_tek_bilgi_cevap" OutputToken="close_window">
-      <Text>{=da_tek_npc_bilgi}A celestial deposit was uncovered in the deep quarry near {HammadeKaynagi_Link}. Ride to the village and speak with the elder {KoyMuhtari_Link}. But keep your hand on your hilt, for a jealous merchant named {RakipTuccar_Link} has placed spies around my workshop and covets the vein.</Text>
+    <DialogNode Type="Player" Id="Demirci_P_Soru_Savas" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t2" OutputToken="da_c1_t3_savas">
+      <Text>{=da_c1_p_lore_savas}I care not for ancient tales, but for steel that splits shields in twain. What would you ask of me, smith?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_Teklif_Kestirme" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t2" OutputToken="da_c1_kestirme" ShowWhenDisabled="true" DisabledHint="{=da_hint_gold}10,000 Gold Required">
+      <Text>{=da_tek_p2}Master, don't misunderstand... War waits for no smith. Is that finished blade upon your rack for sale? Can I purchase it here and now for 10,000 gold?</Text>
+      <Conditions>
+        <Condition Type="HasGold" Amount="10000" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_Teklif_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t2" OutputToken="close_window">
+      <Text>{=da_cirak_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 4: NPC Lore Responses (Fallen Star / Oath) -->
+    <DialogNode Type="Npc" Id="Demirci_Lore_Ahit" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t3_ahit" OutputToken="da_c1_t4">
+      <Text>{=da_c1_npc_lore_ahit}Before the First Empire arose, a blazing star plummeted from the heavens into these hills. The ancient smiths' guild and your ancestors swore a blood covenant to guard its heart. The Covenant Sword is no mere trinket; it is power destined to make its bearer master of the realm. Yet common iron cannot bear such a vow; I require 5 chunks of genuine fallen Star Iron.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Demirci_Lore_Savas" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t3_savas" OutputToken="da_c1_t4">
+      <Text>{=da_c1_npc_lore_savas}Any horse-shoer can hammer out shield-splitting iron, child! The blade I speak of reaps the destiny of kingdoms. You yearn to spill blood, I know, yet without the forge's spirit, the steel you swing is no better than a timber club. Only one ore can birth such a weapon: 5 chunks of genuine fallen Star Iron!</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 5: Player Inquiries (Ore Secrets vs Dangers/Enemies) -->
+    <DialogNode Type="Player" Id="Demirci_P_Sorgu_Maden" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t4" OutputToken="da_c1_t5_maden">
+      <Text>{=da_c1_p_sorgu_maden}Star Iron... What secret lies within this ore? What makes it so unyielding upon your anvil?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_P_Sorgu_Dusman" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t4" OutputToken="da_c1_t5_dusman">
+      <Text>{=da_c1_p_sorgu_dusman}Where lies this ore vein, and who dares stand in our path? Whoever bars my way shall taste my steel.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_Teklif_Kestirme_2" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t4" OutputToken="da_c1_kestirme" ShowWhenDisabled="true" DisabledHint="{=da_hint_gold}10,000 Gold Required">
+      <Text>{=da_tek_p2}Master, don't misunderstand... War waits for no smith. Is that finished blade upon your rack for sale? Can I purchase it here and now for 10,000 gold?</Text>
+      <Conditions>
+        <Condition Type="HasGold" Amount="10000" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_P_Ertele_2" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t4" OutputToken="close_window">
+      <Text>{=da_cirak_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 6: NPC Details on Quarry & Rival Merchant Spies -->
+    <DialogNode Type="Npc" Id="Demirci_Detay_Maden" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t5_maden" OutputToken="da_c1_t6">
+      <Text>{=da_c1_npc_detay_maden}Star Iron shimmers with a pale celestial sheen in darkness; though it blazes white-hot in the hearth, it remains cold and stubborn beneath the hammer. The only bellows in Calradia capable of yielding it are here. A vein was uncovered in the quarry near {HammadeKaynagi_Link}. But the miners cannot haul it unaided; a covetous merchant, {RakipTuccar_Link}, caught scent of it and encircled the quarry with spies.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Demirci_Detay_Dusman" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t5_dusman" OutputToken="da_c1_t6">
+      <Text>{=da_c1_npc_detay_dusman}The ore lies in the quarry of {HammadeKaynagi_Link}. Yet the true hazard is not the rock, but the hired cutthroats of merchant {RakipTuccar_Link}! That greedy vulture seeks to seize my craft and sell the celestial ore to imperial palaces for a king's ransom. You must confer with the village elder {KoyMuhtari_Link} and secure the ore.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 7: Player Stance & Commitment -->
+    <DialogNode Type="Player" Id="Demirci_P_Durus_Cirak" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t6" OutputToken="da_c1_t7_kabul">
+      <Text>{=da_c1_p_durus_cirak}Your hearth shall never turn cold, master. I will ride to the village, confer with the elder, and carry the Star Iron to your anvil myself.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_P_Durus_Savasci" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t6" OutputToken="da_c1_t7_kabul">
+      <Text>{=da_c1_p_durus_savasci}If that merchant's hired dogs dare cross my path, I shall leave their carcasses for the crows. I ride for the village at once.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_Teklif_Kestirme_3" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t6" OutputToken="da_c1_kestirme" ShowWhenDisabled="true" DisabledHint="{=da_hint_gold}10,000 Gold Required">
+      <Text>{=da_tek_p2}Master, don't misunderstand... War waits for no smith. Is that finished blade upon your rack for sale? Can I purchase it here and now for 10,000 gold?</Text>
+      <Conditions>
+        <Condition Type="HasGold" Amount="10000" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_P_Ertele_3" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t6" OutputToken="close_window">
+      <Text>{=da_cirak_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 8: Send-off / Quest Acceptance -->
+    <DialogNode Type="Npc" Id="Demirci_Ugurla" TargetAlias="EfsaneviDemirci" InputToken="da_c1_t7_kabul" OutputToken="close_window">
+      <Text>{=da_c1_npc_ugurla}May the spirits of our forebears guide your stride, child. Ride to {HammadeKaynagi_Link} and find {KoyMuhtari_Link}. Keep your eyes sharp and your blade loose in its scabbard. I shall kindle the coals against your return.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage1_Toplama" />
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Demirci_Teklif_Kestirme" TargetAlias="EfsaneviDemirci" InputToken="da_tek_sorular" OutputToken="da_tek_kestirme_cevap" ShowWhenDisabled="true" DisabledHint="{=da_hint_gold}10,000 Gold Required">
-      <Text>{=da_tek_p2}Master, don't misunderstand... War waits for no smith. Is that finished blade upon your rack for sale? Can I purchase it here and now for 10,000 gold?</Text>
-      <Conditions>
-         <Condition Type="HasGold" Amount="10000" />
-      </Conditions>
-    </DialogNode>
-
-    <DialogNode Type="Npc" Id="Demirci_Teklif_Kestirme_Cevap" TargetAlias="EfsaneviDemirci" InputToken="da_tek_kestirme_cevap" OutputToken="close_window">
+    <!-- Shortcut Purchase Answer -->
+    <DialogNode Type="Npc" Id="Demirci_Teklif_Kestirme_Cevap" TargetAlias="EfsaneviDemirci" InputToken="da_c1_kestirme" OutputToken="close_window">
       <Text>{=da_tek_npc_kestirme}You lack the patience of a true swordsman, child. Yet if coin is how you wage war, so be it. Take the blade; it carries the blood of my forge, even if bought rather than earned. We shall see if you are worthy of what comes next...</Text>
       <Consequences>
-         <Action Type="TakeGold" Amount="10000" />
-         <Action Type="ChangeStage" ObjectId="Stage2_KestirmeYol" />
-         <Action Type="LeaveEncounter" />
+        <Action Type="TakeGold" Amount="10000" />
+        <Action Type="ChangeStage" ObjectId="Stage2_KestirmeYol" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Demirci_Teklif_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_tek_sorular" OutputToken="close_window">
-      <Text>{=da_cirak_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
-
     <!-- Dialogue with Village Elder at HammadeKaynagi -->
+    <!-- Turn 1: Player arrives at village -->
     <DialogNode Type="Player" Id="Muhtar_Giris" TargetAlias="KoyMuhtari" InputToken="hero_main_options" OutputToken="da_muhtar_1" Priority="200">
       <Text>{=da_muhtar_p_giris}I am here on behalf of {EfsaneviDemirci_Link}. I have come to collect the Star Iron ore from your quarry.</Text>
       <Conditions>
@@ -150,14 +227,53 @@
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Muhtar_Cevap_1" TargetAlias="KoyMuhtari" InputToken="da_muhtar_1" OutputToken="da_muhtar_secim">
+    <!-- Turn 2: Elder alarms player of ambush -->
+    <DialogNode Type="Npc" Id="Muhtar_Cevap_1" TargetAlias="KoyMuhtari" InputToken="da_muhtar_1" OutputToken="da_m_t2">
       <Text>{=da_muhtar_dlg_1}Gods deliver us! You arrive in the shadow of disaster, warrior! We mined five hefty chunks of Star Iron, but just an hour ago, bloodthirsty sellswords bearing the mark of {RakipTuccar_Link} raided our cart just beyond the village ditch! They seized all the ore and are lurking outside our borders, waiting to slay anyone who pursues them!</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Muhtar_Secim_Savas" TargetAlias="KoyMuhtari" InputToken="da_muhtar_secim" OutputToken="da_muhtar_savas_cevap">
+    <!-- Turn 3: Player investigates ambush location or backup stock -->
+    <DialogNode Type="Player" Id="Muhtar_P_Sorgu_Pusu" TargetAlias="KoyMuhtari" InputToken="da_m_t2" OutputToken="da_m_t3_pusu">
+      <Text>{=da_c1_m_p_sorgu_pusu}How many were they, and which direction did they flee? Did they spill village blood?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Muhtar_P_Sorgu_Mahzen" TargetAlias="KoyMuhtari" InputToken="da_m_t2" OutputToken="da_m_t3_mahzen">
+      <Text>{=da_c1_m_p_sorgu_mahzen}Kept you no reserve ore in the quarry cellars? Is there no emergency cache in the village?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Muhtar_Secim_Ertele" TargetAlias="KoyMuhtari" InputToken="da_m_t2" OutputToken="close_window">
+      <Text>{=da_cirak_muhtar_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 4: Elder details ambush or backup store -->
+    <DialogNode Type="Npc" Id="Muhtar_Lore_Pusu" TargetAlias="KoyMuhtari" InputToken="da_m_t3_pusu" OutputToken="da_m_t4">
+      <Text>{=da_c1_m_npc_lore_pusu}Thirty armored cutthroats at least! They ambushed our wagon in the gully just past the ditch, loaded the ore into their saddlebags, and now lurk in the brush mocking us. If you approach, they will bare their blades!</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Muhtar_Lore_Mahzen" TargetAlias="KoyMuhtari" InputToken="da_m_t3_mahzen" OutputToken="da_m_t4">
+      <Text>{=da_c1_m_npc_lore_mahzen}Our quarry foreman is a cautious man; he locked five raw chunks of Star Iron deep within the furnace cellar for dire emergencies. But that ore is our village's famine reserve; I cannot turn the key without coin to compensate our miners.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 5: Player Decides Path (Battle vs Purchase vs Defer) -->
+    <DialogNode Type="Player" Id="Muhtar_Secim_Savas" TargetAlias="KoyMuhtari" InputToken="da_m_t4" OutputToken="da_muhtar_savas_cevap">
       <Text>{=da_muhtar_p_savas}They picked the wrong quarry to plunder. I will hunt down these dogs and take back our Star Iron in blood.</Text>
       <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Muhtar_Secim_SatinAl" TargetAlias="KoyMuhtari" InputToken="da_m_t4" OutputToken="da_muhtar_satinal_cevap" ShowWhenDisabled="true" DisabledHint="{=da_hint_muhtar_gold}2,000 Gold Required">
+      <Text>{=da_muhtar_p_satinal}Do you have any reserve ore kept in your cellars? I will pay 2,000 gold right now to compensate your miners.</Text>
+      <Conditions>
+        <Condition Type="HasGold" Amount="2000" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Muhtar_Secim_Ertele_2" TargetAlias="KoyMuhtari" InputToken="da_m_t4" OutputToken="close_window">
+      <Text>{=da_cirak_muhtar_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Muhtar_Savas_Cevap" TargetAlias="KoyMuhtari" InputToken="da_muhtar_savas_cevap" OutputToken="close_window">
@@ -170,13 +286,6 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Muhtar_Secim_SatinAl" TargetAlias="KoyMuhtari" InputToken="da_muhtar_secim" OutputToken="da_muhtar_satinal_cevap" ShowWhenDisabled="true" DisabledHint="{=da_hint_muhtar_gold}2,000 Gold Required">
-      <Text>{=da_muhtar_p_satinal}Do you have any reserve ore kept in your cellars? I will pay 2,000 gold right now to compensate your miners.</Text>
-      <Conditions>
-        <Condition Type="HasGold" Amount="2000" />
-      </Conditions>
-    </DialogNode>
-
     <DialogNode Type="Npc" Id="Muhtar_SatinAl_Cevap" TargetAlias="KoyMuhtari" InputToken="da_muhtar_satinal_cevap" OutputToken="close_window">
       <Text>{=da_muhtar_dlg_satinal}Aye, our foreman held five rough ingots in the locked furnace store for emergencies. For two thousand gold, our village can rebuild. Here, take the ore to the smith before more brigands smell it!</Text>
       <Consequences>
@@ -185,10 +294,6 @@
         <Action Type="ChangeStage" ObjectId="Stage3_Teslim" />
         <Action Type="LeaveEncounter" />
       </Consequences>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Muhtar_Secim_Ertele" TargetAlias="KoyMuhtari" InputToken="da_muhtar_secim" OutputToken="close_window">
-      <Text>{=da_cirak_muhtar_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <!-- Stage 3 Delivery Dialogues -->
@@ -200,21 +305,33 @@
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Demirci_Teslim_Gecis" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_1" OutputToken="da_teslim_gecis_2" Priority="200">
+    <DialogNode Type="Npc" Id="Demirci_Teslim_Gecis" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_1" OutputToken="da_teslim_t2" Priority="200">
       <Text>{=da_teslim_ready}By the anvil of the ancients! That dark, starlit sheen... It is genuine fallen star-metal! You survived the merchant's cutthroats and claimed what is rightfully yours.</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Demirci_Teslim_Gecis_P" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_2" OutputToken="close_window">
-      <Text>{=da_teslim_p1}Take the ore, master. Kindle your coals and let us forge our oath in steel.</Text>
+    <!-- Turn 3: Player Tones upon Delivery -->
+    <DialogNode Type="Player" Id="Demirci_Teslim_P_Hurmet" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_t2" OutputToken="da_teslim_t3">
+      <Text>{=da_c1_teslim_p_hurmet}Your hearth's fire and our ancestors' oath guided my path, master. The hands worthy of forging this celestial steel are yours alone.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_Teslim_P_Savas" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_t2" OutputToken="da_teslim_t3">
+      <Text>{=da_c1_teslim_p_savas}Those who barred my way tasted cold wrath. Enough words; let us hear the anvil ring beneath your hammer!</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Demirci_Teslim_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_t2" OutputToken="close_window">
+      <Text>{=da_cirak_teslim_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 4: Final Blessing & Forging Begins -->
+    <DialogNode Type="Npc" Id="Demirci_Teslim_Bitis" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_t3" OutputToken="close_window">
+      <Text>{=da_c1_teslim_npc_bitis}Kindle the bellows! Your apprentice's oath has been honored in blood and toil, child. Now let the hearth roar, and let the steel take shape!</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage3_Basari_Normal" />
         <Action Type="LeaveEncounter" />
       </Consequences>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Demirci_Teslim_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_teslim_gecis_2" OutputToken="close_window">
-      <Text>{=da_cirak_teslim_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
   </CustomDialogs>
 </Questline>

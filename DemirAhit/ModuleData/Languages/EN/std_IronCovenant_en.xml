@@ -115,5 +115,66 @@
     <string id="da_miras_p4" text="This sword was bought with my clan's blood and sweat. It shall remain our eternal heirloom and the standard beneath which my heirs shall conquer!" />
     <string id="da_miras_p5" text="I shall present this peerless blade to my sovereign king. In the monarch's hands, it shall elevate our clan to the right hand of the throne!" />
     <string id="da_miras_karar_ertele" text="I cannot deal with this right now. We will speak later." />
+
+    <!-- Quest 1: Multi-Step Dialogues -->
+    <string id="da_c1_intro_npc" text="Welcome, warrior. Hear you the deep breath of the bellows? For generations, this hearth has burned in kinship with your bloodline. I knew your forebears well; these hands shaped the ancient steel that laid your house's seat. Yet centuries have passed, and banners have fallen. It is time you carried a Covenant Sword worthy of your lineage." />
+    <string id="da_c1_p_lore_ahit" text="You spoke of my ancestors' vow, master. What is this Iron Covenant? Whence comes the bond between your forge and my bloodline?" />
+    <string id="da_c1_p_lore_savas" text="I care not for ancient tales, but for steel that splits shields in twain. What would you ask of me, smith?" />
+    <string id="da_c1_npc_lore_ahit" text="Before the First Empire arose, a blazing star plummeted from the heavens into these hills. The ancient smiths' guild and your ancestors swore a blood covenant to guard its heart. The Covenant Sword is no mere trinket; it is power destined to make its bearer master of the realm. Yet common iron cannot bear such a vow; I require 5 chunks of genuine fallen Star Iron." />
+    <string id="da_c1_npc_lore_savas" text="Any horse-shoer can hammer out shield-splitting iron, child! The blade I speak of reaps the destiny of kingdoms. You yearn to spill blood, I know, yet without the forge's spirit, the steel you swing is no better than a timber club. Only one ore can birth such a weapon: 5 chunks of genuine fallen Star Iron!" />
+    <string id="da_c1_p_sorgu_maden" text="Star Iron... What secret lies within this ore? What makes it so unyielding upon your anvil?" />
+    <string id="da_c1_p_sorgu_dusman" text="Where lies this ore vein, and who dares stand in our path? Whoever bars my way shall taste my steel." />
+    <string id="da_c1_npc_detay_maden" text="Star Iron shimmers with a pale celestial sheen in darkness; though it blazes white-hot in the hearth, it remains cold and stubborn beneath the hammer. The only bellows in Calradia capable of yielding it are here. A vein was uncovered in the quarry near {HammadeKaynagi_Link}. But the miners cannot haul it unaided; a covetous merchant, {RakipTuccar_Link}, caught scent of it and encircled the quarry with spies." />
+    <string id="da_c1_npc_detay_dusman" text="The ore lies in the quarry of {HammadeKaynagi_Link}. Yet the true hazard is not the rock, but the hired cutthroats of merchant {RakipTuccar_Link}! That greedy vulture seeks to seize my craft and sell the celestial ore to imperial palaces for a king's ransom. You must confer with the village elder {KoyMuhtari_Link} and secure the ore." />
+    <string id="da_c1_p_durus_cirak" text="Your hearth shall never turn cold, master. I will ride to the village, confer with the elder, and carry the Star Iron to your anvil myself." />
+    <string id="da_c1_p_durus_savasci" text="If that merchant's hired dogs dare cross my path, I shall leave their carcasses for the crows. I ride for the village at once." />
+    <string id="da_c1_npc_ugurla" text="May the spirits of our forebears guide your stride, child. Ride to {HammadeKaynagi_Link} and find {KoyMuhtari_Link}. Keep your eyes sharp and your blade loose in its scabbard. I shall kindle the coals against your return." />
+    <string id="da_c1_m_p_sorgu_pusu" text="How many were they, and which direction did they flee? Did they spill village blood?" />
+    <string id="da_c1_m_p_sorgu_mahzen" text="Kept you no reserve ore in the quarry cellars? Is there no emergency cache in the village?" />
+    <string id="da_c1_m_npc_lore_pusu" text="Thirty armored cutthroats at least! They ambushed our wagon in the gully just past the ditch, loaded the ore into their saddlebags, and now lurk in the brush mocking us. If you approach, they will bare their blades!" />
+    <string id="da_c1_m_npc_lore_mahzen" text="Our quarry foreman is a cautious man; he locked five raw chunks of Star Iron deep within the furnace cellar for dire emergencies. But that ore is our village's famine reserve; I cannot turn the key without coin to compensate our miners." />
+    <string id="da_c1_teslim_p_hurmet" text="Your hearth's fire and our ancestors' oath guided my path, master. The hands worthy of forging this celestial steel are yours alone." />
+    <string id="da_c1_teslim_p_savas" text="Those who barred my way tasted cold wrath. Enough words; let us hear the anvil ring beneath your hammer!" />
+    <string id="da_c1_teslim_npc_bitis" text="Kindle the bellows! Your apprentice's oath has been honored in blood and toil, child. Now let the hearth roar, and let the steel take shape!" />
+
+    <!-- Quest 2: Multi-Step Dialogues -->
+    <string id="da_k2_p_sorgu_lonca" text="How many generations has this forge stood, master? How dares a mere merchant scheme to burn so ancient a workshop?" />
+    <string id="da_k2_p_sorgu_taktik" text="How many saboteurs has he recruited, and from where do they plan to launch their torching?" />
+    <string id="da_k2_npc_lore_lonca" text="For three centuries this hearth has tempered the crowns of kings and forged the heirlooms of great houses. Yet when that merchant failed to extort our quenching fluxes and ancient dies, he vowed that what he cannot own shall turn to ash. He believes his coin can purchase impunity." />
+    <string id="da_k2_npc_lore_taktik" text="Rumors say he hired over sixty cutthroats. In the dead of night, when watchmen are heaviest with sleep, they intend to scale the workshop eaves with pitch-soaked torches. If flames take the timbers, saving the bellows will be impossible." />
+    <string id="da_k2_npc_onay_savunma" text="I honor your steadfast resolve, warrior. Post your scouts around the perimeter and keep watch for five nights. If flames rise, our honor burns with them!" />
+    <string id="da_k2_npc_onay_saldiri" text="Bold words from a true warlord! Track down {RakipTuccar_Link} and force him to tear up that treacherous contract. Yet beware: the guards bought by his gold are seasoned sellswords." />
+    <string id="da_k2_m_p_sorgu" text="Is burning a centuries-old craft and innocent lives truly worth securing a petty monopoly? Is this what Calradia's laws taught you?" />
+    <string id="da_k2_m_p_gozdagi" text="Your coin can purchase you naught but a shallow grave, merchant. If a single spark touches that forge, I shall turn your caravans to ash and your flesh to carrion." />
+    <string id="da_k2_m_p_pazarlik" text="Every breath has its price in your ledger. What is the sum to call off your cutthroats and leave the forge unmolested?" />
+    <string id="da_k2_m_npc_sorgu" text="The law? (Laughs harshly) Warlords extort tribute, lords gorge at banquets, and those with gold write the laws! That stubborn old smith refused to bow, so he must burn. Yet if you wish to close my ledger, either open your purse or let your steel speak!" />
+    <string id="da_k2_m_npc_gozdagi" text="Your tongue is sharp, but the spears of my forty hired mercenaries are sharper! You do not frighten me, warrior. Either compensate my lost profits, or leave your corpse in the gutter!" />
+    <string id="da_k2_m_npc_pazarlik" text="At last, someone who speaks sense! For the advance coin paid to the arsonists and my foregone weapon margins, I demand 2,000 gold. Hand over the coin and the torches are extinguished; refuse, and steel shall decide!" />
+
+    <!-- Quest 3: Multi-Step Dialogues -->
+    <string id="da_u3_p_sorgu_zanaat" text="Why is Master Kalan's craft so indispensable? What is the secret of these quenching salts, master?" />
+    <string id="da_u3_p_sorgu_askeri" text="How formidable are the ramparts and dungeons of {DusmanKale_Link}? Does his rescue call for open warfare or silent shadows?" />
+    <string id="da_u3_npc_lore_zanaat" text="We are twin masters of the anvil; I shape the steel and rule the flames, while Kalan listens to the metal's song at the moment of quenching. With celestial fluxes he tempers the blade so it remains keen as a razor yet supple as a willow branch. Without him, this sword is stillborn!" />
+    <string id="da_u3_npc_lore_askeri" text="{DusmanKale_Link} is a black monolith perched atop sheer crags. Its garrison is numerous, and torches illuminate the battlements like noon. Yet in the dungeon corridors lie drainage sluices and blind spots during the watch relief. A master of shadows or a fearless rescuer can slip inside." />
+    <string id="da_u3_p_yemin_sovalye" text="No craftsman of our covenant shall rot in an enemy pit. I swear upon my clan's honor to bring your brother Kalan back to this hearth unharmed." />
+    <string id="da_u3_p_yemin_savasci" text="The walls of {DusmanKale_Link} cannot bar my fury. If need be, I shall leave not one stone upon another to bring Kalan home!" />
+    <string id="da_u3_npc_ugurla" text="May the ancestral gods shroud your footsteps in mist, warrior. Show Kalan the seal of the forge; he will know you. Go, and wrench my brother from that subterranean darkness!" />
+    <string id="da_u3_k_p_kanit_ahit" text="Your brother bade me say: 'The sacred fire turns to ash never, and true steel bends never.' He awaits you at the anvil." />
+    <string id="da_u3_k_p_kanit_savas" text="Look into my eyes, master; I am no phantom. I have come to tear these dungeon walls down upon their heads. Ready yourself!" />
+    <string id="da_u3_k_npc_lore_guven" text="The covenant watchword... You are truly my brother's sworn companion! (Tears glisten on his soot-streaked cheeks) The gods be praised! The dungeon key rests on the head jailer's belt, and two torchbearers pace the courtyard." />
+    <string id="da_u3_k_npc_lore_cesaret" text="Your fierce resolve speaks through your voice, warrior! I have loosened my manacles, yet days of starvation weigh upon me. Sentries bar our path; every step must be measured." />
+
+    <!-- Quest 4: Multi-Step Dialogues -->
+    <string id="da_m4_p_sorgu_rituel" text="What is this 'Heart's Fire' ritual? Why does ordinary coal not suffice for this steel, master?" />
+    <string id="da_m4_p_sorgu_maliyet" text="What is the toll of such a rite, master? My clan's treasury stands ready to bring this legend to fruition." />
+    <string id="da_m4_npc_lore_rituel" text="Because Star Iron fell from the firmament, it scorns earthly heat, child. The Heart's Fire burns with distilled quicksilver, rare brimstone salts, and consecrated oils; its flame blazes radiant azure. When steel is quenched in that crucible, its grains fuse forever, and the blade acquires an unbreakable soul." />
+    <string id="da_m4_npc_lore_maliyet" text="Procuring these rare fluxes and royal catalysts demands 50,000 gold. A sum that could equip an entire royal cohort, yet the sword it births will wield the might to bend whole armies to its will." />
+    <string id="da_m4_p_tutum_soy" text="For the eternal renown of my lineage and my ancestors' covenant, 50,000 gold is a light burden. I shall gather the coin and return to your forge." />
+    <string id="da_m4_p_tutum_kudret" text="No tribute is too steep for a blade that will shake Calradia to its core. I will fetch the gold; prepare the crucible!" />
+    <string id="da_m4_npc_hazirlik" text="May your word prove sturdier than tempered steel, child. Amass the 50,000 gold while we bank the crucibles. When this flame erupts, all Calradia shall bear witness!" />
+    <string id="da_m4_k_p_sorgu_klan" text="My house's sigil gleams upon the pommel. This weapon was kneaded with my clan's blood; can it truly belong to anyone else?" />
+    <string id="da_m4_k_p_sorgu_kral" text="Were I to present this blade to my sovereign... Would it not serve the realm's peace and elevate our house beside the throne?" />
+    <string id="da_m4_k_npc_lore_klan" text="If you keep it for your bloodline, your heirs shall reap conquests beneath its edge for centuries; your name will echo across royal halls. You will carve your destiny with your own right arm." />
+    <string id="da_m4_k_npc_lore_kral" text="If you offer it to your liege lord, your clan will claim the highest seat at the royal council; the monarch's gratitude and your political renown will know no bounds. The choice rests in your heart." />
   </strings>
 </base>

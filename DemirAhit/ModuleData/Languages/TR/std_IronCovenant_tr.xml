@@ -115,5 +115,66 @@
     <string id="da_miras_p4" text="Bu kılıç klanımın kanı ve teriyle yoğruldu. Soyumun ebedi yadigarı ve ardıllarımın zafer sancağı olarak kalacaktır!" />
     <string id="da_miras_p5" text="Bu eşsiz kılıcı hükümdarıma sunacağım. Kralımızın elinde bu kılıç klanımızı tahtın sağ koluna yükseltecektir!" />
     <string id="da_miras_karar_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
+
+    <!-- Görev 1: Çok Adımlı Diyaloglar -->
+    <string id="da_c1_intro_npc" text="Hoş geldin savaşçı. Körüğün derin soluğunu işitiyor musun? Bu ocağın ateşi nesillerdir klanının kanıyla harlanır. Atalarını bizzat tanırdım; hanenizin temelini atan o kadim çeliği bu eller dövmüştü. Lakin asırlar geçti, sancaklar değişti. Şimdi soyunun şanına layık bir Ahit Kılıcı dövme vaktidir." />
+    <string id="da_c1_p_lore_ahit" text="Atalarımın andını andın usta. Nedir bu Demir Ahit? Ocağın ile soyum arasındaki bağ nereden gelir?" />
+    <string id="da_c1_p_lore_savas" text="Bana eski hikayeler değil, kalkanları ikiye bölecek bir çelik gerek. Benden ne istiyorsun usta?" />
+    <string id="da_c1_npc_lore_ahit" text="İlk İmparatorluk kurulmadan evvel, bu topraklara gökten ateşli bir yıldız düştü. Kadim demirci loncası ve atalarının klanı, o yıldızın kalbini korumak için kan yemini etti. Ahit Kılıcı bir süs değildir; taşıyan haneyi mülkün efendisi yapacak kudrettir. Lakin sıradan bir demir bu yemini taşıyamaz; bana gökten düşen 5 parça hakiki Yıldız Demiri gerek." />
+    <string id="da_c1_npc_lore_savas" text="Kalkan bölecek çeliği her nalbant döver evlat! Benim bahsettiğim kılıç ise krallıkların kaderini biçer. Kan dökmeye heveslisin bilirim, lakin o kılıcın ruhu olmadan savurduğun demir bir çubuktan farksızdır. O kılıcı doğuracak tek bir cevher vardır: Gökten düşen 5 parça hakiki Yıldız Demiri!" />
+    <string id="da_c1_p_sorgu_maden" text="Yıldız Demiri... Bu cevherin sırrı nedir? Onu sıradan demirden ayıran ve dövmeyi zorlaştıran ne?" />
+    <string id="da_c1_p_sorgu_dusman" text="Bu madenin yatağı nerede ve önümüze kim dikilecek? Önümde kim durursa kılıcımın tadına bakar." />
+    <string id="da_c1_npc_detay_maden" text="Yıldız Demiri geceleyin soluk mavi parıldar; ocakta akkor olsa da çekicin altında buz gibi sert kalır. Onu eğip bükecek tek körük bu atölyededir. Damar {HammadeKaynagi_Link} köyündeki derin taş ocağında patlak verdi. Lakin madenciler tek başına çıkaramaz; hırslı tüccar {RakipTuccar_Link} kokuyu aldı ve ocağın etrafına gözcüler dikti." />
+    <string id="da_c1_npc_detay_dusman" text="Cevher {HammadeKaynagi_Link} köyündedir. Lakin asıl tehlike maden değil, tüccar {RakipTuccar_Link}'ın tuttuğu paralı katillerdir! O haris herif zanaatımı gasp edip Yıldız Demirini saraylara fahiş fiyata satmak istiyor. Köy büyüğü {KoyMuhtari_Link} ile konuşup madeni emniyete almalısın." />
+    <string id="da_c1_p_durus_cirak" text="Ocağının ateşi sönmeyecek usta. Köye gidip muhtarla görüşeceğim ve Yıldız Demirlerini bizzat ocağına taşıyacağım." />
+    <string id="da_c1_p_durus_savasci" text="O tüccarın kiralık itleri karşıma çıkarsa leşlerini çukura doldururum. Köye süratle varıp madeni alacağım." />
+    <string id="da_c1_npc_ugurla" text="Ata ruhları adımlarını gözetsin evlat. {HammadeKaynagi_Link} köyüne git ve {KoyMuhtari_Link} ile görüş. Gözün açık, kılıcın gevşek kında olsun. Ben körükleri hazırlarken seni bekliyor olacağım." />
+    <string id="da_c1_m_p_sorgu_pusu" text="Kaç kişilerdi ve nereye doğru çekildiler? Köylülerin canına kastettiler mi?" />
+    <string id="da_c1_m_p_sorgu_mahzen" text="Taş ocağında veya mahzende hiç yedek cevher saklamadınız mı? Bu madenin telafisi yok mu?" />
+    <string id="da_c1_m_npc_lore_pusu" text="Otuz kadar zırhlı kiralık katil! Köyün dışındaki dere yatağında pusuya yattılar, arabayı devirip madeni heybelerine yüklediler. Çalılıkların arasında kıkırdayıp alay ediyorlar. Üstlerine varırsan kılıç çekerler!" />
+    <string id="da_c1_m_npc_lore_mahzen" text="Ocak başı ustamız ihtiyatlı adamdır; acil durumlar için kilitli fırın mahzeninde tam beş parça ham Yıldız Demiri saklamıştı. Lakin o maden köyümüzün kıtlık güvencesidir; madencilerin hakkını ödemeden o kilidi açamam." />
+    <string id="da_c1_teslim_p_hurmet" text="Ocağının ateşi ve atalarımızın yemini rehberim oldu usta. Bu çeliği dövecek hünerli eller senindir." />
+    <string id="da_c1_teslim_p_savas" text="Yoluma çıkanlar kılıcımın gazabını tattı. Artık laf değil, örsün inleyişini duymak istiyorum usta!" />
+    <string id="da_c1_teslim_npc_bitis" text="Körükleri harlayın! Çıraklık yeminin alnının akıyla yerine getirildi evlat. Şimdi ocak konuşsun, çelik biçim alsın!" />
+
+    <!-- Görev 2: Çok Adımlı Diyaloglar -->
+    <string id="da_k2_p_sorgu_lonca" text="Bu atölye kaç kuşaktır ayakta usta? Bir tüccar nasıl böylesi kadim bir ocağı yakmaya cüret edebilir?" />
+    <string id="da_k2_p_sorgu_taktik" text="Kaç kundakçı topladı, saldırıyı nereden ve ne zaman başlatmayı planlıyorlar?" />
+    <string id="da_k2_npc_lore_lonca" text="Üç yüz yıldır bu ocakta kralların taçları, hanelerin mühürleri dövüldü. Lakin o tüccar loncamızın su verme sırlarını ve kadim kalıplarını ele geçiremeyince, 'benim olmayan kül olsun' dedi. Altının gücüyle adaleti satın alabileceğini sanıyor." />
+    <string id="da_k2_npc_lore_taktik" text="Altmıştan fazla çapulcu tuttukları söyleniyor. Gece vakti, nöbetçilerin en yorgun olduğu saatte katranlı meşalelerle atölyenin çatısına tırmanacaklar. Eğer ateş ahşap kirişlere sıçrarsa ocağı kurtarmak imkansız olur." />
+    <string id="da_k2_npc_onay_savunma" text="Metanetini takdir ederim yiğit. Ocağın etrafına gözcülerini yerleştir, beş gece boyunca tetikte ol. Alevler yükselirse şerefimiz de yanar!" />
+    <string id="da_k2_npc_onay_saldiri" text="Gözü pek bir savaşçının sözleri bunlar! {RakipTuccar_Link}'ı bul ve o kalleş sözleşmeyi iptal ettir. Lakin dikkat et; parayla tuttuğu muhafızlar da kılıç kuşanmıştır." />
+    <string id="da_k2_m_p_sorgu" text="Bir tekel kurmak uğruna asırlık bir zanaatı ve masum canları yakmaya değer mi? Kalradya kanunları sana bunu mu öğretti?" />
+    <string id="da_k2_m_p_gozdagi" text="Paran sana ancak bir mezar satın alabilir tüccar. O demirciye bir kıvılcım değerse kervanlarını kül, kendini de yem ederim." />
+    <string id="da_k2_m_p_pazarlik" text="Her nefesin bir maliyeti vardır. Ocağa dokunmamanın ve adamlarını geri çekmenin bedeli nedir?" />
+    <string id="da_k2_m_npc_sorgu" text="Kanun mu? (Kahkaha atar) Savaş ağaları haraç toplar, lordlar ziyafet çeker, kanunu ise parası olan yazar! O ihtiyar demirci bana eğilmedi, cezasını çekecek. Lakin eğer defterimi kapatmak istiyorsan, ya keseni açacaksın ya da çeliğinle konuşacaksın!" />
+    <string id="da_k2_m_npc_gozdagi" text="Kelimelerin keskin ama arkamda duran kırk kiralık muhafızın mızrakları daha keskin! Beni korkutamazsın savaşçı. Bana ya kaybettiğim kârı ödersin, ya da leşini bu sokakta bırakırsın!" />
+    <string id="da_k2_m_npc_pazarlik" text="İşte aklı başında biri! Kundakçılara verdiğim kapora ve beklenen silah kârım için tam 2.000 altın isterim. Altını verirsen meşaleler söner; vermezsen kılıçlar konuşur!" />
+
+    <!-- Görev 3: Çok Adımlı Diyaloglar -->
+    <string id="da_u3_p_sorgu_zanaat" text="Kalan ustanın zanaatı neden bu kadar vazgeçilmez? Bu su verme tuzlarının sırrı nedir usta?" />
+    <string id="da_u3_p_sorgu_askeri" text="{DusmanKale_Link} kalesinin surları ve zindanı ne kadar muhkem? Onu oradan çıkarmak için açık savaş mı gerek, gölge mi?" />
+    <string id="da_u3_npc_lore_zanaat" text="Biz ikiz ustayız; ben çeliği döver, ateşi yönetirim; Kalan ise su verme anında metalin şarkısını dinler. Göğün tuzuyla suyun ısısını öyle bir dengeler ki, kılıç hem jilet gibi keskin hem de bir ağaç dalı gibi esnek olur. O olmadan bu kılıç bir ölü doğar!" />
+    <string id="da_u3_npc_lore_askeri" text="{DusmanKale_Link} sarp kayalıklar üzerine kurulu kara bir taştır. Garnizonu kalabalıktır, meşaleler surları gündüz gibi aydınlatır. Lakin zindan koridorlarında kanalizasyon menfezleri ve nöbet değişim açıkları vardır. Usta bir hırsız veya cesur bir kurtarıcı içeri sızabilir." />
+    <string id="da_u3_p_yemin_sovalye" text="Ahit kardeşliğimizin hiçbir ustası düşman zindanında çürüyemez. Kardeşin Kalan'ı o zindandan sağ salim çıkarıp bu ocağa getireceğime şerefim üzerine and içerim." />
+    <string id="da_u3_p_yemin_savasci" text="{DusmanKale_Link} surları bana engel olamaz. Gerekirse taş üstünde taş bırakmam, Kalan ustayı kurtarırım!" />
+    <string id="da_u3_npc_ugurla" text="Ata tanrıları adımlarını gölgelerle örtsün yiğit. Kalan'a ocağın mührünü göster, seni tanıyacaktır. Git ve kardeşimi o karanlık dehlizden kurtar!" />
+    <string id="da_u3_k_p_kanit_ahit" text="Ağabeyin 'Kutsal ateş küllenmez, çelik asla bükülmez' dedi ve beni yolladı. Ocağın başında seni bekliyor." />
+    <string id="da_u3_k_p_kanit_savas" text="Gözlerime bak usta; ben bir hayal değilim. Bu zindanın duvarlarını başlarına yıkmaya geldim, toparlan!" />
+    <string id="da_u3_k_npc_lore_guven" text="Ahit parolası... Gerçekten ağabeyimin yoldaşısın! (Gözleri yaşarır) Şükürler olsun! Zindan kapısının anahtarı başgardiyanda, avluda ise iki nöbetçi meşaleyle bekliyor." />
+    <string id="da_u3_k_npc_lore_cesaret" text="Kudretin sesinden belli savaşçı! Zincirlerimi gevşettim ama günlerdir aç susuzum. Çıkış yolunda nöbetçiler bekliyor, adımlarımızı dikkatli atmalıyız." />
+
+    <!-- Görev 4: Çok Adımlı Diyaloglar -->
+    <string id="da_m4_p_sorgu_rituel" text="Nedir bu 'Kalbin Ateşi' ritüeli? Sıradan bir ocak koru neden bu çeliğe yetmez usta?" />
+    <string id="da_m4_p_sorgu_maliyet" text="Böylesi bir ritüelin maliyeti nedir usta? Klanımın hazinesi bu efsaneyi tamamlamaya muktedirdir." />
+    <string id="da_m4_npc_lore_rituel" text="Yıldız Demiri göklerden düştüğü için dünyevi ateşe direnir evlat. Kalbin Ateşi, saflaştırılmış cıva, nadir kükürt tuzları ve kutsal yağların harmanıyla yanar; alevi akkor mavi parlar. Çelik o ateşe girdiğinde metalin gözenekleri açılır ve kılıç kırılmaz bir ruha kavuşur." />
+    <string id="da_m4_npc_lore_maliyet" text="Bu cevherlerin ve simyevi yağların temini için tam 50.000 altın gerekir. Bu meblağ bir krallığın ordusunu donatır, lakin ortaya çıkacak kılıç da tek başına bir orduyu dize getirecek kudrettedir." />
+    <string id="da_m4_p_tutum_soy" text="Soyumun ebedi şanı ve atalarımın ahdi için 50.000 altın feda olsun. Hazinemi toplayıp ocağına döneceğim." />
+    <string id="da_m4_p_tutum_kudret" text="Kalradya'yı titretecek bir kılıç için hiçbir bedel çok değildir. Altınları getireceğim, ateşi hazır edin!" />
+    <string id="da_m4_npc_hazirlik" text="Sözün çelikten daha sağlam olsun evlat. Biz potaları hazırlarken sen 50.000 altını toparla. Bu ateş yandığında tüm Kalradya şahitlik edecek!" />
+    <string id="da_m4_k_p_sorgu_klan" text="Kılıcın kabzasında soyumun damgası parlıyor. Bu silah klanımın kanıyla yoğruldu, başkasına verilebilir mi?" />
+    <string id="da_m4_k_p_sorgu_kral" text="Bu kılıcı hükümdarıma sunsam... Diyarın barışı ve klanımızın saraydaki itibarı için daha hayırlı olmaz mı?" />
+    <string id="da_m4_k_npc_lore_klan" text="Klanına saklarsan, nesiller boyu ardılların bu kılıçla zaferler kazanacak; adın asırlarca sancaklarda yankılanacak. Kendi kaderini kendi bileğinle çizeceksin." />
+    <string id="da_m4_k_npc_lore_kral" text="Hükümdarına sunarsan, kralın divanında klanın en yüksek payeye ulaşacak; sana karşı duyulan minnet ve nüfuz sınırları aşacaktır. Karar senin yüreğindedir." />
   </strings>
 </base>

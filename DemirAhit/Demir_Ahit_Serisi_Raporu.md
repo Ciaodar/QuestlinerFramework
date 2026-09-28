@@ -28,7 +28,7 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 - TaleWorlds motorunun dil dosyalarını otomatik tanıması için `ModuleData/Languages` hiyerarşisi BUTR/Native standartlarına uygun hale getirilmiştir:
   - `ModuleData/Languages/EN/language_data.xml` (İngilizce dil paketi: `std_IronCovenant_en.xml`)
   - `ModuleData/Languages/TR/language_data.xml` (Türkçe dil paketi: `std_IronCovenant_tr.xml`)
-- Her iki dil dosyasında tam 100 adet string ID birebir örtüşmekte, Kalradya evrenine uygun zengin, edebi ve sürükleyici bir ortaçağ üslubu kullanılmaktadır.
+- Her iki dil dosyasında tam **153 adet string ID** birebir örtüşmekte, Kalradya evrenine uygun zengin, edebi ve sürükleyici bir ortaçağ üslubu kullanılmaktadır.
 
 ### C. Motor Desteği: Devre Dışı Diyalog İpuçları (ShowWhenDisabled & DisabledHint)
 - C# motorunun sunduğu `ShowWhenDisabled="true"` ve `DisabledHint="{=hint_id}Text"` özelliği tüm görevlerdeki kritik seçeneklere uygulanmıştır:
@@ -42,6 +42,12 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 ### D. Oyuncu Özgürlüğü: Erteleme Seçenekleri (close_window)
 - Tüm görevlerde teklif, başlangıç ve yol ayrımı diyaloglarına `_Ertele` seçenekleri (`OutputToken="close_window"`) eklenmiştir.
 - Oyuncuya zorla görev başlatma veya hazırlıksız aşama geçişi yaptırılmaz; diyalog penceresi kapanır ve görev durumu bozulmadan sonraki etkileşimde kaldığı yerden devam eder.
+
+### E. 7-8 Adımlı Karşılıklı Derin Diyaloglar ve Rol Yapma Seçenekleri (Multi-Step Narrative Dialogues)
+- Monolog diyalog yapısı tamamen kaldırılarak, her görevde derin, karşılıklı konuşma akışları (back-and-forth) inşa edilmiştir:
+  - **Farklı Karakter Tonları / Rol Yapma:** Oyuncu hürmetkar zanaatkar çırağı, sabırsız/savaşçı lider veya pratik tüccar tavrıyla yanıt verebilir.
+  - **Zengin Evren Bilgisi (Lore):** İlk İmparatorluk öncesi düşen göktaşı, demirci loncasının ve klanın kadim ahdi, Yıldız Demirinin eritilme zorluğu, ikiz ustaların (demirci & Kalan) metalurji sırları ve Kalbin Ateşi simyevi ritüeli diyaloglara derinlemesine işlenmiştir.
+  - **4 Görevde Toplam 116 Diyalog Düğümü:** Çırağın Yemini (38 düğüm), Kalfa Sınavı (28 düğüm), Ustanın Yükü (23 düğüm), Mirasın Dövülüşü (27 düğüm).
 
 ---
 
