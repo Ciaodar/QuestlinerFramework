@@ -87,9 +87,9 @@
   </Stages>
 
   <CustomDialogs>
-    <!-- Stage 1 Dialog: Entry via hero_main_options -->
+    <!-- Stage 1 Dialog: Master Smith on the Arson Plot -->
     <!-- Turn 1: Player enters forge -->
-    <DialogNode Type="Player" Id="Kalfa_Uyari_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_k2_t1" Priority="200">
+    <DialogNode Type="Player" Id="Kalfa_Uyari_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="ql_da_k2_t1" Priority="200">
       <Text>{=da_kalfa_p_giris}I heard alarming rumors, master. What troubles your forge?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Uyari" />
@@ -97,54 +97,90 @@
     </DialogNode>
 
     <!-- Turn 2: NPC explains the arson plot -->
-    <DialogNode Type="Npc" Id="Kalfa_Uyari_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t1" OutputToken="da_k2_t2" Priority="200">
+    <DialogNode Type="Npc" Id="Kalfa_Uyari_Giris" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t1" OutputToken="ql_da_k2_t2" Priority="200">
       <Text>{=da_kalfa_dlg_1}A shadow hangs over the anvil, my friend. {RakipTuccar_Link} has gathered brigands and cutthroats to burn my workshop to the ground. If the hearth turns cold, the great blade shall never be finished. How shall we meet this malice?</Text>
       <Conditions />
     </DialogNode>
 
-    <!-- Turn 3: Player investigates guild history or saboteur tactics -->
-    <DialogNode Type="Player" Id="Kalfa_P_Sorgu_Lonca" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t2" OutputToken="da_k2_t3_lonca">
+    <!-- Turn 3: Player Tone Choices (Guild Lore / Arson Intel / Legal Recourse / Defer) -->
+    <DialogNode Type="Player" Id="Kalfa_P_Sorgu_Lonca" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t2" OutputToken="ql_da_k2_t3_lonca">
       <Text>{=da_k2_p_sorgu_lonca}How many generations has this forge stood, master? How dares a mere merchant scheme to burn so ancient a workshop?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_P_Sorgu_Taktik" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t2" OutputToken="da_k2_t3_taktik">
+    <DialogNode Type="Player" Id="Kalfa_P_Sorgu_Taktik" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t2" OutputToken="ql_da_k2_t3_taktik">
       <Text>{=da_k2_p_sorgu_taktik}How many saboteurs has he recruited, and from where do they plan to launch their torching?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_Uyari_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t2" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Kalfa_P_Sorgu_Hukuk" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t2" OutputToken="ql_da_k2_t3_hukuk">
+      <Text>{=da_k2_p_sorgu_hukuk}How do town magistrates and city guards tolerate such open lawlessness? Can we not call upon the town guard?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kalfa_Uyari_Ertele" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t2" OutputToken="close_window">
       <Text>{=da_kalfa_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Turn 4: NPC Lore (Ancient Guild Feud vs Arson Tactics) -->
-    <DialogNode Type="Npc" Id="Kalfa_Lore_Lonca" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t3_lonca" OutputToken="da_k2_t4">
+    <!-- Turn 4: NPC Lore (Ancient Guild Feud / Arson Tactics / Corrupt Law) -->
+    <DialogNode Type="Npc" Id="Kalfa_Lore_Lonca" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t3_lonca" OutputToken="ql_da_k2_t4">
       <Text>{=da_k2_npc_lore_lonca}For three centuries this hearth has tempered the crowns of kings and forged the heirlooms of great houses. Yet when that merchant failed to extort our quenching fluxes and ancient dies, he vowed that what he cannot own shall turn to ash. He believes his coin can purchase impunity.</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Kalfa_Lore_Taktik" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t3_taktik" OutputToken="da_k2_t4">
+    <DialogNode Type="Npc" Id="Kalfa_Lore_Taktik" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t3_taktik" OutputToken="ql_da_k2_t4">
       <Text>{=da_k2_npc_lore_taktik}Rumors say he hired over sixty cutthroats. In the dead of night, when watchmen are heaviest with sleep, they intend to scale the workshop eaves with pitch-soaked torches. If flames take the timbers, saving the bellows will be impossible.</Text>
       <Conditions />
     </DialogNode>
 
-    <!-- Turn 5: Player Tactical Resolution (Defense vs Assault vs Defer) -->
-    <DialogNode Type="Player" Id="Kalfa_Uyari_Savunma" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t4" OutputToken="da_k2_t5_savunma">
+    <DialogNode Type="Npc" Id="Kalfa_Lore_Hukuk" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t3_hukuk" OutputToken="ql_da_k2_t4">
+      <Text>{=da_k2_npc_lore_hukuk}The magistrates are fat with that merchant's bribes, child! In Calradia, when coin clinks, justice goes blind. If we wait for courts, our forge will be cold ash before a bailiff even writes a summons.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 5: Player Strategic Inquiries (Perimeter Fortification vs Preemptive Strike) -->
+    <DialogNode Type="Player" Id="Kalfa_P_Sorgu_Tahkimat" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t4" OutputToken="ql_da_k2_t5_savunma">
+      <Text>{=da_k2_p_sorgu_tahkimat}What defenses can we mount around the perimeter? How are we prepared against torches, master?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kalfa_P_Sorgu_Onleyici" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t4" OutputToken="ql_da_k2_t5_saldiri">
+      <Text>{=da_k2_p_sorgu_onleyici}Waiting for arsonists invites ruin. Where does this merchant keep his counting house? We must crush the viper in its nest.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kalfa_P_Ertele_2" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t4" OutputToken="close_window">
+      <Text>{=da_kalfa_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 6: NPC Strategic Outlines -->
+    <DialogNode Type="Npc" Id="Kalfa_Detay_Tahkimat" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t5_savunma" OutputToken="ql_da_k2_t6">
+      <Text>{=da_k2_npc_detay_tahkimat}We filled the cisterns and barricaded the courtyard. If you and your warriors keep a 5-night vigil, you can drown those brigands in the ditch before they ever light a torch.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Kalfa_Detay_Onleyici" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t5_saldiri" OutputToken="ql_da_k2_t6">
+      <Text>{=da_k2_npc_detay_onleyici}He sits in the caravansary of the merchant quarter, flanked by forty hired spearmen. If you march directly upon him, you can tear up that foul contract before a spark is struck.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 7: Player Final Tactical Doctrine (Defense vs Direct Confrontation vs Defer) -->
+    <DialogNode Type="Player" Id="Kalfa_Uyari_Savunma" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t6" OutputToken="ql_da_k2_t7_savunma">
       <Text>{=da_kalfa_p1}I shall post guards and keep watch over your workshop. No arsonist shall breathe within our perimeter.</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_Uyari_Saldiri" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t4" OutputToken="da_k2_t5_saldiri">
+    <DialogNode Type="Player" Id="Kalfa_Uyari_Saldiri" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t6" OutputToken="ql_da_k2_t7_saldiri">
       <Text>{=da_kalfa_p2}Defense invites hesitation. I shall hunt down {RakipTuccar_Link} directly and break his will before the torches are lit.</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_P_Ertele_2" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t4" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Kalfa_P_Ertele_3" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t6" OutputToken="close_window">
       <Text>{=da_kalfa_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Turn 6: NPC Confirmations & Stage Transitions -->
-    <DialogNode Type="Npc" Id="Kalfa_Npc_Savunma_Onay" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t5_savunma" OutputToken="close_window">
+    <!-- Turn 8: NPC Confirmations & Stage Transitions -->
+    <DialogNode Type="Npc" Id="Kalfa_Npc_Savunma_Onay" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t7_savunma" OutputToken="close_window">
       <Text>{=da_k2_npc_onay_savunma}I honor your steadfast resolve, warrior. Post your scouts around the perimeter and keep watch for five nights. If flames rise, our honor burns with them!</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2A_Nobet" />
@@ -152,7 +188,7 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Kalfa_Npc_Saldiri_Onay" TargetAlias="EfsaneviDemirci" InputToken="da_k2_t5_saldiri" OutputToken="close_window">
+    <DialogNode Type="Npc" Id="Kalfa_Npc_Saldiri_Onay" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t7_saldiri" OutputToken="close_window">
       <Text>{=da_k2_npc_onay_saldiri}Bold words from a true warlord! Track down {RakipTuccar_Link} and force him to tear up that treacherous contract. Yet beware: the guards bought by his gold are seasoned sellswords.</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2B_Takip" />
@@ -162,7 +198,7 @@
 
     <!-- Stage 2B Dialog with Rival Merchant -->
     <!-- Turn 1: Player confronts merchant -->
-    <DialogNode Type="Player" Id="Kalfa_Takip_Giris_P" TargetAlias="RakipTuccar" InputToken="hero_main_options" OutputToken="da_k2_m_t1" Priority="200">
+    <DialogNode Type="Player" Id="Kalfa_Takip_Giris_P" TargetAlias="RakipTuccar" InputToken="hero_main_options" OutputToken="ql_da_k2_m_t1" Priority="200">
       <Text>{=da_kalfa_t_p_giris}We must settle the matter of your arsonists and the blacksmith's forge, merchant.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2B_Takip" />
@@ -170,73 +206,99 @@
     </DialogNode>
 
     <!-- Turn 2: Merchant taunts with arrogance -->
-    <DialogNode Type="Npc" Id="Kalfa_Takip_Giris" TargetAlias="RakipTuccar" InputToken="da_k2_m_t1" OutputToken="da_k2_m_t2" Priority="200">
+    <DialogNode Type="Npc" Id="Kalfa_Takip_Giris" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t1" OutputToken="ql_da_k2_m_t2" Priority="200">
       <Text>{=da_kalfa_dlg_2}Ah, the clan warlord barks! Commerce in this district belongs to those with coin, not ancient fossil smiths dreaming of bygone kingdoms. What brings you to my ledger?</Text>
       <Conditions />
     </DialogNode>
 
     <!-- Turn 3: Player probing options (Moral / Intimidation / Practicality / Defer) -->
-    <DialogNode Type="Player" Id="Kalfa_P_Merchant_Sorgu" TargetAlias="RakipTuccar" InputToken="da_k2_m_t2" OutputToken="da_k2_m_t3_sorgu">
+    <DialogNode Type="Player" Id="Kalfa_P_Merchant_Sorgu" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t2" OutputToken="ql_da_k2_m_t3_sorgu">
       <Text>{=da_k2_m_p_sorgu}Is burning a centuries-old craft and innocent lives truly worth securing a petty monopoly? Is this what Calradia's laws taught you?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_P_Merchant_Gozdagi" TargetAlias="RakipTuccar" InputToken="da_k2_m_t2" OutputToken="da_k2_m_t3_gozdagi">
+    <DialogNode Type="Player" Id="Kalfa_P_Merchant_Gozdagi" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t2" OutputToken="ql_da_k2_m_t3_gozdagi">
       <Text>{=da_k2_m_p_gozdagi}Your coin can purchase you naught but a shallow grave, merchant. If a single spark touches that forge, I shall turn your caravans to ash and your flesh to carrion.</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_P_Merchant_Pazarlik" TargetAlias="RakipTuccar" InputToken="da_k2_m_t2" OutputToken="da_k2_m_t3_pazarlik">
+    <DialogNode Type="Player" Id="Kalfa_P_Merchant_Pazarlik" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t2" OutputToken="ql_da_k2_m_t3_pazarlik">
       <Text>{=da_k2_m_p_pazarlik}Every breath has its price in your ledger. What is the sum to call off your cutthroats and leave the forge unmolested?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_Takip_Ertele" TargetAlias="RakipTuccar" InputToken="da_k2_m_t2" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Kalfa_Takip_Ertele" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t2" OutputToken="close_window">
       <Text>{=da_kalfa_takip_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <!-- Turn 4: Merchant Counter-Arguments -->
-    <DialogNode Type="Npc" Id="Kalfa_M_Cevap_Sorgu" TargetAlias="RakipTuccar" InputToken="da_k2_m_t3_sorgu" OutputToken="da_k2_m_t4">
+    <DialogNode Type="Npc" Id="Kalfa_M_Cevap_Sorgu" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t3_sorgu" OutputToken="ql_da_k2_m_t4">
       <Text>{=da_k2_m_npc_sorgu}The law? (Laughs harshly) Warlords extort tribute, lords gorge at banquets, and those with gold write the laws! That stubborn old smith refused to bow, so he must burn. Yet if you wish to close my ledger, either open your purse or let your steel speak!</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Kalfa_M_Cevap_Gozdagi" TargetAlias="RakipTuccar" InputToken="da_k2_m_t3_gozdagi" OutputToken="da_k2_m_t4">
+    <DialogNode Type="Npc" Id="Kalfa_M_Cevap_Gozdagi" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t3_gozdagi" OutputToken="ql_da_k2_m_t4">
       <Text>{=da_k2_m_npc_gozdagi}Your tongue is sharp, but the spears of my forty hired mercenaries are sharper! You do not frighten me, warrior. Either compensate my lost profits, or leave your corpse in the gutter!</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Kalfa_M_Cevap_Pazarlik" TargetAlias="RakipTuccar" InputToken="da_k2_m_t3_pazarlik" OutputToken="da_k2_m_t4">
+    <DialogNode Type="Npc" Id="Kalfa_M_Cevap_Pazarlik" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t3_pazarlik" OutputToken="ql_da_k2_m_t4">
       <Text>{=da_k2_m_npc_pazarlik}At last, someone who speaks sense! For the advance coin paid to the arsonists and my foregone weapon margins, I demand 2,000 gold. Hand over the coin and the torches are extinguished; refuse, and steel shall decide!</Text>
       <Conditions />
     </DialogNode>
 
-    <!-- Turn 5: Final Resolution (Bribe vs Threat vs Battle vs Defer) -->
-    <DialogNode Type="Player" Id="Kalfa_Takip_Rusvet" TargetAlias="RakipTuccar" InputToken="da_k2_m_t4" OutputToken="da_kalfa_t_kabul" ShowWhenDisabled="true" DisabledHint="{=da_hint_bribe_gold}2,000 Gold Required">
+    <!-- Turn 5: Player Counter-Pressure (Roguery Intimidation vs Commercial Scrutiny) -->
+    <DialogNode Type="Player" Id="Kalfa_P_M_Sorgu_Baskisi" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t4" OutputToken="ql_da_k2_m_t5_baski">
+      <Text>{=da_k2_m_p_baski}You boast of hired spears, but sellswords melt away when their master's throat feels cold steel. Do you truly wager your life on hirelings? [Roguery]</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kalfa_P_M_Sorgu_Finans" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t4" OutputToken="ql_da_k2_m_t5_finans">
+      <Text>{=da_k2_m_p_finans}Two thousand denars is a fortune for a handful of cutthroats. What guarantee do I have you won't strike again next moon?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Kalfa_Takip_Ertele_2" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t4" OutputToken="close_window">
+      <Text>{=da_kalfa_takip_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 6: Merchant Reaction & Ultimatums -->
+    <DialogNode Type="Npc" Id="Kalfa_M_Cevap_Baski" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t5_baski" OutputToken="ql_da_k2_m_t6">
+      <Text>{=da_k2_m_npc_baski}(The merchant swallows dryly, stepping back as he eyes your hand on the hilt) The... the underworld whispers of your ruthlessness. Choose quickly then: coin, terror, or blood in the street?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Kalfa_M_Cevap_Finans" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t5_finans" OutputToken="ql_da_k2_m_t6">
+      <Text>{=da_k2_m_npc_finans}My signature upon parchment is binding across all guilds! Once gold touches my palms, I will burn that arson contract before your very eyes.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 7: Final Resolution (Bribe vs Threat vs Battle vs Defer) -->
+    <DialogNode Type="Player" Id="Kalfa_Takip_Rusvet" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t6" OutputToken="ql_da_k2_m_t7_rusvet" ShowWhenDisabled="true" DisabledHint="{=da_hint_bribe_gold}2,000 Gold Required">
       <Text>{=da_kalfa_t_p1}I offer you 2,000 gold. Call off your arsonists and let this feud end in profit.</Text>
       <Conditions>
         <Condition Type="HasGold" Amount="2000" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_Takip_Tehdit" TargetAlias="RakipTuccar" InputToken="da_k2_m_t4" OutputToken="da_kalfa_t_korku" ShowWhenDisabled="true" DisabledHint="{=da_hint_roguery_50}Requires Roguery 50">
+    <DialogNode Type="Player" Id="Kalfa_Takip_Tehdit" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t6" OutputToken="ql_da_k2_m_t7_tehdit" ShowWhenDisabled="true" DisabledHint="{=da_hint_roguery_50}Requires Roguery 50">
       <Text>{=da_kalfa_t_p2}If you don't recall your cutthroats this instant, your own bedchamber will taste cold steel before sunrise. [Roguery]</Text>
       <Conditions>
         <Condition Type="SkillCheck" ObjectId="Roguery" Amount="50" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_Takip_Savas" TargetAlias="RakipTuccar" InputToken="da_k2_m_t4" OutputToken="da_kalfa_t_savas_cevap">
+    <DialogNode Type="Player" Id="Kalfa_Takip_Savas" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t6" OutputToken="ql_da_k2_m_t7_savas">
       <Text>{=da_kalfa_t_p3}Words are wasted on treacherous vultures like you. Call your mercenaries, and let steel decide who governs this land!</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kalfa_Takip_Ertele_2" TargetAlias="RakipTuccar" InputToken="da_k2_m_t4" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Kalfa_Takip_Ertele_3" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t6" OutputToken="close_window">
       <Text>{=da_kalfa_takip_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Turn 6: Merchant Responses & Consequences -->
-    <DialogNode Type="Npc" Id="Kalfa_Takip_Rusvet_Cevap" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_kabul" OutputToken="close_window">
+    <!-- Turn 8: Merchant Responses & Consequences -->
+    <DialogNode Type="Npc" Id="Kalfa_Takip_Rusvet_Cevap" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t7_rusvet" OutputToken="close_window">
       <Text>{=da_kalfa_dlg_3_altin}Gold always speaks with greater eloquence than pride. Very well, I shall recall my mercenaries. The old fool may hammer in peace.</Text>
       <Consequences>
         <Action Type="TakeGold" Amount="2000" />
@@ -245,7 +307,7 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Kalfa_Takip_Tehdit_Cevap" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_korku" OutputToken="close_window">
+    <DialogNode Type="Npc" Id="Kalfa_Takip_Tehdit_Cevap" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t7_tehdit" OutputToken="close_window">
       <Text>{=da_kalfa_dlg_3}B-by the gods, stay back! Lower your blade... I want no quarrel with bloodthirsty sellswords. The contract is canceled, I swear it!</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage3_Basari" />
@@ -253,7 +315,7 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Kalfa_Takip_Savas_Cevap" TargetAlias="RakipTuccar" InputToken="da_kalfa_t_savas_cevap" OutputToken="close_window">
+    <DialogNode Type="Npc" Id="Kalfa_Takip_Savas_Cevap" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t7_savas" OutputToken="close_window">
       <Text>{=da_kalfa_dlg_4}Insolent dog! Guards, seize this meddler and toss their corpse into the gutters!</Text>
       <Consequences>
         <Action Type="SpawnBanditParty" TargetAlias="Korumalar" Amount="40" PartyTemplateId="mercenary_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_koruma}Merchant Guards" />

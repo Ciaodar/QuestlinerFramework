@@ -69,9 +69,9 @@
   </Stages>
 
   <CustomDialogs>
-    <!-- Stage 1: Initial Meeting -->
+    <!-- Stage 1: Meeting Master Smiths for the Heart's Fire Ritual -->
     <!-- Turn 1: Player arrives at forge -->
-    <DialogNode Type="Player" Id="Miras_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_miras_npc_1" Priority="200">
+    <DialogNode Type="Player" Id="Miras_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="ql_da_m4_t1" Priority="200">
       <Text>{=da_miras_p_giris}The bellows roar like dragons today, master. Is the steel ready for the final fold?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Haber" />
@@ -79,54 +79,90 @@
     </DialogNode>
 
     <!-- Turn 2: NPC describes 1,000-fold blade and Heart's Fire ritual -->
-    <DialogNode Type="Npc" Id="Miras_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_miras_npc_1" OutputToken="da_m4_t2" Priority="200">
+    <DialogNode Type="Npc" Id="Miras_Giris" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t1" OutputToken="ql_da_m4_t2" Priority="200">
       <Text>{=da_miras_dlg_1}Welcome, noble warlord. For weeks my brother {Kalan_Link} and I have folded the celestial steel a thousand times over the anvil. The blade is straight and flawless. But to breathe an eternal soul into the metal, we must ignite the 'Heart's Fire'. This sacred ritual requires rare alchemical fluxes and royal crucible catalysts worth 50,000 gold.</Text>
       <Conditions />
     </DialogNode>
 
-    <!-- Turn 3: Player investigates ritual secrets or cost -->
-    <DialogNode Type="Player" Id="Miras_P_Sorgu_Rituel" TargetAlias="EfsaneviDemirci" InputToken="da_m4_t2" OutputToken="da_m4_t3_rituel">
+    <!-- Turn 3: Player Tone Choices (Ritual Secrets / Cost & Scale / Bloodline Vow / Defer) -->
+    <DialogNode Type="Player" Id="Miras_P_Sorgu_Rituel" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t2" OutputToken="ql_da_m4_t3_rituel">
       <Text>{=da_m4_p_sorgu_rituel}What is this 'Heart's Fire' ritual? Why does ordinary coal not suffice for this steel, master?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_P_Sorgu_Maliyet" TargetAlias="EfsaneviDemirci" InputToken="da_m4_t2" OutputToken="da_m4_t3_maliyet">
+    <DialogNode Type="Player" Id="Miras_P_Sorgu_Maliyet" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t2" OutputToken="ql_da_m4_t3_maliyet">
       <Text>{=da_m4_p_sorgu_maliyet}What is the toll of such a rite, master? My clan's treasury stands ready to bring this legend to fruition.</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_Kabul_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_m4_t2" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Miras_P_Sorgu_Soy" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t2" OutputToken="ql_da_m4_t3_soy">
+      <Text>{=da_m4_p_sorgu_soy}Generations of our bloodline have waited for this dawn, master. Whatever the furnace demands, our house shall provide.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Kabul_Ertele" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t2" OutputToken="close_window">
       <Text>{=da_miras_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Turn 4: NPC Lore (Celestial Metallurgy & Alchemy vs Cost) -->
-    <DialogNode Type="Npc" Id="Miras_Lore_Rituel" TargetAlias="EfsaneviDemirci" InputToken="da_m4_t3_rituel" OutputToken="da_m4_t4">
+    <!-- Turn 4: NPC Lore (Celestial Metallurgy & Alchemy vs Cost vs Ancestral Pride) -->
+    <DialogNode Type="Npc" Id="Miras_Lore_Rituel" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t3_rituel" OutputToken="ql_da_m4_t4">
       <Text>{=da_m4_npc_lore_rituel}Because Star Iron fell from the firmament, it scorns earthly heat, child. The Heart's Fire burns with distilled quicksilver, rare brimstone salts, and consecrated oils; its flame blazes radiant azure. When steel is quenched in that crucible, its grains fuse forever, and the blade acquires an unbreakable soul.</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Miras_Lore_Maliyet" TargetAlias="EfsaneviDemirci" InputToken="da_m4_t3_maliyet" OutputToken="da_m4_t4">
+    <DialogNode Type="Npc" Id="Miras_Lore_Maliyet" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t3_maliyet" OutputToken="ql_da_m4_t4">
       <Text>{=da_m4_npc_lore_maliyet}Procuring these rare fluxes and royal catalysts demands 50,000 gold. A sum that could equip an entire royal cohort, yet the sword it births will wield the might to bend whole armies to its will.</Text>
       <Conditions />
     </DialogNode>
 
-    <!-- Turn 5: Player Commitment Tones (Lineage Honor vs Conqueror Might vs Defer) -->
-    <DialogNode Type="Player" Id="Miras_P_Tutum_Soy" TargetAlias="EfsaneviDemirci" InputToken="da_m4_t4" OutputToken="da_m4_t5_kabul">
+    <DialogNode Type="Npc" Id="Miras_Lore_Soy" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t3_soy" OutputToken="ql_da_m4_t4">
+      <Text>{=da_m4_npc_lore_soy}Your ancestors look down from the halls of eternity with pride, child. Fifty thousand gold is the earthly cost to unlock heavenly power. When azure fire blazes, your house's name will be inscribed upon the stars.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 5: Player Follow-up on Final Preparation -->
+    <DialogNode Type="Player" Id="Miras_P_Sorgu_Zaman" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t4" OutputToken="ql_da_m4_t5_zaman">
+      <Text>{=da_m4_p_sorgu_zaman}How long does it take to bank the crucibles and stoke the azure flame, master?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_P_Sorgu_Kader" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t4" OutputToken="ql_da_m4_t5_kader">
+      <Text>{=da_m4_p_sorgu_kader}Once the blade emerges from the flames, who shall hold the right to dictate its destiny?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_P_Ertele_2" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t4" OutputToken="close_window">
+      <Text>{=da_miras_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 6: NPC Crucible Guidance & Destiny Foreshadowing -->
+    <DialogNode Type="Npc" Id="Miras_Detay_Zaman" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t5_zaman" OutputToken="ql_da_m4_t6">
+      <Text>{=da_m4_npc_detay_zaman}Once the gold is delivered, my brother Kalan and I need but a few hours to blend the salts. The coals are already humming.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Miras_Detay_Kader" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t5_kader" OutputToken="ql_da_m4_t6">
+      <Text>{=da_m4_npc_detay_kader}Yours alone, warlord! It is sealed with your bloodline's covenant. Whether it crowns your heirs or seals your sovereign's realm, the choice rests in your hands.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 7: Player Commitment Tones (Lineage Honor vs Conqueror Might vs Defer) -->
+    <DialogNode Type="Player" Id="Miras_P_Tutum_Soy" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t6" OutputToken="ql_da_m4_t7_kabul">
       <Text>{=da_m4_p_tutum_soy}For the eternal renown of my lineage and my ancestors' covenant, 50,000 gold is a light burden. I shall gather the coin and return to your forge.</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_P_Tutum_Kudret" TargetAlias="EfsaneviDemirci" InputToken="da_m4_t4" OutputToken="da_m4_t5_kabul">
+    <DialogNode Type="Player" Id="Miras_P_Tutum_Kudret" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t6" OutputToken="ql_da_m4_t7_kabul">
       <Text>{=da_m4_p_tutum_kudret}No tribute is too steep for a blade that will shake Calradia to its core. I will fetch the gold; prepare the crucible!</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_P_Ertele_2" TargetAlias="EfsaneviDemirci" InputToken="da_m4_t4" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Miras_P_Ertele_3" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t6" OutputToken="close_window">
       <Text>{=da_miras_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Turn 6: NPC Directive & Transition to Gathering Gold -->
-    <DialogNode Type="Npc" Id="Miras_Npc_Hazirlik" TargetAlias="EfsaneviDemirci" InputToken="da_m4_t5_kabul" OutputToken="close_window">
+    <!-- Turn 8: NPC Directive & Transition to Gathering Gold -->
+    <DialogNode Type="Npc" Id="Miras_Npc_Hazirlik" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_t7_kabul" OutputToken="close_window">
       <Text>{=da_m4_npc_hazirlik}May your word prove sturdier than tempered steel, child. Amass the 50,000 gold while we bank the crucibles. When this flame erupts, all Calradia shall bear witness!</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Kaynak" />
@@ -135,26 +171,26 @@
     </DialogNode>
 
     <!-- Stage 2: Delivering Gold -->
-    <DialogNode Type="Player" Id="Miras_Kaynak_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_miras_npc_2" Priority="200">
+    <DialogNode Type="Player" Id="Miras_Kaynak_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="ql_da_miras_npc_2" Priority="200">
       <Text>{=da_miras_p_giris_2}Let the crucible be stoked, master. I have returned with our offering.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Kaynak" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Miras_Kaynak_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_miras_npc_2" OutputToken="da_miras_kaynak_secimler" Priority="200">
+    <DialogNode Type="Npc" Id="Miras_Kaynak_Giris" TargetAlias="EfsaneviDemirci" InputToken="ql_da_miras_npc_2" OutputToken="ql_da_miras_kaynak_secimler" Priority="200">
       <Text>{=da_miras_dlg_2}Do you bring the gold to kindle the Heart's Fire?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_Kaynak_Ver" TargetAlias="EfsaneviDemirci" InputToken="da_miras_kaynak_secimler" OutputToken="da_miras_npc_3" ShowWhenDisabled="true" DisabledHint="{=da_hint_heart_gold}50,000 Gold Required">
+    <DialogNode Type="Player" Id="Miras_Kaynak_Ver" TargetAlias="EfsaneviDemirci" InputToken="ql_da_miras_kaynak_secimler" OutputToken="ql_da_miras_npc_3" ShowWhenDisabled="true" DisabledHint="{=da_hint_heart_gold}50,000 Gold Required">
       <Text>{=da_miras_p2}Here is the 50,000 gold. Kindle the flame and quench the blade!</Text>
       <Conditions>
         <Condition Type="HasGold" Amount="50000" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_Kaynak_Yok" TargetAlias="EfsaneviDemirci" InputToken="da_miras_kaynak_secimler" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Miras_Kaynak_Yok" TargetAlias="EfsaneviDemirci" InputToken="ql_da_miras_kaynak_secimler" OutputToken="close_window">
       <Text>{=da_miras_p3}I have not yet amassed the full sum. Keep the embers banked; I shall return shortly.</Text>
       <Conditions>
         <Condition Type="!HasGold" Amount="50000" />
@@ -164,11 +200,11 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_Kaynak_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_miras_kaynak_secimler" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Miras_Kaynak_Ertele" TargetAlias="EfsaneviDemirci" InputToken="ql_da_miras_kaynak_secimler" OutputToken="close_window">
       <Text>{=da_miras_kaynak_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Miras_Kaynak_Bitis" TargetAlias="EfsaneviDemirci" InputToken="da_miras_npc_3" OutputToken="close_window">
+    <DialogNode Type="Npc" Id="Miras_Kaynak_Bitis" TargetAlias="EfsaneviDemirci" InputToken="ql_da_miras_npc_3" OutputToken="close_window">
       <Text>{=da_miras_dlg_3}The flames leap blue and white! Give us but a few hours... (The rhythmic thunder of twin hammers echoes through the valley as incandescent sparks cascade across the workshop floor) It is finished! Behold the Covenant Blade! Speak to me once more, warrior, for a fateful choice remains.</Text>
       <Consequences>
         <Action Type="TakeGold" Amount="50000" />
@@ -181,7 +217,7 @@
 
     <!-- Stage 3: The Destiny of the Blade -->
     <!-- Turn 1: Player marvels at completed sword -->
-    <DialogNode Type="Player" Id="Miras_Karar_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="da_miras_npc_4" Priority="200">
+    <DialogNode Type="Player" Id="Miras_Karar_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="ql_da_m4_k_t1" Priority="200">
       <Text>{=da_miras_p_giris_3}The blade is breathtaking. What final counsel do you give, master?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Sonuc" />
@@ -189,59 +225,95 @@
     </DialogNode>
 
     <!-- Turn 2: NPC introduces the philosophical crossroad -->
-    <DialogNode Type="Npc" Id="Miras_Karar_Giris" TargetAlias="EfsaneviDemirci" InputToken="da_miras_npc_4" OutputToken="da_m4_k_t2" Priority="200">
+    <DialogNode Type="Npc" Id="Miras_Karar_Giris" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t1" OutputToken="ql_da_m4_k_t2" Priority="200">
       <Text>{=da_miras_dlg_4}The Covenant Sword... The purest, most lethal steel these hands shall ever fashion. A weapon worthy of reshaping empires. Will you bind its glory to your clan's eternal bloodline, or will you offer it as a gift of supreme fealty to your liege lord?</Text>
       <Conditions />
     </DialogNode>
 
-    <!-- Turn 3: Player ponders Clan vs Crown -->
-    <DialogNode Type="Player" Id="Miras_P_Sorgu_Klan" TargetAlias="EfsaneviDemirci" InputToken="da_m4_k_t2" OutputToken="da_m4_k_t3_klan">
+    <!-- Turn 3: Player ponders Clan vs Crown vs Warrior Soul -->
+    <DialogNode Type="Player" Id="Miras_P_Sorgu_Klan" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t2" OutputToken="ql_da_m4_k_t3_klan">
       <Text>{=da_m4_k_p_sorgu_klan}My house's sigil gleams upon the pommel. This weapon was kneaded with my clan's blood; can it truly belong to anyone else?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_P_Sorgu_Kral" TargetAlias="EfsaneviDemirci" InputToken="da_m4_k_t2" OutputToken="da_m4_k_t3_kral">
+    <DialogNode Type="Player" Id="Miras_P_Sorgu_Kral" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t2" OutputToken="ql_da_m4_k_t3_kral">
       <Text>{=da_m4_k_p_sorgu_kral}Were I to present this blade to my sovereign... Would it not serve the realm's peace and elevate our house beside the throne?</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_Karar_Ertele" TargetAlias="EfsaneviDemirci" InputToken="da_m4_k_t2" OutputToken="close_window">
+    <DialogNode Type="Player" Id="Miras_P_Sorgu_Bilek" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t2" OutputToken="ql_da_m4_k_t3_bilek">
+      <Text>{=da_m4_k_p_sorgu_bilek}Does true dominion spring from crowns and thrones, or from the warrior who wields the cold edge?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Karar_Ertele" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t2" OutputToken="close_window">
       <Text>{=da_miras_karar_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Turn 4: NPC Wisdom on Clan Sovereignty vs Feudal Dominance -->
-    <DialogNode Type="Npc" Id="Miras_Lore_Karar_Klan" TargetAlias="EfsaneviDemirci" InputToken="da_m4_k_t3_klan" OutputToken="da_m4_k_t4">
+    <!-- Turn 4: NPC Wisdom on Both Destinies -->
+    <DialogNode Type="Npc" Id="Miras_Lore_Karar_Klan" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t3_klan" OutputToken="ql_da_m4_k_t4">
       <Text>{=da_m4_k_npc_lore_klan}If you keep it for your bloodline, your heirs shall reap conquests beneath its edge for centuries; your name will echo across royal halls. You will carve your destiny with your own right arm.</Text>
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Miras_Lore_Karar_Kral" TargetAlias="EfsaneviDemirci" InputToken="da_m4_k_t3_kral" OutputToken="da_m4_k_t4">
+    <DialogNode Type="Npc" Id="Miras_Lore_Karar_Kral" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t3_kral" OutputToken="ql_da_m4_k_t4">
       <Text>{=da_m4_k_npc_lore_kral}If you offer it to your liege lord, your clan will claim the highest seat at the royal council; the monarch's gratitude and your political renown will know no bounds. The choice rests in your heart.</Text>
       <Conditions />
     </DialogNode>
 
-    <!-- Turn 5: Final Fate of the Covenant Blade -->
-    <DialogNode Type="Player" Id="Miras_Karar_Klan" TargetAlias="EfsaneviDemirci" InputToken="da_m4_k_t4" OutputToken="close_window">
+    <DialogNode Type="Npc" Id="Miras_Lore_Karar_Bilek" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t3_bilek" OutputToken="ql_da_m4_k_t4">
+      <Text>{=da_m4_k_npc_lore_bilek}Thrones crumble and crowns rust away, but legendary steel endures. Whether bound to your banner or gifted to a sovereign, it is the wielder's honor that gives the steel its soul.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 5: Player Probes the Master Smith's Own Heart -->
+    <DialogNode Type="Player" Id="Miras_P_Sorgu_UstaGorus" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t4" OutputToken="ql_da_m4_k_t5">
+      <Text>{=da_m4_k_p_sorgu_ustagorus}And what says your own heart, master? As a craftsman who turned gray before this forge, in whose hands do you wish this masterpiece to shine?</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Karar_Ertele_2" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t4" OutputToken="close_window">
+      <Text>{=da_miras_karar_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 6: Master's Impartial Blessing -->
+    <DialogNode Type="Npc" Id="Miras_Lore_UstaGorus" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t5" OutputToken="ql_da_m4_k_t6">
+      <Text>{=da_m4_k_npc_lore_ustagorus}Steel has no king, warrior; it knows only the will of whoever grips its hilt. My hammer has finished its work; the final verse of this legend belongs to you.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 7: Final Fate of the Covenant Blade (Supreme Destiny Choice) -->
+    <DialogNode Type="Player" Id="Miras_Karar_Klan" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t6" OutputToken="ql_da_m4_sonuc_klan">
       <Text>{=da_miras_p4}This sword was bought with my clan's blood and sweat. It shall remain our eternal heirloom and the standard beneath which my heirs shall conquer!</Text>
+      <Conditions />
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Karar_Kral" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t6" OutputToken="ql_da_m4_sonuc_kral" ShowWhenDisabled="true" DisabledHint="{=da_hint_vassal_req}Must be a Vassal of an Empire or Kingdom">
+      <Text>{=da_miras_p5}I shall present this peerless blade to my sovereign king. In the monarch's hands, it shall elevate our clan to the right hand of the throne!</Text>
+      <Conditions>
+        <Condition Type="IsVassalOfTargetFaction" TargetAlias="IttifakKrali" Amount="1" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Miras_Karar_Ertele_3" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_k_t6" OutputToken="close_window">
+      <Text>{=da_miras_karar_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Turn 8: Grand Epilogue & Consequences -->
+    <DialogNode Type="Npc" Id="Miras_Sonuc_Klan_Cevap" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_sonuc_klan" OutputToken="close_window">
+      <Text>{=da_m4_npc_sonuc_klan}Then take it, true Heir of the Covenant! May this celestial steel split shields, shatter armor, and guide your heirs to rule Calradia! (Lifts the gleaming blade and presents it upon the anvil cushion) Wear it with honor, warlord!</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage4_Miras" />
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Miras_Karar_Kral" TargetAlias="EfsaneviDemirci" InputToken="da_m4_k_t4" OutputToken="close_window" ShowWhenDisabled="true" DisabledHint="{=da_hint_vassal_req}Must be a Vassal of an Empire or Kingdom">
-      <Text>{=da_miras_p5}I shall present this peerless blade to my sovereign king. In the monarch's hands, it shall elevate our clan to the right hand of the throne!</Text>
-      <Conditions>
-        <Condition Type="IsVassalOfTargetFaction" TargetAlias="IttifakKrali" Amount="1" />
-      </Conditions>
+    <DialogNode Type="Npc" Id="Miras_Sonuc_Kral_Cevap" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_sonuc_kral" OutputToken="close_window">
+      <Text>{=da_m4_npc_sonuc_kral}A noble and far-sighted decision! A weapon worthy of an emperor's hand... (Carefully sheathes the blade into a velvet scabbard emblazoned with golden sigils and presents it) Present this to King {IttifakKrali_Link}. His gratitude shall echo in songs for a hundred winters!</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage4_Kral" />
         <Action Type="LeaveEncounter" />
       </Consequences>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Miras_Karar_Ertele_2" TargetAlias="EfsaneviDemirci" InputToken="da_m4_k_t4" OutputToken="close_window">
-      <Text>{=da_miras_karar_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
   </CustomDialogs>
 </Questline>
