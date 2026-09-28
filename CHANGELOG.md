@@ -2,6 +2,20 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.5.0] - 28 Eylül 2026 (Effective Kingdom Resolving, Chained Quest Timing & War Fallback)
+
+### Düzeltildi & Geliştirildi (Fixed & Improved)
+- **Şehir ve Kasaba Eşrafı Krallık Çözümleyicisi (Effective Kingdom Resolving):**
+  - `TargetResolverService.cs` içerisine `GetEffectiveKingdom` metodu eklendi. TaleWorlds Native yapısında soylu olmayan eşraf karakterlerinin (`Merchant`, `GangLeader`, `Artisan`, `RuralNotable`) klanı krallık taşımadığından `SameKingdomAs(Alias)` filtresinin bu NPC'leri eleyip 0 adaya düşürme ve görevi başlatamama sorunu giderildi. Artık eşrafın ikamet ettiği yerleşkenin bağlı olduğu krallık (`HomeSettlement.MapFaction as Kingdom`) okunarak filtre kusursuz çalışmaktadır.
+- **Zincirleme Görev Tetikleme Zamanlaması (Success Node Quest Chaining):**
+  - `DynamicQuest.cs` içinde `TransitionToStage` metodu güncellendi. Başarı aşamasındaki (`IsSuccessNode`) `OnEnterActions` çalıştırılmadan önce görev kimliği `_completedQuestIds` listesine işlenir. Böylece `OnEnterActions` içinde çağrılan `StartQuest` aksiyonu, önkoşulundaki `IsQuestCompleted` testini anında geçerek ardışık görevleri güvenle başlatır.
+- **Kıtasal Savaş Garantisi (DeclareWar Robustness):**
+  - `ActionExecutor.cs` içindeki `DeclareWar` aksiyonunda, `targetFaction` ile `sourceFaction` aynı krallığa denk geldiğinde (örneğin oyuncu hedef kralın kendi krallığını hedeflediğinde) savaşı iptal etmek yerine haritadaki diğer aktif bir krallık seçilerek kıtasal savaşın patlak vermesi garanti altına alındı.
+- **Mobil Birlik Çözümleyici Yedek Desteği (`PartyOf` Fallback):**
+  - Hedef lord esir düşmüşse veya haritada kişisel ordusu yoksa `PartyOf(Hero)` çözümleyicisinin başarısız olmasını önlemek için ilgili lordun klanına ait aktif birlikler güvenli yedek olarak tanındı.
+
+---
+
 ## [v1.4.0] - 28 Eylül 2026 (Dialogue Priority, AI vs AI Warfare & MobileParty Resolving)
 
 ### Eklendi & İyileştirildi (Added & Improved)

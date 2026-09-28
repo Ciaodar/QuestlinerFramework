@@ -172,7 +172,7 @@
     <!-- Golge Tunegi: Golge Tuneginin Cagri -->
     <string id="sp_gt1_title" text="Call of the Shadow Roost" />
     <string id="sp_gt1_s0_log" text="You left the artisan lifeless in his workshop. With city guards scouring the streets, you must lay low and blend into the shadows. Wait for the heat to die down... (1 Day)" />
-    <string id="sp_gt1_s1_log" text="As the alert faded, a black-feathered pigeon landed under your cloak. Someone recognized the bone seal you claimed from the artisan's corpse. Travel near {GolgeSiginagi_Link} and speak with the Shadow Courier {GolgeUlagi_Link}." />
+    <string id="sp_gt1_s1_log" text="As the alert faded, a black-feathered pigeon landed under your cloak. Someone recognized the bone seal you claimed from the artisan's corpse. Travel to {GolgeSehri_Link} and speak with the Shadow Courier {GolgeUlagi_Link}." />
     <string id="sp_gt1_s2_log" text="The courier confirmed the artisan was leaking the Pigeon archives to rival kingdoms. Prove your blind loyalty: Ambush and eliminate the 50-man foreign guard detachment {RakipAjanlar_Link} awaiting the ciphers near {GolgeSiginagi_Link}." />
     <string id="sp_gt1_s_success_log" text="You butchered the foreign spies. The Shadow Roost approved your ruthlessness and blind devotion. You are no longer a mere pawn; you are now an executioner of the shadows. You received the 'Shadow Bone Dagger' and 30,000 denars." />
     <string id="sp_gt1_dlg1" text="You bear the raven bone seal taken from the slain artisan... The Shadow Roost knows what you did." />
@@ -189,24 +189,28 @@
     <string id="sp_gt2_s_success_log" text="You broke {Dost_Link}'s army and executed him in cold blood. The Motherland's purge is complete. The Shadow Roost sends you 50,000 denars and 50 renown." />
     <string id="sp_gt2_dlg1" text="You... You are that omen who slaughtered the artisan! What do you want from me? I burned all the ledgers, I swear it!" />
     <string id="sp_gt2_dlg1_p" text="I am here regarding the ciphers you purchased." />
+    <string id="sp_gt2_dlg1_reply" text="What?! Who sent you?! Was it the courier cabal?! Please, I burned all the ledgers, take anything you want, spare my life!" />
     <string id="sp_gt2_dlg2" text="Blind Loyalty knows no mercy. The Shadow Roost sends its regards. (Execute the Merchant)" />
     <string id="sp_gt2_dlg3" text="Hand over the vault keys first, then face your doom. (Extort 15,000 denars &amp; Execute)" />
     <string id="sp_gt2_dlg4" text="You think you can purge the alleys, Pigeon? You murdered the merchant, but you won't leave this den breathing! Boys, gut this dog!" />
     <string id="sp_gt2_dlg4_p" text="The Shadow Roost requires your silence, gang master." />
+    <string id="sp_gt2_dlg4_reply" text="My silence? The only silence you will find in this alley is six feet under! Boys, carve this wretch up!" />
     <string id="sp_gt2_dlg5" text="Shadows swallow the alleys. Die! (Attack)" />
     <string id="sp_gt2_dlg6" text="{PLAYER.NAME}... When I look at you, I no longer see an ally, but a bloodthirsty cult monster! The artisan was a traitor, but he was to face a court of law. You butchered him like a dog and became a slave to the Shadow Roost! I will wipe you from these lands!" />
     <string id="sp_gt2_dlg6_p" text="We meet again, Dost. It seems our paths end here." />
+    <string id="sp_gt2_dlg6_reply" text="Aye, it ends here. I trusted you with our realm's secrets, and you turned them into an altar of slaughter for the Shadow Roost! Draw steel, traitor!" />
     <string id="sp_gt2_dlg7" text="You are weak, Dost. Your courts, your kings, and your lies only protect the weak. Pigeons do not soar in the skies, they feast above tombs. Draw your sword!" />
 
     <!-- Golge Tunegi: Calradia'nin Kuklacisi (Nihai Son) -->
     <string id="sp_gt3_title" text="Puppeteer of Calradia" />
-    <string id="sp_gt3_s1_log" text="Calradia's obstacles have been cleared in blood. Travel to {GolgeSiginagi_Link} to meet the Blind Master {KorUsta_Link}, founder of the Shadow Roost, and choose the ultimate fate of the realm." />
+    <string id="sp_gt3_s1_log" text="Calradia's obstacles have been cleared in blood. Travel to {TunekSehri_Link} to meet the Blind Master {KorUsta_Link}, founder of the Shadow Roost, and choose the ultimate fate of the realm." />
     <string id="sp_gt3_s2_kirikkukla_log" text="You set the roost ablaze! {KorUsta_Link}'s 40 fanatic guards {FanatikMuhafizlar_Link} surround you in fury. Annihilate them and break the chains of the cult!" />
     <string id="sp_gt3_s_bas_efendi_log" text="The Blind Master's breath ceased under your fingers. The Shadow Master Ring now gleams upon your hand. While Calradia's kings sit pompously upon their thrones, each morning they will wake to a raven feather beneath their pillow—reminding them who truly rules Calradia from the dark." />
     <string id="sp_gt3_s_kirik_kukla_log" text="As the Shadow Roost collapsed in flames, you walked away without looking back. The ciphers turned to ash, the masters perished. Now, bound to no cult and no crown, you wander the Calradian plains as a feared ghost whose name is only whispered in terror." />
     <string id="sp_gt3_s_kaos_log" text="That very night, false pigeons cooed inside imperial palaces. By morning, empires declared war upon one another. Cities fell to siege, villages burned, and across this continental inferno, you hold the gold and armies to tear down dynasties as you please." />
     <string id="sp_gt3_dlg1" text="So much blood, such unfaltering blind loyalty... You have arrived at the summit, little pigeon. Calradia's crowns tremble before us. What is your will?" />
     <string id="sp_gt3_dlg1_p" text="I have come to face the master of the roost." />
+    <string id="sp_gt3_dlg1_reply" text="So much blood, such unfaltering blind loyalty... You have arrived at the summit, little pigeon. Calradia's crowns tremble before us. What is your will?" />
     <string id="sp_gt3_dlg2" text="You forgot the first rule you taught me, Master: 'The sharpest beak cracks the oldest roost.' From now on, I give the orders! (Poison the Blind Master &amp; Claim the Shadow Throne)" />
     <string id="sp_gt3_dlg3" text="You are no mastermind; you are a sewer rat lurking in the dark! No motherland, no honor—only lies and slaughter. This roost burns tonight! (Torch the Roost &amp; Slaughter the Fanatics)" />
     <string id="sp_gt3_dlg4" text="The world does not seek order, Master. The world hungers for fire! I have dispatched the forged decrees to the monarchs of Calradia. At dawn, war horns shall sound! (Unleash Continental War)" />

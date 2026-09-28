@@ -308,6 +308,11 @@ namespace Questliner.Framework.Core
             var nextStageModel = Model.Stages.FirstOrDefault(s => s.Id == nextStageId);
             if (nextStageModel != null)
             {
+                if (nextStageModel.IsSuccessNode || nextStageModel.IsFailNode)
+                {
+                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
+                }
+
                 foreach (var action in nextStageModel.OnEnterActions)
                 {
                     Questliner.Framework.Engine.ActionExecutor.Execute(action, this);

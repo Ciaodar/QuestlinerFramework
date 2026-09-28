@@ -11,8 +11,9 @@
   </Triggers>
 
   <TargetResolvers>
-    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
-    <Resolver Alias="GolgeUlagi" TargetType="Hero" Filters="Artisan, SameCultureAsPlayer" Selector="Nearest" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" IsOptional="true" />
+    <Resolver Alias="GolgeSehri" TargetType="Settlement" Filters="Town" Selector="Nearest" />
+    <Resolver Alias="GolgeUlagi" TargetType="Hero" Filters="Artisan" RequiredSettlementAlias="GolgeSehri" />
     <Resolver Alias="GolgeSiginagi" TargetType="Settlement" Filters="Hideout" Selector="Nearest" />
     <Resolver Alias="RakipAjanlar" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
   </TargetResolvers>
@@ -27,7 +28,7 @@
     </Stage>
 
     <Stage Id="Stage1_UlakBulusma" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_gt1_s1_log}As the alert faded, a black-feathered pigeon landed under your cloak. Someone recognized the bone seal you claimed from the artisan's corpse. Travel near {GolgeSiginagi_Link} and speak with the Shadow Courier {GolgeUlagi_Link}.</LogText>
+      <LogText>{=sp_gt1_s1_log}As the alert faded, a black-feathered pigeon landed under your cloak. Someone recognized the bone seal you claimed from the artisan's corpse. Travel to {GolgeSehri_Link} and speak with the Shadow Courier {GolgeUlagi_Link}.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="GolgeUlagi" />

@@ -11,7 +11,8 @@
   </Triggers>
 
   <TargetResolvers>
-    <Resolver Alias="KorUsta" TargetType="Hero" Filters="Artisan, SameCultureAsPlayer" Selector="First" />
+    <Resolver Alias="TunekSehri" TargetType="Settlement" Filters="Town" Selector="Nearest" />
+    <Resolver Alias="KorUsta" TargetType="Hero" Filters="Artisan" RequiredSettlementAlias="TunekSehri" />
     <Resolver Alias="HedefKral" TargetType="Hero" Filters="KingdomLeader, !PlayerClan" Selector="Nearest" />
     <Resolver Alias="GolgeSiginagi" TargetType="Settlement" Filters="Hideout" Selector="Nearest" />
     <Resolver Alias="FanatikMuhafizlar" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
@@ -19,7 +20,7 @@
 
   <Stages>
     <Stage Id="Stage1_UstaBulusma" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_gt3_s1_log}Calradia's obstacles have been cleared in blood. Travel to {GolgeSiginagi_Link} to meet the Blind Master {KorUsta_Link}, founder of the Shadow Roost, and choose the ultimate fate of the realm.</LogText>
+      <LogText>{=sp_gt3_s1_log}Calradia's obstacles have been cleared in blood. Travel to {TunekSehri_Link} to meet the Blind Master {KorUsta_Link}, founder of the Shadow Roost, and choose the ultimate fate of the realm.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="KorUsta" />
@@ -77,11 +78,15 @@
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="GT3_Usta_Player" TargetAlias="KorUsta" InputToken="hero_main_options" OutputToken="ql_gt3_usta_choices" Priority="200">
+    <DialogNode Type="Player" Id="GT3_Usta_Player" TargetAlias="KorUsta" InputToken="hero_main_options" OutputToken="ql_gt3_usta_player_entry" Priority="200">
       <Text>{=sp_gt3_dlg1_p}I have come to face the master of the roost.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
       </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="GT3_Usta_Npc_Reply" TargetAlias="KorUsta" InputToken="ql_gt3_usta_player_entry" OutputToken="ql_gt3_usta_choices">
+      <Text>{=sp_gt3_dlg1_reply}So much blood, such unfaltering blind loyalty... You have arrived at the summit, little pigeon. Calradia's crowns tremble before us. What is your will?</Text>
     </DialogNode>
 
     <!-- Secenek 1: Golge Bas Efendi -->
@@ -96,7 +101,7 @@
     <DialogNode Type="Player" Id="GT3_Choice_KirikKukla" TargetAlias="KorUsta" InputToken="ql_gt3_usta_choices" OutputToken="close_window">
       <Text>{=sp_gt3_dlg3}You are no mastermind; you are a sewer rat lurking in the dark! No motherland, no honor—only lies and slaughter. This roost burns tonight! (Torch the Roost &amp; Slaughter the Fanatics)</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="FanatikMuhafizlar" Amount="40" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="EngagePlayer" />
+        <Action Type="SpawnBanditParty" TargetAlias="FanatikMuhafizlar" Amount="40" PartyTemplateId="deserters_template" SettlementAlias="TunekSehri" StringValue="EngagePlayer" />
         <Action Type="SetPartyAi" TargetAlias="FanatikMuhafizlar" StringValue="EngagePlayer" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_KirikKukla_Savas" />
       </Consequences>

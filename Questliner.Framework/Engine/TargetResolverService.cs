@@ -255,6 +255,16 @@ namespace Questliner.Framework.Engine
             return h.Clan?.MapFaction ?? h.CurrentSettlement?.MapFaction ?? h.HomeSettlement?.MapFaction;
         }
 
+        private static Kingdom? GetEffectiveKingdom(Hero? h)
+        {
+            if (h == null) return null;
+            return h.Clan?.Kingdom 
+                   ?? (h.Clan?.MapFaction as Kingdom) 
+                   ?? (h.CurrentSettlement?.MapFaction as Kingdom) 
+                   ?? (h.HomeSettlement?.MapFaction as Kingdom)
+                   ?? (h.MapFaction as Kingdom);
+        }
+
         private static IEnumerable<Hero> ApplyFilter(IEnumerable<Hero> source, string filter, DynamicQuest? quest, Hero? questGiver = null)
         {
             var effectiveGiver = questGiver ?? quest?.QuestGiver;
@@ -284,8 +294,8 @@ namespace Questliner.Framework.Engine
                 var alias = filter.Substring(14, filter.Length - 15);
                 if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
                 {
-                    var kingdom = aliasHero.Clan?.Kingdom;
-                    return isNegated ? source.Where(h => h.Clan?.Kingdom != kingdom) : source.Where(h => h.Clan?.Kingdom == kingdom);
+                    var kingdom = GetEffectiveKingdom(aliasHero);
+                    return isNegated ? source.Where(h => GetEffectiveKingdom(h) != kingdom) : source.Where(h => GetEffectiveKingdom(h) == kingdom);
                 }
                 return source;
             }
@@ -433,7 +443,12 @@ namespace Questliner.Framework.Engine
                     {
                         var heroAlias = filter.Substring(8, filter.Length - 9);
                         var hero = quest?.GetTargetHero(heroAlias);
-                        step = candidates.Where(p => hero != null && (p.LeaderHero == hero || p == hero.PartyBelongedTo));
+                        var heroParties = candidates.Where(p => hero != null && (p.LeaderHero == hero || p == hero.PartyBelongedTo));
+                        if (!heroParties.Any() && hero?.Clan != null)
+                        {
+                            heroParties = candidates.Where(p => p.ActualClan == hero.Clan);
+                        }
+                        step = heroParties;
                     }
                     else if (filter.StartsWith("Faction("))
                     {
@@ -454,6 +469,10 @@ namespace Questliner.Framework.Engine
                 var hero = quest?.GetTargetHero(heroAlias);
                 if (hero != null && hero.PartyBelongedTo != null && hero.PartyBelongedTo.IsActive)
                     return hero.PartyBelongedTo;
+                var fallbackParty = finalList.FirstOrDefault(p => p.LeaderHero == hero) 
+                                 ?? finalList.FirstOrDefault(p => p.ActualClan == hero?.Clan);
+                if (fallbackParty != null)
+                    return fallbackParty;
             }
             if (model.Selector.StartsWith("NearestTo(") && model.Selector.EndsWith(")"))
             {

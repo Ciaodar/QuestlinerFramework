@@ -314,9 +314,17 @@ namespace Questliner.Framework.Engine
                         sourceFaction = Clan.PlayerClan.MapFaction;
                     }
 
-                    if (targetFaction != null && sourceFaction != null && targetFaction != sourceFaction)
+                    if (targetFaction != null && sourceFaction != null)
                     {
-                        DeclareWarAction.ApplyByDefault(sourceFaction, targetFaction);
+                        if (targetFaction == sourceFaction)
+                        {
+                            sourceFaction = Campaign.Current.Kingdoms.FirstOrDefault(k => k != targetFaction && !k.IsEliminated) ?? sourceFaction;
+                        }
+
+                        if (targetFaction != sourceFaction)
+                        {
+                            DeclareWarAction.ApplyByDefault(sourceFaction, targetFaction);
+                        }
                     }
                     break;
                 }

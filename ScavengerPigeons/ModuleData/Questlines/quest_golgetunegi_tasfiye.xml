@@ -14,7 +14,10 @@
     <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
     <Resolver Alias="Muhbir1" TargetType="Hero" Filters="Merchant, SameKingdomAs(Dost)" Selector="Nearest" />
     <Resolver Alias="Muhbir2" TargetType="Hero" Filters="GangLeader, SameKingdomAs(Dost)" Selector="Random" />
-    <Resolver Alias="DostOrdusu" TargetType="MobileParty" Filters="LordParty, PartyOf(Dost)" Selector="NearestTo(Dost)" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
+    <Resolver Alias="Muhbir1" TargetType="Hero" Filters="Merchant, SameKingdomAs(Dost)" Selector="Nearest" />
+    <Resolver Alias="Muhbir2" TargetType="Hero" Filters="GangLeader, SameKingdomAs(Dost)" Selector="Random" />
+    <Resolver Alias="DostOrdusu" TargetType="MobileParty" Filters="LordParty, PartyOf(Dost)" Selector="NearestTo(Dost)" IsOptional="true" />
     <Resolver Alias="CeteMuhafizlari" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
   </TargetResolvers>
 
@@ -77,11 +80,15 @@
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="GT2_M1_Player" TargetAlias="Muhbir1" InputToken="hero_main_options" OutputToken="ql_gt2_m1_intro" Priority="200">
+    <DialogNode Type="Player" Id="GT2_M1_Player" TargetAlias="Muhbir1" InputToken="hero_main_options" OutputToken="ql_gt2_m1_player_intro" Priority="200">
       <Text>{=sp_gt2_dlg1_p}I am here regarding the ciphers you purchased.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Muhbir1" />
       </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="GT2_M1_Npc_Reply" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_player_intro" OutputToken="ql_gt2_m1_intro">
+      <Text>{=sp_gt2_dlg1_reply}What?! Who sent you?! Was it the courier cabal?! Please, I burned all the ledgers, take anything you want, spare my life!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="GT2_M1_ChoiceA" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_intro" OutputToken="close_window">
@@ -109,11 +116,15 @@
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="GT2_M2_Player" TargetAlias="Muhbir2" InputToken="hero_main_options" OutputToken="ql_gt2_m2_intro" Priority="200">
+    <DialogNode Type="Player" Id="GT2_M2_Player" TargetAlias="Muhbir2" InputToken="hero_main_options" OutputToken="ql_gt2_m2_player_intro" Priority="200">
       <Text>{=sp_gt2_dlg4_p}The Shadow Roost requires your silence, gang master.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Muhbir2" />
       </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="GT2_M2_Npc_Reply" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_player_intro" OutputToken="ql_gt2_m2_intro">
+      <Text>{=sp_gt2_dlg4_reply}My silence? The only silence you will find in this alley is six feet under! Boys, carve this wretch up!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="GT2_M2_Choice" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_intro" OutputToken="close_window">
@@ -134,11 +145,15 @@
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="GT2_Dost_Player" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_gt2_dost_intro" Priority="200">
+    <DialogNode Type="Player" Id="GT2_Dost_Player" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_gt2_dost_player_intro" Priority="200">
       <Text>{=sp_gt2_dlg6_p}We meet again, Dost. It seems our paths end here.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_DostYuzlesme" />
       </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="GT2_Dost_Npc_Reply" TargetAlias="Dost" InputToken="ql_gt2_dost_player_intro" OutputToken="ql_gt2_dost_intro">
+      <Text>{=sp_gt2_dlg6_reply}Aye, it ends here. I trusted you with our realm's secrets, and you turned them into an altar of slaughter for the Shadow Roost! Draw steel, traitor!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="GT2_Dost_Fight" TargetAlias="Dost" InputToken="ql_gt2_dost_intro" OutputToken="close_window">
