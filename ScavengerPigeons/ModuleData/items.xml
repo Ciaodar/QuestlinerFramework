@@ -30,4 +30,10 @@
     </ItemComponent>
     <Flags />
   </Item>
+  <Item id="black_ledger" name="{=sp_item_black_ledger}The Black Ledger" mesh="scroll_a" Type="Goods" is_merchandise="false" value="8000" weight="0.5">
+    <ItemComponent>
+      <Trade value="8000" />
+    </ItemComponent>
+    <Flags />
+  </Item>
 </Items>

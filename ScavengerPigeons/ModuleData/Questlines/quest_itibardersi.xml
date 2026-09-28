@@ -95,6 +95,10 @@
       </Consequences>
     </DialogNode>
 
+    <DialogNode Type="Player" Id="Berber_ID_Ertele" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="close_window">
+      <Text>{=sp_id_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
     <DialogNode Type="Npc" Id="Berber_A5_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a5" OutputToken="close_window">
       <Text>{=sp_id_dlg23}Alright, see you later, baby pigeon...</Text>
     </DialogNode>

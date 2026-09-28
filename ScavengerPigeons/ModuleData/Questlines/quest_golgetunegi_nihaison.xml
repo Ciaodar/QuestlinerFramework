@@ -3,7 +3,6 @@
 
   <Prerequisites>
     <Condition Type="IsQuestCompleted" ObjectId="QLF_GolgeTunegi_Tasfiye" Amount="1" />
-    <Condition Type="ClanTier" Amount="4" />
   </Prerequisites>
 
   <Triggers>
@@ -70,27 +69,82 @@
   </Stages>
 
   <CustomDialogs>
-    <!-- Kor Usta ile Yuzlesme -->
-    <DialogNode Type="Npc" Id="GT3_Usta_Npc" TargetAlias="KorUsta" InputToken="start" OutputToken="ql_gt3_usta_choices" Priority="200">
-      <Text>{=sp_gt3_dlg1}So much blood, such unfaltering blind loyalty... You have arrived at the summit, little pigeon. Calradia's crowns tremble before us. What is your will?</Text>
-      <Conditions>
-        <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
-      </Conditions>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="GT3_Usta_Player" TargetAlias="KorUsta" InputToken="hero_main_options" OutputToken="ql_gt3_usta_player_entry" Priority="200">
+    <!-- KOR USTA ILE YUZLESME: 8 ADIMLI FELSEFI DIALOG VE 3 BUYUK FINAL -->
+    <DialogNode Type="Player" Id="GT3_Usta_Player" TargetAlias="KorUsta" InputToken="hero_main_options" OutputToken="ql_gt3_usta_a1" Priority="200">
       <Text>{=sp_gt3_dlg1_p}I have come to face the master of the roost.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="GT3_Usta_Npc_Reply" TargetAlias="KorUsta" InputToken="ql_gt3_usta_player_entry" OutputToken="ql_gt3_usta_choices">
-      <Text>{=sp_gt3_dlg1_reply}So much blood, such unfaltering blind loyalty... You have arrived at the summit, little pigeon. Calradia's crowns tremble before us. What is your will?</Text>
+    <DialogNode Type="Npc" Id="GT3_Usta_Npc" TargetAlias="KorUsta" InputToken="start" OutputToken="ql_gt3_usta_step1_choices" Priority="200">
+      <Text>{=sp_gt3_dlg1}Step forward, little pigeon... I cannot see your eyes, but I hear the rhythm of your stride. The blood of Dost, the scent of burning ledgers, and the cold steel of ambition clinging to your mantle.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
+      </Conditions>
     </DialogNode>
 
+    <DialogNode Type="Npc" Id="GT3_Usta_A1" TargetAlias="KorUsta" InputToken="ql_gt3_usta_a1" OutputToken="ql_gt3_usta_step1_choices">
+      <Text>{=sp_gt3_dlg1}Step forward, little pigeon... I cannot see your eyes, but I hear the rhythm of your stride. The blood of Dost, the scent of burning ledgers, and the cold steel of ambition clinging to your mantle.</Text>
+    </DialogNode>
+
+    <!-- Tur 1: Oyuncu Tepkisi -->
+    <DialogNode Type="Player" Id="GT3_U_P1_Inq" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step1_choices" OutputToken="ql_gt3_usta_a2">
+      <Text>{=sp_gt3_dlg_p1_inq}So you are the Blind Master—the hidden phantom who birthed the Scavenger Pigeons from the shadows.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_U_P1_Angry" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step1_choices" OutputToken="ql_gt3_usta_a2">
+      <Text>{=sp_gt3_dlg_p1_angry}Breathe that scent deeply, old man. It is the butcher's bill for your decades of conspiracy and deceit.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_U_P1_Prag" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step1_choices" OutputToken="ql_gt3_usta_a2">
+      <Text>{=sp_gt3_dlg_p1_prag}I didn't scale this fortress for poetic metaphors. Dost is dead, and the master ciphers are mine. What is your will?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_U_P1_Ertele" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step1_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 2: Kor Usta'nin Felsefi Cevabi -->
+    <DialogNode Type="Npc" Id="GT3_Usta_A2" TargetAlias="KorUsta" InputToken="ql_gt3_usta_a2" OutputToken="ql_gt3_usta_step2_choices">
+      <Text>{=sp_gt3_dlg_u_philosophy}Deceit? No, little bird... Harmony! Calradia's monarchs are vain beasts who would drown this continent in blood for a patch of barren soil. The Shadow Roost gives their bloodlust a script. We whisper, we forge, we harvest their gold, and in return, we keep humanity from self-annihilation.</Text>
+    </DialogNode>
+
+    <!-- Tur 3: Oyuncu Elestirisi ve Sorgusu -->
+    <DialogNode Type="Player" Id="GT3_U_P2_Critique" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step2_choices" OutputToken="ql_gt3_usta_a3">
+      <Text>{=sp_gt3_dlg_p2_critique}You speak of harmony while you orchestrated fake wars, burned frontier settlements, and starved loyal clans!</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_U_P2_Future" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step2_choices" OutputToken="ql_gt3_usta_a3">
+      <Text>{=sp_gt3_dlg_p2_future}And now that the script has failed and your greatest puppet lies slain on the battlefield, what becomes of this roost?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_U_P2_Ertele" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step2_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 4: Kor Usta 3 Buyuk Yolu Sunar -->
+    <DialogNode Type="Npc" Id="GT3_Usta_A3" TargetAlias="KorUsta" InputToken="ql_gt3_usta_a3" OutputToken="ql_gt3_usta_step3_choices">
+      <Text>{=sp_gt3_dlg_u_three_paths}Now comes the anvil of destiny. The throne of the Roost is empty. You can claim the Shadow Master Ring and guide the realm from behind the curtain; you can burn this nest to ashes and walk away as an unchained ghost; or you can loose the forged decrees and watch three empires tear each other to shreds!</Text>
+    </DialogNode>
+
+    <!-- Tur 5: Oyuncu Kendi Yolu Uzerine Dusunur -->
+    <DialogNode Type="Player" Id="GT3_U_P3_Throne" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step3_choices" OutputToken="ql_gt3_usta_a4">
+      <Text>{=sp_gt3_dlg_p3_throne}Kings on thrones are easy to unseat, but the unseen puppeteer rules forever.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_U_P3_Burn" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step3_choices" OutputToken="ql_gt3_usta_a4">
+      <Text>{=sp_gt3_dlg_p3_burn}Every brick of this roost was laid with innocent blood. It deserves nothing but flame.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_U_P3_Fire" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step3_choices" OutputToken="ql_gt3_usta_a4">
+      <Text>{=sp_gt3_dlg_p3_fire}Why settle for ruling shadows when the entire world can be engulfed in glorious fire?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_U_P3_Ertele" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step3_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 6: Kor Usta Son Sozunu Soyler -->
+    <DialogNode Type="Npc" Id="GT3_Usta_A4" TargetAlias="KorUsta" InputToken="ql_gt3_usta_a4" OutputToken="ql_gt3_usta_final_choices">
+      <Text>{=sp_gt3_dlg_u_final_prompt}Speak your verdict, little pigeon. Calradia's crowns tremble in silence for your choice.</Text>
+    </DialogNode>
+
+    <!-- Tur 7: 3 BUYUK RADIKAL FINAL -->
     <!-- Secenek 1: Golge Bas Efendi -->
-    <DialogNode Type="Player" Id="GT3_Choice_BasEfendi" TargetAlias="KorUsta" InputToken="ql_gt3_usta_choices" OutputToken="close_window">
+    <DialogNode Type="Player" Id="GT3_Choice_BasEfendi" TargetAlias="KorUsta" InputToken="ql_gt3_usta_final_choices" OutputToken="close_window">
       <Text>{=sp_gt3_dlg2}You forgot the first rule you taught me, Master: 'The sharpest beak cracks the oldest roost.' From now on, I give the orders! (Poison the Blind Master &amp; Claim the Shadow Throne)</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="StageSuccess_GolgeBasEfendi" />
@@ -98,7 +152,7 @@
     </DialogNode>
 
     <!-- Secenek 2: Kirik Kukla -->
-    <DialogNode Type="Player" Id="GT3_Choice_KirikKukla" TargetAlias="KorUsta" InputToken="ql_gt3_usta_choices" OutputToken="close_window">
+    <DialogNode Type="Player" Id="GT3_Choice_KirikKukla" TargetAlias="KorUsta" InputToken="ql_gt3_usta_final_choices" OutputToken="close_window">
       <Text>{=sp_gt3_dlg3}You are no mastermind; you are a sewer rat lurking in the dark! No motherland, no honor—only lies and slaughter. This roost burns tonight! (Torch the Roost &amp; Slaughter the Fanatics)</Text>
       <Consequences>
         <Action Type="SpawnBanditParty" TargetAlias="FanatikMuhafizlar" Amount="40" PartyTemplateId="deserters_template" SettlementAlias="TunekSehri" StringValue="EngagePlayer" />
@@ -108,12 +162,16 @@
     </DialogNode>
 
     <!-- Secenek 3: Kuller Imparatorlugu (Kaos) -->
-    <DialogNode Type="Player" Id="GT3_Choice_Kaos" TargetAlias="KorUsta" InputToken="ql_gt3_usta_choices" OutputToken="close_window">
+    <DialogNode Type="Player" Id="GT3_Choice_Kaos" TargetAlias="KorUsta" InputToken="ql_gt3_usta_final_choices" OutputToken="close_window">
       <Text>{=sp_gt3_dlg4}The world does not seek order, Master. The world hungers for fire! I have dispatched the forged decrees to the monarchs of Calradia. At dawn, war horns shall sound! (Unleash Continental War)</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="StageSuccess_Kaos" />
       </Consequences>
     </DialogNode>
-  </CustomDialogs>
 
+    <!-- Erteleme Secenegi -->
+    <DialogNode Type="Player" Id="GT3_Choice_Ertele" TargetAlias="KorUsta" InputToken="ql_gt3_usta_final_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+  </CustomDialogs>
 </Questline>

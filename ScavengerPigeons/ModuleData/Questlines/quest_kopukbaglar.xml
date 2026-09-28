@@ -5,7 +5,6 @@
     <Condition Type="IsQuestCompleted" ObjectId="QLF_AnavataninIhaneti" Amount="1" />
   </Prerequisites>
 
-
   <Triggers>
     <Trigger EventType="AutoStart" />
   </Triggers>
@@ -63,25 +62,31 @@
       </OnTimeoutActions>
     </Stage>
 
+    <!-- ROTA B: Haini Öldürürsen (Dost'a Sadakat & 4 Mevsim) -->
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_kb_success_log}You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The ciphers were returned to {Dost_Link}, and your absolute loyalty to the Scavenger Pigeons has been proven once and for all.</LogText>
+      <LogText>{=sp_kb_success_log}You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost_Link}. Impressed by your unwavering devotion, Dost welcomed you into the deeper ranks of the realm's shadow service, promising to call upon you for four seasons of service.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="KillHero" TargetAlias="HainZanaatkar" />
-        <Action Type="ChangeRelation" TargetAlias="Dost" Amount="5" />
+        <Action Type="SetGlobalFlag" ObjectId="SP_Zanaatkar_Katledildi" Amount="1" />
+        <Action Type="ChangeRelation" TargetAlias="Dost" Amount="10" />
         <Action Type="ChangeRenown" Amount="30" />
         <Action Type="GiveItem" ObjectId="pigeon_secret_dagger" Amount="1" />
+        <Action Type="StartQuest" ObjectId="QLF_DostunGorevleri" />
       </OnEnterActions>
     </Stage>
 
+    <!-- ROTA A: Haini Öldürmezsen (Rüşvet Al / Kaçmasına İzin Ver) -->
     <Stage Id="StageYozlasma" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_kb_yozlasma_log}You accepted the traitor's bribe. You let {HainZanaatkar_Link} escape to a rival kingdom with the ciphers. You are richer and now wield the Pigeon's Secret Dagger, but you have betrayed the Motherland. {Dost_Link} remains unaware of your corruption.</LogText>
+      <LogText>{=sp_kb_yozlasma_log}You accepted the artisan's bribe and allowed {HainZanaatkar_Link} to vanish into the wilderness. You gained 25,000 gold and the Pigeon's Secret Dagger. Moments later, a dying black pigeon delivered the artisan's final cryptic message: Dost is playing everyone; The Black Ledger (The Black Ledger) hidden in the ciphers will burn Calradia. The hunt for the truth has begun!</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeFugitive" TargetAlias="HainZanaatkar" />
-        <Action Type="ChangeRenown" Amount="-20" />
-        <Action Type="ChangeRelation" TargetAlias="Dost" Amount="-10" />
+        <Action Type="SetGlobalFlag" ObjectId="SP_Zanaatkar_Kacti" Amount="1" />
+        <Action Type="ChangeRenown" Amount="20" />
+        <Action Type="ChangeCrimeRating" Amount="25" />
         <Action Type="GiveItem" ObjectId="pigeon_secret_dagger" Amount="1" />
+        <Action Type="StartQuest" ObjectId="QLF_KaranlikAg" />
       </OnEnterActions>
     </Stage>
 
@@ -90,13 +95,12 @@
       <Conditions />
       <OnEnterActions>
         <Action Type="ChangeRelation" TargetAlias="Dost" Amount="-15" />
-        <Action Type="ChangeRenown" Amount="-20" />
       </OnEnterActions>
     </Stage>
   </Stages>
 
   <CustomDialogs>
-    <!-- Stage 1: Dost ile bulusma -->
+    <!-- 1. DOST ILE BULUSMA: 7 ADIMLI DERIN LORE VE SOHBET AGACI -->
     <DialogNode Type="Player" Id="KB_Dost_Giris" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_kb_dost_a1" Priority="100">
       <Text>{=sp_kb_dlg1}I received your bloody pigeon message. What is the emergency?</Text>
       <Conditions>
@@ -104,56 +108,160 @@
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="KB_Dost_A1" TargetAlias="Dost" InputToken="ql_kb_dost_a1" OutputToken="ql_kb_dost_b1">
+    <DialogNode Type="Npc" Id="KB_Dost_A1" TargetAlias="Dost" InputToken="ql_kb_dost_a1" OutputToken="ql_kb_dost_step1_choices">
       <Text>{=sp_kb_dlg2}It's a disaster, my friend! The artisan, {HainZanaatkar_Link}... The one who gave you the fake assassination order. He wasn't just playing a role. He's a real double agent!</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="KB_Dost_B1" TargetAlias="Dost" InputToken="ql_kb_dost_b1" OutputToken="ql_kb_dost_a2">
-      <Text>{=sp_kb_dlg3}What did he do?</Text>
+    <!-- Tur 1: Oyuncunun Ilk Tepkisi -->
+    <DialogNode Type="Player" Id="KB_Dost_P1_Inq" TargetAlias="Dost" InputToken="ql_kb_dost_step1_choices" OutputToken="ql_kb_dost_a2">
+      <Text>{=sp_kb_dlg_tone_inq}A double agent? How could someone in the inner circle breach our security like that?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_Dost_P1_Skep" TargetAlias="Dost" InputToken="ql_kb_dost_step1_choices" OutputToken="ql_kb_dost_a2">
+      <Text>{=sp_kb_dlg_tone_skep}First you told me he was testing me, now you claim he is a traitor. How do I know who to trust?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_Dost_P1_Prag" TargetAlias="Dost" InputToken="ql_kb_dost_step1_choices" OutputToken="ql_kb_dost_a2">
+      <Text>{=sp_kb_dlg_tone_prag}Enough hand-wringing. What did he take, and what is the bounty on his head?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_Dost_P1_Ertele" TargetAlias="Dost" InputToken="ql_kb_dost_step1_choices" OutputToken="close_window">
+      <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="KB_Dost_A2" TargetAlias="Dost" InputToken="ql_kb_dost_a2" OutputToken="ql_kb_dost_b2">
-      <Text>{=sp_kb_dlg4}He stole our master ciphers and fled the city. He's planning to sell them to the enemy. He hired a massive mercenary army disguised as looters to escort him. We must stop him before he crosses the border!</Text>
+    <!-- Tur 2: Dost Arka Plani ve Tehlikeyi Aciklar -->
+    <DialogNode Type="Npc" Id="KB_Dost_A2" TargetAlias="Dost" InputToken="ql_kb_dost_a2" OutputToken="ql_kb_dost_step2_choices">
+      <Text>{=sp_kb_dlg_dost_leak}He held the master cipher archive—the true identities of every operative we planted across all kingdoms! Before dawn, he murdered two keepers and slipped through the gates. If he delivers those scrolls to the enemy, hundreds of our people will be rounded up and executed.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="KB_Dost_B2" TargetAlias="Dost" InputToken="ql_kb_dost_b2" OutputToken="ql_kb_dost_a3">
-      <Text>{=sp_kb_dlg5}Tell me what to do.</Text>
+    <!-- Tur 3: Oyuncu Riskleri ve Baglari Sorgular -->
+    <DialogNode Type="Player" Id="KB_Dost_P2_Risk" TargetAlias="Dost" InputToken="ql_kb_dost_step2_choices" OutputToken="ql_kb_dost_a3">
+      <Text>{=sp_kb_dlg_p2_risk}If our informants are exposed, will the high lords brand us as conspirators rather than protectors?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_Dost_P2_Motive" TargetAlias="Dost" InputToken="ql_kb_dost_step2_choices" OutputToken="ql_kb_dost_a3">
+      <Text>{=sp_kb_dlg_p2_motive}He spent decades serving the Pigeons. What could possibly drive an elder craftsman to such reckless treachery?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_Dost_P2_Ertele" TargetAlias="Dost" InputToken="ql_kb_dost_step2_choices" OutputToken="close_window">
+      <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="KB_Dost_A3" TargetAlias="Dost" InputToken="ql_kb_dost_a3" OutputToken="close_window">
-      <Text>{=sp_kb_dlg6}Hunt down his decoy looter parties. Destroy three of them. This will force his main convoy out of hiding. I am counting on you, Pigeon.</Text>
+    <!-- Tur 4: Dost Planin ve Dusman Birliklerinin Detayini Verir -->
+    <DialogNode Type="Npc" Id="KB_Dost_A3" TargetAlias="Dost" InputToken="ql_kb_dost_a3" OutputToken="ql_kb_dost_step3_choices">
+      <Text>{=sp_kb_dlg_dost_army}Gold, fear, and paranoia! He claims our society has become too powerful and orchestrates false wars. But he is a hypocrite—he hired 70 battle-hardened deserters disguised as common looters to guard his escape. He is marching toward the border passes right now.</Text>
+    </DialogNode>
+
+    <!-- Tur 5: Oyuncu Stratejiyi Tartar -->
+    <DialogNode Type="Player" Id="KB_Dost_P3_Tactics" TargetAlias="Dost" InputToken="ql_kb_dost_step3_choices" OutputToken="ql_kb_dost_a4">
+      <Text>{=sp_kb_dlg_p3_tactics}Seventy deserters with baggage can move fast. How do we pin them down without fighting the entire garrison?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_Dost_P3_Force" TargetAlias="Dost" InputToken="ql_kb_dost_step3_choices" OutputToken="ql_kb_dost_a4">
+      <Text>{=sp_kb_dlg_p3_force}Let him hire a thousand cutthroats. My blade will cut through his vanguard like straw. Where do I strike?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_Dost_P3_Ertele" TargetAlias="Dost" InputToken="ql_kb_dost_step3_choices" OutputToken="close_window">
+      <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 6: Dost Taktigi Belirler -->
+    <DialogNode Type="Npc" Id="KB_Dost_A4" TargetAlias="Dost" InputToken="ql_kb_dost_a4" OutputToken="ql_kb_dost_step4_choices">
+      <Text>{=sp_kb_dlg_dost_tactics}He deployed three decoy looter bands across the foothills to confuse our tracking hounds. Intercept and destroy those three decoy parties. Once his decoys are crushed, his main convoy will lose its screen and be forced to face you in the open.</Text>
+    </DialogNode>
+
+    <!-- Tur 7: Nihai Karar ve Gorevi Kabul -->
+    <DialogNode Type="Player" Id="KB_Dost_P4_Accept" TargetAlias="Dost" InputToken="ql_kb_dost_step4_choices" OutputToken="close_window">
+      <Text>{=sp_kb_dlg_p4_acc}Consider it done, Dost. I will bring back the master ciphers and end this treason. (Accept Hunt)</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Av" />
       </Consequences>
     </DialogNode>
+    <DialogNode Type="Player" Id="KB_Dost_P4_Prag" TargetAlias="Dost" InputToken="ql_kb_dost_step4_choices" OutputToken="close_window">
+      <Text>{=sp_kb_dlg_p4_prag}I will ride him down. But make sure the Motherland remembers who saved her throat today. (Accept Hunt)</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2_Av" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_Dost_P4_Ertele" TargetAlias="Dost" InputToken="ql_kb_dost_step4_choices" OutputToken="close_window">
+      <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
 
-    <!-- Stage 3: Konvoy ile Yuzlesme -->
-    <DialogNode Type="Npc" Id="KB_Konvoy_Giris" TargetAlias="Konvoy" InputToken="start" OutputToken="ql_kb_konvoy_b1" Priority="200">
+
+    <!-- 2. KONVOY ILE YUZLESME: 8 ADIMLI DRAMATIK HESAPLASMA VE BUYUK CATAL -->
+    <DialogNode Type="Npc" Id="KB_Konvoy_Giris" TargetAlias="Konvoy" InputToken="start" OutputToken="ql_kb_konvoy_step1_choices" Priority="200">
       <Text>{=sp_kb_dlg7}So, {PlayerName}... You actually found me. I am {HainZanaatkar.Name}. You Pigeons are truly relentless.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Yuzlesme" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="KB_Konvoy_B1" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_b1" OutputToken="ql_kb_konvoy_a2">
-      <Text>{=sp_kb_dlg8}Give me the ciphers, traitor. Your death will be quick.</Text>
+    <!-- Adim 1: Oyuncu Yuzlesmeyi Baslatir -->
+    <DialogNode Type="Player" Id="KB_K_P1_Inq" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step1_choices" OutputToken="ql_kb_konvoy_a2">
+      <Text>{=sp_kb_dlg_p_inq}Why run like a common thief? Why steal the very ciphers you swore to protect?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_K_P1_Harsh" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step1_choices" OutputToken="ql_kb_konvoy_a2">
+      <Text>{=sp_kb_dlg_p_harsh}Save your breath, rat. Hand over the master ciphers and get on your knees.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_K_P1_Prag" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step1_choices" OutputToken="ql_kb_konvoy_a2">
+      <Text>{=sp_kb_dlg_p_prag}You hired 70 deserters and spent a fortune to flee. What is in those ciphers that makes you run for your life?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_K_P1_Ertele" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step1_choices" OutputToken="close_window">
+      <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="KB_Konvoy_A2" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_a2" OutputToken="ql_kb_konvoy_choices">
-      <Text>{=sp_kb_dlg9}Wait! You blindly fight for {Dost_Link} and the Motherland. Do you even know what these ciphers contain? They are false-flag assassination orders to start an unjustified war! The Motherland is corrupt, my friend. Let me go, and I will give you a fortune and my legendary dagger.</Text>
+    <!-- Adim 2: Zanaatkar Ilk Katmani Acar -->
+    <DialogNode Type="Npc" Id="KB_Konvoy_A2" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_a2" OutputToken="ql_kb_konvoy_step2_choices">
+      <Text>{=sp_kb_dlg_k_layer1}You speak of theft, but you don't even know whose blood is on your hands! You think you are fighting for the Motherland and your noble friend Dost. But you are nothing more than his blinded executioner!</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="KB_Konvoy_Choice1" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_choices" OutputToken="close_window">
-      <Text>{=sp_kb_dlg10}The lies of a traitor mean nothing to me. Men, attack! (Fight)</Text>
-      <!-- Ends conversation to start the battle. When player wins, the Stage3 condition DefeatedParties completes the quest. -->
+    <!-- Adim 3: Oyuncu Sorgulamayi Derinlestirir -->
+    <DialogNode Type="Player" Id="KB_K_P2_Accuse" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step2_choices" OutputToken="ql_kb_konvoy_a3">
+      <Text>{=sp_kb_dlg_p2_accuse}Dost warned me you would spew poison. You're selling our defense archives to foreign crowns to save your own hide!</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_K_P2_Curious" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step2_choices" OutputToken="ql_kb_konvoy_a3">
+      <Text>{=sp_kb_dlg_p2_curious}Whose blood? What did you discover in those master ciphers that made you turn against your own brothers?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_K_P2_Ertele" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step2_choices" OutputToken="close_window">
+      <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="KB_Konvoy_Choice2" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_choices" OutputToken="ql_kb_konvoy_bribe_end">
-      <Text>{=sp_kb_dlg11}A false-flag war? Hand over the gold and the dagger, and get out of my sight.</Text>
+    <!-- Adim 4: Zanaatkar Kara Kutuk ve Sahte Savaslari Ifsa Eder -->
+    <DialogNode Type="Npc" Id="KB_Konvoy_A3" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_a3" OutputToken="ql_kb_konvoy_step3_choices">
+      <Text>{=sp_kb_dlg_k_ledger_reveal}Defense archives? Lies! These ciphers contain the 'Black Ledger' (Kara Kütük)—the secret record of every false-flag raid Dost orchestrated! He hires deserters to slaughter frontier villages under rival banners, forcing kings into wars so the Pigeons can sell protection and intelligence at extortionate prices!</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="KB_Konvoy_A3" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_bribe_end" OutputToken="close_window">
-      <Text>{=sp_kb_dlg12}A wise choice. The Pigeons are Fools. Farewell, {PlayerName}.</Text>
+    <!-- Adim 5: Oyuncu Ikilemi Tartar -->
+    <DialogNode Type="Player" Id="KB_K_P3_Doubt" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step3_choices" OutputToken="ql_kb_konvoy_a4">
+      <Text>{=sp_kb_dlg_p3_doubt}Manufactured wars... Is that why you gave me an assassination contract against Dost when we first met?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_K_P3_Skeptical" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step3_choices" OutputToken="ql_kb_konvoy_a4">
+      <Text>{=sp_kb_dlg_p3_skep}Even if Dost is ruthless, you are surrounded by 70 cutthroats. Why should I trust a mercenary commander over a kingdom lord?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_K_P3_Ertele" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step3_choices" OutputToken="close_window">
+      <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Adim 6: Zanaatkar Teklifini Yapar (Servet ve Hancer) -->
+    <DialogNode Type="Npc" Id="KB_Konvoy_A4" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_a4" OutputToken="ql_kb_konvoy_final_choices">
+      <Text>{=sp_kb_dlg_k_offer}Yes! I tried to have him killed to save Calradia from another continental bloodbath, but you refused! Now my only desire is to live. Let me cross this border, {PlayerName}. Take my 25,000 gold and my Pigeon's Secret Dagger. Dost will never know. You can walk away wealthy and unburdened!</Text>
+    </DialogNode>
+
+    <!-- Adim 7: BUYUK KARAR ANI (ROTA A vs ROTA B) -->
+    <!-- ROTA B: Haini Oldur (Dost'a Sadakat) -->
+    <DialogNode Type="Player" Id="KB_Konvoy_Choice_Fight_Loyal" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_final_choices" OutputToken="close_window">
+      <Text>{=sp_kb_dlg10}The poisoned tongue of a traitor cannot deceive me. The Motherland's justice will be served! Men, attack! (Fight)</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KB_Konvoy_Choice_Fight_Pragmatic" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_final_choices" OutputToken="close_window">
+      <Text>{=sp_kb_dlg_fight_prag}Your dagger and your gold will be mine once your corpse hits the dirt anyway. Draw your steel! (Fight)</Text>
+    </DialogNode>
+
+    <!-- ROTA A: Haini Oldurmezsen (Rusvet Al / Kacmasina Izin Ver) -->
+    <DialogNode Type="Player" Id="KB_Konvoy_Choice_Bribe" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_final_choices" OutputToken="ql_kb_konvoy_bribe_end">
+      <Text>{=sp_kb_dlg11}False-flag wars and puppet masters? Hand over the 25,000 gold and that dagger, and disappear across the border. (Accept Bribe &amp; Let Escape)</Text>
+    </DialogNode>
+
+    <!-- Erteleme Secenegi -->
+    <DialogNode Type="Player" Id="KB_Konvoy_Choice_Ertele" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_final_choices" OutputToken="close_window">
+      <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Rusvet Kapanisi -->
+    <DialogNode Type="Npc" Id="KB_Konvoy_A5_BribeEnd" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_bribe_end" OutputToken="close_window">
+      <Text>{=sp_kb_dlg12}A wise decision... The Pigeons are blind fools, but you have eyes to see. Take the gold and the dagger. Farewell, {PlayerName}!</Text>
       <Consequences>
         <Action Type="AddGold" Amount="25000" />
         <Action Type="ChangeStage" ObjectId="StageYozlasma" />
@@ -162,5 +270,4 @@
       </Consequences>
     </DialogNode>
   </CustomDialogs>
-
 </Questline>

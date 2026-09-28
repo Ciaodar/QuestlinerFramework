@@ -63,6 +63,13 @@
       <Text>{=sp_yd_dlg5}Nice try. You have a knack for tactics.</Text>
     </DialogNode>
 
+    <DialogNode Type="Player" Id="YD_Prequel_Ertele" TargetAlias="looters" InputToken="ql_prequel_choices" OutputToken="close_window">
+      <Text>{=sp_yd_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
+    </DialogNode>
+
     <DialogNode Type="Npc" Id="A2_Inanis" TargetAlias="looters" InputToken="ql_capulcu_inanis" OutputToken="ql_prequel_subchoices">
       <Text>{=sp_yd_dlg6}You believe me. I knew it!</Text>
     </DialogNode>
@@ -85,6 +92,13 @@
       <Text>{=sp_yd_dlg9}Every word spoken holds importance. Yet, an honorless looter's head cannot stay on his shoulders! (Attack)</Text>
       <Consequences>
         <Action Type="StartQuest" ObjectId="QLF_YaDogruysa" />
+      </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="YD_Prequel_Sub_Ertele" TargetAlias="looters" InputToken="ql_prequel_subchoices" OutputToken="close_window">
+      <Text>{=sp_yd_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
@@ -150,6 +164,10 @@
       <Consequences>
         <Action Type="FailQuest" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Berber_B4_Ertele" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="close_window">
+      <Text>{=sp_yd_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Berber_A5_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a5" OutputToken="close_window">

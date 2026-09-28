@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_KaranlikAg" Title="{=sp_ka_title}The Black Ledger &amp; The Web of Shadows" TimeLimitInDays="60">
+
+  <Prerequisites>
+    <Condition Type="GlobalFlag" ObjectId="SP_Zanaatkar_Kacti" Amount="1" />
+    <Condition Type="IsQuestCompleted" ObjectId="QLF_KopukBaglar" Amount="1" />
+  </Prerequisites>
+
+  <Triggers>
+    <Trigger EventType="AutoStart" />
+  </Triggers>
+
+  <TargetResolvers>
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
+    <Resolver Alias="GizliSehir" TargetType="Settlement" Filters="Town" Selector="Nearest" />
+    <Resolver Alias="KaraMuhbir" TargetType="Hero" Filters="GangLeader" RequiredSettlementAlias="GizliSehir" Selector="Random" />
+    <Resolver Alias="GolgeSuikastcilar" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
+    <Resolver Alias="KasaKorumasi" TargetType="Hero" Filters="Artisan" RequiredSettlementAlias="GizliSehir" Selector="Random" />
+  </TargetResolvers>
+
+  <Stages>
+    <Stage Id="Stage0_CanCekisenGuvercin" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="1">
+      <LogText>{=sp_ka_s0_log}A dying black pigeon collapsed onto your campfire, its claws clutching a scorched parchment written in the fugitive artisan's trembling hand: 'You gave me mercy, and now I give you truth. Dost is not serving the Motherland; he is turning it into an abattoir. The Black Ledger (The Black Ledger) detailing every manufactured war and staged assassination is hidden in {GizliSehir_Link}. Find the broker {KaraMuhbir_Link} before Dost's silencers bury the truth.'</LogText>
+      <Conditions />
+      <OnTimeoutActions>
+        <Action Type="ChangeStage" ObjectId="Stage1_MuhbirBulusma" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage1_MuhbirBulusma" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ka_s1_log}Ride to {GizliSehir_Link} and locate the underworld broker {KaraMuhbir_Link}. You must uncover the location of the cipher vault holding the Black Ledger.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="KaraMuhbir" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage2_PusuSavasi" NextStageId="Stage3_KasaAcilis" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ka_s2_log}Just as {KaraMuhbir_Link} confessed, Dost's death squad {GolgeSuikastcilar_Link} ambushed the district to silence anyone seeking the Black Ledger! Slay the assassins to survive and secure the coordinates to the cipher vault.</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="GolgeSuikastcilar" Amount="1" />
+      </Conditions>
+      <OnExitActions>
+        <Action Type="MakeMet" TargetAlias="KasaKorumasi" />
+      </OnExitActions>
+    </Stage>
+
+    <Stage Id="Stage3_KasaAcilis" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ka_s3_log}With the assassins broken, seek out the vault keeper {KasaKorumasi_Link} in {GizliSehir_Link} to unlock the iron casket and seize the Black Ledger.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="KasaKorumasi" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_ka_s_success_log}The Black Ledger (The Black Ledger) is now in your hands! Its blackened pages expose Dost and the Scavenger Pigeons as the architects behind endless border conflicts across Calradia. Armed with the realm's deadliest blackmail, you gained 60,000 denars, 60 renown, and cemented your feared standing in the shadows.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="GiveItem" ObjectId="raven_bone_cipher" Amount="1" />
+        <Action Type="AddGold" Amount="60000" />
+        <Action Type="ChangeRenown" Amount="60" />
+        <Action Type="ChangeCrimeRating" Amount="30" />
+        <Action Type="SetGlobalFlag" ObjectId="SP_KaraKutuk_EleGecirildi" Amount="1" />
+      </OnEnterActions>
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- 1. YERALTI MUHBIRI ILE BULUSMA: 7 ADIMLI DERIN LORE VE SOHBET AGACI -->
+    <DialogNode Type="Player" Id="KA_Muhbir_Giris" TargetAlias="KaraMuhbir" InputToken="hero_main_options" OutputToken="ql_ka_muhbir_a1" Priority="200">
+      <Text>{=sp_ka_dlg_m_entry}I am looking for the one who keeps records of the shadow trade.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_MuhbirBulusma" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KA_Muhbir_A1" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_a1" OutputToken="ql_ka_muhbir_step1_choices">
+      <Text>{=sp_ka_dlg_m_intro}Keep your voice down, stranger! The street stones have ears, and Dost's silencers are lurking around every corner. Who sent you into my den?</Text>
+    </DialogNode>
+
+    <!-- Tur 1: Oyuncu Tepkisi -->
+    <DialogNode Type="Player" Id="KA_M_P1_Inq" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step1_choices" OutputToken="ql_ka_muhbir_a2">
+      <Text>{=sp_ka_dlg_p1_inq}A dying black pigeon reached me from the frontier. The fugitive artisan told me you hold the key to the Black Ledger.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_M_P1_Skep" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step1_choices" OutputToken="ql_ka_muhbir_a2">
+      <Text>{=sp_ka_dlg_p1_skep}You look terrified. Are you an honest broker of secrets, or another bait laid out by Dost?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_M_P1_Prag" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step1_choices" OutputToken="ql_ka_muhbir_a2">
+      <Text>{=sp_ka_dlg_p1_prag}I didn't come to exchange pleasantries. Point me to the cipher archive, or I leave you to Dost's hounds.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_M_P1_Ertele" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step1_choices" OutputToken="close_window">
+      <Text>{=sp_ka_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 2: Muhbir Ilk Bilgiyi Verir -->
+    <DialogNode Type="Npc" Id="KA_Muhbir_A2" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_a2" OutputToken="ql_ka_muhbir_step2_choices">
+      <Text>{=sp_ka_dlg_m_pigeon_reveal}So the artisan's bird reached someone after all... That brave fool tried to stop the war machine. What do you want from an old bookkeeper like me? Knowing what is inside that ledger is a death warrant across the whole continent!</Text>
+    </DialogNode>
+
+    <!-- Tur 3: Oyuncu Detaylari ve Tehlikeleri Sorgular -->
+    <DialogNode Type="Player" Id="KA_M_P2_WhyTerror" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step2_choices" OutputToken="ql_ka_muhbir_a3">
+      <Text>{=sp_ka_dlg_p2_why}Why a death warrant? What could be written on parchment that frightens every lord in Calradia?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_M_P2_DostComplicity" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step2_choices" OutputToken="ql_ka_muhbir_a3">
+      <Text>{=sp_ka_dlg_p2_dost}How deeply is Dost involved? Is he merely a rogue operative, or does the entire Scavenger Pigeon leadership answer to him?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_M_P2_Ertele" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step2_choices" OutputToken="close_window">
+      <Text>{=sp_ka_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 4: Muhbir Kara Kutuk'un Korkunc Hakikatini Acar -->
+    <DialogNode Type="Npc" Id="KA_Muhbir_A3" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_a3" OutputToken="ql_ka_muhbir_step3_choices">
+      <Text>{=sp_ka_dlg_m_ledger_lore}It is the ledger of manufactured wars! Over forty lords from three rival kingdoms paid Dost to assassinate legitimate heirs, poison wells, and stage border raids. Dost orchestrates the slaughter, and the Pigeons sell both sides the intelligence to fight! The ledger is Dost's ultimate insurance against kings.</Text>
+    </DialogNode>
+
+    <!-- Tur 5: Oyuncu Pusu Tehlikesini Sezer -->
+    <DialogNode Type="Player" Id="KA_M_P3_Power" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step3_choices" OutputToken="ql_ka_muhbir_a4">
+      <Text>{=sp_ka_dlg_p3_power}Whoever controls this ledger holds the collar of every corrupt ruler in Calradia. Where is the vault?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_M_P3_Doubt" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step3_choices" OutputToken="ql_ka_muhbir_a4">
+      <Text>{=sp_ka_dlg_p3_doubt}If Dost keeps such a dangerous record here, his personal guard cannot be far behind.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_M_P3_Ertele" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step3_choices" OutputToken="close_window">
+      <Text>{=sp_ka_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 6: Muhbir Panikle Pusuyu Gorur -->
+    <DialogNode Type="Npc" Id="KA_Muhbir_A4" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_a4" OutputToken="ql_ka_muhbir_step4_choices">
+      <Text>{=sp_ka_dlg_m_ambush_panic}You're right! Curse the heavens—look past the alleyway! Shadow cloaks and drawn crossbows... Dost's elite death squad has encircled the district! They know I've revealed the location! We are cornered!</Text>
+    </DialogNode>
+
+    <!-- Tur 7: Oyuncu Savasa Karar Verir -->
+    <DialogNode Type="Player" Id="KA_M_P4_Fight_Heroic" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step4_choices" OutputToken="close_window">
+      <Text>{=sp_ka_dlg_p4_fight_heroic}Let Dost send his butchers. Today, the shadows bleed like mortals! (Draw Steel &amp; Defend)</Text>
+      <Consequences>
+        <Action Type="SpawnBanditParty" TargetAlias="GolgeSuikastcilar" Amount="45" PartyTemplateId="deserters_template" StringValue="{=sp_ka_assassins}Dost's Shadow Assassins" />
+        <Action Type="SetPartyAi" TargetAlias="GolgeSuikastcilar" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="ChangeStage" ObjectId="Stage2_PusuSavasi" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_M_P4_Fight_Prag" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step4_choices" OutputToken="close_window">
+      <Text>{=sp_ka_dlg_p4_fight_prag}Barricade the inner door, old man. I will turn their ambush into their graveyard. (Fight)</Text>
+      <Consequences>
+        <Action Type="SpawnBanditParty" TargetAlias="GolgeSuikastcilar" Amount="45" PartyTemplateId="deserters_template" StringValue="{=sp_ka_assassins}Dost's Shadow Assassins" />
+        <Action Type="SetPartyAi" TargetAlias="GolgeSuikastcilar" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="ChangeStage" ObjectId="Stage2_PusuSavasi" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_M_P4_Ertele" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step4_choices" OutputToken="close_window">
+      <Text>{=sp_ka_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+
+    <!-- 2. KASA KORUYUCUSU ILE BULUSMA: 6 ADIMLI DERIN IFTAR VE KASAYI ALIS -->
+    <DialogNode Type="Player" Id="KA_Kasa_Giris" TargetAlias="KasaKorumasi" InputToken="hero_main_options" OutputToken="ql_ka_kasa_a1" Priority="200">
+      <Text>{=sp_ka_dlg_k_entry}The assassins outside will bother you no longer. I have come for the Black Ledger.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_KasaAcilis" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="KA_Kasa_A1" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_a1" OutputToken="ql_ka_kasa_step1_choices">
+      <Text>{=sp_ka_dlg_k_intro}You cut down Dost's elite blades like wheat... I watched from the parapet. The iron casket is right here, sealed under the mark of the Raven Bone.</Text>
+    </DialogNode>
+
+    <!-- Tur 1: Oyuncu Sorulari -->
+    <DialogNode Type="Player" Id="KA_K_P1_Inq" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_step1_choices" OutputToken="ql_ka_kasa_a2">
+      <Text>{=sp_ka_dlg_k_inq}What is the most damning truth recorded within these pages?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_K_P1_Skep" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_step1_choices" OutputToken="ql_ka_kasa_a2">
+      <Text>{=sp_ka_dlg_k_skep}How do I know this isn't another forged deception crafted to misdirect my blade?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_K_P1_Prag" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_step1_choices" OutputToken="ql_ka_kasa_a2">
+      <Text>{=sp_ka_dlg_k_prag}Enough philosophy. Crack the seals and place the casket in my custody.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_K_P1_Ertele" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_step1_choices" OutputToken="close_window">
+      <Text>{=sp_ka_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 2: Koruyucunun Aciklamasi -->
+    <DialogNode Type="Npc" Id="KA_Kasa_A2" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_a2" OutputToken="ql_ka_kasa_final_choices">
+      <Text>{=sp_ka_dlg_k_reveal}Every wax seal on these sheets bears the personal crest of Dost and the secret council. It proves that every skirmish, every raided caravan, and every slandered noble in the realm was orchestrated to siphon wealth into the Scavenger Pigeons' coffers. Whoever holds this holds the leash of Calradia's rulers.</Text>
+    </DialogNode>
+
+    <!-- Tur 3: Karar ve Gorevin Sonu -->
+    <DialogNode Type="Player" Id="KA_K_P2_Ruler" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_final_choices" OutputToken="close_window">
+      <Text>{=sp_ka_dlg_fin_ruler}With this ledger, Dost's puppet empire is finished. From now on, the shadows answer to me. (Claim the Black Ledger)</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="StageSuccess" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_K_P2_Prag" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_final_choices" OutputToken="close_window">
+      <Text>{=sp_ka_dlg_fin_prag}Power and gold always follow the truth. I will keep this weapon close. (Claim the Black Ledger)</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="StageSuccess" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="KA_K_P2_Ertele" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_final_choices" OutputToken="close_window">
+      <Text>{=sp_ka_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+  </CustomDialogs>
+</Questline>

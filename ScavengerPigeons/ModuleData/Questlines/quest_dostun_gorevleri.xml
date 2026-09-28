@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Questline Id="QLF_DostunGorevleri" Title="{=sp_dg_title}Four Seasons of Service" TimeLimitInDays="90">
+
+  <Prerequisites>
+    <Condition Type="GlobalFlag" ObjectId="SP_Zanaatkar_Katledildi" Amount="1" />
+    <Condition Type="IsQuestCompleted" ObjectId="QLF_KopukBaglar" Amount="1" />
+  </Prerequisites>
+
+  <Triggers>
+    <Trigger EventType="AutoStart" />
+  </Triggers>
+
+  <TargetResolvers>
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
+    <Resolver Alias="BaharSehir" TargetType="Settlement" Filters="Town, SameKingdomAs(Dost)" Selector="Nearest" />
+    <Resolver Alias="BaharOperatifi" TargetType="Hero" Filters="Artisan" RequiredSettlementAlias="BaharSehir" Selector="Random" />
+    <Resolver Alias="YazSehir" TargetType="Settlement" Filters="Town" Selector="SecondNearest" />
+    <Resolver Alias="YazKuryesi" TargetType="Hero" Filters="Merchant" RequiredSettlementAlias="YazSehir" Selector="Random" />
+    <Resolver Alias="SonbaharHaydutlar" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
+    <Resolver Alias="KisSehir" TargetType="Settlement" Filters="Town, SameKingdomAs(Dost)" Selector="Furthest" />
+    <Resolver Alias="KisSarayli" TargetType="Hero" Filters="Headman, SameKingdomAs(Dost)" Selector="Nearest" />
+    <Resolver Alias="DerinKanatUlagi" TargetType="Hero" Filters="Artisan, !Target(BaharOperatifi)" Selector="Random" />
+  </TargetResolvers>
+
+  <Stages>
+    <!-- Bahar: Bekleme ve Casusluk -->
+    <Stage Id="Stage0_Bahar_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
+      <LogText>{=sp_dg_s0_log}With the traitor executed, you have proven your absolute loyalty to {Dost_Link}. The true motives of the Scavenger Pigeons remain veiled in patriotic duty. You await your first seasonal order on the 7th day of Spring...</LogText>
+      <Conditions />
+      <OnTimeoutActions>
+        <Action Type="ChangeStage" ObjectId="Stage1_Bahar_Casusluk" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage1_Bahar_Casusluk" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_dg_s1_log}Spring Service - Espionage: A pigeon from {Dost_Link} directs you to {BaharSehir_Link}. Meet with operative {BaharOperatifi_Link} to receive decoded foreign intelligence.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="BaharOperatifi" />
+      </OnEnterActions>
+    </Stage>
+
+    <!-- Yaz: Bekleme ve Kuryelik -->
+    <Stage Id="Stage2_Yaz_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
+      <LogText>{=sp_dg_s2_wait_log}The Spring espionage task was completed. As Summer heat sweeps across Calradia, you await {Dost_Link}'s next assignment on the 7th day of Summer...</LogText>
+      <Conditions />
+      <OnTimeoutActions>
+        <Action Type="ChangeStage" ObjectId="Stage2_Yaz_Kuryelik" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage2_Yaz_Kuryelik" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_dg_s2_log}Summer Service - Courier Dispatch: Ride to {YazSehir_Link} and deliver an urgent, wax-sealed diplomatic cylinder to {YazKuryesi_Link} without breaking the seal.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="YazKuryesi" />
+      </OnEnterActions>
+    </Stage>
+
+    <!-- Sonbahar: Bekleme ve Savaşçılık -->
+    <Stage Id="Stage3_Sonbahar_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
+      <LogText>{=sp_dg_s3_wait_log}The dispatch reached its destination. As autumn leaves fall, {Dost_Link} summons your martial strength for the 7th day of Autumn...</LogText>
+      <Conditions />
+      <OnTimeoutActions>
+        <Action Type="SpawnBanditParty" TargetAlias="SonbaharHaydutlar" Amount="35" PartyTemplateId="deserters_template" StringValue="{=sp_dg_raiders}Hostile Deserters" />
+        <Action Type="SetPartyAi" TargetAlias="SonbaharHaydutlar" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="ChangeStage" ObjectId="Stage3_Sonbahar_Savas" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage3_Sonbahar_Savas" NextStageId="Stage4_Kis_Bekleme" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_dg_s3_log}Autumn Service - Combat: Hostile raiders {SonbaharHaydutlar_Link} are harassing Pigeon supply routes along the frontier. Hunt them down and eliminate them to ensure secure transit for the realm.</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="SonbaharHaydutlar" Amount="1" />
+      </Conditions>
+    </Stage>
+
+    <!-- Kış: Bekleme ve Saray Ayak İşleri -->
+    <Stage Id="Stage4_Kis_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
+      <LogText>{=sp_dg_s4_wait_log}The border is secured. Winter's frost envelops the realm, and on the 7th day of Winter, delicate palace affairs require your discretion...</LogText>
+      <Conditions />
+      <OnTimeoutActions>
+        <Action Type="ChangeStage" ObjectId="Stage4_Kis_Saray" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage4_Kis_Saray" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_dg_s4_log}Winter Service - Court Affairs: Travel to {KisSehir_Link} and contact {KisSarayli_Link} to plant forged directives in the local registry to steer the noble council.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="KisSarayli" />
+      </OnEnterActions>
+    </Stage>
+
+    <!-- 5. Görev: Derin Kanat & Büyük İkilem -->
+    <Stage Id="Stage5_DerinKanat_SuikastEmri" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_dg_s5_log}The four seasons of service are complete. But an unmarked black raven has arrived, directing you to meet {DerinKanatUlagi_Link}. The inner council has issued a shocking, unprecedented assassination decree: The target is none other than {Dost_Link}!</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="DerinKanatUlagi" />
+      </OnEnterActions>
+    </Stage>
+
+    <!-- Final A: Kör Sadakat -->
+    <Stage Id="StageSuccess_KorSadakat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_dg_s_korsadakat_log}You refused to entertain the words of a traitor and struck down {DerinKanatUlagi_Link} where he stood. You rode to {Dost_Link} and reported the coup attempt within the ranks. Overwhelmed by your unyielding, incorruptible loyalty, Dost gifted you 50,000 denars and named you his eternal champion. You remained a steadfast guardian of the Motherland.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="AddGold" Amount="50000" />
+        <Action Type="ChangeRenown" Amount="50" />
+        <Action Type="ChangeRelation" TargetAlias="Dost" Amount="25" />
+      </OnEnterActions>
+    </Stage>
+
+    <!-- Final B: Gölge Rotası -->
+    <Stage Id="StageSuccess_GolgeRotasi" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
+      <LogText>{=sp_dg_s_golgerotasi_log}You held your blade and listened to {DerinKanatUlagi_Link}. The documents he provided tore the veil from your eyes: {Dost_Link} has orchestrated every crisis, every border war, and every death to line his own pockets. The courier handed you the Raven Bone Cipher and directed you to the hidden sanctuary of the Shadow Roost (Gölge Tüneği). But Dost already senses your defiance...</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="GiveItem" ObjectId="raven_bone_cipher" Amount="1" />
+        <Action Type="ChangeRenown" Amount="40" />
+        <Action Type="StartQuest" ObjectId="QLF_GolgeTunegi_Cagri" />
+      </OnEnterActions>
+    </Stage>
+  </Stages>
+
+  <CustomDialogs>
+    <!-- 1. BAHAR DIYALOGLARI: CASUSLUK -->
+    <DialogNode Type="Player" Id="DG_Bahar_Player" TargetAlias="BaharOperatifi" InputToken="hero_main_options" OutputToken="ql_dg_bahar_a1" Priority="200">
+      <Text>{=sp_dg_dlg_b_entry}I am here on behalf of Dost. Spring intelligence must be transferred.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_Bahar_Casusluk" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="DG_Bahar_A1" TargetAlias="BaharOperatifi" InputToken="ql_dg_bahar_a1" OutputToken="ql_dg_bahar_step1_choices">
+      <Text>{=sp_dg_dlg_b_npc}The pigeon flew swiftly. The foreign garrisons are shifting patrols. Here are the decoded ciphers for Dost.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="DG_Bahar_P_Acc" TargetAlias="BaharOperatifi" InputToken="ql_dg_bahar_step1_choices" OutputToken="close_window">
+      <Text>{=sp_dg_dlg_b_acc}The Motherland's eyes are everywhere. I will ensure these reach our archive.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2_Yaz_Bekleme" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_Bahar_P_Inq" TargetAlias="BaharOperatifi" InputToken="ql_dg_bahar_step1_choices" OutputToken="close_window">
+      <Text>{=sp_dg_dlg_b_inq}Do these ciphers indicate an imminent attack, or just routine maneuvers?</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage2_Yaz_Bekleme" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_Bahar_P_Ertele" TargetAlias="BaharOperatifi" InputToken="ql_dg_bahar_step1_choices" OutputToken="close_window">
+      <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- 2. YAZ DIYALOGLARI: KURYELIK -->
+    <DialogNode Type="Player" Id="DG_Yaz_Player" TargetAlias="YazKuryesi" InputToken="hero_main_options" OutputToken="ql_dg_yaz_a1" Priority="200">
+      <Text>{=sp_dg_dlg_y_entry}I bear a sealed cylinder from Dost for the Summer trade convoy.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_Yaz_Kuryelik" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="DG_Yaz_A1" TargetAlias="YazKuryesi" InputToken="ql_dg_yaz_a1" OutputToken="ql_dg_yaz_step1_choices">
+      <Text>{=sp_dg_dlg_y_npc}The seal is unbroken... Praise the heavens. This guarantees our caravans passage across contested borders without imperial tariff.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="DG_Yaz_P_Acc" TargetAlias="YazKuryesi" InputToken="ql_dg_yaz_step1_choices" OutputToken="close_window">
+      <Text>{=sp_dg_dlg_y_acc}My duty is fulfilled. Guard those manifests well.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_Sonbahar_Bekleme" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_Yaz_P_Inq" TargetAlias="YazKuryesi" InputToken="ql_dg_yaz_step1_choices" OutputToken="close_window">
+      <Text>{=sp_dg_dlg_y_inq}How does a secret society secure trade immunity from rival kings?</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_Sonbahar_Bekleme" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_Yaz_P_Ertele" TargetAlias="YazKuryesi" InputToken="ql_dg_yaz_step1_choices" OutputToken="close_window">
+      <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- 3. KIŞ DIYALOGLARI: SARAY AYAK İŞLERİ -->
+    <DialogNode Type="Player" Id="DG_Kis_Player" TargetAlias="KisSarayli" InputToken="hero_main_options" OutputToken="ql_dg_kis_a1" Priority="200">
+      <Text>{=sp_dg_dlg_k_entry}Winter has come. I bring the registry directives from Dost.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage4_Kis_Saray" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="DG_Kis_A1" TargetAlias="KisSarayli" InputToken="ql_dg_kis_a1" OutputToken="ql_dg_kis_step1_choices">
+      <Text>{=sp_dg_dlg_k_npc}Right on schedule. These forged seals will replace the tax ledgers tonight. The council will vote exactly as Dost demands.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="DG_Kis_P_Acc" TargetAlias="KisSarayli" InputToken="ql_dg_kis_step1_choices" OutputToken="close_window">
+      <Text>{=sp_dg_dlg_k_acc}The four seasons of service are nearly complete. Proceed as planned.</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage5_DerinKanat_SuikastEmri" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_Kis_P_Inq" TargetAlias="KisSarayli" InputToken="ql_dg_kis_step1_choices" OutputToken="close_window">
+      <Text>{=sp_dg_dlg_k_inq}Doesn't tampering with royal registries risk the wrath of the crown?</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage5_DerinKanat_SuikastEmri" />
+      </Consequences>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_Kis_P_Ertele" TargetAlias="KisSarayli" InputToken="ql_dg_kis_step1_choices" OutputToken="close_window">
+      <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- 4. GÖREV 5: DERİN KANAT VE BÜYÜK İKİLEM (8 ADIMLI DERİN DİYALOG) -->
+    <DialogNode Type="Player" Id="DG_Derin_Player_Giris" TargetAlias="DerinKanatUlagi" InputToken="hero_main_options" OutputToken="ql_dg_derin_a1" Priority="200">
+      <Text>{=sp_dg_dlg_d_entry}A black raven brought me your summons. Who are you, and what is this urgent contract?</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage5_DerinKanat_SuikastEmri" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="DG_Derin_A1" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_a1" OutputToken="ql_dg_derin_step1_choices">
+      <Text>{=sp_dg_dlg_d_npc}You proved your discipline through four seasons of service, {PlayerName}. But the time for petty errands has ended. The deep wing of the Scavenger Pigeons has chosen you for the supreme task: {Dost_Link} must be executed tonight.</Text>
+    </DialogNode>
+
+    <!-- Tur 1: Oyuncu İsyanı (Zanaatkar Atfı & Rol Yapma Seçenekleri) -->
+    <DialogNode Type="Player" Id="DG_D_P1_Angry" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step1_choices" OutputToken="ql_dg_derin_a2">
+      <Text>{=sp_dg_dlg_p_angry}Why are you committing such treachery?! Don't you know what happened to the last person who gave me this mission?! I hunted that artisan down and put him to the sword!</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_D_P1_Skep" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step1_choices" OutputToken="ql_dg_derin_a2">
+      <Text>{=sp_dg_dlg_p_skep}Another assassination order against Dost? Is this another twisted loyalty test orchestrated by the Pigeons, or have you all lost your minds?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_D_P1_Prag" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step1_choices" OutputToken="ql_dg_derin_a2">
+      <Text>{=sp_dg_dlg_p_prag}Dost rewarded me with gold and honor, while you whisper treason in dark corners. Give me one reason not to take your head right now.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_D_P1_Ertele" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step1_choices" OutputToken="close_window">
+      <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 2: Derin Kanat Ulağının Yalvarışı ve İtirafı (Kullanıcı Direktif Metni) -->
+    <DialogNode Type="Npc" Id="DG_Derin_A2" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_a2" OutputToken="ql_dg_derin_step2_choices">
+      <Text>{=sp_dg_dlg_d_reply}We are desperately trying to rid the realm of the true traitor to the motherland! Dost is the real puppeteer of fabricated wars. The artisan you killed saw the darkness coming and tried to warn you! The dispatches you carried through four seasons didn't protect peace—they sparked border clashes for his personal profit!</Text>
+    </DialogNode>
+
+    <!-- Tur 3: Oyuncu Dört Mevsimlik Hizmetini ve Çelişkiyi Sorgular -->
+    <DialogNode Type="Player" Id="DG_D_P2_ServiceDoubt" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step2_choices" OutputToken="ql_dg_derin_a3">
+      <Text>{=sp_dg_dlg_p2_doubt}I served him through Spring, Summer, Autumn, and Winter! I carried dispatches, crushed deserters, planted directives. Are you saying all of it was a puppet show?!</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_D_P2_AccuseCourier" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step2_choices" OutputToken="ql_dg_derin_a3">
+      <Text>{=sp_dg_dlg_p2_accuse}And who gave your shadowy faction the right to pass judgment? Are you just another ambitious butcher seeking Dost's seat?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_D_P2_Ertele" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step2_choices" OutputToken="close_window">
+      <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 4: Ulak Belgeleri ve Gerçekleri Açar -->
+    <DialogNode Type="Npc" Id="DG_Derin_A3" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_a3" OutputToken="ql_dg_derin_step3_choices">
+      <Text>{=sp_dg_dlg_d_facts}Yes, a puppet show of blood! The summer dispatches provoked a grain blockade, and the winter registry starved a rival loyalist clan. Dost orchestrates every crisis so kings must grovel before the Scavenger Pigeons for information! We are the inner circle—the Shadow Council who refuse to let the Motherland burn for one man's greed!</Text>
+    </DialogNode>
+
+    <!-- Tur 5: Oyuncu İspat İster -->
+    <DialogNode Type="Player" Id="DG_D_P3_DemandProof" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step3_choices" OutputToken="ql_dg_derin_a4">
+      <Text>{=sp_dg_dlg_p3_proof}Show me your proof. If Dost is the monster you claim, prove it before my blade draws your blood.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_D_P3_DefendDost" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step3_choices" OutputToken="ql_dg_derin_a4">
+      <Text>{=sp_dg_dlg_p3_defend}Words are cheap, and traitors always cloak themselves in righteousness. Why should I believe you over Dost?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_D_P3_Ertele" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step3_choices" OutputToken="close_window">
+      <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- Tur 6: Ulak Boynunu Kılıca Uzatır (KULLANICI DİREKTİFİ: İKNA OLMAZSAN BOYNUM KILICINA KURBANDIR) -->
+    <DialogNode Type="Npc" Id="DG_Derin_A4" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_a4" OutputToken="ql_dg_derin_final_choices">
+      <Text>{=sp_dg_dlg_d_plea}Listen to me; do not kill me right now, and let me prove to you that you are mistaken. If you are not convinced, my neck is forfeit to your blade! Here is the Raven Bone Cipher bearing the seal of the Shadow Council. Read the orders Dost signed in secret, then make your choice!</Text>
+    </DialogNode>
+
+    <!-- Tur 7: NİHAİ BÜYÜK KARAR ANI -->
+    <!-- Seçim 1: Haini Öldür (Kör Sadakat Finali) -->
+    <DialogNode Type="Player" Id="DG_Derin_Choice_Kill" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_final_choices" OutputToken="close_window">
+      <Text>{=sp_dg_dlg_ch_kill}I swore an oath to Dost and the Motherland. No traitor's silver tongue will sway me! Die! (Execute the Courier &amp; Stand with Dost)</Text>
+      <Consequences>
+        <Action Type="KillHero" TargetAlias="DerinKanatUlagi" />
+        <Action Type="SetGlobalFlag" ObjectId="SP_DerinKanat_Olduruldu" Amount="1" />
+        <Action Type="ChangeStage" ObjectId="StageSuccess_KorSadakat" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Seçim 2: Haini Dinle / Bağışla (Gölge Tüneği Rotası) -->
+    <DialogNode Type="Player" Id="DG_Derin_Choice_Listen" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_final_choices" OutputToken="close_window">
+      <Text>{=sp_dg_dlg_ch_listen}If what you say about Dost's false wars is true, the realm has bled for a lie. Put away your fear; show me the proof of the Shadow Council. (Spare &amp; Listen to the Courier)</Text>
+      <Consequences>
+        <Action Type="SetGlobalFlag" ObjectId="SP_DerinKanat_Dinlendi" Amount="1" />
+        <Action Type="ChangeStage" ObjectId="StageSuccess_GolgeRotasi" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Erteleme Seçeneği -->
+    <DialogNode Type="Player" Id="DG_Derin_Choice_Ertele" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_final_choices" OutputToken="close_window">
+      <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+  </CustomDialogs>
+</Questline>

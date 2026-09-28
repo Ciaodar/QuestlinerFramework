@@ -88,6 +88,13 @@
         </Consequences>
       </DialogNode>
 
+      <DialogNode Type="Player" Id="Esir_Ertele" TargetAlias="looters" InputToken="ql_esir_p2" OutputToken="close_window">
+        <Text>{=sp_hg_ertele}I cannot deal with this right now. We will speak later.</Text>
+        <Consequences>
+          <Action Type="LeaveEncounter" />
+        </Consequences>
+      </DialogNode>
+
     <!-- Stage 4: Elebaşı Konusmasi -->
     <DialogNode Type="Npc" Id="Elebasi_Giris" TargetAlias="looters" InputToken="start" OutputToken="ql_elebasi_a1" Priority="200">
       <Text>{=sp_hg_dlg5}Halt! We are not here to draw swords... You released my soldiers. I am a looter field coordinator. What is the meaning of this? Are you trying to tell us something?</Text>
@@ -99,8 +106,14 @@
     <DialogNode Type="Player" Id="Elebasi_P1" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="ql_elebasi_a2">
       <Text>{=sp_hg_dlg6}Yes, I stand before you to prove I didn't kill the man we call our friend. I need to find out who started these slanderous rumors.</Text>
     </DialogNode>
-        <DialogNode Type="Player" Id="Elebasi_P2" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="ql_elebasi_a2">
+    <DialogNode Type="Player" Id="Elebasi_P2" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="ql_elebasi_a2">
       <Text>{=sp_hg_dlg7}No, I have no more business with you looters. I wasn't going to execute someone I don't even know for you.</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="Elebasi_Ertele" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="close_window">
+      <Text>{=sp_hg_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Elebasi_N2" TargetAlias="looters" InputToken="ql_elebasi_a2" OutputToken="ql_elebasi_a3">
