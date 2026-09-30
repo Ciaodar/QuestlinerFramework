@@ -24,15 +24,7 @@
   </TargetResolvers>
 
   <Stages>
-    <!-- Bahar: Bekleme ve Casusluk -->
-    <Stage Id="Stage0_Bahar_Bekleme" NextStageId="Stage1_Bahar_Casusluk" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=sp_dg_s0_log}With the traitor executed, you have proven your absolute loyalty to {Dost_Link}. The true motives of the Scavenger Pigeons remain veiled in patriotic duty. You await your seasonal orders via pigeon dispatch...</LogText>
-      <Conditions />
-      <OnTimeoutActions>
-        <Action Type="ChangeStage" ObjectId="Stage1_Bahar_Casusluk" />
-      </OnTimeoutActions>
-    </Stage>
-
+    <!-- Bahar: Casusluk (Gorev hemen baslar, bekleme yok) -->
     <Stage Id="Stage1_Bahar_Casusluk" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_dg_s1_log}Spring Service - Espionage: A pigeon from {Dost_Link} directs you to {BaharSehir_Link}. Meet with operative {BaharOperatifi_Link} to receive decoded foreign intelligence.</LogText>
       <Conditions />
@@ -128,14 +120,14 @@
   <CustomDialogs>
     <!-- 1. BAHAR DIYALOGLARI: CASUSLUK -->
     <DialogNode Type="Player" Id="DG_Bahar_Player" TargetAlias="BaharOperatifi" InputToken="hero_main_options" OutputToken="ql_dg_bahar_a1" Priority="200">
-      <Text>{=sp_dg_dlg_b_entry}I am here on behalf of Dost. Spring intelligence must be transferred.</Text>
+      <Text>{=sp_dg_dlg_b_entry}I am here on behalf of {Dost.Name}. Spring intelligence must be transferred.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Bahar_Casusluk" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="DG_Bahar_A1" TargetAlias="BaharOperatifi" InputToken="ql_dg_bahar_a1" OutputToken="ql_dg_bahar_step1_choices">
-      <Text>{=sp_dg_dlg_b_npc}The pigeon flew swiftly. The foreign garrisons are shifting patrols. Here are the decoded ciphers for Dost.</Text>
+      <Text>{=sp_dg_dlg_b_npc}The pigeon flew swiftly. The foreign garrisons are shifting patrols. Here are the decoded ciphers for {Dost.Name}.</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="DG_Bahar_P_Acc" TargetAlias="BaharOperatifi" InputToken="ql_dg_bahar_step1_choices" OutputToken="close_window">
@@ -156,7 +148,7 @@
 
     <!-- 2. YAZ DIYALOGLARI: KURYELIK -->
     <DialogNode Type="Player" Id="DG_Yaz_Player" TargetAlias="YazKuryesi" InputToken="hero_main_options" OutputToken="ql_dg_yaz_a1" Priority="200">
-      <Text>{=sp_dg_dlg_y_entry}I bear a sealed cylinder from Dost for the Summer trade convoy.</Text>
+      <Text>{=sp_dg_dlg_y_entry}I bear a sealed cylinder from {Dost.Name} for the Summer trade convoy.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Yaz_Kuryelik" />
       </Conditions>
@@ -184,14 +176,14 @@
 
     <!-- 3. KIŞ DIYALOGLARI: SARAY AYAK İŞLERİ -->
     <DialogNode Type="Player" Id="DG_Kis_Player" TargetAlias="KisSarayli" InputToken="hero_main_options" OutputToken="ql_dg_kis_a1" Priority="200">
-      <Text>{=sp_dg_dlg_k_entry}Winter has come. I bring the registry directives from Dost.</Text>
+      <Text>{=sp_dg_dlg_k_entry}Winter has come. I bring the registry directives from {Dost.Name}.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage4_Kis_Saray" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="DG_Kis_A1" TargetAlias="KisSarayli" InputToken="ql_dg_kis_a1" OutputToken="ql_dg_kis_step1_choices">
-      <Text>{=sp_dg_dlg_k_npc}Right on schedule. These forged seals will replace the tax ledgers tonight. The council will vote exactly as Dost demands.</Text>
+      <Text>{=sp_dg_dlg_k_npc}Right on schedule. These forged seals will replace the tax ledgers tonight. The council will vote exactly as {Dost.Name} demands.</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="DG_Kis_P_Acc" TargetAlias="KisSarayli" InputToken="ql_dg_kis_step1_choices" OutputToken="close_window">

@@ -1,0 +1,11 @@
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\bin\Release\net472\Questliner.Framework.dll
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\bin\Release\net472\Questliner.Framework.pdb
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\bin\Release\net472\Questliner.Shared.dll
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\bin\Release\net472\Questliner.Shared.pdb
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\obj\Release\net472\Questliner.Framework.csproj.AssemblyReference.cache
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\obj\Release\net472\Questliner.Framework.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\obj\Release\net472\Questliner.Framework.csproj.CoreCompileInputs.cache
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\obj\Release\net472\Questliner.Framework.sourcelink.json
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\obj\Release\net472\Questlin.5CC4F45F.Up2Date
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\obj\Release\net472\Questliner.Framework.dll
+C:\Users\meteh\RiderProjects\QuestlinerFramework\Questliner.Framework\obj\Release\net472\Questliner.Framework.pdb

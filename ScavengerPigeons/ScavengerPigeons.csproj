@@ -26,5 +26,6 @@
     
     <Copy SourceFiles="$(SubModuleTemplatePath)" DestinationFiles="$(ModuleFolder)\SubModule.xml" />
     <Copy SourceFiles="@(ModuleData)" DestinationFolder="$(ModuleFolder)\ModuleData\%(RecursiveDir)" />
+    <Copy SourceFiles="$(TargetDir)$(TargetFileName)" DestinationFolder="$(ModuleFolder)\bin\Win64_Shipping_Client\" />
   </Target>
 </Project>

@@ -22,7 +22,7 @@
 
     <!-- BASARILI BITIS -->
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_id_s_success_log}You found the barber and asked him 'What is the name of the looter?'. He told you about the slanders against you. An old friend from your motherland asked for your help from the secret cult 'Scavenger Pigeons', of which he is a member. They gave you some money and told you to gather a party of 70 men and find the elder of a nearby village.</LogText>
+      <LogText>{=sp_id_s_success_log}You found the barber and asked him 'What is the name of the looter?'. He told you about the slanders against you. An old friend from your motherland, {Dost_Link}, asked for your help from the secret cult 'Scavenger Pigeons', of which he is a member. They gave you some money and told you to gather a party of 70 men and find the elder of a nearby village.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />
@@ -51,9 +51,6 @@
     <DialogNode Type="Player" Id="Berber_B1b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b1" OutputToken="ql_berber_itibar_a2">
       <Text>{=sp_id_dlg13}The looter told me my reputation is in danger. What does this mean?</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="Berber_ID_B1_Ertele" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b1" OutputToken="close_window">
-      <Text>{=sp_id_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
 
     <DialogNode Type="Npc" Id="Berber_A2_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a2" OutputToken="ql_berber_itibar_b2">
       <Text>{=sp_id_dlg14}Ahh, {PlayerName}... Your suspicious behavior is, of course, very justified. Don't worry. You did very well to believe him and come here. Your friend from your motherland, {Dost_Link}, contacted us. He mentioned that they started spreading rumors behind your back that could declare you a traitor.</Text>
@@ -65,9 +62,6 @@
     <DialogNode Type="Player" Id="Berber_B2b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b2" OutputToken="ql_berber_itibar_a3">
       <Text>{=sp_id_dlg16}You? Are you a secret society? What is your problem?</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="Berber_ID_B2_Ertele" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b2" OutputToken="close_window">
-      <Text>{=sp_id_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
 
     <DialogNode Type="Npc" Id="Berber_A3_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a3" OutputToken="ql_berber_itibar_b3">
       <Text>{=sp_id_dlg17}Don't worry friend. We are the Scavenger Pigeons, serving for centuries. We are faster than any messenger, stronger than any servant. Your friend is a brave man who has helped us a lot. He vouched for you and asked us to save you from this conspiracy.</Text>
@@ -76,12 +70,9 @@
     <DialogNode Type="Player" Id="Berber_B3_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b3" OutputToken="ql_berber_itibar_a4">
       <Text>{=sp_id_dlg18}What do you want from me?</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="Berber_ID_B3_Ertele" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b3" OutputToken="close_window">
-      <Text>{=sp_id_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
 
     <DialogNode Type="Npc" Id="Berber_A4_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a4" OutputToken="ql_berber_itibar_b4">
-      <Text>{=sp_id_dlg19}As a token of our sincerity, we are gifting you some gold. Gather 70 men and find the village elder in the nearest village.</Text>
+      <Text>{=sp_id_dlg19}As a token of our sincerity, we are gifting you some gold. Your old friend {Dost_Link} directed you to us for this purpose. Gather 70 men and find the village elder in the nearest village.</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Berber_B4a_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="ql_berber_itibar_a5">

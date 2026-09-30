@@ -2,7 +2,7 @@
 <Questline Id="QLF_AnavataninIhaneti" Title="{=sp_ai_title}Treason of the Motherland" TimeLimitInDays="60">
   <TargetResolvers>
     <Resolver Alias="KoyBuyugu" TargetType="Hero" Filters="SameCultureAsPlayer, RuralNotable, !Target(Dost)" Selector="Nearest" />
-    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost), SameCultureAsPlayer, Lord, !PlayerClan, !ClanLeader, HasMobileParty, HasKingdom" Selector="Nearest" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
     <Resolver Alias="UzakSehir" TargetType="Settlement" Filters="Town, SameKingdomAs(Dost)" Selector="Furthest" />
     <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="SameCultureAsPlayer, Artisan" RequiredSettlementAlias="UzakSehir" Selector="Random" />
     <Resolver Alias="Kral" TargetType="Hero" Filters="SameKingdomAs(Dost), KingdomLeader" Selector="First" />
@@ -128,9 +128,6 @@
     <DialogNode Type="Player" Id="KB_B1b" TargetAlias="KoyBuyugu" InputToken="ql_kb_b1" OutputToken="ql_kb_a2">
       <Text>{=sp_ai_dlg4}You must be a pigeon too...</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="KB_B1_Ertele" TargetAlias="KoyBuyugu" InputToken="ql_kb_b1" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
 
     <DialogNode Type="Npc" Id="KB_A2" TargetAlias="KoyBuyugu" InputToken="ql_kb_a2" OutputToken="ql_kb_b2">
       <Text>{=sp_ai_dlg5}Yes, of course... Your friend {Dost_Link} sent word about you. You are here for the next step. What you will do now is take this special leather containing secret information to the artisan named {ArtisanTarget_Link} in the city of {UzakSehir_Link}.</Text>
@@ -146,9 +143,6 @@
     <DialogNode Type="Player" Id="KB_B2b" TargetAlias="KoyBuyugu" InputToken="ql_kb_b2" OutputToken="ql_kb_a4">
       <Text>{=sp_ai_dlg8}Alright, I will do it.</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="KB_B2_Ertele" TargetAlias="KoyBuyugu" InputToken="ql_kb_b2" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
 
     <DialogNode Type="Npc" Id="KB_A4" TargetAlias="KoyBuyugu" InputToken="ql_kb_a4" OutputToken="ql_kb_b3">
       <Text>{=sp_ai_dlg9}Safe travels, looter...</Text>
@@ -159,9 +153,6 @@
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Zanaatkar" />
       </Consequences>
-    </DialogNode>
-    <DialogNode Type="Player" Id="KB_B3_Ertele" TargetAlias="KoyBuyugu" InputToken="ql_kb_b3" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <!-- 2. ARTISAN (ZANAATKAR) DIYALOGLARI -->
@@ -185,9 +176,6 @@
     <DialogNode Type="Player" Id="Art_B1c" TargetAlias="ArtisanTarget" InputToken="ql_art_b1" OutputToken="ql_art_a2">
       <Text>{=sp_ai_dlg15}{PlayerName}.</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="Art_B1_Ertele" TargetAlias="ArtisanTarget" InputToken="ql_art_b1" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
 
     <DialogNode Type="Npc" Id="Art_A2" TargetAlias="ArtisanTarget" InputToken="ql_art_a2" OutputToken="ql_art_b2">
       <Text>{=sp_ai_dlg16}Does a baby pigeon return to its nest?</Text>
@@ -202,9 +190,6 @@
     <DialogNode Type="Player" Id="Art_B2c" TargetAlias="ArtisanTarget" InputToken="ql_art_b2" OutputToken="ql_art_a3">
       <Text>{=sp_ai_dlg19}Does it not return?</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="Art_B2_Ertele" TargetAlias="ArtisanTarget" InputToken="ql_art_b2" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
 
     <DialogNode Type="Npc" Id="Art_A3" TargetAlias="ArtisanTarget" InputToken="ql_art_a3" OutputToken="ql_art_b3">
       <Text>{=sp_ai_dlg20}Of course! So, do you seek justice or revenge?</Text>
@@ -218,9 +203,6 @@
     </DialogNode>
     <DialogNode Type="Player" Id="Art_B3c" TargetAlias="ArtisanTarget" InputToken="ql_art_b3" OutputToken="ql_art_a4">
       <Text>{=sp_ai_dlg23}An eye for an eye, blood for blood. REVENGE, REVENGE!!</Text>
-    </DialogNode>
-    <DialogNode Type="Player" Id="Art_B3_Ertele" TargetAlias="ArtisanTarget" InputToken="ql_art_b3" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Art_A4" TargetAlias="ArtisanTarget" InputToken="ql_art_a4" OutputToken="ql_art_b4">
@@ -239,10 +221,6 @@
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage3_SuikastKabul" />
       </Consequences>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Art_B4_Ertele" TargetAlias="ArtisanTarget" InputToken="ql_art_b4" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <!-- 3. DOST ILE YUZLESME (SUIKAST EMRI SONRASI) -->
@@ -292,10 +270,6 @@
       <Text>{=sp_ai_dlg31}A looter wants your head. Be careful not to be left to my mercy.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Dost_B1_Ertele" TargetAlias="Dost" InputToken="ql_dost_b1" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
-
     <DialogNode Type="Npc" Id="Dost_A2" TargetAlias="Dost" InputToken="ql_dost_a2" OutputToken="ql_dost_b2">
       <Text>{=sp_ai_dlg32}What nonsense are you spouting? They take orders from me. This means there is a traitor among them who thinks they've fooled you!</Text>
     </DialogNode>
@@ -312,10 +286,6 @@
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage4_Dost_Savas" />
       </Consequences>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Dost_B2_Ertele" TargetAlias="Dost" InputToken="ql_dost_b2" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Dost_A3" TargetAlias="Dost" InputToken="ql_dost_a3" OutputToken="close_window">
@@ -358,10 +328,6 @@
       <Text>{=sp_ai_dlg39}The artisan wanted me to kill the man who is our friend.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="KB_Ihbar_B1_Ertele" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b1" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
-
     <DialogNode Type="Npc" Id="KB_Ihbar_A2" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a2" OutputToken="ql_kb_ihbar_b2">
       <Text>{=sp_ai_dlg40}Kill? And our friend no less? Are you sure about this? Why should I believe you? The person you accuse is a valuable looter.</Text>
     </DialogNode>
@@ -374,10 +340,6 @@
       <Text>{=sp_ai_dlg42}I don't care. I will not kill anyone. I am not going to bother convincing you either!</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="KB_Ihbar_B2_Ertele" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b2" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
-
     <DialogNode Type="Npc" Id="KB_Ihbar_A3" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a3" OutputToken="ql_kb_ihbar_b3">
       <Text>{=sp_ai_dlg43}I am sorry, Yes! You are not lying. How many times has this happened... That man is a traitor!</Text>
     </DialogNode>
@@ -388,10 +350,6 @@
     
     <DialogNode Type="Player" Id="KB_Ihbar_B3b" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b3" OutputToken="ql_kb_ihbar_a4">
       <Text>{=sp_ai_dlg45}That man! He thought he could use me, huh. Now I'll show him...</Text>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="KB_Ihbar_B3_Ertele" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_b3" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="KB_Ihbar_A4" TargetAlias="KoyBuyugu" InputToken="ql_kb_ihbar_a4" OutputToken="close_window">
@@ -442,11 +400,12 @@
       <Text>{=sp_ai_dlg50_acc}The Motherland's honor is preserved, and 50,000 denars is a fitting recompense. I accept. (Accept 50,000 Gold)</Text>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="Dost_Final_A3" TargetAlias="Dost" InputToken="ql_dost_final_a3" OutputToken="hero_main_options">
-      <Text>{=sp_ai_dlg51}Did you want to talk about anything else?</Text>
+    <DialogNode Type="Npc" Id="Dost_Final_A3" TargetAlias="Dost" InputToken="ql_dost_final_a3" OutputToken="close_window">
+      <Text>{=sp_ai_dlg51}May your blade serve the realm well. Farewell, friend.</Text>
       <Consequences>
         <Action Type="AddGold" Amount="50000" />
         <Action Type="ChangeStage" ObjectId="StageSuccess" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
   </CustomDialogs>
