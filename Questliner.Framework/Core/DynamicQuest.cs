@@ -200,7 +200,16 @@ namespace Questliner.Framework.Core
                 }
                 else
                 {
-                    ForceSuccess();
+                    var changeStageAction = currentStageModel.OnTimeoutActions.FirstOrDefault(a => a.ActionType == "ChangeStage")
+                                         ?? currentStageModel.OnExitActions.FirstOrDefault(a => a.ActionType == "ChangeStage");
+                    if (changeStageAction != null && !string.IsNullOrEmpty(changeStageAction.ObjectId))
+                    {
+                        TransitionToStage(changeStageAction.ObjectId);
+                    }
+                    else
+                    {
+                        ForceSuccess();
+                    }
                 }
             }
         }

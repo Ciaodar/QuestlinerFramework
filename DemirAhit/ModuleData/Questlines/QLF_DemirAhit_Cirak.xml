@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Questline Id="QLF_DemirAhit_Cirak" Title="{=demirahit1_title}Apprentice's Oath" TimeLimitInDays="45">
   <TargetResolvers>
-    <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="Artisan" Selector="Nearest" />
+    <Resolver Alias="DemirciSehri" TargetType="Settlement" Filters="Town" Selector="Nearest" />
+    <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="Artisan" RequiredSettlementAlias="DemirciSehri" Selector="Nearest" />
     <Resolver Alias="HammadeKaynagi" TargetType="Settlement" Filters="Village" Selector="Nearest" />
     <Resolver Alias="KoyMuhtari" TargetType="Hero" Filters="RuralNotable" RequiredSettlementAlias="HammadeKaynagi" Selector="Nearest" />
     <Resolver Alias="RakipTuccar" TargetType="Hero" Filters="Merchant" Selector="Random" />
@@ -18,7 +19,7 @@
 
   <Stages>
     <Stage Id="Stage1_Davet" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_0}Your clan's deeds echo across the taverns and keeps of Calradia. The renowned master smith {EfsaneviDemirci_Link} has sent word, seeking you out to reforge an ancient blade bound to your bloodline.</LogText>
+      <LogText>{=da_log_0}Your clan's deeds echo across the taverns and keeps of Calradia. The renowned master smith {EfsaneviDemirci_Link}, located in {DemirciSehri_Link}, has sent word, seeking you out to reforge an ancient blade bound to your bloodline.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="SetGlobalFlag" ObjectId="DemirAhit_Baslatildi" Amount="1" />
@@ -347,6 +348,21 @@
         <Action Type="ChangeStage" ObjectId="Stage3_Teslim" />
         <Action Type="LeaveEncounter" />
       </Consequences>
+    </DialogNode>
+
+    <!-- Hired Assassins Hostile Encounter (Stage 2: Ambush) -->
+    <!-- Turn 1: Hostile bandit confrontation on map encounter -->
+    <DialogNode Type="Npc" Id="Katiller_Giris" TargetAlias="KiralikKatiller" InputToken="start" OutputToken="ql_da_katiller_secim" Priority="200">
+      <Text>{=da_katiller_dlg_intro}That star iron belongs to our master! Turn back, lordling, or your blood will quench the ore!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_Pusu" />
+      </Conditions>
+    </DialogNode>
+
+    <!-- Turn 2: Player battle reply (no postponement option in hostile encounter) -->
+    <DialogNode Type="Player" Id="Katiller_Savas" TargetAlias="KiralikKatiller" InputToken="ql_da_katiller_secim" OutputToken="close_window">
+      <Text>{=da_katiller_p_savas}My steel will speak for me. Draw!</Text>
+      <Conditions />
     </DialogNode>
 
     <!-- Stage 3 Delivery Dialogues (The Master's Anvil) -->

@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item id="sifreli_defter" name="{=shdw_item_ledger}Encrypted Ledger" mesh="book_closed_a" Type="Goods" is_merchandise="false" value="1000" weight="0.5">
-    <ItemComponent>
-      <Trade value="1000" />
-    </ItemComponent>
+  <Item id="sifreli_defter" name="{=shdw_item_ledger}Encrypted Ledger" mesh="book_closed_a" Type="Goods" is_merchandise="false" value="0" weight="0.5">
     <Flags />
   </Item>
-  <Item id="lordun_muhurlu_emri" name="{=shdw_item_order}Lord's Sealed Order" mesh="scroll_a" Type="Goods" is_merchandise="false" value="1500" weight="0.5">
-    <ItemComponent>
-      <Trade value="1500" />
-    </ItemComponent>
+  <Item id="lordun_muhurlu_emri" name="{=shdw_item_order}Lord's Sealed Order" mesh="scroll_a" Type="Goods" is_merchandise="false" value="0" weight="0.5">
     <Flags />
   </Item>
 </Items>

@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item id="pigeon_secret_dagger" name="{=sp_item_pigeon_secret_dagger}Secret Pigeon Dagger" mesh="dagger_1" Type="OneHandedWeapon" is_merchandise="false" value="1500" weight="0.8">
-    <ItemComponent>
-      <Weapon weapon_class="Dagger" thrust_speed="95" speed_rating="100" missile_speed="0" weapon_length="45" thrust_damage="28" swing_damage="22" thrust_damage_type="Pierce" swing_damage_type="Cut" item_usage="onehanded" />
-    </ItemComponent>
+  <!-- Weapons (Pre-crafted with valid native pieces for crash-free equipment) -->
+  <CraftedItem id="pigeon_secret_dagger" name="{=sp_item_pigeon_secret_dagger}Secret Pigeon Dagger" crafting_template="Dagger" value="1500" is_merchandise="false">
+    <Pieces>
+      <Piece id="dagger_blade_1" Type="Blade" />
+      <Piece id="empire_dagger_guard_1" Type="Guard" />
+      <Piece id="empire_grip_1" Type="Handle" />
+      <Piece id="empire_pommel_1" Type="Pommel" />
+    </Pieces>
+  </CraftedItem>
+
+  <CraftedItem id="shadow_bone_dagger" name="{=sp_item_shadow_bone_dagger}Shadow Bone Dagger" crafting_template="Dagger" value="3000" is_merchandise="false">
+    <Pieces>
+      <Piece id="dagger_blade_6" Type="Blade" />
+      <Piece id="sturgian_dagger_guard_1" Type="Guard" />
+      <Piece id="sturgian_grip_1" Type="Handle" />
+      <Piece id="sturgian_pommel_1" Type="Pommel" />
+    </Pieces>
+  </CraftedItem>
+
+  <CraftedItem id="pigeon_blood_claymore" name="{=sp_item_pigeon_blood_claymore}Pigeon Blood Claymore" crafting_template="TwoHandedSword" value="7500" is_merchandise="false">
+    <Pieces>
+      <Piece id="battania_blade_1" Type="Blade" />
+      <Piece id="battania_guard_1" Type="Guard" />
+      <Piece id="battania_grip_2" Type="Handle" />
+      <Piece id="battania_pommel_1" Type="Pommel" />
+    </Pieces>
+  </CraftedItem>
+
+  <!-- Quest Goods (Cannot be sold, 0 value, no Trade component) -->
+  <Item id="raven_bone_cipher" name="{=sp_item_raven_bone_cipher}Raven Bone Cipher" mesh="scroll_a" Type="Goods" is_merchandise="false" value="0" weight="0.2">
     <Flags />
   </Item>
-  <Item id="raven_bone_cipher" name="{=sp_item_raven_bone_cipher}Raven Bone Cipher" mesh="scroll_a" Type="Goods" is_merchandise="false" value="2500" weight="0.2">
-    <ItemComponent>
-      <Trade value="2500" />
-    </ItemComponent>
+
+  <Item id="shadow_master_ring" name="{=sp_item_shadow_master_ring}Shadow Master Ring" mesh="jewelry_ring" Type="Goods" is_merchandise="false" value="0" weight="0.1">
     <Flags />
   </Item>
-  <Item id="shadow_bone_dagger" name="{=sp_item_shadow_bone_dagger}Shadow Bone Dagger" mesh="dagger_2" Type="OneHandedWeapon" is_merchandise="false" value="3000" weight="0.7">
-    <ItemComponent>
-      <Weapon weapon_class="Dagger" thrust_speed="98" speed_rating="105" missile_speed="0" weapon_length="50" thrust_damage="34" swing_damage="26" thrust_damage_type="Pierce" swing_damage_type="Cut" item_usage="onehanded" />
-    </ItemComponent>
-    <Flags />
-  </Item>
-  <Item id="shadow_master_ring" name="{=sp_item_shadow_master_ring}Shadow Master Ring" mesh="jewelry_ring" Type="Goods" is_merchandise="false" value="4000" weight="0.1">
-    <ItemComponent>
-      <Trade value="4000" />
-    </ItemComponent>
-    <Flags />
-  </Item>
-  <Item id="pigeon_blood_claymore" name="{=sp_item_pigeon_blood_claymore}Pigeon Blood Claymore" mesh="sword_2" Type="TwoHandedWeapon" is_merchandise="false" value="7500" weight="2.4">
-    <ItemComponent>
-      <Weapon weapon_class="TwoHandedSword" thrust_speed="85" speed_rating="92" missile_speed="0" weapon_length="120" thrust_damage="42" swing_damage="92" thrust_damage_type="Pierce" swing_damage_type="Cut" item_usage="twohanded" />
-    </ItemComponent>
-    <Flags />
-  </Item>
-  <Item id="black_ledger" name="{=sp_item_black_ledger}The Black Ledger" mesh="scroll_a" Type="Goods" is_merchandise="false" value="8000" weight="0.5">
-    <ItemComponent>
-      <Trade value="8000" />
-    </ItemComponent>
+
+  <Item id="black_ledger" name="{=sp_item_black_ledger}The Black Ledger" mesh="scroll_a" Type="Goods" is_merchandise="false" value="0" weight="0.5">
     <Flags />
   </Item>
 </Items>

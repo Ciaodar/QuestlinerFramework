@@ -337,8 +337,16 @@ namespace Questliner.Framework.Engine
             {
                 var key = filter.Substring(11, filter.Length - 12);
                 var globalHero = Questliner.Framework.Core.GlobalStateManager.Instance.GetGlobalHero(key);
-                // If globalHero is null (not set or died and removed from dictionary depending on how Bannerlord handles dead heroes references, though they remain as dead heroes usually),
-                // we still filter strictly.
+                if (globalHero == null && !isNegated)
+                {
+                    // Fallback to prevent softlocks when debug testing quests directly via console
+                    globalHero = source.FirstOrDefault(h => h.IsAlive && h != Hero.MainHero);
+                    if (globalHero != null)
+                    {
+                        Questliner.Framework.Core.GlobalStateManager.Instance.SetGlobalHero(key, globalHero);
+                        TaleWorlds.Library.Debug.Print($"[Questliner] GlobalHero '{key}' was not found in storage. Fallback assigned: '{globalHero.Name}' ({globalHero.StringId}).");
+                    }
+                }
                 return isNegated ? source.Where(h => h != globalHero) : source.Where(h => h == globalHero);
             }
 

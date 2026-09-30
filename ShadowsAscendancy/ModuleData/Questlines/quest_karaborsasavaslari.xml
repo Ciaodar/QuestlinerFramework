@@ -10,6 +10,8 @@
   <Prerequisites>
     <Condition Type="ClanTier" Amount="3" />
     <Condition Type="IsQuestCompleted" ObjectId="QLF_GolgelerinFisiltisi" Amount="1" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_KaraborsaSavaslari" Amount="1" />
+    <Condition Type="!GlobalFlag" ObjectId="KaraborsaSavaslari_Bitti" Amount="1" />
   </Prerequisites>
 
   <Triggers>
@@ -23,24 +25,27 @@
         <Condition Type="DefeatedParties" TargetAlias="KiralikKatiller" Amount="1" />
       </Conditions>
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="60" StringValue="{=shdw_q2_katiller}Hired Assassins" />
+        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="60" PartyTemplateId="deserters_template" StringValue="{=shdw_q2_katiller}Hired Assassins" />
         <Action Type="SetPartyAi" TargetAlias="KiralikKatiller" StringValue="EngageParty" ObjectId="Player" />
       </OnEnterActions>
       <OnExitActions>
         <!-- Katiller yenilince yaralı bir komutan partisi spawn edip beklemesini sağlıyoruz -->
-        <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" StringValue="{=shdw_q2_komutan}Wounded Commander" />
+        <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" PartyTemplateId="deserters_template" StringValue="{=shdw_q2_komutan}Wounded Commander" />
         <Action Type="SetPartyAi" TargetAlias="KatilKomutan" StringValue="Hold" />
       </OnExitActions>
     </Stage>
 
     <Stage Id="Stage2_Sorgu" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q2_s2_log}You defeated the hired assassins and survived. Find the Wounded Commander waiting on the map and interrogate him.</LogText>
+      <LogText>{=shdw_q2_s2_log}You defeated the hired assassins and survived. Find the Wounded Commander ({KatilKomutan_Link}) waiting on the map and interrogate him.</LogText>
       <Conditions />
     </Stage>
 
     <Stage Id="Stage3_Intikam" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=shdw_q2_s3_log}You learned that {YozlasmisLord_Link} was behind the assassination attempt and secured the evidence (Lord's Sealed Order). Now it's time to confront him.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="Stage4_Hukumdar" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
@@ -51,20 +56,63 @@
     <Stage Id="StageSuccess_Santaj" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
       <LogText>{=shdw_q2_s5a_log}You took a hefty hush money payment from the corrupt lord and covered up the incident. It might have been a dishonorable move, but your purse is quite full.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="SetGlobalFlag" ObjectId="KaraborsaSavaslari_Bitti" Amount="1" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="StageSuccess_Savas" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
       <LogText>{=shdw_q2_s5b_log}Even at the cost of declaring war on a kingdom, you delivered your own justice with your sword. All of Calradia should fear your wrath!</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="SetGlobalFlag" ObjectId="KaraborsaSavaslari_Bitti" Amount="1" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="StageSuccess_Politik" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
       <LogText>{=shdw_q2_s5c_log}By presenting the documents to the kingdom leader, you ensured the corrupt lord's exile. You gained favor with the ruler and achieved a great political victory in the kingdom.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="SetGlobalFlag" ObjectId="KaraborsaSavaslari_Bitti" Amount="1" />
+      </OnEnterActions>
     </Stage>
   </Stages>
 
   <CustomDialogs>
+    <!-- ========================================== -->
+    <!-- 0. KİRALIK KATİLLER DİYALOĞU (KiralikKatiller - Mobil Parti) -->
+    <!-- ========================================== -->
+    <DialogNode Type="Npc" Id="Katiller_Giris" TargetAlias="KiralikKatiller" InputToken="start" OutputToken="ql_shdw_katil_1" Priority="200">
+      <Text>{=shdw_q2_dlg_assassin_intro}There they are! The bounty on your head is large enough to buy an estate. Prepare to die!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_Suikast" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Katiller_Saldir" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_1" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_assassin_fight}You'll have to take my head from my cold corpse, bandit scum. Draw your steel!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Katiller_Sorgu" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_1" OutputToken="ql_shdw_katil_sorgu_c">
+      <Text>{=shdw_q2_dlg_assassin_sorgu}Who paid you to hunt me? Was it a nobleman, or the alley syndicates?</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Katiller_Tehdit" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_1" OutputToken="ql_shdw_katil_tehdit_c">
+      <Text>{=shdw_q2_dlg_assassin_threat}You gathered sixty men just to die in the mud. Let us see if your courage matches your numbers!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Katiller_Cevap_Sorgu" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_sorgu_c" OutputToken="ql_shdw_katil_fight">
+      <Text>{=shdw_q2_dlg_assassin_sorgu_c}(Laughs) Dead men don't need names! Cut them down, let no one take our prize!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Katiller_Cevap_Tehdit" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_tehdit_c" OutputToken="ql_shdw_katil_fight">
+      <Text>{=shdw_q2_dlg_assassin_threat_c}We'll choke those arrogant words back down your throat! Attack!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Katiller_Savas_Final" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_fight" OutputToken="close_window">
+      <Text>{=shdw_q2_dlg_assassin_saldir}Come then, let's see how sharp your steel really is!</Text>
+    </DialogNode>
+
     <!-- ========================================== -->
     <!-- 1. KOMUTAN SORGUSU (KatilKomutan - Mobil Parti - 8 Adımlı Sorgu) -->
     <!-- ========================================== -->
@@ -102,6 +150,9 @@
       <Conditions>
         <Condition Type="GlobalFlag" ObjectId="GolgelerinFisiltisi_KanunAdami" Amount="1" />
       </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
+      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kom_Cevap_Ihanet" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_1" OutputToken="ql_shdw_kom_2">
@@ -109,6 +160,9 @@
       <Conditions>
         <Condition Type="GlobalFlag" ObjectId="GolgelerinFisiltisi_KaranlikOrtak" Amount="1" />
       </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
+      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kom_Cevap_Fallback" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_1" OutputToken="ql_shdw_kom_2">
@@ -117,6 +171,9 @@
         <Condition Type="!GlobalFlag" ObjectId="GolgelerinFisiltisi_KanunAdami" Amount="1" />
         <Condition Type="!GlobalFlag" ObjectId="GolgelerinFisiltisi_KaranlikOrtak" Amount="1" />
       </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
+      </Consequences>
     </DialogNode>
 
     <!-- Tur 4: Oyuncu Derinlemesine Soruşturma (Ferman & Savunmalar) -->
@@ -172,6 +229,7 @@
         <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="DestroyEncounteredParty" />
         <Action Type="DestroyParty" TargetAlias="KatilKomutan" />
+        <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
         <Action Type="LeaveEncounter" />
         <Action Type="ChangeStage" ObjectId="Stage3_Intikam" />
       </Consequences>
@@ -183,6 +241,7 @@
         <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="DestroyEncounteredParty" />
         <Action Type="DestroyParty" TargetAlias="KatilKomutan" />
+        <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
         <Action Type="LeaveEncounter" />
         <Action Type="ChangeStage" ObjectId="Stage3_Intikam" />
       </Consequences>
@@ -284,8 +343,11 @@
       <Text>{=shdw_q2_dlg7}Pay me 20,000 denars, and this matter is buried forever.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Lord_Karar_Savas" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_karar" OutputToken="ql_shdw_lord_savas_son">
+    <DialogNode Type="Player" Id="Lord_Karar_Savas" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_karar" OutputToken="ql_shdw_lord_savas_son" ShowWhenDisabled="true" DisabledHint="{=shdw_hint_settlement}You cannot draw steel inside a settlement!">
       <Text>{=shdw_q2_dlg8}My honor cannot be bought with coin. Draw your weapon!</Text>
+      <Conditions>
+        <Condition Type="!IsPlayerInSettlement" />
+      </Conditions>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Karar_Politik" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_karar" OutputToken="ql_shdw_lord_politik_son">
@@ -353,6 +415,9 @@
 
     <DialogNode Type="Player" Id="Hukumdar_Ertele" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_kanit" OutputToken="close_window">
       <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
 
     <!-- Tur 3: Hükümdar Parşömeni İnceler ve Sorgular -->
@@ -371,6 +436,9 @@
 
     <DialogNode Type="Player" Id="Huk_Delil_Ertele" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_delil" OutputToken="close_window">
       <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
 
     <!-- Tur 5: Hükümdarın Karar Değerlendirmesi -->
@@ -389,6 +457,9 @@
 
     <DialogNode Type="Player" Id="Huk_Talep_Ertele" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_talep" OutputToken="close_window">
       <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
 
     <!-- Tur 7: Hükümdarın Nihai Kararı & Ödüller -->
@@ -400,6 +471,7 @@
         <Action Type="ChangeInfluence" Amount="30" />
         <Action Type="MakeFugitive" TargetAlias="YozlasmisLord" />
         <Action Type="ChangeStage" ObjectId="StageSuccess_Politik" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 

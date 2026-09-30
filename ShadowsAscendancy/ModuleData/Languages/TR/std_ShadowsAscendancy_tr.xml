@@ -92,7 +92,7 @@
     <string id="shdw_q2_title" text="Karaborsa Savaşları" />
 
     <string id="shdw_q2_s1_log" text="Klanın artık tüm diyarda tanınıyor (Tier 3). Ancak geçmişin seni bırakmıyor. Başına büyük bir ödül konmuş ve kiralık katiller peşinde. Onları yenerek hayatta kal!" />
-    <string id="shdw_q2_s2_log" text="Kiralık katilleri yendin ve hayatta kaldın. Haritada bekleyen Yaralı Komutanı bul ve onu sorgula." />
+    <string id="shdw_q2_s2_log" text="Kiralık katilleri yendin ve hayatta kaldın. Haritada bekleyen Yaralı Komutanı ({KatilKomutan_Link}) bul ve onu sorgula." />
     <string id="shdw_q2_s3_log" text="Suikast girişiminin arkasında {YozlasmisLord_Link} olduğunu öğrendin ve kanıtı (Lordun Mühürlü Emri) ele geçirdin. Şimdi onunla yüzleşme zamanı." />
     <string id="shdw_q2_s4_log" text="Lordun rüşvet teklifini reddettin. Şimdi {Hukumdar_Link} ile konuşup ihaneti kanıtlaman gerekiyor." />
     <string id="shdw_q2_s5a_log" text="Yozlaşmış lorddan yüklü miktarda sus payı alarak olayların üstünü örttün. Belki onursuzca bir hareketti ama cüzdanın oldukça doldu." />
@@ -152,6 +152,14 @@
     <string id="shdw_q2_dlg_huk_talep_adalet" text="Soyu ne kadar yüce olursa olsun hiçbir hainin adaletinizden kaçamayacağını tüm Calradia görsün." />
     <string id="shdw_q2_dlg_huk_talep_odul" text="Bu hakikati tahtın önüne getirmek için canımı ve klanımı tehlikeye attım yüce hükümdarım. Yalnızca sadakatimin hak ettiği onur ve itibarı talep ediyorum." />
     <string id="shdw_q2_dlg11" text="Bir asilzadeyi suçlamak büyük bir cürettir, ancak mühür açıkça onun. Bu küstahlığı cezasız kalmayacak. Krallığa olan sadakatin için teşekkürler, hak ettiğin değeri göreceksin." />
+    <string id="shdw_q2_dlg_assassin_intro" text="İşte oradalar! Başına konan ödül bir malikane satın almaya yeter. Ölmeye hazırlan!" />
+    <string id="shdw_q2_dlg_assassin_fight" text="Kellemi ancak cesedimden alabilirsin, haydut pisliği. Çek kılıcını!" />
+    <string id="shdw_q2_dlg_assassin_sorgu" text="Beni avlamanız için size kim para ödedi? Bir asilzade mi, yoksa sokak çeteleri mi?" />
+    <string id="shdw_q2_dlg_assassin_threat" text="Çamurda gebermek için altmış kişi toplamışsınız. Bakalım cesaretiniz sayılarınıza yetecek mi!" />
+    <string id="shdw_q2_dlg_assassin_sorgu_c" text="(Güler) Ölü adamlar isim sormaz! Kesin şunları, ödülü kimseye kaptırmayın!" />
+    <string id="shdw_q2_dlg_assassin_threat_c" text="Küstah laflarını ağzına tıkayacağız! Saldırın!" />
+    <string id="shdw_q2_dlg_assassin_saldir" text="Gelin öyleyse, kılıçlarınız ne kadar keskinmiş görelim!" />
+    <string id="shdw_hint_settlement" text="Bir yerleşkenin ortasında kılıç çekemezsiniz!" />
 
     <string id="shdw_q2_katiller" text="Kiralık Katiller" />
     <string id="shdw_q2_komutan" text="Yaralı Komutan" />

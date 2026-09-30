@@ -66,5 +66,31 @@ namespace Questliner.Framework.Core
             q.ForceSuccess();
             return $"Forced success for {id}.";
         }
+
+        [CommandLineFunctionality.CommandLineArgumentFunction("set_flag", "qlf")]
+        public static string SetFlag(List<string> args)
+        {
+            if (args.Count < 2) return "Usage: qlf.set_flag [FlagName] [1/0]";
+            var flag = args[0];
+            bool val = args[1] == "1" || args[1].ToLower() == "true";
+            GlobalStateManager.Instance.SetFlag(flag, val);
+            return $"Global Flag '{flag}' set to {val}.";
+        }
+
+        [CommandLineFunctionality.CommandLineArgumentFunction("get_flags", "qlf")]
+        public static string GetFlags(List<string> args)
+        {
+            var flags = GlobalStateManager.Instance.GlobalFlags;
+            if (flags == null || flags.Count == 0) return "No active global flags.";
+            return "Active Global Flags:\n" + string.Join("\n", flags.Select(kvp => $"- {kvp.Key}: {kvp.Value}"));
+        }
+
+        [CommandLineFunctionality.CommandLineArgumentFunction("list_global_heroes", "qlf")]
+        public static string ListGlobalHeroes(List<string> args)
+        {
+            var heroes = GlobalStateManager.Instance.GlobalHeroes;
+            if (heroes == null || heroes.Count == 0) return "No stored global heroes.";
+            return "Stored Global Heroes:\n" + string.Join("\n", heroes.Select(kvp => $"- {kvp.Key}: {kvp.Value?.Name} ({kvp.Value?.StringId})"));
+        }
     }
 }

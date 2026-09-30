@@ -663,12 +663,13 @@ namespace Questliner.Framework.Behaviors
                     var defeatedParties = mapEvent.InvolvedParties.Where(p => p.Side != mapEvent.PlayerSide);
                     foreach(var dp in defeatedParties)
                     {
-                        if (dp.MobileParty != null && dp.MobileParty.Party != null && dp.MobileParty.Party.Culture != null)
+                        var cultureId = dp.MobileParty?.Party?.Culture?.StringId;
+                        if (!string.IsNullOrEmpty(cultureId) && cultureId != "looters")
                         {
-                            quest.IncrementCounter($"Defeated_{dp.MobileParty.Party.Culture.StringId}_Parties", 1);
+                            quest.IncrementCounter($"Defeated_{cultureId}_Parties", 1);
                         }
 
-                        if (dp.MobileParty != null && (dp.MobileParty.IsBandit || dp.MobileParty.Party?.Culture?.StringId == "looters"))
+                        if (dp.MobileParty != null && (dp.MobileParty.IsBandit || cultureId == "looters"))
                         {
                             quest.IncrementCounter("Defeated_looters_Parties", 1);
                             quest.IncrementCounter("Defeated_BanditParty_Parties", 1);

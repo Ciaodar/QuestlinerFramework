@@ -110,7 +110,8 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Hizli" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="close_window">
       <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="Hold" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="EngageParty" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
     </DialogNode>
@@ -192,7 +193,8 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Detayli" TargetAlias="GorevVeren" InputToken="ql_shdw_t_karar" OutputToken="close_window">
       <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="Hold" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="EngageParty" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
     </DialogNode>
@@ -200,7 +202,8 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Adalet" TargetAlias="GorevVeren" InputToken="ql_shdw_t_karar" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_t_kabul_adalet}I will hunt down those raiders for the safety of the roads, merchant. But once I hold that ledger, we will have words about your transactions.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="Hold" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="EngageParty" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
     </DialogNode>
@@ -231,13 +234,6 @@
       <Text>{=shdw_q1_dlg_kervan_tehdit}If you lie to me, this sand will be your grave. Whose orders are you carrying out?</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kervan_Ertele_1" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_1" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
-
     <DialogNode Type="Npc" Id="Kervan_Cevap_2" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_2" OutputToken="ql_shdw_kervan_sub">
       <Text>{=shdw_q1_dlg_kervan_sorgu_c}(Laughs) A mercenary dog sent by that coward merchant! That ledger belongs to the masters of the back alleys now. If you want it, bleed for it!</Text>
     </DialogNode>
@@ -250,26 +246,12 @@
       <Text>{=shdw_q1_dlg_kervan_sorgu2}The back-alley syndicate? So you admit you're running smuggled contraband for the city gang leader?</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kervan_Ertele_2" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_sub" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
-
     <DialogNode Type="Npc" Id="Kervan_Fight_Cevap" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_fight" OutputToken="ql_shdw_kervan_fight_p">
       <Text>{=shdw_q1_dlg_kervan_sorgu2_c}We take orders from {KacakciLideri_Link}! You won't leave this valley alive to tell anyone! Kill them!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kervan_Savas_Final" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_fight_p" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_pusu_saldir}Come on then, gang scum! Taste my steel!</Text>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Kervan_Ertele_3" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_fight_p" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
     </DialogNode>
 
     <!-- ========================================== -->
@@ -395,10 +377,6 @@
       <Text>{=shdw_q1_dlg8}I am a noble, I don't do dirty work like assassinations. But pay me a hefty cut, and I'll force the merchant to pay you your tribute.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Cete_P_Ertele_4" TargetAlias="KacakciLideri" InputToken="ql_shdw_c8_nihai_karar" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
-
     <DialogNode Type="Npc" Id="Cete_Tehdit" TargetAlias="KacakciLideri" InputToken="ql_shdw_c_kanun_son" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_tehdit}Is that so? The outside of the city can be very dangerous these days. Watch your back on the roads, fool.</Text>
       <Consequences>
@@ -478,26 +456,12 @@
       <Text>{=shdw_q1_dlg_pusu_gozdagi}If you lie to me or think you can frighten me, this field will be your grave! Flee before I cut you all down!</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Pusu_Ertele" TargetAlias="CetePartisi" InputToken="ql_shdw_pusu1" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
-
     <DialogNode Type="Npc" Id="Pusu_Yanit" TargetAlias="CetePartisi" InputToken="ql_shdw_pusu_yanit" OutputToken="ql_shdw_pusu_final">
       <Text>{=shdw_q1_dlg_pusu_yanit_c}Empty threats from a dead man walking! Kill them all!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Pusu_Savas_Final" TargetAlias="CetePartisi" InputToken="ql_shdw_pusu_final" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_pusu_saldir}Come on then, gang scum! Taste my steel!</Text>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Pusu_Ertele_2" TargetAlias="CetePartisi" InputToken="ql_shdw_pusu_final" OutputToken="close_window">
-      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
     </DialogNode>
 
   </CustomDialogs>

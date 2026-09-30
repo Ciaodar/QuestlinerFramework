@@ -8,6 +8,7 @@
   <TargetResolvers>
     <!-- GizemliSehir: Oyuncuya en yakın ikinci ŞEHİR (Town) -->
     <Resolver Alias="GizemliSehir" TargetType="Settlement" Filters="Town" Selector="SecondNearest" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="SameCultureAsPlayer, Lord, !PlayerClan, !ClanLeader, HasMobileParty, HasKingdom" Selector="Nearest" />
   </TargetResolvers>
 
   <Stages>
@@ -24,6 +25,7 @@
       <LogText>{=sp_yd_s_success_log}You found the barber and asked him 'What is the name of the looter?'. He told you about the slanders against you. An old friend from your motherland asked for your help from the secret cult 'Scavenger Pigeons', of which he is a member. They gave you some money and told you to gather a party of 70 men and find the elder of a nearby village.</LogText>
       <Conditions />
       <OnEnterActions>
+        <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />
         <Action Type="StartQuest" ObjectId="QLF_AnavataninIhaneti" />
       </OnEnterActions>
       <OnExitActions />
@@ -45,12 +47,6 @@
     <DialogNode Type="Player" Id="B1_Sorgu" TargetAlias="looters" InputToken="ql_prequel_player_1" OutputToken="ql_capulcu_aciklama">
       <Text>{=sp_yd_dlg2}What is this nonsense, how do you know my name, you honorless scum?!</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="YD_Prequel_P1_Ertele" TargetAlias="looters" InputToken="ql_prequel_player_1" OutputToken="close_window">
-      <Text>{=sp_yd_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
 
     <DialogNode Type="Npc" Id="A2_Aciklama" TargetAlias="looters" InputToken="ql_capulcu_aciklama" OutputToken="ql_prequel_choices">
       <Text>{=sp_yd_dlg3}Listen, this isn't some ordinary looter's foolish deception attempt, alright? Your reputation is in danger. I am a friend of a friend from your motherland. If you value your reputation, go to the barber of the second nearest city and ask 'What is the name of the looter?'. He will provide you with intel.</Text>
@@ -67,13 +63,6 @@
     <!-- SECENEK 2: DIYALOGA DEVAM ET -->
     <DialogNode Type="Player" Id="B2_IyiDeneme" TargetAlias="looters" InputToken="ql_prequel_choices" OutputToken="ql_capulcu_inanis">
       <Text>{=sp_yd_dlg5}Nice try. You have a knack for tactics.</Text>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="YD_Prequel_Ertele" TargetAlias="looters" InputToken="ql_prequel_choices" OutputToken="close_window">
-      <Text>{=sp_yd_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="A2_Inanis" TargetAlias="looters" InputToken="ql_capulcu_inanis" OutputToken="ql_prequel_subchoices">
@@ -101,13 +90,6 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="YD_Prequel_Sub_Ertele" TargetAlias="looters" InputToken="ql_prequel_subchoices" OutputToken="close_window">
-      <Text>{=sp_yd_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
-
     <!-- 2. BERBER ILE KONUSMA (GOREVI BITIREN KISIM) -->
     <DialogNode Type="Player" Id="Berber_Soru" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="barber_question1" OutputToken="ql_berber_itibar_a1" Priority="100">
       <Text>{=sp_yd_dlg10}What is the name of the looter?</Text>
@@ -131,7 +113,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Berber_A2_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a2" OutputToken="ql_berber_itibar_b2">
-      <Text>{=sp_yd_dlg14}Ahh, {PlayerName}... Your suspicious behavior is, of course, very justified. Don't worry. You did very well to believe him and come here. A friend from your motherland contacted us. He mentioned that they started spreading rumors behind your back that could declare you a traitor.</Text>
+      <Text>{=sp_yd_dlg14}Ahh, {PlayerName}... Your suspicious behavior is, of course, very justified. Don't worry. You did very well to believe him and come here. Your friend from your motherland, {Dost_Link}, contacted us. He mentioned that they started spreading rumors behind your back that could declare you a traitor.</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Berber_B2a_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b2" OutputToken="ql_berber_itibar_a3">

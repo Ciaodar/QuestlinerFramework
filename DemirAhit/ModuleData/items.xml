@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item id="YildizDemiri" name="{=da_item_yildiz_demiri}Star Iron" mesh="iron_ingot" Type="Goods" is_merchandise="false" value="100" weight="1.5">
-    <ItemComponent>
-      <Trade value="100" />
-    </ItemComponent>
+  <Item id="YildizDemiri" name="{=da_item_yildiz_demiri}Star Iron" mesh="iron_ingot" Type="Goods" is_merchandise="false" value="0" weight="1.5">
     <Flags />
   </Item>
-  <Item id="GeciciAhitKilici" name="{=da_item_gecici_ahit}Temporary Covenant Sword" mesh="sword_1" Type="OneHandedWeapon" is_merchandise="false" value="2000" weight="2.0">
-    <ItemComponent>
-      <Weapon weapon_class="OneHandedSword" thrust_speed="90" speed_rating="95" missile_speed="0" weapon_length="100" thrust_damage="35" swing_damage="70" thrust_damage_type="Pierce" swing_damage_type="Cut" item_usage="onehanded" />
-    </ItemComponent>
+  <CraftedItem id="GeciciAhitKilici" name="{=da_item_gecici_ahit}Temporary Covenant Sword" crafting_template="OneHandedSword" is_merchandise="false" value="2000">
+    <Pieces>
+      <Piece id="vlandian_blade_1" Type="Blade" />
+      <Piece id="vlandian_guard_1" Type="Guard" />
+      <Piece id="vlandian_grip_1" Type="Handle" />
+      <Piece id="vlandian_pommel_1" Type="Pommel" />
+    </Pieces>
+  </CraftedItem>
+  <Item id="KalfaMuhru" name="{=da_item_kalfa_muhru}Journeyman's Seal" mesh="jewelry_amulet" Type="Goods" is_merchandise="false" value="0" weight="0.1">
     <Flags />
   </Item>
-  <Item id="KalfaMuhru" name="{=da_item_kalfa_muhru}Journeyman's Seal" mesh="jewelry_amulet" Type="Goods" is_merchandise="false" value="500" weight="0.1">
-    <ItemComponent>
-      <Trade value="500" />
-    </ItemComponent>
+  <Item id="KalbinAtesi" name="{=da_item_kalbin_atesi}Heart's Fire" mesh="ore_iron" Type="Goods" is_merchandise="false" value="0" weight="2.5">
     <Flags />
   </Item>
-  <Item id="KalbinAtesi" name="{=da_item_kalbin_atesi}Heart's Fire" mesh="ore_iron" Type="Goods" is_merchandise="false" value="5000" weight="2.5">
-    <ItemComponent>
-      <Trade value="5000" />
-    </ItemComponent>
-    <Flags />
-  </Item>
-  <Item id="AhitKilici_Efsanevi" name="{=da_item_ahit_efsanevi}Legendary Covenant Sword" mesh="sword_2" Type="OneHandedWeapon" is_merchandise="false" value="20000" weight="1.8">
-    <ItemComponent>
-      <Weapon weapon_class="OneHandedSword" thrust_speed="100" speed_rating="105" missile_speed="0" weapon_length="110" thrust_damage="45" swing_damage="90" thrust_damage_type="Pierce" swing_damage_type="Cut" item_usage="onehanded" />
-    </ItemComponent>
-    <Flags />
-  </Item>
+  <CraftedItem id="AhitKilici_Efsanevi" name="{=da_item_ahit_efsanevi}Legendary Covenant Sword" crafting_template="OneHandedSword" is_merchandise="false" value="20000">
+    <Pieces>
+      <Piece id="vlandian_noble_blade_1" Type="Blade" />
+      <Piece id="vlandian_noble_guard_1" Type="Guard" />
+      <Piece id="vlandian_noble_grip_1" Type="Handle" />
+      <Piece id="vlandian_noble_pommel_1" Type="Pommel" />
+    </Pieces>
+  </CraftedItem>
 </Items>

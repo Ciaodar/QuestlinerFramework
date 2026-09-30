@@ -2,7 +2,7 @@
 <Questline Id="QLF_AnavataninIhaneti" Title="{=sp_ai_title}Treason of the Motherland" TimeLimitInDays="60">
   <TargetResolvers>
     <Resolver Alias="KoyBuyugu" TargetType="Hero" Filters="SameCultureAsPlayer, RuralNotable, !Target(Dost)" Selector="Nearest" />
-    <Resolver Alias="Dost" TargetType="Hero" Filters="SameCultureAsPlayer, Lord, !PlayerClan, !ClanLeader, HasMobileParty, HasKingdom" Selector="Nearest" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost), SameCultureAsPlayer, Lord, !PlayerClan, !ClanLeader, HasMobileParty, HasKingdom" Selector="Nearest" />
     <Resolver Alias="UzakSehir" TargetType="Settlement" Filters="Town, SameKingdomAs(Dost)" Selector="Furthest" />
     <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="SameCultureAsPlayer, Artisan" RequiredSettlementAlias="UzakSehir" Selector="Random" />
     <Resolver Alias="Kral" TargetType="Hero" Filters="SameKingdomAs(Dost), KingdomLeader" Selector="First" />
@@ -10,7 +10,7 @@
 
   <Stages>
     <Stage Id="Stage1_KoyBuyugu" NextStageId="" LogType="Progress" TargetAmount="70" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_ai_s1_log}The mysterious barber's words haunt your mind. An old friend from your motherland has asked the secret society 'Scavenger Pigeons' for help to fight against terrible slanders that will ruin your reputation. However, before the Pigeons accept you, you must prove your strength. Use the gold you were given to gather a company of 70 men and meet with the village elder {KoyBuyugu_Link}.</LogText>
+      <LogText>{=sp_ai_s1_log}The mysterious barber's words haunt your mind. An old friend from your motherland, {Dost_Link}, has asked the secret society 'Scavenger Pigeons' for help to fight against terrible slanders that will ruin your reputation. However, before the Pigeons accept you, you must prove your strength. Use the gold you were given to gather a company of 70 men and meet with the village elder {KoyBuyugu_Link}.</LogText>
       <Conditions>
         <Condition Type="HasTroopCount" Amount="70" />
       </Conditions>
@@ -102,7 +102,7 @@
   <CustomDialogs>
     <!-- 1. KOY BUYUGU DIYALOGLARI (GIRIS) -->
     <DialogNode Type="Player" Id="KB_Player_Giris" TargetAlias="KoyBuyugu" InputToken="hero_main_options" OutputToken="ql_kb_npc_giris" Priority="150">
-      <Text>{=sp_ai_dlg1}I have a special matter to discuss with you.</Text>
+      <Text>{=sp_ai_dlg1}The barber directed me to you regarding the matter of {Dost_Link}.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_KoyBuyugu" />
       </Conditions>
@@ -133,7 +133,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="KB_A2" TargetAlias="KoyBuyugu" InputToken="ql_kb_a2" OutputToken="ql_kb_b2">
-      <Text>{=sp_ai_dlg5}Yes, of course... You are here for the next step. What you will do now is take this special leather containing secret information to the artisan named {ArtisanTarget_Link} in the city of {UzakSehir_Link}.</Text>
+      <Text>{=sp_ai_dlg5}Yes, of course... Your friend {Dost_Link} sent word about you. You are here for the next step. What you will do now is take this special leather containing secret information to the artisan named {ArtisanTarget_Link} in the city of {UzakSehir_Link}.</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="KB_B2a" TargetAlias="KoyBuyugu" InputToken="ql_kb_b2" OutputToken="ql_kb_a3">
@@ -403,7 +403,7 @@
 
     <!-- 5. KRALLIGA KATILDIKTAN SONRA DOST ILE SON YUZLESME -->
     <DialogNode Type="Player" Id="Dost_Final_Player_Giris" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_dost_final_bridge" Priority="150">
-      <Text>{=sp_ai_dlg47_p}I have returned, Dost.</Text>
+      <Text>{=sp_ai_dlg47_p}I have returned, friend.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage5_KralligaKatil" />
       </Conditions>
@@ -434,22 +434,12 @@
       <Text>{=sp_ai_dlg49}Don't think you fooled me. I already wanted to go down this path myself. The slander was just an added bonus.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Dost_Final_B1_Ertele" TargetAlias="Dost" InputToken="ql_dost_final_b1" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
-
     <DialogNode Type="Npc" Id="Dost_Final_A2" TargetAlias="Dost" InputToken="ql_dost_final_a2" OutputToken="ql_dost_final_step2_choices">
       <Text>{=sp_ai_dlg50}Thank you. The donation I'm about to make will compensate for the trouble I've caused you and help you in your new service.</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Dost_Final_P2_Acc" TargetAlias="Dost" InputToken="ql_dost_final_step2_choices" OutputToken="ql_dost_final_a3">
       <Text>{=sp_ai_dlg50_acc}The Motherland's honor is preserved, and 50,000 denars is a fitting recompense. I accept. (Accept 50,000 Gold)</Text>
-    </DialogNode>
-    <DialogNode Type="Player" Id="Dost_Final_P2_Prag" TargetAlias="Dost" InputToken="ql_dost_final_step2_choices" OutputToken="ql_dost_final_a3">
-      <Text>{=sp_ai_dlg50_prag}Gold seals our pact. May our alliance bring fortune to both of us. (Accept 50,000 Gold)</Text>
-    </DialogNode>
-    <DialogNode Type="Player" Id="Dost_Final_P2_Ertele" TargetAlias="Dost" InputToken="ql_dost_final_step2_choices" OutputToken="close_window">
-      <Text>{=sp_ai_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Dost_Final_A3" TargetAlias="Dost" InputToken="ql_dost_final_a3" OutputToken="hero_main_options">
