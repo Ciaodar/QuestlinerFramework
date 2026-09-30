@@ -110,7 +110,7 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Hizli" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="close_window">
       <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="EngageParty" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
@@ -193,7 +193,7 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Detayli" TargetAlias="GorevVeren" InputToken="ql_shdw_t_karar" OutputToken="close_window">
       <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="EngageParty" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
@@ -202,7 +202,7 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Adalet" TargetAlias="GorevVeren" InputToken="ql_shdw_t_karar" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_t_kabul_adalet}I will hunt down those raiders for the safety of the roads, merchant. But once I hold that ledger, we will have words about your transactions.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="EngageParty" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>

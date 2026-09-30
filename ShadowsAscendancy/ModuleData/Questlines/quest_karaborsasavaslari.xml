@@ -36,7 +36,7 @@
     </Stage>
 
     <Stage Id="Stage2_Sorgu" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q2_s2_log}You defeated the hired assassins and survived. Find the Wounded Commander ({KatilKomutan_Link}) waiting on the map and interrogate him.</LogText>
+      <LogText>{=shdw_q2_s2_log}You defeated the hired assassins and survived. Find {KatilKomutan_Link} waiting on the map and interrogate him.</LogText>
       <Conditions />
     </Stage>
 
@@ -228,8 +228,8 @@
       <Consequences>
         <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="DestroyEncounteredParty" />
-        <Action Type="DestroyParty" TargetAlias="KatilKomutan" />
         <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
+        <Action Type="MakeMet" TargetAlias="HedefLord" />
         <Action Type="LeaveEncounter" />
         <Action Type="ChangeStage" ObjectId="Stage3_Intikam" />
       </Consequences>
@@ -240,8 +240,8 @@
       <Consequences>
         <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="DestroyEncounteredParty" />
-        <Action Type="DestroyParty" TargetAlias="KatilKomutan" />
         <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
+        <Action Type="MakeMet" TargetAlias="HedefLord" />
         <Action Type="LeaveEncounter" />
         <Action Type="ChangeStage" ObjectId="Stage3_Intikam" />
       </Consequences>
@@ -283,6 +283,9 @@
 
     <DialogNode Type="Player" Id="Lord_Giris_Ertele" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_yuzlesme" OutputToken="close_window">
       <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
 
     <!-- Tur 3: Lordun Yanıtı (Kibir ve Rüşvet Teklifi) -->
@@ -305,6 +308,9 @@
 
     <DialogNode Type="Player" Id="Lord_Ertele_2" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="close_window">
       <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
 
     <!-- Tur 5: Lord Calradia Entrikalarını Açıklar & Fiyatı Belirler -->
@@ -331,6 +337,9 @@
 
     <DialogNode Type="Player" Id="Lord_Ertele_3" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_confront" OutputToken="close_window">
       <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
 
     <!-- Tur 7: Lordun Ültimatomu -->
@@ -356,6 +365,9 @@
 
     <DialogNode Type="Player" Id="Lord_Karar_Ertele" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_karar" OutputToken="close_window">
       <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
 
     <!-- Tur 9: Lordun Nihai Tepkisi & Sonuçlar -->
@@ -366,11 +378,12 @@
         <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="ChangeRenown" Amount="-20" /> 
         <Action Type="ChangeStage" ObjectId="StageSuccess_Santaj" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Sonuc_Savas" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_savas_son" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_lord_savas_c}(Draws his gilded sword, roaring to his guards) Insolent dog! You dare threaten me under my own roof?! Guards, slay this wretch!</Text>
+      <Text>{=shdw_q2_dlg_lord_savas_c}(Draws his gilded sword, roaring to his guards) Insolent dog! You dare threaten me?! Guards, slay this wretch!</Text>
       <Consequences>
         <Action Type="DeclareWar" TargetAlias="YozlasmisLord" />
         <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
@@ -383,6 +396,7 @@
       <Consequences>
         <Action Type="ChangeRelation" TargetAlias="YozlasmisLord" Amount="-50" />
         <Action Type="ChangeStage" ObjectId="Stage4_Hukumdar" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 

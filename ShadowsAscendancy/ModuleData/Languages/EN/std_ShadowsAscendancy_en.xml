@@ -92,7 +92,7 @@
     <string id="shdw_q2_title" text="Black Market Wars" />
 
     <string id="shdw_q2_s1_log" text="Your clan is now known throughout the realm (Tier 3). However, your past isn't letting you go. A large bounty has been placed on your head, and hired assassins are after you. Defeat them and survive!" />
-    <string id="shdw_q2_s2_log" text="You defeated the hired assassins and survived. Find the Wounded Commander ({KatilKomutan_Link}) waiting on the map and interrogate him." />
+    <string id="shdw_q2_s2_log" text="You defeated the hired assassins and survived. Find {KatilKomutan_Link} waiting on the map and interrogate him." />
     <string id="shdw_q2_s3_log" text="You learned that {YozlasmisLord_Link} was behind the assassination attempt and secured the evidence (Lord's Sealed Order). Now it's time to confront him." />
     <string id="shdw_q2_s4_log" text="You rejected the lord's bribe. Now you must speak with {Hukumdar_Link} to prove his betrayal." />
     <string id="shdw_q2_s5a_log" text="You took a hefty hush money payment from the corrupt lord and covered up the incident. It might have been a dishonorable move, but your purse is quite full." />
@@ -138,7 +138,7 @@
     <string id="shdw_q2_dlg8" text="My honor cannot be bought with coin. Draw your weapon!" />
     <string id="shdw_q2_dlg9" text="I am taking this order straight to the ruler. Justice will be served." />
     <string id="shdw_q2_dlg_lord_santaj_c" text="(Grins arrogantly and tosses a heavy iron-bound chest at your feet) Smart choice. Gold never lies. Take your silver and never let me see your face in my domain again." />
-    <string id="shdw_q2_dlg_lord_savas_c" text="(Draws his gilded sword, roaring to his guards) Insolent dog! You dare threaten me under my own roof?! Guards, slay this wretch!" />
+    <string id="shdw_q2_dlg_lord_savas_c" text="(Draws his gilded sword, roaring to his guards) Insolent dog! You dare threaten me?! Guards, slay this wretch!" />
     <string id="shdw_q2_dlg_lord_politik_c" text="(His face turns pale with fury) The ruler?! You will never reach the court alive, mercenary! Run to the king if you dare, but you will find Calradia's courts colder than my dungeons!" />
 
     <string id="shdw_q2_dlg_huk_intro" text="Welcome to our court. What urgent matter brings you before the throne?" />

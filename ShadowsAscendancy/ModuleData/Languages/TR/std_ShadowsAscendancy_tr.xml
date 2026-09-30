@@ -92,7 +92,7 @@
     <string id="shdw_q2_title" text="Karaborsa Savaşları" />
 
     <string id="shdw_q2_s1_log" text="Klanın artık tüm diyarda tanınıyor (Tier 3). Ancak geçmişin seni bırakmıyor. Başına büyük bir ödül konmuş ve kiralık katiller peşinde. Onları yenerek hayatta kal!" />
-    <string id="shdw_q2_s2_log" text="Kiralık katilleri yendin ve hayatta kaldın. Haritada bekleyen Yaralı Komutanı ({KatilKomutan_Link}) bul ve onu sorgula." />
+    <string id="shdw_q2_s2_log" text="Kiralık katilleri yendin ve hayatta kaldın. Haritada bekleyen {KatilKomutan_Link}'ı bul ve onu sorgula." />
     <string id="shdw_q2_s3_log" text="Suikast girişiminin arkasında {YozlasmisLord_Link} olduğunu öğrendin ve kanıtı (Lordun Mühürlü Emri) ele geçirdin. Şimdi onunla yüzleşme zamanı." />
     <string id="shdw_q2_s4_log" text="Lordun rüşvet teklifini reddettin. Şimdi {Hukumdar_Link} ile konuşup ihaneti kanıtlaman gerekiyor." />
     <string id="shdw_q2_s5a_log" text="Yozlaşmış lorddan yüklü miktarda sus payı alarak olayların üstünü örttün. Belki onursuzca bir hareketti ama cüzdanın oldukça doldu." />
