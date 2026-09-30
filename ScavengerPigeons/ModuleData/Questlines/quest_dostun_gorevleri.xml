@@ -26,7 +26,7 @@
   <Stages>
     <!-- Bahar: Casusluk (Gorev hemen baslar, bekleme yok) -->
     <Stage Id="Stage1_Bahar_Casusluk" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_dg_s1_log}Spring Service - Espionage: A pigeon from {Dost_Link} directs you to {BaharSehir_Link}. Meet with operative {BaharOperatifi_Link} to receive decoded foreign intelligence.</LogText>
+      <LogText>{=sp_dg_s1_log}Spring Service - Espionage: A pigeon from {Dost.Name} directs you to {BaharSehir_Link}. Meet with operative {BaharOperatifi_Link} to receive decoded foreign intelligence.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="BaharOperatifi" />
@@ -35,7 +35,7 @@
 
     <!-- Yaz: Bekleme ve Kuryelik -->
     <Stage Id="Stage2_Yaz_Bekleme" NextStageId="Stage2_Yaz_Kuryelik" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=sp_dg_s2_wait_log}The Spring espionage task was completed. As summer sweeps across Calradia, you await {Dost_Link}'s next dispatch order...</LogText>
+      <LogText>{=sp_dg_s2_wait_log}The Spring espionage task was completed. As summer sweeps across Calradia, you await {Dost.Name}'s next dispatch order...</LogText>
       <Conditions />
       <OnTimeoutActions>
         <Action Type="ChangeStage" ObjectId="Stage2_Yaz_Kuryelik" />
@@ -52,7 +52,7 @@
 
     <!-- Sonbahar: Bekleme ve Savaşçılık -->
     <Stage Id="Stage3_Sonbahar_Bekleme" NextStageId="Stage3_Sonbahar_Savas" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=sp_dg_s3_wait_log}The dispatch reached its destination. As autumn leaves fall, {Dost_Link} summons your martial strength for a critical frontier operation...</LogText>
+      <LogText>{=sp_dg_s3_wait_log}The dispatch reached its destination. As autumn leaves fall, {Dost.Name} summons your martial strength for a critical frontier operation...</LogText>
       <Conditions />
       <OnTimeoutActions>
         <Action Type="SpawnBanditParty" TargetAlias="SonbaharHaydutlar" Amount="35" StringValue="{=sp_dg_raiders}Hostile Deserters" SpawnDistance="2" SpawnRadius="3" />
@@ -87,7 +87,7 @@
 
     <!-- 5. Görev: Derin Kanat & Büyük İkilem -->
     <Stage Id="Stage5_DerinKanat_SuikastEmri" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_dg_s5_log}The four seasons of service are complete. But an unmarked black raven has arrived, directing you to meet {DerinKanatUlagi_Link}. The inner council has issued a shocking, unprecedented assassination decree: The target is none other than {Dost_Link}!</LogText>
+      <LogText>{=sp_dg_s5_log}The four seasons of service are complete. But an unmarked black raven has arrived, directing you to meet {DerinKanatUlagi_Link}. The inner council has issued a shocking, unprecedented assassination decree: The target is none other than {Dost.Name}!</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="DerinKanatUlagi" />
@@ -96,7 +96,7 @@
 
     <!-- Final A: Kör Sadakat -->
     <Stage Id="StageSuccess_KorSadakat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_dg_s_korsadakat_log}You refused to entertain the words of a traitor and struck down {DerinKanatUlagi_Link} where he stood. You rode to {Dost_Link} and reported the coup attempt within the ranks. Overwhelmed by your unyielding, incorruptible loyalty, Dost gifted you 50,000 denars and named you his eternal champion. You remained a steadfast guardian of the Motherland.</LogText>
+      <LogText>{=sp_dg_s_korsadakat_log}You refused to entertain the words of a traitor and struck down {DerinKanatUlagi_Link} where he stood. You rode to {Dost.Name} and reported the coup attempt within the ranks. Overwhelmed by your unyielding, incorruptible loyalty, Dost gifted you 50,000 denars and named you his eternal champion. You remained a steadfast guardian of the Motherland.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="AddGold" Amount="50000" />
@@ -107,7 +107,7 @@
 
     <!-- Final B: Gölge Rotası -->
     <Stage Id="StageSuccess_GolgeRotasi" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_dg_s_golgerotasi_log}You held your blade and listened to {DerinKanatUlagi_Link}. The documents he provided tore the veil from your eyes: {Dost_Link} has orchestrated every crisis, every border war, and every death to line his own pockets. The courier handed you the Raven Bone Cipher and directed you to the hidden sanctuary of the Shadow Roost (Gölge Tüneği). But Dost already senses your defiance...</LogText>
+      <LogText>{=sp_dg_s_golgerotasi_log}You held your blade and listened to {DerinKanatUlagi_Link}. The documents he provided tore the veil from your eyes: {Dost.Name} has orchestrated every crisis, every border war, and every death to line his own pockets. The courier handed you the Raven Bone Cipher and directed you to the hidden sanctuary of the Shadow Roost (Gölge Tüneği). But Dost already senses your defiance...</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="GiveItem" ObjectId="raven_bone_cipher" Amount="1" />

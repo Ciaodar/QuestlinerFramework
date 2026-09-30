@@ -22,7 +22,7 @@
 
     <!-- BASARILI BITIS -->
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_id_s_success_log}You found the barber and asked him 'What is the name of the looter?'. He told you about the slanders against you. An old friend from your motherland, {Dost_Link}, asked for your help from the secret cult 'Scavenger Pigeons', of which he is a member. They gave you some money and told you to gather a party of 70 men and find the elder of a nearby village.</LogText>
+      <LogText>{=sp_id_s_success_log}You found the barber and asked him 'What is the name of the looter?'. He told you about the slanders against you. An old friend from your motherland, {Dost.Name}, asked for your help from the secret cult 'Scavenger Pigeons', of which he is a member. They gave you some money and told you to gather a party of 70 men and find the elder of a nearby village.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />

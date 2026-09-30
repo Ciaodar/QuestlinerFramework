@@ -55,7 +55,7 @@
     </Stage>
 
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_gt2_s_success_log}You broke {Dost_Link}'s army and executed him on the field of honor. The false patriot is dead. The Shadow Roost sends you 50,000 denars and 50 renown, inviting you to the final council.</LogText>
+      <LogText>{=sp_gt2_s_success_log}You broke {Dost.Name}'s army and executed him on the field of honor. The false patriot is dead. The Shadow Roost sends you 50,000 denars and 50 renown, inviting you to the final council.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="KillHero" TargetAlias="Dost" />
