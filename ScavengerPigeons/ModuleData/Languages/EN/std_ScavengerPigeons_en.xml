@@ -28,7 +28,7 @@
 
     <!-- Anavatanin Ihaneti -->
     <string id="sp_ai_title" text="Treason of the Motherland" />
-    <string id="sp_ai_s1_log" text="The mysterious barber's words haunt your mind. An old friend from your motherland has asked the secret society 'Scavenger Pigeons' for help to fight against terrible slanders that will ruin your reputation. However, before the Pigeons accept you, you must prove your strength. Use the gold you were given to gather a company of 70 men and meet with the village elder {KoyBuyugu_Link}." />
+    <string id="sp_ai_s1_log" text="The mysterious barber's words haunt your mind. An old friend from your motherland, {Dost_Link}, has asked the secret society 'Scavenger Pigeons' for help to fight against terrible slanders that will ruin your reputation. However, before the Pigeons accept you, you must prove your strength. Use the gold you were given to gather a company of 70 men and meet with the village elder {KoyBuyugu_Link}." />
     <string id="sp_ai_s2_log" text="You spoke with the village elder {KoyBuyugu_Link}. As expected, this was no ordinary task. He gave you a piece of leather with secret ciphers on it and told you to deliver it to the artisan {ArtisanTarget_Link} in the city of {UzakSehir_Link} without wasting any time." />
     <string id="sp_ai_s3a_log" text="The Scavenger Pigeons' sage, {ArtisanTarget_Link}, gave you an assassination mission. You accepted it without question. Your target: {Dost_Link}." />
     <string id="sp_ai_s3b_log" text="The Pigeons have asked you to kill {Dost_Link}, the person they previously said was your friend. Inconsistent and strange things are happening. You objected to the mission during your conversation with {ArtisanTarget_Link}. You might want to urgently speak to someone about your suspicions." />
@@ -40,11 +40,11 @@
     <string id="sp_ai_s_success_log" text="You learned that all of this was a game set up to test your loyalty. It turns out you have just met your friend {Dost_Link}. He gave you 50,000 denars as compensation for the troubles he caused and wished you success in your new service. The rumors of treason have ended." />
     <string id="sp_ai_s_infaz_log" text="You saw through the treachery of {ArtisanTarget_Link} and executed him on the spot. Searching his corpse, you discovered the mysterious Raven Bone Cipher. The chapter of the motherland has closed in blood, but the eyes of the Shadow Roost are now upon you." />
     
-    <string id="sp_ai_dlg1" text="I have a special matter to discuss with you." />
+    <string id="sp_ai_dlg1" text="The barber directed me to you regarding the matter of {Dost_Link}." />
     <string id="sp_ai_dlg2" text="Your name must be {PlayerName}, isn't it?" />
     <string id="sp_ai_dlg3" text="I guess I should get used to everyone knowing my name." />
     <string id="sp_ai_dlg4" text="You must be a pigeon too..." />
-    <string id="sp_ai_dlg5" text="Yes, of course... You are here for the next step. What you will do now is take this special leather containing secret information to the artisan named {ArtisanTarget_Link} in the city of {UzakSehir_Link}." />
+    <string id="sp_ai_dlg5" text="Yes, of course... Your friend {Dost_Link} sent word about you. You are here for the next step. What you will do now is take this special leather containing secret information to the artisan named {ArtisanTarget_Link} in the city of {UzakSehir_Link}." />
     <string id="sp_ai_dlg6" text="What does this have to do with my problem?" />
     <string id="sp_ai_dlg7" text="Everything is connected." />
     <string id="sp_ai_dlg8" text="Alright, I will do it." />
@@ -114,7 +114,7 @@
     <string id="sp_yd_dlg11" text="Anubis. Looters are the most suspicious birds of the realm. What did you want, stranger?" />
     <string id="sp_yd_dlg12" text="The mysterious man dressed as a looter I spoke to said my reputation is in danger. I hope you aren't mocking me." />
     <string id="sp_yd_dlg13" text="The looter told me my reputation is in danger. What does this mean?" />
-    <string id="sp_yd_dlg14" text="Ahh, {PlayerName}... Your suspicious behavior is, of course, very justified. Don't worry. You did very well to believe him and come here. A friend from your motherland contacted us. He mentioned that they started spreading rumors behind your back that could declare you a traitor." />
+    <string id="sp_yd_dlg14" text="Ahh, {PlayerName}... Your suspicious behavior is, of course, very justified. Don't worry. You did very well to believe him and come here. Your friend from your motherland, {Dost_Link}, contacted us. He mentioned that they started spreading rumors behind your back that could declare you a traitor." />
     <string id="sp_yd_dlg15" text="Who are you people? What kind of cult is this? Couldn't that idiot just send a regular messenger? Besides, I don't even know this man. Stop playing games." />
     <string id="sp_yd_dlg16" text="You? Are you a secret society? What is your problem?" />
     <string id="sp_yd_dlg17" text="Don't worry friend. We are the Scavenger Pigeons, serving for centuries. We are faster than any messenger, stronger than any servant. Your friend is a brave man who has helped us a lot. He vouched for you and asked us to save you from this conspiracy." />
@@ -134,7 +134,7 @@
     <string id="sp_id_dlg11" text="Anubis. Looters are the most suspicious birds of the realm. What did you want, stranger?" />
     <string id="sp_id_dlg12" text="The mysterious man dressed as a looter I spoke to said my reputation is in danger. I hope you aren't mocking me." />
     <string id="sp_id_dlg13" text="The looter told me my reputation is in danger. What does this mean?" />
-    <string id="sp_id_dlg14" text="Ahh, {PlayerName}... Your suspicious behavior is, of course, very justified. Don't worry. You did very well to believe him and come here. A friend from your motherland contacted us. He mentioned that they started spreading rumors behind your back that could declare you a traitor." />
+    <string id="sp_id_dlg14" text="Ahh, {PlayerName}... Your suspicious behavior is, of course, very justified. Don't worry. You did very well to believe him and come here. Your friend from your motherland, {Dost_Link}, contacted us. He mentioned that they started spreading rumors behind your back that could declare you a traitor." />
     <string id="sp_id_dlg15" text="Who are you people? What kind of cult is this? Couldn't that idiot just send a regular messenger? Besides, I don't even know this man. Stop playing games." />
     <string id="sp_id_dlg16" text="You? Are you a secret society? What is your problem?" />
     <string id="sp_id_dlg17" text="Don't worry friend. We are the Scavenger Pigeons, serving for centuries. We are faster than any messenger, stronger than any servant. Your friend is a brave man who has helped us a lot. He vouched for you and asked us to save you from this conspiracy." />
@@ -241,7 +241,7 @@
 
     <!-- Anavatanin Ihaneti (Additions) -->
     <string id="sp_ai_ertele" text="I cannot deal with this right now. We will speak later." />
-    <string id="sp_ai_dlg47_p" text="I have returned, Dost." />
+    <string id="sp_ai_dlg47_p" text="I have returned, friend." />
     <string id="sp_ai_dlg50" text="Thank you. The donation I'm about to make will compensate for the trouble I've caused you and help you in your new service." />
     <string id="sp_ai_dlg51" text="Did you want to talk about anything else?" />
 
@@ -262,7 +262,7 @@
     <string id="sp_kb_dlg_p3_tactics" text="Seventy deserters with baggage can move fast. How do we pin them down without fighting the entire garrison?" />
     <string id="sp_kb_dlg_p3_force" text="Let him hire a thousand cutthroats. My blade will cut through his vanguard like straw. Where do I strike?" />
     <string id="sp_kb_dlg_dost_tactics" text="He deployed three decoy looter bands across the foothills to confuse our tracking hounds. Intercept and destroy those three decoy parties. Once his decoys are crushed, his main convoy will lose its screen and be forced to face you in the open." />
-    <string id="sp_kb_dlg_p4_acc" text="Consider it done, Dost. I will bring back the master ciphers and end this treason. (Accept Hunt)" />
+    <string id="sp_kb_dlg_p4_acc" text="Consider it done, friend. I will bring back the master ciphers and end this treason. (Accept Hunt)" />
     <string id="sp_kb_dlg_p4_prag" text="I will ride him down. But make sure the Motherland remembers who saved her throat today. (Accept Hunt)" />
     <string id="sp_kb_dlg_p_inq" text="Why run like a common thief? Why steal the very ciphers you swore to protect?" />
     <string id="sp_kb_dlg_p_harsh" text="Save your breath, rat. Hand over the master ciphers and get on your knees." />
@@ -310,14 +310,14 @@
 
     <!-- Dostun Gorevleri (Four Seasons of Service) -->
     <string id="sp_dg_title" text="Four Seasons of Service" />
-    <string id="sp_dg_s0_log" text="With the traitor executed, you have proven your absolute loyalty to {Dost_Link}. The true motives of the Scavenger Pigeons remain veiled in patriotic duty. You await your first seasonal order on the 7th day of Spring..." />
+    <string id="sp_dg_s0_log" text="With the traitor executed, you have proven your absolute loyalty to {Dost_Link}. The true motives of the Scavenger Pigeons remain veiled in patriotic duty. You await your seasonal orders via pigeon dispatch..." />
     <string id="sp_dg_s1_log" text="Spring Service - Espionage: A pigeon from {Dost_Link} directs you to {BaharSehir_Link}. Meet with operative {BaharOperatifi_Link} to receive decoded foreign intelligence." />
-    <string id="sp_dg_s2_wait_log" text="The Spring espionage task was completed. As Summer heat sweeps across Calradia, you await {Dost_Link}'s next assignment on the 7th day of Summer..." />
+    <string id="sp_dg_s2_wait_log" text="The Spring espionage task was completed. As summer sweeps across Calradia, you await {Dost_Link}'s next dispatch order..." />
     <string id="sp_dg_s2_log" text="Summer Service - Courier Dispatch: Ride to {YazSehir_Link} and deliver an urgent, wax-sealed diplomatic cylinder to {YazKuryesi_Link} without breaking the seal." />
-    <string id="sp_dg_s3_wait_log" text="The dispatch reached its destination. As autumn leaves fall, {Dost_Link} summons your martial strength for the 7th day of Autumn..." />
+    <string id="sp_dg_s3_wait_log" text="The dispatch reached its destination. As autumn leaves fall, {Dost_Link} summons your martial strength for a critical frontier operation..." />
     <string id="sp_dg_raiders" text="Hostile Deserters" />
     <string id="sp_dg_s3_log" text="Autumn Service - Combat: Hostile raiders {SonbaharHaydutlar_Link} are harassing Pigeon supply routes along the frontier. Hunt them down and eliminate them to ensure secure transit for the realm." />
-    <string id="sp_dg_s4_wait_log" text="The border is secured. Winter's frost envelops the realm, and on the 7th day of Winter, delicate palace affairs require your discretion..." />
+    <string id="sp_dg_s4_wait_log" text="The border is secured. Winter's frost envelops the realm, and delicate palace affairs will soon require your discretion..." />
     <string id="sp_dg_s4_log" text="Winter Service - Court Affairs: Travel to {KisSehir_Link} and contact {KisSarayli_Link} to plant forged directives in the local registry to steer the noble council." />
     <string id="sp_dg_s5_log" text="The four seasons of service are complete. But an unmarked black raven has arrived, directing you to meet {DerinKanatUlagi_Link}. The inner council has issued a shocking, unprecedented assassination decree: The target is none other than {Dost_Link}!" />
     <string id="sp_dg_s_korsadakat_log" text="You refused to entertain the words of a traitor and struck down {DerinKanatUlagi_Link} where he stood. You rode to {Dost_Link} and reported the coup attempt within the ranks. Overwhelmed by your unyielding, incorruptible loyalty, Dost gifted you 50,000 denars and named you his eternal champion. You remained a steadfast guardian of the Motherland." />

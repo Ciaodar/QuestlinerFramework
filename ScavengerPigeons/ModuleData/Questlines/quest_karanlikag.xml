@@ -135,7 +135,7 @@
     <DialogNode Type="Player" Id="KA_M_P4_Fight_Heroic" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step4_choices" OutputToken="close_window">
       <Text>{=sp_ka_dlg_p4_fight_heroic}Let Dost send his butchers. Today, the shadows bleed like mortals! (Draw Steel &amp; Defend)</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="GolgeSuikastcilar" Amount="45" PartyTemplateId="deserters_template" StringValue="{=sp_ka_assassins}Dost's Shadow Assassins" />
+        <Action Type="SpawnBanditParty" TargetAlias="GolgeSuikastcilar" Amount="45" StringValue="{=sp_ka_assassins}Dost's Shadow Assassins" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="GolgeSuikastcilar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_PusuSavasi" />
       </Consequences>
@@ -143,7 +143,7 @@
     <DialogNode Type="Player" Id="KA_M_P4_Fight_Prag" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step4_choices" OutputToken="close_window">
       <Text>{=sp_ka_dlg_p4_fight_prag}Barricade the inner door, old man. I will turn their ambush into their graveyard. (Fight)</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="GolgeSuikastcilar" Amount="45" PartyTemplateId="deserters_template" StringValue="{=sp_ka_assassins}Dost's Shadow Assassins" />
+        <Action Type="SpawnBanditParty" TargetAlias="GolgeSuikastcilar" Amount="45" StringValue="{=sp_ka_assassins}Dost's Shadow Assassins" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="GolgeSuikastcilar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_PusuSavasi" />
       </Consequences>

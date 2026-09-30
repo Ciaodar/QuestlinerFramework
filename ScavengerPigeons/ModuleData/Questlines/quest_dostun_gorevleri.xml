@@ -4,6 +4,7 @@
   <Prerequisites>
     <Condition Type="GlobalFlag" ObjectId="SP_Zanaatkar_Katledildi" Amount="1" />
     <Condition Type="IsQuestCompleted" ObjectId="QLF_KopukBaglar" Amount="1" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_DostunGorevleri" />
   </Prerequisites>
 
   <Triggers>
@@ -24,8 +25,8 @@
 
   <Stages>
     <!-- Bahar: Bekleme ve Casusluk -->
-    <Stage Id="Stage0_Bahar_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
-      <LogText>{=sp_dg_s0_log}With the traitor executed, you have proven your absolute loyalty to {Dost_Link}. The true motives of the Scavenger Pigeons remain veiled in patriotic duty. You await your first seasonal order on the 7th day of Spring...</LogText>
+    <Stage Id="Stage0_Bahar_Bekleme" NextStageId="Stage1_Bahar_Casusluk" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=sp_dg_s0_log}With the traitor executed, you have proven your absolute loyalty to {Dost_Link}. The true motives of the Scavenger Pigeons remain veiled in patriotic duty. You await your seasonal orders via pigeon dispatch...</LogText>
       <Conditions />
       <OnTimeoutActions>
         <Action Type="ChangeStage" ObjectId="Stage1_Bahar_Casusluk" />
@@ -41,8 +42,8 @@
     </Stage>
 
     <!-- Yaz: Bekleme ve Kuryelik -->
-    <Stage Id="Stage2_Yaz_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
-      <LogText>{=sp_dg_s2_wait_log}The Spring espionage task was completed. As Summer heat sweeps across Calradia, you await {Dost_Link}'s next assignment on the 7th day of Summer...</LogText>
+    <Stage Id="Stage2_Yaz_Bekleme" NextStageId="Stage2_Yaz_Kuryelik" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=sp_dg_s2_wait_log}The Spring espionage task was completed. As summer sweeps across Calradia, you await {Dost_Link}'s next dispatch order...</LogText>
       <Conditions />
       <OnTimeoutActions>
         <Action Type="ChangeStage" ObjectId="Stage2_Yaz_Kuryelik" />
@@ -58,11 +59,11 @@
     </Stage>
 
     <!-- Sonbahar: Bekleme ve Savaşçılık -->
-    <Stage Id="Stage3_Sonbahar_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
-      <LogText>{=sp_dg_s3_wait_log}The dispatch reached its destination. As autumn leaves fall, {Dost_Link} summons your martial strength for the 7th day of Autumn...</LogText>
+    <Stage Id="Stage3_Sonbahar_Bekleme" NextStageId="Stage3_Sonbahar_Savas" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=sp_dg_s3_wait_log}The dispatch reached its destination. As autumn leaves fall, {Dost_Link} summons your martial strength for a critical frontier operation...</LogText>
       <Conditions />
       <OnTimeoutActions>
-        <Action Type="SpawnBanditParty" TargetAlias="SonbaharHaydutlar" Amount="35" PartyTemplateId="deserters_template" StringValue="{=sp_dg_raiders}Hostile Deserters" />
+        <Action Type="SpawnBanditParty" TargetAlias="SonbaharHaydutlar" Amount="35" StringValue="{=sp_dg_raiders}Hostile Deserters" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="SonbaharHaydutlar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage3_Sonbahar_Savas" />
       </OnTimeoutActions>
@@ -76,8 +77,8 @@
     </Stage>
 
     <!-- Kış: Bekleme ve Saray Ayak İşleri -->
-    <Stage Id="Stage4_Kis_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
-      <LogText>{=sp_dg_s4_wait_log}The border is secured. Winter's frost envelops the realm, and on the 7th day of Winter, delicate palace affairs require your discretion...</LogText>
+    <Stage Id="Stage4_Kis_Bekleme" NextStageId="Stage4_Kis_Saray" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=sp_dg_s4_wait_log}The border is secured. Winter's frost envelops the realm, and delicate palace affairs will soon require your discretion...</LogText>
       <Conditions />
       <OnTimeoutActions>
         <Action Type="ChangeStage" ObjectId="Stage4_Kis_Saray" />

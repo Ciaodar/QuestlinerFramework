@@ -28,7 +28,7 @@
 
     <!-- Anavatanin Ihaneti -->
     <string id="sp_ai_title" text="Anavatanın İhaneti" />
-    <string id="sp_ai_s1_log" text="Gizemli berberin anlattıkları zihnini kurcalıyor. Anavatanından eski bir dostun, senin itibarını zedeleyecek korkunç iftiralarla mücadele etmek için gizli örgüt Çapulcu Güvercinler'den yardım istemiş. Ancak Güvercinler seni aralarına kabul etmeden önce gücünü kanıtlamanı bekliyor. Sana verilen altınları kullanarak 70 kişilik bir bölük topla ve köy büyüğü {KoyBuyugu_Link} ile buluş." />
+    <string id="sp_ai_s1_log" text="Gizemli berberin anlattıkları zihnini kurcalıyor. Anavatanından eski bir dostun, {Dost_Link}, senin itibarını zedeleyecek korkunç iftiralarla mücadele etmek için gizli örgüt Çapulcu Güvercinler'den yardım istemiş. Ancak Güvercinler seni aralarına kabul etmeden önce gücünü kanıtlamanı bekliyor. Sana verilen altınları kullanarak 70 kişilik bir bölük topla ve köy büyüğü {KoyBuyugu_Link} ile buluş." />
     <string id="sp_ai_s2_log" text="Köy büyüğü {KoyBuyugu_Link} ile konuştun. Beklediğin gibi, bu sıradan bir görev değildi. Sana üzerinde şifreler olan gizli bir deri verdi ve bunu hiç vakit kaybetmeden {UzakSehir_Link} şehrindeki {ArtisanTarget_Link} isimli zanaatkara teslim etmeni istedi." />
     <string id="sp_ai_s3a_log" text="Çapulcu Güvercinler bilgesi {ArtisanTarget_Link}, bir suikast görevi verdi. Sorgulamadan kabul ettin. Hedefin: {Dost_Link}." />
     <string id="sp_ai_s3b_log" text="Güvercinler daha önce dostun olduğunu söyledikleri {Dost_Link} isimli kişiyi şimdi öldürmeni istedi. Tutarsız bir takım gariplikler yaşanıyor. {ArtisanTarget_Link} ile konuşmanda verilen göreve karşı çıktın. Acilen bu şüphenden birilerine bahsetmek isteyebilirsin." />
@@ -40,11 +40,11 @@
     <string id="sp_ai_s_success_log" text="Tüm bunların sadakatini test etmek için kurulmuş bir oyun olduğunu öğrendin. Dostun {Dost_Link} ile ise yeni tanışıyormuşsunuz. Sana başına açtığı belaların telafisi ve hizmetinde yardımcı olması için 50.000 dinar hediye etti ve yeni hizmetinde başarılar diledi. İhanet söylentileri son buldu." />
     <string id="sp_ai_s_infaz_log" text="{ArtisanTarget_Link} isimli zanaatkarın entrikalarını sezerek örgütün mutlak kanununu uyguladın ve onu oracıkta infaz ettin. Cesedini aradığında gizemli Kuzgun Kemiği Şifresi'ni ele geçirdin. Anavatan defteri kanla kapandı, ancak Gölge Tüneği'nin gözleri artık senin üzerinde." />
     
-    <string id="sp_ai_dlg1" text="Sizinle konuşmam gereken özel bir konu var." />
+    <string id="sp_ai_dlg1" text="Berber, {Dost_Link} meselesi hakkında beni size yönlendirdi." />
     <string id="sp_ai_dlg2" text="Adın {PlayerName} olmalı, değil mi?" />
     <string id="sp_ai_dlg3" text="Herkesin adımı bilmesine alışmalıyım sanırım." />
     <string id="sp_ai_dlg4" text="Sen de bir güvercin olmalısın..." />
-    <string id="sp_ai_dlg5" text="Evet, Elbette... Bir sonraki adım için buradasın. Şimdi yapacağın şey sana vereceğim gizli bilgilerin yer aldığı bu özel deriyi {UzakSehir_Link} şehrindeki {ArtisanTarget_Link} isimli zanaatkara götürmelisin." />
+    <string id="sp_ai_dlg5" text="Evet, elbette... Dostun {Dost_Link} senin hakkında bize haber uçurmuştu. Sıradaki adım için buradasın. Şimdi yapman gereken, gizli bilgiler içeren bu özel deriyi vakit kaybetmeden {UzakSehir_Link} şehrindeki zanaatkar {ArtisanTarget_Link}'e götürmek." />
     <string id="sp_ai_dlg6" text="Bunun benim problemimle ne alakası var?" />
     <string id="sp_ai_dlg7" text="Her şey birbiriyle alakalıdır." />
     <string id="sp_ai_dlg8" text="Pekala, yapacağım." />
@@ -113,7 +113,7 @@
     <string id="sp_yd_dlg11" text="Anubis. Çapulcular diyarın en kuşkulu kuşlarıdır. Ne istemiştin, yabancı?" />
     <string id="sp_yd_dlg12" text="Konuştuğum gizemli çapulcu kılıklı adam itibarımın tehlikede olduğunu söyledi. Umarım beni alaya almıyorsunuzdur." />
     <string id="sp_yd_dlg13" text="Çapulcu bana itibarın tehlikede, dedi. Bu ne anlama geliyor?" />
-    <string id="sp_yd_dlg14" text="Ahh, {PlayerName}... Kuşkucu davranışın tabii ki çok haklı. Merak etme. Ona inanmak ve buraya gelmekle çok iyi ettin. Anavatanından bir dost bize ulaştı. Arkandan hain ilan edilebileceğin sözler yaymaya başladıklarından bahsetti." />
+    <string id="sp_yd_dlg14" text="Ahh, {PlayerName}... Kuşkucu davranışın tabii ki çok haklı. Merak etme. Ona inanmak ve buraya gelmekle çok iyi ettin. Anavatanından bir dost, {Dost_Link}, bize ulaştı. Arkandan hain ilan edilebileceğin sözler yaymaya başladıklarından bahsetti." />
     <string id="sp_yd_dlg15" text="Siz de kimsiniz? Nasıl bir kült bu? Dümdüz ulak gönderemiyor muydu aptal herif? Ayrıca ben bu adamı tanımıyorum bile. Oyun oynamayı bırak." />
     <string id="sp_yd_dlg16" text="Siz mi? Gizli bir topluluk musunuz? Derdiniz nedir?" />
     <string id="sp_yd_dlg17" text="Merak etme dost. Biz asırlardır görev yapan Çapulcu Güvercinleriz. Herhangi bir ulaktan daha hızlı, herhangi bir uşaktan daha güçlüyüz. Dostun bizlere çokça yardımda bulunmuş cevval bir adamdır. Sana kefil oldu ve seni bu komplodan kurtarmamızı istedi." />
@@ -133,7 +133,7 @@
     <string id="sp_id_dlg11" text="Anubis. Çapulcular diyarın en kuşkulu kuşlarıdır. Ne istemiştin, yabancı?" />
     <string id="sp_id_dlg12" text="Konuştuğum gizemli çapulcu kılıklı adam itibarımın tehlikede olduğunu söyledi. Umarım beni alaya almıyorsunuzdur." />
     <string id="sp_id_dlg13" text="Çapulcu bana itibarın tehlikede, dedi. Bu ne anlama geliyor?" />
-    <string id="sp_id_dlg14" text="Ahh, {PlayerName}... Kuşkucu davranın tabii ki çok haklı. Merak etme. Ona inanmak ve buraya gelmekle çok iyi ettin. Anavatanından bir dost bize ulaştı. Arkandan hain ilan edilebileceğin sözler yaymaya başladıklarından bahsetti." />
+    <string id="sp_id_dlg14" text="Ahh, {PlayerName}... Kuşkucu davranışın tabii ki çok haklı. Merak etme. Ona inanmak ve buraya gelmekle çok iyi ettin. Anavatanından bir dost, {Dost_Link}, bize ulaştı. Arkandan hain ilan edilebileceğin sözler yaymaya başladıklarından bahsetti." />
     <string id="sp_id_dlg15" text="Siz de kimsiniz? Nasıl bir kült bu? Dümdüz ulak gönderemiyor muydu aptal herif? Ayrıca ben bu adamı tanımıyorum bile. Oyun oynamayı bırak." />
     <string id="sp_id_dlg16" text="Siz mi? Gizli bir topluluk musunuz? Derdiniz nedir?" />
     <string id="sp_id_dlg17" text="Merak etme dost. Biz asırlardır görev yapan Çapulcu Güvercinleriz. Herhangi bir ulaktan daha hızlı, herhangi bir uçaktan daha güçlüyüz. Dostun bizlere çokça yardımda bulunmuş cevval bir adamdır. Sana kefil oldu ve seni bu komplodan kurtarmamızı istedi." />
@@ -240,7 +240,7 @@
 
     <!-- Anavatanin Ihaneti (Ek) -->
     <string id="sp_ai_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
-    <string id="sp_ai_dlg47_p" text="Geri döndüm, Dost." />
+    <string id="sp_ai_dlg47_p" text="Geri döndüm, dostum." />
     <string id="sp_ai_dlg50" text="Teşekkürler. Sana sunacağım bu bağış hem açtığım zahmetin bir telafisi olacak hem de yeni hizmetinde sana güç katacaktır." />
     <string id="sp_ai_dlg51" text="Başka bir şey hakkında konuşmak ister miydin?" />
 
@@ -261,7 +261,7 @@
     <string id="sp_kb_dlg_p3_tactics" text="Yük taşıyan yetmiş firari hızlı hareket edebilir. Bütün bir muhafız alayıyla çatışmadan onları nasıl kıstıracağız?" />
     <string id="sp_kb_dlg_p3_force" text="İsterse bin kesici tutsun. Kılıcım onun öncülerini saman gibi biçecektir. Nereye vurmam gerekiyor?" />
     <string id="sp_kb_dlg_dost_tactics" text="Tazılarımızın iz sürmesini engellemek için eteklere üç yem çapulcu grubu saldı. O üç yem grubu yakalayıp yok et. Yemleri ezildiğinde ana konvoyu perdesini kaybedecek ve seninle açıkta yüzleşmek zorunda kalacak." />
-    <string id="sp_kb_dlg_p4_acc" text="Oldu bil Dost. Ana şifreleri geri getirecek ve bu ihanete son vereceğim. (Avı Kabul Et)" />
+    <string id="sp_kb_dlg_p4_acc" text="Oldu bil dostum. Ana şifreleri geri getirecek ve bu ihanete son vereceğim. (Avı Kabul Et)" />
     <string id="sp_kb_dlg_p4_prag" text="Peşine düşeceğim. Ancak bugün Anavatan'ın boğazını kimin kurtardığını unutmadığınızdan emin olun. (Avı Kabul Et)" />
     <string id="sp_kb_dlg_p_inq" text="Neden adi bir hırsız gibi kaçıyorsun? Korumaya yemin ettiğin şifreleri neden çaldın?" />
     <string id="sp_kb_dlg_p_harsh" text="Nefesini tüketme lağım faresi. Ana şifreleri teslim et ve diz çök." />
@@ -309,14 +309,14 @@
 
     <!-- Dostun Gorevleri (Dort Mevsim Hizmet) -->
     <string id="sp_dg_title" text="Dört Mevsim Hizmet" />
-    <string id="sp_dg_s0_log" text="Hain infaz edildikten sonra {Dost_Link}'a olan mutlak sadakatini kanıtladın. Çapulcu Güvercinler'in asıl gayesi vatanperverlik perdesi arkasında gizleniyor. İlk mevsimlik emrini İlkbaharın 7. gününde bekliyorsun..." />
+    <string id="sp_dg_s0_log" text="Hain infaz edildikten sonra {Dost_Link}'a olan mutlak sadakatini kanıtladın. Çapulcu Güvercinler'in asıl gayesi vatanperverlik perdesi arkasında gizleniyor. Güvercin ulağıyla gelecek mevsimlik emirlerini bekliyorsun..." />
     <string id="sp_dg_s1_log" text="İlkbahar Hizmeti - Casusluk: {Dost_Link}'dan gelen bir güvercin seni {BaharSehir_Link} şehrine yönlendiriyor. Çözülmüş yabancı istihbaratını teslim almak için ajan {BaharOperatifi_Link} ile buluş." />
-    <string id="sp_dg_s2_wait_log" text="İlkbahar casusluk görevi tamamlandı. Yaz sıcağı Calradia bozkırlarını kavururken, {Dost_Link}'ın Yazın 7. günündeki bir sonraki vazifesini bekliyorsun..." />
+    <string id="sp_dg_s2_wait_log" text="İlkbahar casusluk görevi tamamlandı. Yaz sıcağı Calradia bozkırlarını kavururken, {Dost_Link}'ın güvercin ulağıyla ileteceği yeni sevkiyat emrini bekliyorsun..." />
     <string id="sp_dg_s2_log" text="Yaz Hizmeti - Ulak Sevkiyatı: {YazSehir_Link} şehrine at sür ve balmumu mühürlü diplomatik silindiri mührünü kırmadan ulak {YazKuryesi_Link}'a teslim et." />
-    <string id="sp_dg_s3_wait_log" text="Sevkiyat hedefine ulaştı. Sonbahar yaprakları dökülürken, {Dost_Link} Sonbaharın 7. gününde senin kılıcının kudretini göreve çağırıyor..." />
+    <string id="sp_dg_s3_wait_log" text="Sevkiyat hedefine ulaştı. Sonbahar yaprakları dökülürken, {Dost_Link} kritik bir sınır harekatı için senin kılıcının kudretini göreve çağırıyor..." />
     <string id="sp_dg_raiders" text="Düşman Firariler" />
     <string id="sp_dg_s3_log" text="Sonbahar Hizmeti - Muharebe: Düşman çapulcular {SonbaharHaydutlar_Link} sınır boyundaki Güvercin ikmal yollarını taciz ediyor. Diyarın güvenli geçişini sağlamak için onları avla ve yok et." />
-    <string id="sp_dg_s4_wait_log" text="Sınır güvenliği sağlandı. Kışın ayazı diyarı sararken, Kışın 7. gününde saraydaki hassas meseleler senin dirayetini bekliyor..." />
+    <string id="sp_dg_s4_wait_log" text="Sınır güvenliği sağlandı. Kışın ayazı diyarı sararken, saraydaki hassas meseleler pek yakında senin dirayetini gerektirecek..." />
     <string id="sp_dg_s4_log" text="Kış Hizmeti - Saray Entrikası: {KisSehir_Link} şehrine git ve soylular konseyini yönlendirmek amacıyla sahte yönergeleri kütüğe yerleştirmek için saraylı {KisSarayli_Link} ile temas kur." />
     <string id="sp_dg_s5_log" text="Dört mevsimlik hizmet tamamlandı. Ancak işaretsiz kara bir kuzgun geldi ve seni {DerinKanatUlagi_Link} ile buluşmaya çağırdı. İç konsey akılalmaz, emsalsiz bir infaz fermanı çıkardı: Hedef bizzat {Dost_Link}!" />
     <string id="sp_dg_s_korsadakat_log" text="Bir hainin lafına kulak asmayı reddettin ve {DerinKanatUlagi_Link}'ı durduğu yerde kılıçtan geçirdin. {Dost_Link}'a at sürüp saflarındaki darbe girişimini bildirdin. Sarsılmaz, yozlaşmaz sadakatinden derinden etkilenen Dost sana 50.000 dinar hediye etti ve seni ebedi şampiyonu ilan etti. Anavatan'ın bükülmez muhafızı olarak kaldın." />

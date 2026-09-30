@@ -74,34 +74,20 @@
       <Text>{=sp_hg_dlg2}Tell me what you know, or I will put you all to the sword!</Text>
     </DialogNode>
     
-    <DialogNode Type="Player" Id="Esir_Ertele1" TargetAlias="looters" InputToken="ql_esir_a1" OutputToken="close_window">
-      <Text>{=sp_hg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
-    
     <DialogNode Type="Npc" Id="Esir_N2" TargetAlias="looters" InputToken="ql_esir_a2" OutputToken="ql_esir_p2">
       <Text>{=sp_hg_dlg3}We are just field operatives. The artisan tells us who to target. But the real boss will be here soon. Let us bring him to you!</Text>
     </DialogNode>
     
-      <DialogNode Type="Player" Id="Esir_P2" TargetAlias="looters" InputToken="ql_esir_p2" OutputToken="close_window">
-        <Text>{=sp_hg_dlg4}Alright, I'm letting you go. You're of no other use anyway. I'll be waiting for your ringleader.</Text>
-        <Consequences>
-          <Action Type="LeaveEncounter" />
-          <Action Type="DestroyEncounteredParty" />
-          <Action Type="ChangeStage" ObjectId="Stage4_ElebasiBekleme" />
-          <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="25" StringValue="{=sp_hg_spawn2}Looter Ringleader" />
-          <Action Type="SetPartyAi" TargetAlias="looters" StringValue="IgnoreAi" />
-        </Consequences>
-      </DialogNode>
-
-      <DialogNode Type="Player" Id="Esir_Ertele" TargetAlias="looters" InputToken="ql_esir_p2" OutputToken="close_window">
-        <Text>{=sp_hg_ertele}I cannot deal with this right now. We will speak later.</Text>
-        <Consequences>
-          <Action Type="LeaveEncounter" />
-        </Consequences>
-      </DialogNode>
+    <DialogNode Type="Player" Id="Esir_P2" TargetAlias="looters" InputToken="ql_esir_p2" OutputToken="close_window">
+      <Text>{=sp_hg_dlg4}Alright, I'm letting you go. You're of no other use anyway. I'll be waiting for your ringleader.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+        <Action Type="DestroyEncounteredParty" />
+        <Action Type="ChangeStage" ObjectId="Stage4_ElebasiBekleme" />
+        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="25" StringValue="{=sp_hg_spawn2}Looter Ringleader" />
+        <Action Type="SetPartyAi" TargetAlias="looters" StringValue="IgnoreAi" />
+      </Consequences>
+    </DialogNode>
 
     <!-- Stage 4: Elebaşı Konusmasi -->
     <DialogNode Type="Npc" Id="Elebasi_Giris" TargetAlias="looters" InputToken="start" OutputToken="ql_elebasi_a1" Priority="200">
@@ -117,12 +103,6 @@
     <DialogNode Type="Player" Id="Elebasi_P2" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="ql_elebasi_a2">
       <Text>{=sp_hg_dlg7}No, I have no more business with you looters. I wasn't going to execute someone I don't even know for you.</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="Elebasi_Ertele" TargetAlias="looters" InputToken="ql_elebasi_a1" OutputToken="close_window">
-      <Text>{=sp_hg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
 
     <DialogNode Type="Npc" Id="Elebasi_N2" TargetAlias="looters" InputToken="ql_elebasi_a2" OutputToken="ql_elebasi_step2_choices">
       <Text>{=sp_hg_dlg8}Kill? Then you are not the traitor among us... The real traitor is that rabid dog {ArtisanTarget_Link} who gave you the order. Your true mission should have been to return to the Motherland and offer your services.</Text>
@@ -133,12 +113,6 @@
     </DialogNode>
     <DialogNode Type="Player" Id="Elebasi_P2_Prag" TargetAlias="looters" InputToken="ql_elebasi_step2_choices" OutputToken="ql_elebasi_a3">
       <Text>{=sp_hg_dlg_p2_prag}I knew something smelled foul. The artisan will pay for trying to deceive me.</Text>
-    </DialogNode>
-    <DialogNode Type="Player" Id="Elebasi_P2_Ertele" TargetAlias="looters" InputToken="ql_elebasi_step2_choices" OutputToken="close_window">
-      <Text>{=sp_hg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
     </DialogNode>
     
     <DialogNode Type="Npc" Id="Elebasi_N3" TargetAlias="looters" InputToken="ql_elebasi_a3" OutputToken="close_window">

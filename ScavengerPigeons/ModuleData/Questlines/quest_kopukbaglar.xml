@@ -16,7 +16,7 @@
   </TargetResolvers>
 
   <Stages>
-    <Stage Id="Stage0_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="7">
+    <Stage Id="Stage0_Bekleme" NextStageId="Stage1_Mesaj" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
       <LogText>{=sp_kb_s0_log}You are waiting for news about the traitorous looter {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you.</LogText>
       <Conditions />
       <OnTimeoutActions>
@@ -41,7 +41,7 @@
         <Condition Type="DefeatedParties" TargetAlias="looters" Amount="3" />
       </Conditions>
       <OnExitActions>
-        <Action Type="SpawnBanditParty" TargetAlias="Konvoy" Amount="70" StringValue="{=sp_kb_convoy}Traitor's Convoy" PartyTemplateId="deserters_template" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="Konvoy" Amount="70" StringValue="{=sp_kb_convoy}Traitor's Convoy" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="Konvoy" StringValue="EngageParty" ObjectId="Player" />
       </OnExitActions>
       <OnTimeoutActions>
@@ -165,7 +165,7 @@
 
     <!-- Tur 7: Nihai Karar ve Gorevi Kabul -->
     <DialogNode Type="Player" Id="KB_Dost_P4_Accept" TargetAlias="Dost" InputToken="ql_kb_dost_step4_choices" OutputToken="close_window">
-      <Text>{=sp_kb_dlg_p4_acc}Consider it done, Dost. I will bring back the master ciphers and end this treason. (Accept Hunt)</Text>
+      <Text>{=sp_kb_dlg_p4_acc}Consider it done, friend. I will bring back the master ciphers and end this treason. (Accept Hunt)</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Av" />
       </Consequences>
@@ -231,9 +231,6 @@
     <DialogNode Type="Player" Id="KB_K_P3_Skeptical" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step3_choices" OutputToken="ql_kb_konvoy_a4">
       <Text>{=sp_kb_dlg_p3_skep}Even if Dost is ruthless, you are surrounded by 70 cutthroats. Why should I trust a mercenary commander over a kingdom lord?</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="KB_K_P3_Ertele" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step3_choices" OutputToken="close_window">
-      <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
 
     <!-- Adim 6: Zanaatkar Teklifini Yapar (Servet ve Hancer) -->
     <DialogNode Type="Npc" Id="KB_Konvoy_A4" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_a4" OutputToken="ql_kb_konvoy_final_choices">
@@ -252,11 +249,6 @@
     <!-- ROTA A: Haini Oldurmezsen (Rusvet Al / Kacmasina Izin Ver) -->
     <DialogNode Type="Player" Id="KB_Konvoy_Choice_Bribe" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_final_choices" OutputToken="ql_kb_konvoy_bribe_end">
       <Text>{=sp_kb_dlg11}False-flag wars and puppet masters? Hand over the 25,000 gold and that dagger, and disappear across the border. (Accept Bribe &amp; Let Escape)</Text>
-    </DialogNode>
-
-    <!-- Erteleme Secenegi -->
-    <DialogNode Type="Player" Id="KB_Konvoy_Choice_Ertele" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_final_choices" OutputToken="close_window">
-      <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <!-- Rusvet Kapanisi -->
