@@ -22,9 +22,11 @@
 
     <!-- Quest 1: Apprentice's Oath (QLF_DemirAhit_Cirak) -->
     <string id="demirahit1_title" text="Apprentice's Oath" />
-    <string id="da_log_0" text="Your clan's deeds echo across the taverns and keeps of Calradia. The renowned master smith {EfsaneviDemirci_Link} has sent word, seeking you out to reforge an ancient blade bound to your bloodline." />
+    <string id="da_log_0" text="Your clan's deeds echo across the taverns and keeps of Calradia. The renowned master smith {EfsaneviDemirci_Link}, located in {DemirciSehri_Link}, has sent word, seeking you out to reforge an ancient blade bound to your bloodline." />
     <string id="da_log_1" text="Ride to the village of {HammadeKaynagi_Link} and speak with {KoyMuhtari_Link} to procure 5 Star Iron ore. Beware: rumors suggest cutthroats hired by {RakipTuccar_Link} are already circling the quarry." />
     <string id="da_katiller" text="Hired Assassins" />
+    <string id="da_katiller_dlg_intro" text="That star iron belongs to our master! Turn back, lordling, or your blood will quench the ore!" />
+    <string id="da_katiller_p_savas" text="My steel will speak for me. Draw!" />
     <string id="da_log_2" text="The rival merchant's hired mercenaries are nearby carrying the stolen Star Iron! Defeat them in battle to reclaim the ore." />
     <string id="da_log_2_win" text="You crushed the hired ambushers and pried 5 Star Iron ore from their baggage! Return to {EfsaneviDemirci_Link} to forge the blade." />
     <string id="da_log_kestirme" text="You bypassed the ore gathering by purchasing the master's ready-forged sword for a steep sum of 10,000 denars." />
