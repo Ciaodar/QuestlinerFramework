@@ -431,11 +431,6 @@
     <DialogNode Type="Npc" Id="Demirci_Teslim_Bitis" TargetAlias="EfsaneviDemirci" InputToken="ql_da_teslim_t5" OutputToken="close_window">
       <Text>{=da_c1_teslim_npc_bitis}Kindle the bellows! Your apprentice's oath has been honored in blood and toil, child. Now let the hearth roar, and let the steel take shape!</Text>
       <Consequences>
-        <Action Type="TakeItem" ObjectId="YildizDemiri" Amount="5" />
-        <Action Type="GiveItem" ObjectId="GeciciAhitKilici" Amount="1" />
-        <Action Type="ChangeRenown" Amount="50" />
-        <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="15" />
-        <Action Type="SetGlobalFlag" ObjectId="DemirAhit1_Basarili" Amount="1" />
         <Action Type="ChangeStage" ObjectId="Stage3_Basari_Normal" />
         <Action Type="LeaveEncounter" />
       </Consequences>

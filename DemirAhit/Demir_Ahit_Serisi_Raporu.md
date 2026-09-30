@@ -22,13 +22,13 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
     </XmlNode>
   </Xmls>
   ```
-- Bu kayıt sayesinde `YildizDemiri`, `GeciciAhitKilici`, `KalfaMuhru`, `KalbinAtesi` ve `AhitKilici_Efsanevi` eşyaları oyuna ve envanter işlemlerine (`GiveItem`, `TakeItem`, `HasItem`) eksiksiz dahil olur. Eşyalarda `is_merchandise="false"` kullanılarak pazarlarda rastgele satılmaları engellenmiştir. Silah hasarları Bannerlord native standardına uygun olarak `swing_damage` / `swing_damage_type` şeklinde tanımlanmıştır.
+- Bu kayıt sayesinde `YildizDemiri`, `GeciciAhitKilici`, `KalfaMuhru`, `KalbinAtesi` ve `AhitKilici_Efsanevi` eşyaları oyuna ve envanter işlemlerine (`GiveItem`, `TakeItem`, `HasItem`) eksiksiz dahil olur. Görev eşyalarında `is_merchandise="false"` ve `value="0"` kullanılarak pazarlarda satılmaları engellenmiştir. Kılıçlar (`GeciciAhitKilici`, `AhitKilici_Efsanevi`) Bannerlord'un kın/kılıç kılıfı ve çarpışma motoruyla tam uyumlu `<CraftedItem>` yapısına dönüştürülmüştür.
 
 ### B. Çift Dilli Yerelleştirme (Localization) ve language_data.xml
 - TaleWorlds motorunun dil dosyalarını otomatik tanıması için `ModuleData/Languages` hiyerarşisi BUTR/Native standartlarına uygun hale getirilmiştir:
   - `ModuleData/Languages/EN/language_data.xml` (İngilizce dil paketi: `std_IronCovenant_en.xml`)
   - `ModuleData/Languages/TR/language_data.xml` (Türkçe dil paketi: `std_IronCovenant_tr.xml`)
-- Her iki dil dosyasında tam **153 adet string ID** birebir örtüşmekte, Kalradya evrenine uygun zengin, edebi ve sürükleyici bir ortaçağ üslubu kullanılmaktadır.
+- Her iki dil dosyasında tam **206 adet string ID** birebir örtüşmekte, Kalradya evrenine uygun zengin, edebi ve sürükleyici bir ortaçağ üslubu kullanılmaktadır.
 
 ### C. Motor Desteği: Devre Dışı Diyalog İpuçları (ShowWhenDisabled & DisabledHint)
 - C# motorunun sunduğu `ShowWhenDisabled="true"` ve `DisabledHint="{=hint_id}Text"` özelliği tüm görevlerdeki kritik seçeneklere uygulanmıştır:
@@ -57,7 +57,8 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 - **Önkoşul:** `ClanTier >= 2` ve `!GlobalFlag(DemirAhit_Baslatildi)`
 - **Süre Sınırı:** 45 Gün
 - **Hedefler:**
-  - `EfsaneviDemirci` (`TargetType="Hero" Filters="Artisan" Selector="Nearest"`)
+  - `DemirciSehri` (`TargetType="Settlement" Filters="Town" Selector="Nearest"`)
+  - `EfsaneviDemirci` (`TargetType="Hero" Filters="Artisan" RequiredSettlementAlias="DemirciSehri" Selector="Nearest"`)
   - `HammadeKaynagi` (`TargetType="Settlement" Filters="Village" Selector="Nearest"`)
   - `KoyMuhtari` (`TargetType="Hero" Filters="RuralNotable" RequiredSettlementAlias="HammadeKaynagi" Selector="Nearest"`)
   - `RakipTuccar` (`TargetType="Hero" Filters="Merchant" Selector="Random"`)
@@ -123,11 +124,11 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 ---
 
 ## 2. Özel Eşyalar (items.xml)
-- `YildizDemiri` (Goods, Value: 100, Mesh: iron_ingot, `is_merchandise="false"`)
-- `GeciciAhitKilici` (OneHandedSword, Swing: 70, Thrust: 35, Speed: 95, `is_merchandise="false"`)
-- `KalfaMuhru` (Goods / Amulet, Value: 500, Mesh: jewelry_amulet, `is_merchandise="false"`)
-- `KalbinAtesi` (Goods, Value: 5000, Mesh: ore_iron, `is_merchandise="false"`)
-- `AhitKilici_Efsanevi` (OneHandedSword, Swing: 90, Thrust: 45, Speed: 105, Value: 20000, `is_merchandise="false"`)
+- `YildizDemiri` (Goods, Value: 0, Mesh: iron_ingot, `is_merchandise="false"`)
+- `GeciciAhitKilici` (CraftedItem, OneHandedSword, parçalar: `vlandian_blade_1`, `vlandian_guard_1`, `vlandian_grip_1`, `vlandian_pommel_1`, Value: 2000, `is_merchandise="false"`)
+- `KalfaMuhru` (Goods / Amulet, Value: 0, Mesh: jewelry_amulet, `is_merchandise="false"`)
+- `KalbinAtesi` (Goods, Value: 0, Mesh: ore_iron, `is_merchandise="false"`)
+- `AhitKilici_Efsanevi` (CraftedItem, OneHandedSword, parçalar: `vlandian_noble_*`, Value: 20000, `is_merchandise="false"`)
 
 ---
 
