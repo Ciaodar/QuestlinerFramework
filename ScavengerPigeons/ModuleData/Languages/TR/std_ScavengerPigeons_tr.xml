@@ -71,7 +71,7 @@
     
     <string id="sp_ai_dlg27" text="Sizinle konuşmam gereken özel bir konu var." />
     <string id="sp_ai_dlg28" text="Sizinle konuşmam gereken özel bir konu var." />
-    <string id="sp_ai_dlg29" text="Dostum, erken geldin. Anavatana hizmete daha girmemişsin." />
+    <string id="sp_ai_dlg29" text="Yoldaş, erken geldin. Anavatana hizmete daha girmemişsin." />
     <string id="sp_ai_dlg30" text="Ecel geldi erkenden. Sen onu beklemezken." />
     <string id="sp_ai_dlg31" text="Çapulcu kelleni istiyor. Dikkat et merhametime kalma." />
     <string id="sp_ai_dlg32" text="Ne saçmalıyorsun? Onlar benden emir alıyorlar. Bu da demek oluyor ki aralarında seni kandırdığını sanan bir hain var!" />
@@ -116,7 +116,7 @@
     <string id="sp_yd_dlg14" text="Ahh, {PlayerName}... Kuşkucu davranışın tabii ki çok haklı. Merak etme. Ona inanmak ve buraya gelmekle çok iyi ettin. Anavatanından bir dost, {Dost_Link}, bize ulaştı. Arkandan hain ilan edilebileceğin sözler yaymaya başladıklarından bahsetti." />
     <string id="sp_yd_dlg15" text="Siz de kimsiniz? Nasıl bir kült bu? Dümdüz ulak gönderemiyor muydu aptal herif? Ayrıca ben bu adamı tanımıyorum bile. Oyun oynamayı bırak." />
     <string id="sp_yd_dlg16" text="Siz mi? Gizli bir topluluk musunuz? Derdiniz nedir?" />
-    <string id="sp_yd_dlg17" text="Merak etme dost. Biz asırlardır görev yapan Çapulcu Güvercinleriz. Herhangi bir ulaktan daha hızlı, herhangi bir uşaktan daha güçlüyüz. Dostun bizlere çokça yardımda bulunmuş cevval bir adamdır. Sana kefil oldu ve seni bu komplodan kurtarmamızı istedi." />
+    <string id="sp_yd_dlg17" text="Merak etme dostum. Biz asırlardır görev yapan Çapulcu Güvercinleriz. Herhangi bir ulaktan daha hızlı, herhangi bir uşaktan daha güçlüyüz. O soylu dostun bizlere çokça yardımda bulunmuş cevval bir adamdır. Sana kefil oldu ve seni bu komplodan kurtarmamızı istedi." />
     <string id="sp_yd_dlg18" text="Benden ne istiyorsunuz?" />
     <string id="sp_yd_dlg19" text="Samimiyetimizin göstergesi olarak sana bir miktar altın hediye ediyoruz. 70 kişi toplayıp en yakın köydeki köy büyüğünü bul." />
     <string id="sp_yd_dlg20" text="Paranızı istemem. 70 kişilik bölüğü oraya götürmeyi de biraz düşüneceğim." />
@@ -136,7 +136,7 @@
     <string id="sp_id_dlg14" text="Ahh, {PlayerName}... Kuşkucu davranışın tabii ki çok haklı. Merak etme. Ona inanmak ve buraya gelmekle çok iyi ettin. Anavatanından bir dost, {Dost_Link}, bize ulaştı. Arkandan hain ilan edilebileceğin sözler yaymaya başladıklarından bahsetti." />
     <string id="sp_id_dlg15" text="Siz de kimsiniz? Nasıl bir kült bu? Dümdüz ulak gönderemiyor muydu aptal herif? Ayrıca ben bu adamı tanımıyorum bile. Oyun oynamayı bırak." />
     <string id="sp_id_dlg16" text="Siz mi? Gizli bir topluluk musunuz? Derdiniz nedir?" />
-    <string id="sp_id_dlg17" text="Merak etme dost. Biz asırlardır görev yapan Çapulcu Güvercinleriz. Herhangi bir ulaktan daha hızlı, herhangi bir uçaktan daha güçlüyüz. Dostun bizlere çokça yardımda bulunmuş cevval bir adamdır. Sana kefil oldu ve seni bu komplodan kurtarmamızı istedi." />
+    <string id="sp_id_dlg17" text="Merak etme dostum. Biz asırlardır görev yapan Çapulcu Güvercinleriz. Herhangi bir ulaktan daha hızlı, herhangi bir uşaktan daha güçlüyüz. O soylu dostun bizlere çokça yardımda bulunmuş cevval bir adamdır. Sana kefil oldu ve seni bu komplodan kurtarmamızı istedi." />
     <string id="sp_id_dlg18" text="Benden ne istiyorsunuz?" />
     <string id="sp_id_dlg19" text="Samimiyetimizin göstergesi olarak sana bir miktar altın hediye ediyoruz. 70 kişi toplayıp en yakın köydeki köy büyüğünü bul." />
     <string id="sp_id_dlg20" text="Paranızı istemem. 70 kişilik bölüğü oraya götürmeyi de biraz düşüneceğim." />
@@ -147,7 +147,7 @@
     <!-- Kopuk Baglar -->
     <string id="sp_kb_title" text="Kopuk Bağlar" />
     <string id="sp_kb_s0_log" text="Hain zanaatkar {HainZanaatkar_Link} hakkında haber bekliyorsun. Seni kandırmaya çalışmasının bedelini yakında ödeyeceğini umuyorsun." />
-    <string id="sp_kb_s1_log" text="Bir güvercinden acil, kanlı bir mektup aldın. Dostun {Dost_Link} seninle acilen görüşmek istiyor. Onu bul ve acil durumun ne olduğunu sor." />
+    <string id="sp_kb_s1_log" text="Bir güvercinden acil, kanlı bir mektup aldın. Eski dostun {Dost_Link} seninle acilen görüşmek istiyor. Onu bul ve acil durumun ne olduğunu sor." />
     <string id="sp_kb_s2_log" text="{Dost_Link} ile konuştun. Zanaatkar {HainZanaatkar_Link}'ın Güvercin şifrelerini çalıp kaçan gerçek bir hain olduğunu açıkladı. Ana firari müfrezesini bulmak için önce diyarda dolaşan 3 sahte çapulcu grubunu sınırları terk etmeden yakalayıp yok etmelisin. (Süre Sınırı: 10 Gün)" />
     <string id="sp_kb_convoy" text="Hainin Firari Müfrezesi" />
     <string id="sp_kb_s3_log" text="Yem gruplarını yok ettikten sonra, hainin seçkin firari müfrezesi seni ortadan kaldırmak için ortaya çıktı! Sınırı geçip kaçmadan önce onlarla yüzleş ve şifreleri geri al. (Süre Sınırı: 5 Gün)" />
