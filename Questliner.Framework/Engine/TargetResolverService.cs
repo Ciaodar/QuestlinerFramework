@@ -24,6 +24,7 @@ namespace Questliner.Framework.Engine
                     var gKey = model.SpecificId.Substring(11, model.SpecificId.Length - 12).Trim();
                     var gh = GlobalStateManager.Instance.GetGlobalHero(gKey);
                     if (gh != null && gh.IsAlive) return gh;
+                    return null;
                 }
                 return Hero.AllAliveHeroes.FirstOrDefault(h => h.StringId == model.SpecificId);
             }
@@ -41,6 +42,7 @@ namespace Questliner.Framework.Engine
                     {
                         return gh;
                     }
+                    return null;
                 }
             }
 
@@ -359,15 +361,9 @@ namespace Questliner.Framework.Engine
             {
                 var key = filter.Substring(11, filter.Length - 12);
                 var globalHero = Questliner.Framework.Core.GlobalStateManager.Instance.GetGlobalHero(key);
-                if (globalHero == null && !isNegated)
+                if (globalHero == null)
                 {
-                    // Fallback to prevent softlocks when debug testing quests directly via console
-                    globalHero = source.FirstOrDefault(h => h.IsAlive && h != Hero.MainHero);
-                    if (globalHero != null)
-                    {
-                        Questliner.Framework.Core.GlobalStateManager.Instance.SetGlobalHero(key, globalHero);
-                        TaleWorlds.Library.Debug.Print($"[Questliner] GlobalHero '{key}' was not found in storage. Fallback assigned: '{globalHero.Name}' ({globalHero.StringId}).");
-                    }
+                    return isNegated ? source : Enumerable.Empty<Hero>();
                 }
                 return isNegated ? source.Where(h => h != globalHero) : source.Where(h => h == globalHero);
             }
@@ -453,9 +449,9 @@ namespace Questliner.Framework.Engine
                 {
                     var gKey = globalFilter.Substring(11, globalFilter.Length - 12).Trim();
                     var gh = GlobalStateManager.Instance.GetGlobalHero(gKey);
-                    if (gh != null)
+                    if (gh == null || gh != hero)
                     {
-                        return gh == hero;
+                        return false;
                     }
                 }
 

@@ -15,11 +15,13 @@ namespace Questliner.Framework.Engine
         /// </summary>
         public static bool IsConditionMet(ConditionModel condition, DynamicQuest? quest)
         {
-            if (condition.ConditionType.StartsWith("!"))
+            if (condition == null || string.IsNullOrEmpty(condition.ConditionType)) return false;
+            string condType = condition.ConditionType.Trim();
+            if (condType.StartsWith("!"))
             {
                 var copy = new ConditionModel 
                 { 
-                    ConditionType = condition.ConditionType.Substring(1), 
+                    ConditionType = condType.Substring(1).Trim(), 
                     TargetAlias = condition.TargetAlias, 
                     ObjectId = condition.ObjectId, 
                     Amount = condition.Amount, 
@@ -29,7 +31,7 @@ namespace Questliner.Framework.Engine
                 };
                 return !IsConditionMet(copy, quest);
             }
-            switch (condition.ConditionType)
+            switch (condType)
             {
                 case "HasItem":
                 {
@@ -96,7 +98,11 @@ namespace Questliner.Framework.Engine
                     return Clan.PlayerClan.Fiefs.Count >= condition.Amount;
                 }
                 case "PlayerClanTier":
+                case "playerClanTier":
+                case "playerclantier":
                 case "ClanTier":
+                case "clanTier":
+                case "clantier":
                 {
                     return Clan.PlayerClan.Tier >= condition.Amount;
                 }

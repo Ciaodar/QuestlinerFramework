@@ -162,8 +162,9 @@ Görevlerin oyun dünyasında nasıl başlayacağını belirleyen ana mekanizmal
 ---
 
 ## 6.1. Görev Eşyaları ve Satılamazlık Koruması
-- Framework, `QuestlinerTradeItemPriceFactorModel` üzerinden TaleWorlds ticaret motorunu genişletir.
-- Değeri 0 olan, `NotMerchandise` (`is_merchandise="false"`) olarak tanımlanan veya hikaye görev nesneleri (`raven_bone_cipher`, `black_ledger`, `shadow_master_ring` vb.) tüccarlara satılırken 0 Dinar değerindedir ve satılamaz. Bu sayede oyuncuların kritik görev eşyalarını kazaen tüccarlara 1 Dinara satarak görevleri kilitlemesi engellenir.
+- Framework, çift katmanlı görev eşyası koruma mekanizmasına sahiptir:
+  1. **Native Görev Eşyası Kilidi (`EquipmentElement.IsQuestItem`):** `GiveItem` aksiyonu ile verilen görev eşyaları doğrudan Native `isQuestItem: true` bayrağıyla envantere eklenir. Ayrıca oyuncu şehre girdiğinde veya saatlik döngüde envanter taranarak (`SanitizeQuestItemsInInventory`) bilinen tüm görev eşyaları kilitlenir. Native envanter arayüzü görev eşyalarının tüccara sürüklenmesine veya satılmasına kesinlikle izin vermez.
+  2. **Ticaret Fiyat Faktör Modeli (`QuestlinerTradeItemPriceFactorModel`):** TaleWorlds ticaret motorundaki `MathF.Max(price, 1)` alt sınırı geçersiz kılınır; `NotMerchandise` (`is_merchandise="false"`), değeri 0 olan veya özel görev eşyaları (`raven_bone_cipher`, `black_ledger`, `shadow_master_ring`, `sifreli_defter`, `lordun_muhurlu_emri`, `kalfamuhru`, `kalbinatesi`, `yildizdemiri`, `geciciahitkilici`, `ahitkilici_efsanevi`, `ql_quest_*`, `qlf_quest_*`) için satış fiyatı 0 Dinar olarak hesaplanır. Bu sayede oyuncuların kritik görev eşyalarını tüccarlara satarak görevi kilitlemesi engellenir.
 
 ---
 

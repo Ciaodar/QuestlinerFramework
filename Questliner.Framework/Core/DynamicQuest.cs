@@ -107,117 +107,225 @@ namespace Questliner.Framework.Core
         public static void BindHeroToMBTextManager(string key, Hero hero)
         {
             if (string.IsNullOrEmpty(key) || hero == null) return;
-            var heroText = new TextObject(hero.Name.ToString());
-            heroText.SetTextVariable("Name", hero.Name);
-            heroText.SetTextVariable("NAME", hero.Name);
-            heroText.SetTextVariable("Link", hero.EncyclopediaLinkWithName);
-            heroText.SetTextVariable("LINK", hero.EncyclopediaLinkWithName);
-            heroText.SetTextVariable("Gender", hero.IsFemale ? 1 : 0);
-            heroText.SetTextVariable("GENDER", hero.IsFemale ? 1 : 0);
+            var heroName = hero.Name ?? new TextObject(string.Empty);
+            var heroLink = hero.EncyclopediaLinkWithName ?? heroName;
 
-            MBTextManager.SetTextVariable(key, heroText);
-            MBTextManager.SetTextVariable(key + ".Name", hero.Name);
-            MBTextManager.SetTextVariable(key + ".NAME", hero.Name);
-            MBTextManager.SetTextVariable(key + "_Name", hero.Name);
-            MBTextManager.SetTextVariable(key + "_Link", hero.EncyclopediaLinkWithName);
-            MBTextManager.SetTextVariable(key + "_LINK", hero.EncyclopediaLinkWithName);
+            TextObject? charProp = null;
             if (hero.CharacterObject != null)
             {
-                StringHelpers.SetCharacterProperties(key, hero.CharacterObject);
+                charProp = StringHelpers.SetCharacterProperties(key, hero.CharacterObject);
             }
+
+            if (charProp != null)
+            {
+                charProp.SetTextVariable("Name", heroName);
+                charProp.SetTextVariable("name", heroName);
+                charProp.SetTextVariable("NAME", heroName);
+                charProp.SetTextVariable("Link", heroLink);
+                charProp.SetTextVariable("link", heroLink);
+                charProp.SetTextVariable("LINK", heroLink);
+                charProp.SetTextVariable("Gender", hero.IsFemale ? 1 : 0);
+                charProp.SetTextVariable("gender", hero.IsFemale ? 1 : 0);
+                charProp.SetTextVariable("GENDER", hero.IsFemale ? 1 : 0);
+            }
+            else
+            {
+                var heroText = new TextObject(heroName.ToString());
+                heroText.SetTextVariable("Name", heroName);
+                heroText.SetTextVariable("name", heroName);
+                heroText.SetTextVariable("NAME", heroName);
+                heroText.SetTextVariable("Link", heroLink);
+                heroText.SetTextVariable("link", heroLink);
+                heroText.SetTextVariable("LINK", heroLink);
+                heroText.SetTextVariable("Gender", hero.IsFemale ? 1 : 0);
+                heroText.SetTextVariable("gender", hero.IsFemale ? 1 : 0);
+                heroText.SetTextVariable("GENDER", hero.IsFemale ? 1 : 0);
+                MBTextManager.SetTextVariable(key, heroText);
+            }
+
+            MBTextManager.SetTextVariable(key + ".Name", heroName);
+            MBTextManager.SetTextVariable(key + ".name", heroName);
+            MBTextManager.SetTextVariable(key + ".NAME", heroName);
+            MBTextManager.SetTextVariable(key + "_Name", heroName);
+            MBTextManager.SetTextVariable(key + "_name", heroName);
+            MBTextManager.SetTextVariable(key + "_NAME", heroName);
+            MBTextManager.SetTextVariable(key + "_Link", heroLink);
+            MBTextManager.SetTextVariable(key + "_link", heroLink);
+            MBTextManager.SetTextVariable(key + "_LINK", heroLink);
+            MBTextManager.SetTextVariable(key + ".Link", heroLink);
+            MBTextManager.SetTextVariable(key + ".link", heroLink);
+            MBTextManager.SetTextVariable(key + ".LINK", heroLink);
+            MBTextManager.SetTextVariable(key + "_Gender", hero.IsFemale ? 1 : 0);
+            MBTextManager.SetTextVariable(key + "_gender", hero.IsFemale ? 1 : 0);
+            MBTextManager.SetTextVariable(key + "_GENDER", hero.IsFemale ? 1 : 0);
         }
 
         public static void BindSettlementToMBTextManager(string key, Settlement settlement)
         {
             if (string.IsNullOrEmpty(key) || settlement == null) return;
-            var settText = new TextObject(settlement.Name.ToString());
-            settText.SetTextVariable("Name", settlement.Name);
-            settText.SetTextVariable("NAME", settlement.Name);
-            settText.SetTextVariable("Link", settlement.EncyclopediaLinkWithName);
-            settText.SetTextVariable("LINK", settlement.EncyclopediaLinkWithName);
+            var settName = settlement.Name ?? new TextObject(string.Empty);
+            var settLink = settlement.EncyclopediaLinkWithName ?? settName;
 
+            var settText = new TextObject("{=!}" + settName.ToString());
+            settText.SetTextVariable("Name", settName);
+            settText.SetTextVariable("name", settName);
+            settText.SetTextVariable("NAME", settName);
+            settText.SetTextVariable("Link", settLink);
+            settText.SetTextVariable("link", settLink);
+            settText.SetTextVariable("LINK", settLink);
             MBTextManager.SetTextVariable(key, settText);
-            MBTextManager.SetTextVariable(key + ".Name", settlement.Name);
-            MBTextManager.SetTextVariable(key + ".NAME", settlement.Name);
-            MBTextManager.SetTextVariable(key + "_Name", settlement.Name);
-            MBTextManager.SetTextVariable(key + "_Link", settlement.EncyclopediaLinkWithName);
-            MBTextManager.SetTextVariable(key + "_LINK", settlement.EncyclopediaLinkWithName);
-            StringHelpers.SetSettlementProperties(key, settlement);
+
+            MBTextManager.SetTextVariable(key + ".Name", settName);
+            MBTextManager.SetTextVariable(key + ".name", settName);
+            MBTextManager.SetTextVariable(key + ".NAME", settName);
+            MBTextManager.SetTextVariable(key + "_Name", settName);
+            MBTextManager.SetTextVariable(key + "_name", settName);
+            MBTextManager.SetTextVariable(key + "_NAME", settName);
+            MBTextManager.SetTextVariable(key + "_Link", settLink);
+            MBTextManager.SetTextVariable(key + "_link", settLink);
+            MBTextManager.SetTextVariable(key + "_LINK", settLink);
+            MBTextManager.SetTextVariable(key + ".Link", settLink);
+            MBTextManager.SetTextVariable(key + ".link", settLink);
+            MBTextManager.SetTextVariable(key + ".LINK", settLink);
         }
 
         public static void BindPartyToMBTextManager(string key, TaleWorlds.CampaignSystem.Party.MobileParty party)
         {
             if (string.IsNullOrEmpty(key) || party == null) return;
-            var partyText = new TextObject(party.Name.ToString());
-            partyText.SetTextVariable("Name", party.Name);
-            partyText.SetTextVariable("NAME", party.Name);
-            partyText.SetTextVariable("Link", party.Name);
-            partyText.SetTextVariable("LINK", party.Name);
+            var pName = party.Name ?? new TextObject(party.StringId);
+            var partyText = new TextObject(pName.ToString());
+            partyText.SetTextVariable("Name", pName);
+            partyText.SetTextVariable("name", pName);
+            partyText.SetTextVariable("NAME", pName);
+            partyText.SetTextVariable("Link", pName);
+            partyText.SetTextVariable("link", pName);
+            partyText.SetTextVariable("LINK", pName);
 
             MBTextManager.SetTextVariable(key, partyText);
-            MBTextManager.SetTextVariable(key + ".Name", party.Name);
-            MBTextManager.SetTextVariable(key + ".NAME", party.Name);
-            MBTextManager.SetTextVariable(key + "_Name", party.Name);
-            MBTextManager.SetTextVariable(key + "_Link", party.Name);
-            MBTextManager.SetTextVariable(key + "_LINK", party.Name);
+            MBTextManager.SetTextVariable(key + ".Name", pName);
+            MBTextManager.SetTextVariable(key + ".name", pName);
+            MBTextManager.SetTextVariable(key + ".NAME", pName);
+            MBTextManager.SetTextVariable(key + "_Name", pName);
+            MBTextManager.SetTextVariable(key + "_name", pName);
+            MBTextManager.SetTextVariable(key + "_NAME", pName);
+            MBTextManager.SetTextVariable(key + "_Link", pName);
+            MBTextManager.SetTextVariable(key + "_link", pName);
+            MBTextManager.SetTextVariable(key + "_LINK", pName);
+            MBTextManager.SetTextVariable(key + ".Link", pName);
+            MBTextManager.SetTextVariable(key + ".link", pName);
+            MBTextManager.SetTextVariable(key + ".LINK", pName);
         }
 
         public static void BindHeroToTextObject(TextObject textObject, string key, Hero hero)
         {
             if (textObject == null || string.IsNullOrEmpty(key) || hero == null) return;
-            var heroText = new TextObject(hero.Name.ToString());
-            heroText.SetTextVariable("Name", hero.Name);
-            heroText.SetTextVariable("NAME", hero.Name);
-            heroText.SetTextVariable("Link", hero.EncyclopediaLinkWithName);
-            heroText.SetTextVariable("LINK", hero.EncyclopediaLinkWithName);
-            heroText.SetTextVariable("Gender", hero.IsFemale ? 1 : 0);
-            heroText.SetTextVariable("GENDER", hero.IsFemale ? 1 : 0);
+            var heroName = hero.Name ?? new TextObject(string.Empty);
+            var heroLink = hero.EncyclopediaLinkWithName ?? heroName;
 
-            textObject.SetTextVariable(key, heroText);
-            textObject.SetTextVariable(key + ".Name", hero.Name);
-            textObject.SetTextVariable(key + ".NAME", hero.Name);
-            textObject.SetTextVariable(key + "_Name", hero.Name);
-            textObject.SetTextVariable(key + "_Link", hero.EncyclopediaLinkWithName);
-            textObject.SetTextVariable(key + "_LINK", hero.EncyclopediaLinkWithName);
+            TextObject? charProp = null;
             if (hero.CharacterObject != null)
             {
-                StringHelpers.SetCharacterProperties(key, hero.CharacterObject, textObject);
+                charProp = StringHelpers.SetCharacterProperties(key, hero.CharacterObject, textObject);
             }
+
+            if (charProp != null)
+            {
+                charProp.SetTextVariable("Name", heroName);
+                charProp.SetTextVariable("name", heroName);
+                charProp.SetTextVariable("NAME", heroName);
+                charProp.SetTextVariable("Link", heroLink);
+                charProp.SetTextVariable("link", heroLink);
+                charProp.SetTextVariable("LINK", heroLink);
+                charProp.SetTextVariable("Gender", hero.IsFemale ? 1 : 0);
+                charProp.SetTextVariable("gender", hero.IsFemale ? 1 : 0);
+                charProp.SetTextVariable("GENDER", hero.IsFemale ? 1 : 0);
+            }
+            else
+            {
+                var heroText = new TextObject(heroName.ToString());
+                heroText.SetTextVariable("Name", heroName);
+                heroText.SetTextVariable("name", heroName);
+                heroText.SetTextVariable("NAME", heroName);
+                heroText.SetTextVariable("Link", heroLink);
+                heroText.SetTextVariable("link", heroLink);
+                heroText.SetTextVariable("LINK", heroLink);
+                heroText.SetTextVariable("Gender", hero.IsFemale ? 1 : 0);
+                heroText.SetTextVariable("gender", hero.IsFemale ? 1 : 0);
+                heroText.SetTextVariable("GENDER", hero.IsFemale ? 1 : 0);
+                textObject.SetTextVariable(key, heroText);
+            }
+
+            textObject.SetTextVariable(key + ".Name", heroName);
+            textObject.SetTextVariable(key + ".name", heroName);
+            textObject.SetTextVariable(key + ".NAME", heroName);
+            textObject.SetTextVariable(key + "_Name", heroName);
+            textObject.SetTextVariable(key + "_name", heroName);
+            textObject.SetTextVariable(key + "_NAME", heroName);
+            textObject.SetTextVariable(key + "_Link", heroLink);
+            textObject.SetTextVariable(key + "_link", heroLink);
+            textObject.SetTextVariable(key + "_LINK", heroLink);
+            textObject.SetTextVariable(key + ".Link", heroLink);
+            textObject.SetTextVariable(key + ".link", heroLink);
+            textObject.SetTextVariable(key + ".LINK", heroLink);
+            textObject.SetTextVariable(key + "_Gender", hero.IsFemale ? 1 : 0);
+            textObject.SetTextVariable(key + "_gender", hero.IsFemale ? 1 : 0);
+            textObject.SetTextVariable(key + "_GENDER", hero.IsFemale ? 1 : 0);
         }
 
         public static void BindSettlementToTextObject(TextObject textObject, string key, Settlement settlement)
         {
             if (textObject == null || string.IsNullOrEmpty(key) || settlement == null) return;
-            var settText = new TextObject(settlement.Name.ToString());
-            settText.SetTextVariable("Name", settlement.Name);
-            settText.SetTextVariable("NAME", settlement.Name);
-            settText.SetTextVariable("Link", settlement.EncyclopediaLinkWithName);
-            settText.SetTextVariable("LINK", settlement.EncyclopediaLinkWithName);
+            var settName = settlement.Name ?? new TextObject(string.Empty);
+            var settLink = settlement.EncyclopediaLinkWithName ?? settName;
 
+            var settText = new TextObject("{=!}" + settName.ToString());
+            settText.SetTextVariable("Name", settName);
+            settText.SetTextVariable("name", settName);
+            settText.SetTextVariable("NAME", settName);
+            settText.SetTextVariable("Link", settLink);
+            settText.SetTextVariable("link", settLink);
+            settText.SetTextVariable("LINK", settLink);
             textObject.SetTextVariable(key, settText);
-            textObject.SetTextVariable(key + ".Name", settlement.Name);
-            textObject.SetTextVariable(key + ".NAME", settlement.Name);
-            textObject.SetTextVariable(key + "_Name", settlement.Name);
-            textObject.SetTextVariable(key + "_Link", settlement.EncyclopediaLinkWithName);
-            textObject.SetTextVariable(key + "_LINK", settlement.EncyclopediaLinkWithName);
-            StringHelpers.SetSettlementProperties(key, settlement, textObject);
+
+            textObject.SetTextVariable(key + ".Name", settName);
+            textObject.SetTextVariable(key + ".name", settName);
+            textObject.SetTextVariable(key + ".NAME", settName);
+            textObject.SetTextVariable(key + "_Name", settName);
+            textObject.SetTextVariable(key + "_name", settName);
+            textObject.SetTextVariable(key + "_NAME", settName);
+            textObject.SetTextVariable(key + "_Link", settLink);
+            textObject.SetTextVariable(key + "_link", settLink);
+            textObject.SetTextVariable(key + "_LINK", settLink);
+            textObject.SetTextVariable(key + ".Link", settLink);
+            textObject.SetTextVariable(key + ".link", settLink);
+            textObject.SetTextVariable(key + ".LINK", settLink);
         }
 
         public static void BindPartyToTextObject(TextObject textObject, string key, TaleWorlds.CampaignSystem.Party.MobileParty party)
         {
             if (textObject == null || string.IsNullOrEmpty(key) || party == null) return;
-            var partyText = new TextObject(party.Name.ToString());
-            partyText.SetTextVariable("Name", party.Name);
-            partyText.SetTextVariable("NAME", party.Name);
-            partyText.SetTextVariable("Link", party.Name);
-            partyText.SetTextVariable("LINK", party.Name);
+            var pName = party.Name ?? new TextObject(party.StringId);
+            var partyText = new TextObject(pName.ToString());
+            partyText.SetTextVariable("Name", pName);
+            partyText.SetTextVariable("name", pName);
+            partyText.SetTextVariable("NAME", pName);
+            partyText.SetTextVariable("Link", pName);
+            partyText.SetTextVariable("link", pName);
+            partyText.SetTextVariable("LINK", pName);
 
             textObject.SetTextVariable(key, partyText);
-            textObject.SetTextVariable(key + ".Name", party.Name);
-            textObject.SetTextVariable(key + ".NAME", party.Name);
-            textObject.SetTextVariable(key + "_Name", party.Name);
-            textObject.SetTextVariable(key + "_Link", party.Name);
-            textObject.SetTextVariable(key + "_LINK", party.Name);
+            textObject.SetTextVariable(key + ".Name", pName);
+            textObject.SetTextVariable(key + ".name", pName);
+            textObject.SetTextVariable(key + ".NAME", pName);
+            textObject.SetTextVariable(key + "_Name", pName);
+            textObject.SetTextVariable(key + "_name", pName);
+            textObject.SetTextVariable(key + "_NAME", pName);
+            textObject.SetTextVariable(key + "_Link", pName);
+            textObject.SetTextVariable(key + "_link", pName);
+            textObject.SetTextVariable(key + "_LINK", pName);
+            textObject.SetTextVariable(key + ".Link", pName);
+            textObject.SetTextVariable(key + ".link", pName);
+            textObject.SetTextVariable(key + ".LINK", pName);
         }
 
         public void InjectVariablesToTextManager()
@@ -543,8 +651,15 @@ namespace Questliner.Framework.Core
                     }
                     foreach (var kvp in TargetParties)
                     {
-                        if (nextStageModel.LogText.Contains("{" + kvp.Key) && kvp.Value != null && !IsTracked(kvp.Value))
-                            AddTrackedObject(kvp.Value);
+                        if (kvp.Value != null && kvp.Value.IsActive && !IsTracked(kvp.Value))
+                        {
+                            if (nextStageModel.LogText.Contains("{" + kvp.Key) ||
+                                nextStageModel.Conditions.Any(c => c.TargetAlias == kvp.Key) ||
+                                nextStageModel.OnEnterActions.Any(a => a.TargetAlias == kvp.Key))
+                            {
+                                AddTrackedObject(kvp.Value);
+                            }
+                        }
                     }
 
                     foreach (var cond in nextStageModel.Conditions)
@@ -635,6 +750,42 @@ namespace Questliner.Framework.Core
         protected override void SetDialogs()
         {
             // Dynamic dialogues bound to this quest instance
+        }
+
+        protected override void OnCompleteWithSuccess()
+        {
+            base.OnCompleteWithSuccess();
+            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
+        }
+
+        protected override void OnFinalize()
+        {
+            base.OnFinalize();
+            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
+        }
+
+        public override void OnFailed()
+        {
+            base.OnFailed();
+            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
+        }
+
+        public override void OnCanceled()
+        {
+            base.OnCanceled();
+            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
+        }
+
+        protected override void OnTimedOut()
+        {
+            base.OnTimedOut();
+            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
+        }
+
+        protected override void OnBetrayal()
+        {
+            base.OnBetrayal();
+            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
         }
     }
 }

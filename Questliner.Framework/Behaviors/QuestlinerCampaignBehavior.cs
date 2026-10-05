@@ -5,6 +5,7 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Settlements;
+using TaleWorlds.Core;
 using Questliner.Framework.Core;
 using Questliner.Shared.Models;
 
@@ -17,11 +18,13 @@ namespace Questliner.Framework.Behaviors
 
         public void MarkQuestAsCompleted(string questId)
         {
+            if (string.IsNullOrEmpty(questId)) return;
             if (!_completedQuestIds.Contains(questId))
             {
                 _completedQuestIds.Add(questId);
             }
         }
+
         public override void RegisterEvents()
         {
             Instance = this;
@@ -33,6 +36,15 @@ namespace Questliner.Framework.Behaviors
             CampaignEvents.HeroKilledEvent.AddNonSerializedListener(this, OnHeroKilled);
             CampaignEvents.HeroPrisonerTaken.AddNonSerializedListener(this, OnHeroPrisonerTaken);
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, OnMapEventEnded);
+            CampaignEvents.OnQuestCompletedEvent.AddNonSerializedListener(this, OnQuestCompleted);
+        }
+
+        private void OnQuestCompleted(QuestBase quest, QuestBase.QuestCompleteDetails details)
+        {
+            if (quest is DynamicQuest dynamicQuest)
+            {
+                MarkQuestAsCompleted(dynamicQuest.Model?.Id ?? dynamicQuest.StringId);
+            }
         }
 
         private QuestModel? _pendingQuestToStart = null;
@@ -598,9 +610,29 @@ namespace Questliner.Framework.Behaviors
             _currentConversationQuestId = null;
         }
 
+        public static void SanitizeQuestItemsInInventory()
+        {
+            if (MobileParty.MainParty?.ItemRoster == null) return;
+            var roster = MobileParty.MainParty.ItemRoster;
+            for (int i = 0; i < roster.Count; i++)
+            {
+                var element = roster.GetElementCopyAtIndex(i);
+                if (element.EquipmentElement.Item != null && !element.EquipmentElement.IsQuestItem)
+                {
+                    if (Models.QuestlinerTradeItemPriceFactorModel.IsQuestItem(element.EquipmentElement.Item))
+                    {
+                        int amount = element.Amount;
+                        roster.AddToCounts(element.EquipmentElement, -amount);
+                        roster.AddToCounts(new EquipmentElement(element.EquipmentElement.Item, element.EquipmentElement.ItemModifier, null, isQuestItem: true), amount);
+                    }
+                }
+            }
+        }
+
         private void OnSettlementEntered(MobileParty party, Settlement settlement, Hero hero)
         {
             if (party != MobileParty.MainParty) return;
+            SanitizeQuestItemsInInventory();
             
             // 1. Process Ongoing Quests
             foreach (var quest in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
@@ -621,6 +653,23 @@ namespace Questliner.Framework.Behaviors
 
                 if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.Model?.Id == questModel.Id))
                     continue; // Zaten aktif
+
+                if (questModel.Prerequisites != null && questModel.Prerequisites.Count > 0)
+                {
+                    bool nonTargetPrereqsMet = true;
+                    foreach (var req in questModel.Prerequisites)
+                    {
+                        if (string.IsNullOrEmpty(req.TargetAlias))
+                        {
+                            if (!Engine.ConditionEvaluator.IsConditionMet(req, null))
+                            {
+                                nonTargetPrereqsMet = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (!nonTargetPrereqsMet) continue;
+                }
 
                 var trigger = questModel.Triggers.FirstOrDefault(t => t.EventType == "OnSettlementEnter");
                 if (trigger != null)
@@ -660,12 +709,15 @@ namespace Questliner.Framework.Behaviors
                         if (canResolveAll)
                         {
                             bool reqsMet = true;
-                            foreach (var req in questModel.Prerequisites)
+                            if (questModel.Prerequisites != null)
                             {
-                                if (!Engine.ConditionEvaluator.IsConditionMet(req, tempQuest))
+                                foreach (var req in questModel.Prerequisites)
                                 {
-                                    reqsMet = false;
-                                    break;
+                                    if (!Engine.ConditionEvaluator.IsConditionMet(req, tempQuest))
+                                    {
+                                        reqsMet = false;
+                                        break;
+                                    }
                                 }
                             }
 
@@ -788,6 +840,7 @@ namespace Questliner.Framework.Behaviors
 
         private void OnHourlyTick()
         {
+            SanitizeQuestItemsInInventory();
             EvaluateAllQuests();
 
             // Check for AutoStart quests
@@ -808,9 +861,25 @@ namespace Questliner.Framework.Behaviors
 
         public void TryAutoStartQuest(QuestModel questModel)
         {
+            if (questModel == null || string.IsNullOrEmpty(questModel.Id)) return;
             if (_completedQuestIds.Contains(questModel.Id)) return;
             if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.Model?.Id == questModel.Id))
                 return;
+
+            // 1. Check prerequisites first BEFORE instantiating a quest
+            if (questModel.Prerequisites != null && questModel.Prerequisites.Count > 0)
+            {
+                foreach (var req in questModel.Prerequisites)
+                {
+                    if (string.IsNullOrEmpty(req.TargetAlias))
+                    {
+                        if (!Engine.ConditionEvaluator.IsConditionMet(req, null))
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
 
             var duration = TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(questModel.TimeLimitInDays > 0 ? questModel.TimeLimitInDays : 9999);
             var tempQuest = new DynamicQuest(questModel, Hero.MainHero, duration); // AutoStart quests default to MainHero as giver if no other giver is specified, but TargetResolvers should assign proper heroes.
@@ -841,12 +910,15 @@ namespace Questliner.Framework.Behaviors
             if (canResolveAll)
             {
                 bool reqsMet = true;
-                foreach (var req in questModel.Prerequisites)
+                if (questModel.Prerequisites != null)
                 {
-                    if (!Engine.ConditionEvaluator.IsConditionMet(req, tempQuest))
+                    foreach (var req in questModel.Prerequisites)
                     {
-                        reqsMet = false;
-                        break;
+                        if (!Engine.ConditionEvaluator.IsConditionMet(req, tempQuest))
+                        {
+                            reqsMet = false;
+                            break;
+                        }
                     }
                 }
 

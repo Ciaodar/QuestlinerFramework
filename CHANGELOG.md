@@ -2,6 +2,32 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.6.1] - 05 Ekim 2026 (Case-Insensitive Text Binding, Native CustomParty Spawning, Quest Loop Prevention & True Quest Item Protection)
+
+### Düzeltildi & Geliştirildi (Fixed & Improved)
+- **Metin Değişkenleri & Diyalog Harf Duyarlılığı (`DynamicQuest.cs`):**
+  - TaleWorlds `StringHelpers.SetCharacterProperties` ve `SetSettlementProperties` çağrılarının `MBTextManager` nesnesini ezerek değişkenleri yalnızca büyük harfli (`NAME`, `LINK`, `GENDER`) bırakması sorunu çözüldü.
+  - `{Dost.Name}`, `{Target.Name}`, `{Target_Link}`, `{Target_Name}` ve tüm küçük/büyük harf kombinasyonları (`Name`, `name`, `NAME`, `Link`, `link`, `LINK`) hem üst `TextObject` özelliklerine hem de düz metin değişkenlerine eksiksiz enjekte edildi.
+  - Diyaloglarda ve günlüklerde `{Dost.Name}` veya `{ArtisanTarget_Link}` boş kalma/silinme sorunu tamamen giderildi.
+- **Haydut Partisi Doğma ve Harita Takibi (`ActionExecutor.cs` - `SpawnBanditParty`):**
+  - Önceki çift mesafe öteleme (double-offsetting: `NavigationHelper` + `InitializeMobilePartyAroundPosition`) hatası kaldırıldı; tek geçişli erişilebilir konum hesabı yapıldı.
+  - TaleWorlds standart `CustomPartyComponent.CreateCustomPartyWithPartyTemplate` altyapısına geçildi, parti görseli güncellendi (`SetVisualAsDirty()`) ve parti görünürlüğü garantilendi.
+  - Doğurulan görev partileri anında `quest.AddTrackedObject(party)` ile harita izleme çemberine (quest tracker) alındı; aşama geçişlerinde (`TransitionToStage`) koşul veya aksiyonla ilişkili tüm partilerin haritada işaretlenmesi otomatikleştirildi.
+- **Sonsuz Görev Yeniden Başlama Döngüleri (`DynamicQuest.cs` & `QuestlinerCampaignBehavior.cs`):**
+  - `QuestBase` sınıfının tüm yaşam döngüsü tamamlama metodları (`OnCompleteWithSuccess`, `OnFinalize`, `OnFailed`, `OnCanceled`, `OnTimedOut`, `OnBetrayal`) override edilerek `MarkQuestAsCompleted` ile bağlandı.
+  - `QuestlinerCampaignBehavior` içerisine `CampaignEvents.OnQuestCompletedEvent` dinleyicisi eklenerek konsol komutları (`completestage`, `campaign.complete_quest`) veya Native zaman aşımları dahil herhangi bir yolla tamamlanan görevlerin `_completedQuestIds` listesine işlenmesi garantiye alındı.
+  - `TryAutoStartQuest` metodunda görev oluşturulmadan önce önkoşul (`Prerequisites`) kontrolü yapılarak yetersiz klan seviyesinde (`ClanTier < 3`) erken başlama engellendi.
+- **Tüccarlara 1 Dinar Satış Koruması (`ActionExecutor.cs` & `QuestlinerCampaignBehavior.cs`):**
+  - `GiveItem` aksiyonunda görev eşyaları `new EquipmentElement(..., isQuestItem: true)` olarak eklendi.
+  - `TakeItem` aksiyonunda envanterdeki quest item öğeleri indekslenerek güvenle düşüldü.
+  - Yerleşkeye girişte ve saatlik tick'te oyuncunun envanteri taranarak `IsQuestItem` olan eşyalar Native ticaret engelli `EquipmentElement(..., isQuestItem: true)` yapısına otomatik dönüştürüldü.
+  - `QuestlinerTradeItemPriceFactorModel.IsQuestItem` içerisindeki aşırı genel `ring` ve `ledger` filtreleri kaldırıldı, spesifik görev eşyalarıyla sınırlandırıldı.
+- **Global Karakter Çözümleme Katılığı (`TargetResolverService.cs`):**
+  - `GlobalHero(Key)` filtresi veya `SpecificId` hedefi bulunamadığında haritadan rastgele bir lord/notable seçip global hafızaya atayan hatalı fallback kaldırıldı. Bulunamayan global karakterler için `null` dönmesi sağlandı, senaryo hafızasının rastgele krallarla zehirlenmesi önlendi.
+  - `SaveHeroToGlobal` aksiyonu çalıştırıldığı anda ilgili NPC `DynamicQuest.BindHeroToMBTextManager` ile hemen metin yöneticisine bağlandı.
+
+---
+
 ## [v1.6.0] - 05 Ekim 2026 (Global Variable Engine, Bandit Party Spawning, Quest Restart Prevention & Non-Sellable Quest Items)
 
 ### Düzeltildi & Geliştirildi (Fixed & Improved)

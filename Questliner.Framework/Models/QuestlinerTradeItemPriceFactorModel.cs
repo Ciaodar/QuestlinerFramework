@@ -39,8 +39,20 @@ namespace Questliner.Framework.Models
             }
 
             string id = item.StringId.ToLower();
-            if (id == "raven_bone_cipher" || id == "black_ledger" || id == "shadow_master_ring" ||
-                id.Contains("cipher") || id.Contains("ledger") || id.Contains("ring") || id.Contains("sealed_order"))
+            if (id == "raven_bone_cipher" || 
+                id == "black_ledger" || 
+                id == "shadow_master_ring" ||
+                id == "sifreli_defter" ||
+                id == "lordun_muhurlu_emri" ||
+                id == "kalfamuhru" ||
+                id == "kalbinatesi" ||
+                id == "yildizdemiri" ||
+                id == "geciciahitkilici" ||
+                id == "ahitkilici_efsanevi" ||
+                id.StartsWith("ql_quest_") || 
+                id.StartsWith("qlf_quest_") ||
+                id.Contains("cipher") || 
+                id.Contains("sealed_order"))
             {
                 return true;
             }

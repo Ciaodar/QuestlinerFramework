@@ -25,7 +25,9 @@ namespace Questliner.Framework.Engine
                     ItemObject? giveItem = MBObjectManager.Instance.GetObject<ItemObject>(action.ObjectId);
                     if (giveItem != null)
                     {
-                        MobileParty.MainParty.ItemRoster.AddToCounts(giveItem, action.Amount);
+                        bool isQuest = Questliner.Framework.Models.QuestlinerTradeItemPriceFactorModel.IsQuestItem(giveItem);
+                        var element = new EquipmentElement(giveItem, null, null, isQuestItem: isQuest);
+                        MobileParty.MainParty.ItemRoster.AddToCounts(element, action.Amount);
                     }
                     break;
                 }
@@ -34,7 +36,15 @@ namespace Questliner.Framework.Engine
                     ItemObject? takeItem = MBObjectManager.Instance.GetObject<ItemObject>(action.ObjectId);
                     if (takeItem != null)
                     {
-                        MobileParty.MainParty.ItemRoster.AddToCounts(takeItem, -action.Amount);
+                        int questIndex = MobileParty.MainParty.ItemRoster.FindIndexOfElement(new EquipmentElement(takeItem, null, null, isQuestItem: true));
+                        if (questIndex >= 0)
+                        {
+                            MobileParty.MainParty.ItemRoster.AddToCounts(new EquipmentElement(takeItem, null, null, isQuestItem: true), -action.Amount);
+                        }
+                        else
+                        {
+                            MobileParty.MainParty.ItemRoster.AddToCounts(takeItem, -action.Amount);
+                        }
                     }
                     break;
                 }
@@ -259,6 +269,7 @@ namespace Questliner.Framework.Engine
                     float maxDist = Math.Max(spawnDist, spawnRad);
                     float minDist = Math.Min(spawnDist, spawnRad);
 
+                    CampaignVec2 spawnPosFinal = spawnPosition;
                     CampaignVec2 reachablePosition = NavigationHelper.FindReachablePointAroundPosition(
                         spawnPosition, 
                         MobileParty.NavigationType.Default, 
@@ -267,26 +278,10 @@ namespace Questliner.Framework.Engine
                     );
                     if (reachablePosition.Face.IsValid())
                     {
-                        spawnPosition = reachablePosition;
+                        spawnPosFinal = reachablePosition;
                     }
 
-                    // 4. Create and Initialize Party
-                    string partyStringId = "ql_spawned_" + clanId + "_" + MBRandom.RandomInt(10000);
-                    var party = MobileParty.CreateParty(partyStringId, null);
-                    if (partyClan != null)
-                    {
-                        party.ActualClan = partyClan;
-                    }
-
-                    party.InitializeMobilePartyAroundPosition(partyTemplate, spawnPosition, maxDist, minDist);
-                    party.SetPartyUsedByQuest(true);
-
-                    if (quest != null && !string.IsNullOrEmpty(action.TargetAlias))
-                    {
-                        quest.TargetParties[action.TargetAlias] = party;
-                    }
-
-                    // 5. Custom Name
+                    // 4. Resolve Custom Name
                     string partyName = "{=!}Bandits";
                     if (!string.IsNullOrEmpty(action.StringValue) && 
                         !action.StringValue.Equals("Hold", StringComparison.OrdinalIgnoreCase) &&
@@ -303,7 +298,31 @@ namespace Questliner.Framework.Engine
                     {
                         partyName = action.TargetAlias;
                     }
-                    party.Party.SetCustomName(new TaleWorlds.Localization.TextObject(partyName));
+                    var customPartyNameObj = new TaleWorlds.Localization.TextObject(partyName);
+
+                    // 5. Create and Initialize Party using CustomPartyComponent
+                    var homeSettlement = Hero.MainHero.CurrentSettlement ?? Hero.MainHero.HomeSettlement ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault();
+                    var party = TaleWorlds.CampaignSystem.Party.PartyComponents.CustomPartyComponent.CreateCustomPartyWithPartyTemplate(
+                        spawnPosFinal,
+                        0f,
+                        homeSettlement,
+                        customPartyNameObj,
+                        partyClan,
+                        partyTemplate,
+                        null!
+                    );
+
+                    party.Party.SetCustomName(customPartyNameObj);
+                    party.SetPartyUsedByQuest(true);
+                    party.IsVisible = true;
+                    party.Party.SetVisualAsDirty();
+
+                    if (quest != null && !string.IsNullOrEmpty(action.TargetAlias))
+                    {
+                        quest.TargetParties[action.TargetAlias] = party;
+                        quest.AddTrackedObject(party);
+                        DynamicQuest.BindPartyToMBTextManager(action.TargetAlias, party);
+                    }
 
                     // 6. Set Troop Count & Diverse Troop Distribution
                     int targetAmount = action.Amount > 0 ? action.Amount : 15;
@@ -608,6 +627,7 @@ namespace Questliner.Framework.Engine
                     if (target != null && !string.IsNullOrEmpty(action.StringValue))
                     {
                         Questliner.Framework.Core.GlobalStateManager.Instance.SetGlobalHero(action.StringValue, target);
+                        DynamicQuest.BindHeroToMBTextManager(action.StringValue, target);
                         TaleWorlds.Library.Debug.Print($"[Questliner] Saved GlobalHero '{action.StringValue}' -> {target.Name} ({target.StringId})");
                     }
                     break;
