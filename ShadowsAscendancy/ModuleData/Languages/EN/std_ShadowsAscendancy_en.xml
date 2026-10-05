@@ -91,7 +91,7 @@
     <!-- Black Market Wars (Quest 2) -->
     <string id="shdw_q2_title" text="Black Market Wars" />
 
-    <string id="shdw_q2_s1_log" text="Your clan is now known throughout the realm (Tier 3). However, your past isn't letting you go. A large bounty has been placed on your head, and hired assassins are after you. Defeat them and survive!" />
+    <string id="shdw_q2_s1_log" text="Your clan is now known throughout the realm, having reached Clan Tier 3. However, your past isn't letting you go. A large bounty has been placed on your head, and hired assassins are after you. Defeat them and survive!" />
     <string id="shdw_q2_s2_log" text="You defeated the hired assassins and survived. Find {KatilKomutan_Link} waiting on the map and interrogate him." />
     <string id="shdw_q2_s3_log" text="You learned that {YozlasmisLord_Link} was behind the assassination attempt and secured the evidence, the Lord's Sealed Order. Now it is time to confront him." />
     <string id="shdw_q2_s4_log" text="You rejected the lord's bribe. Now you must speak with {Hukumdar_Link} to prove his betrayal." />

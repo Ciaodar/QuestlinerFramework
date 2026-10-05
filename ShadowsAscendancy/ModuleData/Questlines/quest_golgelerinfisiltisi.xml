@@ -8,7 +8,7 @@
 
   <Prerequisites>
     <Condition Type="ClanTier" Amount="2" />
-    <Condition Type="!IsQuestCompleted" ObjectId="QLF_GolgelerinFisiltisi" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_GolgelerinFisiltisi" Amount="1" />
     <Condition Type="!GlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />
   </Prerequisites>
 
@@ -17,7 +17,7 @@
   </Triggers>
 
   <Stages>
-    <Stage Id="Stage1_TuccarDiyalog" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+    <Stage Id="Stage1_TuccarDiyalog" NextStageId="Stage2_Takip" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=shdw_q1_s1_log}Your clan's name has started to be heard around here. A merchant named {GorevVeren_Link} in {HedefSehir_Link} wants to see you. It seems their caravans have been mysteriously disappearing lately.</LogText>
       <Conditions />
       <OnEnterActions>
@@ -30,6 +30,10 @@
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="HedefKervan" Amount="1" />
       </Conditions>
+      <OnEnterActions>
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
+      </OnEnterActions>
       <OnExitActions>
         <Action Type="GiveItem" ObjectId="sifreli_defter" Amount="1" />
       </OnExitActions>
@@ -49,10 +53,6 @@
         <!-- NOTE: This requires the new Condition from the Framework Developer! -->
         <Condition Type="!IsPlayerInSettlement" />
       </Conditions>
-      <OnExitActions>
-        <Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="45" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_cetepartisi}Gang Members" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
-        <Action Type="SetPartyAi" TargetAlias="CetePartisi" StringValue="EngageParty" ObjectId="Player" />
-      </OnExitActions>
     </Stage>
 
     <Stage Id="Stage5_PusuSavas" NextStageId="StageSuccess_Kanun" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
@@ -60,6 +60,10 @@
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="CetePartisi" Amount="1" />
       </Conditions>
+      <OnEnterActions>
+        <Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="45" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_cetepartisi}Gang Members" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SetPartyAi" TargetAlias="CetePartisi" StringValue="EngageParty" ObjectId="Player" />
+      </OnEnterActions>
       <OnExitActions>
         <Action Type="AddGold" Amount="5000" />
         <Action Type="ChangeRelation" TargetAlias="GorevVeren" Amount="15" />
@@ -125,8 +129,6 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Hizli" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="close_window">
       <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
-        <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
     </DialogNode>
@@ -208,8 +210,6 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Detayli" TargetAlias="GorevVeren" InputToken="ql_shdw_t_karar" OutputToken="close_window">
       <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
-        <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
     </DialogNode>
@@ -217,8 +217,6 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Adalet" TargetAlias="GorevVeren" InputToken="ql_shdw_t_karar" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_t_kabul_adalet}I will hunt down those raiders for the safety of the roads, merchant. But once I hold that ledger, we will have words about your transactions.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
-        <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
     </DialogNode>
