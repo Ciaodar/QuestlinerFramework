@@ -9,7 +9,7 @@
     
     <string id="shdw_q1_s1_log" text="Your clan's name has started to be heard around here. A merchant named {GorevVeren_Link} in {HedefSehir_Link} wants to see you. It seems their caravans have been mysteriously disappearing lately." />
     <string id="shdw_q1_s2_log" text="You spoke with the merchant {GorevVeren_Link} and agreed to track down the bandits attacking their caravans. Find the Smuggler Caravan on the map and defeat them." />
-    <string id="shdw_q1_s3_log" text="You destroyed the caravan and obtained the Encrypted Ledger. Now you must head to the back alleys of {HedefSehir_Link} and confront the Gang Leader {KacakciLideri_Link}." />
+    <string id="shdw_q1_s3_log" text="You destroyed the caravan and obtained the Encrypted Ledger. Now visit {HedefSehir_Link} and confront Gang Leader {KacakciLideri_Link} at their hideout or via the town menu." />
     <string id="shdw_q1_s4_pusu_log" text="You defied the gang leader. They threatened you and warned that the outside of the city is dangerous. Be prepared for an ambush as soon as you leave the settlement." />
     <string id="shdw_q1_s5_savas_log" text="The gang's assassins have ambushed you outside the city! Defeat them to secure the merchant's routes." />
     <string id="shdw_q1_s4_santaj_log" text="You made a deal with the gang leader. Now go back to the merchant {GorevVeren_Link} and force them to pay tribute to the gang, while you take your own hefty cut." />
@@ -48,7 +48,7 @@
 
     <string id="shdw_q1_cete_turn1" text="(Pushes his goblet aside and studies you cold-eyed) Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat." />
     <string id="shdw_q1_dlg_cete_intro" text="Who do you think you are, barging into my territory? Speak quickly before my men gut you." />
-    <string id="shdw_q1_dlg_cete_threat" text="If you lie to me, this tavern will be your tomb. I butchered your caravan dogs and took this encrypted ledger. Who is behind you?" />
+    <string id="shdw_q1_dlg_cete_threat" text="If you lie to me, this den will be your tomb. I butchered your caravan dogs and took this encrypted ledger. Who is behind you?" />
     <string id="shdw_q1_dlg4" text="I found the dogs plundering the caravans and seized this encrypted ledger. You're no common bandit, who is behind this?" />
     <string id="shdw_q1_dlg_cete_cunning" text="I routed your caravan and hold your encrypted ledger. I want to know who pulls the strings in this city before I decide whose side I am on." />
     <string id="shdw_q1_dlg5" text="(Laughs) You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market." />
@@ -93,7 +93,7 @@
 
     <string id="shdw_q2_s1_log" text="Your clan is now known throughout the realm (Tier 3). However, your past isn't letting you go. A large bounty has been placed on your head, and hired assassins are after you. Defeat them and survive!" />
     <string id="shdw_q2_s2_log" text="You defeated the hired assassins and survived. Find {KatilKomutan_Link} waiting on the map and interrogate him." />
-    <string id="shdw_q2_s3_log" text="You learned that {YozlasmisLord_Link} was behind the assassination attempt and secured the evidence (Lord's Sealed Order). Now it's time to confront him." />
+    <string id="shdw_q2_s3_log" text="You learned that {YozlasmisLord_Link} was behind the assassination attempt and secured the evidence, the Lord's Sealed Order. Now it is time to confront him." />
     <string id="shdw_q2_s4_log" text="You rejected the lord's bribe. Now you must speak with {Hukumdar_Link} to prove his betrayal." />
     <string id="shdw_q2_s5a_log" text="You took a hefty hush money payment from the corrupt lord and covered up the incident. It might have been a dishonorable move, but your purse is quite full." />
     <string id="shdw_q2_s5b_log" text="Even at the cost of declaring war on a kingdom, you delivered your own justice with your sword. All of Calradia should fear your wrath!" />
@@ -164,6 +164,11 @@
     <string id="shdw_q2_katiller" text="Hired Assassins" />
     <string id="shdw_q2_komutan" text="Wounded Commander" />
     <string id="shdw_item_order" text="Lord's Sealed Order" />
+    <string id="shdw_q1_dlg_merchant_entry" text="I heard you were looking for capable blades regarding your disappearing caravans." />
+    <string id="shdw_q1_dlg_cete_entry" text="I am looking for the master of the city's alley operations. We need to talk." />
+    <string id="shdw_q1_dlg_santaj_entry" text="We need to discuss your debts and your business with the syndicate." />
+    <string id="shdw_q2_dlg_lord_player_entry" text="We have unfinished business regarding your hired cutthroats, my lord." />
+    <string id="shdw_q2_dlg_huk_player_entry" text="My liege, I bring urgent evidence concerning high treason within your court." />
 
   </strings>
 </base>

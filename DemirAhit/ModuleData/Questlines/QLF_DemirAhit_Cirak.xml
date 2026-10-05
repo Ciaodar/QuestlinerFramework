@@ -10,6 +10,7 @@
 
   <Prerequisites>
     <Condition Type="ClanTier" Amount="2" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_DemirAhit_Cirak" Amount="1" />
     <Condition Type="!GlobalFlag" ObjectId="DemirAhit_Baslatildi" Amount="1" />
   </Prerequisites>
 
@@ -397,10 +398,6 @@
       <Conditions />
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Demirci_Teslim_Ertele" TargetAlias="EfsaneviDemirci" InputToken="ql_da_teslim_t2" OutputToken="close_window">
-      <Text>{=da_cirak_teslim_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
-
     <!-- Turn 4: Smith explains the metallurgy of the sacred folding -->
     <DialogNode Type="Npc" Id="Demirci_Teslim_Lore_Hurmet" TargetAlias="EfsaneviDemirci" InputToken="ql_da_teslim_t3_hurmet" OutputToken="ql_da_teslim_t4">
       <Text>{=da_c1_teslim_npc_hurmet}A true apprentice of the covenant! Now watch closely: Star Iron requires celestial flux to bond with the iron core. A single mistimed hammer blow can shatter weeks of labor.</Text>
@@ -421,10 +418,6 @@
     <DialogNode Type="Player" Id="Demirci_Teslim_P_Basla" TargetAlias="EfsaneviDemirci" InputToken="ql_da_teslim_t4" OutputToken="ql_da_teslim_t5">
       <Text>{=da_c1_teslim_p_basla}Stoke the flames, master! Let the anvil ring and let the Covenant Sword be born!</Text>
       <Conditions />
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Demirci_Teslim_Ertele_2" TargetAlias="EfsaneviDemirci" InputToken="ql_da_teslim_t4" OutputToken="close_window">
-      <Text>{=da_cirak_teslim_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <!-- Turn 6: Final Blessing & Forging Begins -->

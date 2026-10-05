@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Questline Id="QLF_HainGuvercin" Title="{=sp_hg_title}Traitor Pigeon" TimeLimitInDays="30">
+  <Prerequisites>
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_HainGuvercin" Amount="1" />
+  </Prerequisites>
+
   <TargetResolvers>
     <Resolver Alias="looters" TargetType="MobileParty" Filters="BanditParty, Faction(looters)" Selector="Random" />
-    <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="Artisan" Selector="Random" IsOptional="true" />
+    <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="GlobalHero(SP_HainZanaatkar)" IsOptional="true" />
   </TargetResolvers>
 
   <Stages>

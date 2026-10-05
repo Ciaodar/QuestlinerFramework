@@ -56,6 +56,8 @@
     <string id="da_log_2_1" text="Grim tidings reach your camp: the master smith {EfsaneviDemirci_Link} has caught wind of an arson plot against his workshop, orchestrated by the vengeful merchant {RakipTuccar_Link}. Ride to his forge at once." />
     <string id="da_log_2_2A" text="You chose to stand vigilant over the workshop for 5 days. Keep your scouts posted and blades sharpened; the saboteurs will strike under cover of darkness." />
     <string id="da_sabotajci" text="Rival Workshop Saboteurs" />
+    <string id="da_sabotajcilar_dlg_intro" text="The merchant paid us well to turn that forge to ash! Step aside, or burn with the anvil!" />
+    <string id="da_sabotajcilar_p_savas" text="The only thing turning to ash tonight is your band of arsonists. Draw!" />
     <string id="da_log_2_2A_savas" text="Torches pierce the night! The rival saboteurs have assaulted the workshop perimeter. Crush them before the bellows are put to the torch!" />
     <string id="da_log_2_2B" text="Rather than wait for flames to rise, you decided to sever the snake's head. Track down {RakipTuccar_Link} and put an end to this conspiracy." />
     <string id="da_log_2_2B_savas" text="{RakipTuccar_Link} refused to back down and unleashed his hired bodyguards upon you. Cut them down to assert your clan's will." />
@@ -74,6 +76,8 @@
     <string id="da_kalfa_t_p3" text="Words are wasted on treacherous vultures like you. Call your mercenaries, and let steel decide who governs this land!" />
     <string id="da_kalfa_dlg_4" text="Insolent dog! Guards, seize this meddler and toss their corpse into the gutters!" />
     <string id="da_koruma" text="Merchant Guards" />
+    <string id="da_korumalar_dlg_intro" text="Our master wants your head on a pike! Cut them down!" />
+    <string id="da_korumalar_p_savas" text="Your master's gold cannot save you from righteous steel. To arms!" />
     <string id="da_kalfa_takip_ertele" text="I cannot deal with this right now. We will speak later." />
 
     <!-- Quest 3: Master's Burden (QLF_DemirAhit_Usta) -->
@@ -93,6 +97,8 @@
     <string id="da_kalan_p2" text="There is no slipping past them quietly. Ready your fists or seize a torch; we carve our way to the gate!" />
     <string id="da_kalan_dlg_3" text="Alarms in the keep! The garrison has spotted us! Stand fast!" />
     <string id="da_muhafiz" text="Garrison Guards" />
+    <string id="da_muhafizlar_dlg_intro" text="Dungeon breach! The prisoner is escaping! Cut down the intruders!" />
+    <string id="da_muhafizlar_p_savas" text="Master Kalan walks free today! Stand aside or be cut down!" />
     <string id="da_usta_kalan_ertele" text="I cannot deal with this right now. We will speak later." />
 
     <!-- Quest 4: Forging the Legacy (QLF_DemirAhit_Miras) -->

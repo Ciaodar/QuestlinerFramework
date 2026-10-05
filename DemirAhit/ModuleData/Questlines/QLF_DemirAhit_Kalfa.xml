@@ -7,6 +7,8 @@
 
   <Prerequisites>
     <Condition Type="ClanTier" Amount="3" />
+    <Condition Type="IsQuestCompleted" ObjectId="QLF_DemirAhit_Cirak" Amount="1" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_DemirAhit_Kalfa" Amount="1" />
     <Condition Type="GlobalFlag" ObjectId="DemirAhit1_Basarili" Amount="1" />
     <Condition Type="!GlobalFlag" ObjectId="DemirAhit2_Baslatildi" Amount="1" />
   </Prerequisites>
@@ -32,7 +34,7 @@
       <OnEnterActions />
       <OnExitActions />
       <OnTimeoutActions>
-        <Action Type="SpawnBanditParty" TargetAlias="Sabotajcilar" Amount="60" PartyTemplateId="looters_template" SpawnDistance="1" SpawnRadius="3" StringValue="{=da_sabotajci}Rival Workshop Saboteurs" />
+        <Action Type="SpawnBanditParty" TargetAlias="Sabotajcilar" Amount="60" PartyTemplateId="mercenary_template" SpawnDistance="1" SpawnRadius="3" StringValue="{=da_sabotajci}Rival Workshop Saboteurs" />
         <Action Type="SetPartyAi" TargetAlias="Sabotajcilar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2A_Savas" />
       </OnTimeoutActions>
@@ -323,6 +325,32 @@
         <Action Type="ChangeStage" ObjectId="Stage2B_Savas" />
         <Action Type="LeaveEncounter" />
       </Consequences>
+    </DialogNode>
+
+    <!-- Saboteurs Hostile Encounter (Stage 2A: Defense) -->
+    <DialogNode Type="Npc" Id="Sabotajcilar_Giris" TargetAlias="Sabotajcilar" InputToken="start" OutputToken="ql_da_sabotajci_secim" Priority="200">
+      <Text>{=da_sabotajcilar_dlg_intro}The merchant paid us well to turn that forge to ash! Step aside, or burn with the anvil!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2A_Savas" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Sabotajcilar_Savas" TargetAlias="Sabotajcilar" InputToken="ql_da_sabotajci_secim" OutputToken="close_window">
+      <Text>{=da_sabotajcilar_p_savas}The only thing turning to ash tonight is your band of arsonists. Draw!</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Merchant Guards Hostile Encounter (Stage 2B: Retaliation) -->
+    <DialogNode Type="Npc" Id="Korumalar_Giris" TargetAlias="Korumalar" InputToken="start" OutputToken="ql_da_koruma_secim" Priority="200">
+      <Text>{=da_korumalar_dlg_intro}Our master wants your head on a pike! Cut them down!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2B_Savas" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Korumalar_Savas" TargetAlias="Korumalar" InputToken="ql_da_koruma_secim" OutputToken="close_window">
+      <Text>{=da_korumalar_p_savas}Your master's gold cannot save you from righteous steel. To arms!</Text>
+      <Conditions />
     </DialogNode>
   </CustomDialogs>
 </Questline>

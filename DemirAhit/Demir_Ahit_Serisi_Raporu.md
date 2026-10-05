@@ -54,7 +54,7 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 ## 1. Görev Zinciri Detayları
 
 ### Görev 1: Çırağın Yemini (QLF_DemirAhit_Cirak / Apprentice's Oath)
-- **Önkoşul:** `ClanTier >= 2` ve `!GlobalFlag(DemirAhit_Baslatildi)`
+- **Önkoşul:** `ClanTier >= 2`, `!IsQuestCompleted(QLF_DemirAhit_Cirak)` ve `!GlobalFlag(DemirAhit_Baslatildi)`
 - **Süre Sınırı:** 45 Gün
 - **Hedefler:**
   - `DemirciSehri` (`TargetType="Settlement" Filters="Town" Selector="Nearest"`)
@@ -66,7 +66,7 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
   1. **Davet (Stage1_Davet):** Oyuncunun şanı demircinin kulağına gider. Demirci klan kılıcını yenilemeyi teklif eder. 5 parça Yıldız Demiri (`YildizDemiri`) ister.
   2. **Kestirme Yol:** Demirciyle konuşurken sabırsız oyuncular için 10.000 altın ödeyerek ustanın arkasındaki dövülmüş kılıcı satın alma seçeneği (`Demirci_Teklif_Kestirme`, `ShowWhenDisabled="true"` ve `DisabledHint` ile).
   3. **Yıldız Demiri Tedariki (Stage1_Toplama):** Demirci, oyuncuyu maden ocağının bulunduğu `{HammadeKaynagi_Link}` köyüne ve köy büyüğü `{KoyMuhtari_Link}`'na yönlendirir. Oyuncu köye vardığında muhtar, madenlerin `{RakipTuccar_Link}`'ın kiraladığı haydutlar tarafından çalındığını söyler:
-     - **Yol A (Savaş ve Ganimet):** Muhtarın yönlendirmesiyle 30 kişilik `KiralikKatiller` pususuna saldırılır. Zafer sonrası (`Stage2_Pusu`), 5 adet `YildizDemiri` ganimet olarak heybeye eklenir (`GiveItem Amount="5"`).
+     - **Yol A (Savaş ve Ganimet):** Muhtarın yönlendirmesiyle 30 kişilik `KiralikKatiller` (`sea_raiders_template`) pususuna saldırılır. Karşılaşma diyaloğunun ardından zafer sonrası (`Stage2_Pusu`), 5 adet `YildizDemiri` ganimet olarak heybeye eklenir (`GiveItem Amount="5"`).
      - **Yol B (Köy Ambarından Satın Alma):** Muhtara madencilerin zararını karşılamak için 2.000 altın ödenerek ocak mahzenindeki 5 adet yedek Yıldız Demiri doğrudan satın alınır (`ShowWhenDisabled="true"`, `DisabledHint`).
      - **Yol C (Zaman Aşımı Pususu):** Oyuncu 3 gün içinde muhtarla görüşmezse haydutlar açık haritada oyuncuya doğrudan pusu kurar. Zaferde yine madenler ele geçirilir.
   4. **Teslimat ve Başarı (Stage3_Teslim & Stage3_Basari_Normal):** 5 adet Yıldız Demiri `{EfsaneviDemirci_Link}`'e teslim edilir. Diyalog sonucunda doğrudan `Stage3_Basari_Normal` aşamasına geçilir (`IsSuccessNode="true"`). Demirci madenleri alıp (`TakeItem Amount="5"`), oyuncuya `GeciciAhitKilici`, +50 Renown ve +15 İlişki verir. `DemirAhit1_Basarili=1` bayrağı set edilir ve görev başarıyla noktalanır.
@@ -74,24 +74,24 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 ---
 
 ### Görev 2: Kalfa Sınavı (QLF_DemirAhit_Kalfa / Journeyman's Trial)
-- **Önkoşul:** `ClanTier >= 3` ve `GlobalFlag(DemirAhit1_Basarili) == 1`
+- **Önkoşul:** `ClanTier >= 3`, `IsQuestCompleted(QLF_DemirAhit_Cirak)`, `!IsQuestCompleted(QLF_DemirAhit_Kalfa)` ve `GlobalFlag(DemirAhit1_Basarili) == 1`
 - **Süre Sınırı:** 60 Gün
 - **Hedefler:**
   - `EfsaneviDemirci` (`GlobalHero(DemirAhit_AnaDemirci)`)
   - `RakipTuccar` (`GlobalHero(DemirAhit_RakipTuccar)`)
 - **Akış ve Aşamalar:**
   1. **Uyarı (Stage1_Uyari):** Demirci, rakip tüccarın atölyeyi ateşe vermek üzere kundakçılar tuttuğunu bildirir.
-  2. **Yol A - Nöbet (Stage2A_Nobet & Stage2A_Savas):** Atölye çevresinde 5 gün nöbet tutulur. Gece vakti saldıran 60 kişilik `Sabotajcilar` grubu savaşta püskürtülür.
+  2. **Yol A - Nöbet (Stage2A_Nobet & Stage2A_Savas):** Atölye çevresinde 5 gün nöbet tutulur. Gece vakti saldıran 60 kişilik `Sabotajcilar` grubu (`mercenary_template`) özel karşılaşma diyaloğunun ardından savaşta püskürtülür.
   3. **Yol B - Yüzleşme (Stage2B_Takip & Stage2B_Savas):** Tüccar ile doğrudan yüzleşilir:
      - *Rüşvet:* 2.000 altın ödenerek kalleşliğe son verdirilir (`ShowWhenDisabled="true"`).
      - *Tehdit:* `SkillCheck(Roguery, 50)` ile tüccar korkutulur (`ShowWhenDisabled="true"`).
-     - *Savaş:* 40 kişilik paralı asker grubu (`Korumalar`) darmadağın edilir.
+     - *Savaş:* 40 kişilik paralı asker grubu (`Korumalar`, `mercenary_template`) özel karşılaşma diyaloğunun ardından darmadağın edilir.
   4. **Başarı (Stage3_Basari):** Demirci oyuncuya `KalfaMuhru` takdim eder, +10 İlişki ve +30 Renown kazanılır. `DemirAhit2_Basarili=1` set edilir.
 
 ---
 
 ### Görev 3: Ustanın Yükü (QLF_DemirAhit_Usta / Master's Burden)
-- **Önkoşul:** `ClanTier >= 4` ve `GlobalFlag(DemirAhit2_Basarili) == 1`
+- **Önkoşul:** `ClanTier >= 4`, `IsQuestCompleted(QLF_DemirAhit_Kalfa)`, `!IsQuestCompleted(QLF_DemirAhit_Usta)` ve `GlobalFlag(DemirAhit2_Basarili) == 1`
 - **Süre Sınırı:** 90 Gün
 - **Hedefler:**
   - `EfsaneviDemirci` (`GlobalHero(DemirAhit_AnaDemirci)`)
@@ -101,13 +101,13 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
   1. **Haber (Stage1_Haber):** Demircinin kardeşi Kalan, kadim su verme tuzlarını taşırken esir düşmüştür.
   2. **Kurtarma (Stage2_Kurtarma):** Oyuncu kaleyi kuşatabilir, fidye ödeyebilir veya zindana sızabilir:
      - *Gizli Sızma:* `SkillCheck(Roguery, 80)` ile nöbetçiler sessizce atlatılır (`ShowWhenDisabled="true"`). Başarılı sızma doğrudan `Stage3_Zafer`'e ulaştırır.
-     - *Açık Savaş:* Zindanda yakalanılırsa 150 kişilik kale garnizonu (`GarnizonMuhafizlari`) ile savaşılır.
+     - *Açık Savaş:* Zindanda yakalanılırsa 150 kişilik kale garnizonu (`GarnizonMuhafizlari`, `deserters_template`) özel karşılaşma diyaloğunun ardından savaşılır.
   3. **Zafer (Stage3_Zafer):** Kalan kurtarıldığında (`!TargetIsPrisoner`) görev tamamlanır; Kalan hafızaya alınır (`DemirAhit_Kalan`). +20 Demirci İlişkisi, +20 Kalan İlişkisi, +30 Renown. `DemirAhit3_Basarili=1` set edilir.
 
 ---
 
 ### Görev 4: Mirasın Dövülüşü (QLF_DemirAhit_Miras / Forging the Legacy)
-- **Önkoşul:** `ClanTier >= 5` ve `GlobalFlag(DemirAhit3_Basarili) == 1`
+- **Önkoşul:** `ClanTier >= 5`, `IsQuestCompleted(QLF_DemirAhit_Usta)`, `!IsQuestCompleted(QLF_DemirAhit_Miras)` ve `GlobalFlag(DemirAhit3_Basarili) == 1`
 - **Süre Sınırı:** 60 Gün
 - **Hedefler:**
   - `EfsaneviDemirci` (`GlobalHero(DemirAhit_AnaDemirci)`)

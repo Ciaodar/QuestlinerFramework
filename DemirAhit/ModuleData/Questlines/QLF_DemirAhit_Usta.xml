@@ -8,6 +8,8 @@
 
   <Prerequisites>
     <Condition Type="ClanTier" Amount="4" />
+    <Condition Type="IsQuestCompleted" ObjectId="QLF_DemirAhit_Kalfa" Amount="1" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_DemirAhit_Usta" Amount="1" />
     <Condition Type="GlobalFlag" ObjectId="DemirAhit2_Basarili" Amount="1" />
     <Condition Type="!GlobalFlag" ObjectId="DemirAhit3_Baslatildi" Amount="1" />
   </Prerequisites>
@@ -263,11 +265,24 @@
     <DialogNode Type="Npc" Id="Kalan_Sizma_Basarisiz_Cevap" TargetAlias="Kalan" InputToken="ql_da_kalan_yakalanma" OutputToken="close_window">
       <Text>{=da_kalan_dlg_3}Alarms in the keep! The garrison has spotted us! Stand fast!</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="GarnizonMuhafizlari" Amount="150" PartyTemplateId="looters_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_muhafiz}Garrison Guards" />
+        <Action Type="SpawnBanditParty" TargetAlias="GarnizonMuhafizlari" Amount="150" PartyTemplateId="deserters_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_muhafiz}Garrison Guards" />
         <Action Type="SetPartyAi" TargetAlias="GarnizonMuhafizlari" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2B_Savunma" />
         <Action Type="LeaveEncounter" />
       </Consequences>
+    </DialogNode>
+
+    <!-- Garrison Guards Hostile Encounter (Stage 2B: Alarm / Defense) -->
+    <DialogNode Type="Npc" Id="Muhafizlar_Giris" TargetAlias="GarnizonMuhafizlari" InputToken="start" OutputToken="ql_da_muhafizlar_secim" Priority="200">
+      <Text>{=da_muhafizlar_dlg_intro}Dungeon breach! The prisoner is escaping! Cut down the intruders!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2B_Savunma" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="Muhafizlar_Savas" TargetAlias="GarnizonMuhafizlari" InputToken="ql_da_muhafizlar_secim" OutputToken="close_window">
+      <Text>{=da_muhafizlar_p_savas}Master Kalan walks free today! Stand aside or be cut down!</Text>
+      <Conditions />
     </DialogNode>
   </CustomDialogs>
 </Questline>

@@ -8,6 +8,8 @@
 
   <Prerequisites>
     <Condition Type="ClanTier" Amount="5" />
+    <Condition Type="IsQuestCompleted" ObjectId="QLF_DemirAhit_Usta" Amount="1" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_DemirAhit_Miras" Amount="1" />
     <Condition Type="GlobalFlag" ObjectId="DemirAhit3_Basarili" Amount="1" />
     <Condition Type="!GlobalFlag" ObjectId="DemirAhit4_Baslatildi" Amount="1" />
   </Prerequisites>

@@ -3,6 +3,8 @@
   
   <Prerequisites>
     <Condition Type="ClanTier" Amount="2" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_YaDogruysa" Amount="1" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_ItibarDersi" Amount="1" />
   </Prerequisites>
   
   <TargetResolvers>

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Questline Id="QLF_AnavataninIhaneti" Title="{=sp_ai_title}Treason of the Motherland" TimeLimitInDays="60">
+  <Prerequisites>
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_AnavataninIhaneti" Amount="1" />
+  </Prerequisites>
+
   <TargetResolvers>
     <Resolver Alias="KoyBuyugu" TargetType="Hero" Filters="SameCultureAsPlayer, RuralNotable, !Target(Dost)" Selector="Nearest" />
     <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
@@ -16,6 +20,7 @@
       </Conditions>
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
+        <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
       </OnEnterActions>
     </Stage>
 
@@ -24,6 +29,7 @@
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="ArtisanTarget" />
+        <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
       </OnEnterActions>
     </Stage>
 

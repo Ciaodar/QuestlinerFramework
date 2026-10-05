@@ -3,6 +3,7 @@
 
   <Prerequisites>
     <Condition Type="IsQuestCompleted" ObjectId="QLF_AnavataninIhaneti" Amount="1" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_KopukBaglar" Amount="1" />
   </Prerequisites>
 
   <Triggers>
@@ -62,9 +63,9 @@
       </OnTimeoutActions>
     </Stage>
 
-    <!-- ROTA B: Haini Öldürürsen (Dost'a Sadakat & 4 Mevsim) -->
+    <!-- ROTA B: Haini Öldürürsen (Sadakat & 4 Mevsim) -->
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_kb_success_log}You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost.Name}. Impressed by your unwavering devotion, Dost welcomed you into the deeper ranks of the realm's shadow service, promising to call upon you for four seasons of service.</LogText>
+      <LogText>{=sp_kb_success_log}You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost.Name}. Impressed by your unwavering devotion, your old contact welcomed you into the deeper ranks of the realm's shadow service, promising to call upon you for four seasons of service.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="KillHero" TargetAlias="HainZanaatkar" />
@@ -78,7 +79,7 @@
 
     <!-- ROTA A: Haini Öldürmezsen (Rüşvet Al / Kaçmasına İzin Ver) -->
     <Stage Id="StageYozlasma" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_kb_yozlasma_log}You accepted the artisan's bribe and allowed {HainZanaatkar_Link} to vanish into the wilderness. You gained 25,000 gold and the Pigeon's Secret Dagger. Moments later, a dying black pigeon delivered the artisan's final cryptic message: Dost is playing everyone; The Black Ledger (The Black Ledger) hidden in the ciphers will burn Calradia. The hunt for the truth has begun!</LogText>
+      <LogText>{=sp_kb_yozlasma_log}You accepted the artisan's bribe and allowed {HainZanaatkar_Link} to vanish into the wilderness. You gained 25,000 gold and the Pigeon's Secret Dagger. Moments later, a dying black pigeon delivered the artisan's final cryptic message: {Dost.Name} is playing everyone; the Black Ledger hidden in the ciphers will burn Calradia. The hunt for the truth has begun!</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeFugitive" TargetAlias="HainZanaatkar" />
@@ -86,7 +87,6 @@
         <Action Type="ChangeRenown" Amount="20" />
         <Action Type="ChangeCrimeRating" Amount="25" />
         <Action Type="GiveItem" ObjectId="pigeon_secret_dagger" Amount="1" />
-        <Action Type="StartQuest" ObjectId="QLF_KaranlikAg" />
       </OnEnterActions>
     </Stage>
 
@@ -123,9 +123,9 @@
       <Text>{=sp_kb_dlg_tone_prag}Enough hand-wringing. What did he take, and what is the bounty on his head?</Text>
     </DialogNode>
 
-    <!-- Tur 2: Dost Arka Plani ve Tehlikeyi Aciklar -->
+    <!-- Tur 2: Arka Plani ve Tehlikeyi Aciklar -->
     <DialogNode Type="Npc" Id="KB_Dost_A2" TargetAlias="Dost" InputToken="ql_kb_dost_a2" OutputToken="ql_kb_dost_step2_choices">
-      <Text>{=sp_kb_dlg_dost_leak}He held the master cipher archive—the true identities of every operative we planted across all kingdoms! Before dawn, he murdered two keepers and slipped through the gates. If he delivers those scrolls to the enemy, hundreds of our people will be rounded up and executed.</Text>
+      <Text>{=sp_kb_dlg_dost_leak}He held the master cipher archive, the true identities of every operative we planted across all kingdoms! Before dawn, he murdered two keepers and slipped through the gates. If he delivers those scrolls to the enemy, hundreds of our people will be rounded up and executed.</Text>
     </DialogNode>
 
     <!-- Tur 3: Oyuncu Riskleri ve Baglari Sorgular -->
@@ -136,9 +136,9 @@
       <Text>{=sp_kb_dlg_p2_motive}He spent decades serving the Pigeons. What could possibly drive an elder craftsman to such reckless treachery?</Text>
     </DialogNode>
 
-    <!-- Tur 4: Dost Planin ve Dusman Birliklerinin Detayini Verir -->
+    <!-- Tur 4: Planin ve Dusman Birliklerinin Detayini Verir -->
     <DialogNode Type="Npc" Id="KB_Dost_A3" TargetAlias="Dost" InputToken="ql_kb_dost_a3" OutputToken="ql_kb_dost_step3_choices">
-      <Text>{=sp_kb_dlg_dost_army}Gold, fear, and paranoia! He claims our society has become too powerful and orchestrates false wars. But he is a hypocrite—he hired 70 battle-hardened deserters disguised as common looters to guard his escape. He is marching toward the border passes right now.</Text>
+      <Text>{=sp_kb_dlg_dost_army}Gold, fear, and paranoia! He claims our society has become too powerful and orchestrates false wars. But he is a hypocrite, he hired 70 battle-hardened deserters disguised as common looters to guard his escape. He is marching toward the border passes right now.</Text>
     </DialogNode>
 
     <!-- Tur 5: Oyuncu Stratejiyi Tartar -->
@@ -149,7 +149,7 @@
       <Text>{=sp_kb_dlg_p3_force}Let him hire a thousand cutthroats. My blade will cut through his vanguard like straw. Where do I strike?</Text>
     </DialogNode>
 
-    <!-- Tur 6: Dost Taktigi Belirler -->
+    <!-- Tur 6: Taktigi Belirler -->
     <DialogNode Type="Npc" Id="KB_Dost_A4" TargetAlias="Dost" InputToken="ql_kb_dost_a4" OutputToken="ql_kb_dost_step4_choices">
       <Text>{=sp_kb_dlg_dost_tactics}He deployed three decoy looter bands across the foothills to confuse our tracking hounds. Intercept and destroy those three decoy parties. Once his decoys are crushed, his main convoy will lose its screen and be forced to face you in the open.</Text>
     </DialogNode>
@@ -159,16 +159,21 @@
       <Text>{=sp_kb_dlg_p4_acc}Consider it done, friend. I will bring back the master ciphers and end this treason. (Accept Hunt)</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Av" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
     <DialogNode Type="Player" Id="KB_Dost_P4_Prag" TargetAlias="Dost" InputToken="ql_kb_dost_step4_choices" OutputToken="close_window">
       <Text>{=sp_kb_dlg_p4_prag}I will ride him down. But make sure the Motherland remembers who saved her throat today. (Accept Hunt)</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Av" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
-    <DialogNode Type="Player" Id="KB_Dost_P4_Ertele" TargetAlias="Dost" InputToken="ql_kb_dost_step4_choices" OutputToken="close_window">
+    <DialogNode Type="Player" Id="KB_Dost_P4_Ertele" TargetAlias="Dost" InputToken="ql_kb_dost_step4_choices" OutputToken="hero_main_options">
       <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
+      <Consequences>
+        <Action Type="LeaveEncounter" />
+      </Consequences>
     </DialogNode>
 
 
@@ -206,7 +211,7 @@
 
     <!-- Adim 4: Zanaatkar Kara Kutuk ve Sahte Savaslari Ifsa Eder -->
     <DialogNode Type="Npc" Id="KB_Konvoy_A3" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_a3" OutputToken="ql_kb_konvoy_step3_choices">
-      <Text>{=sp_kb_dlg_k_ledger_reveal}Defense archives? Lies! These ciphers contain the 'Black Ledger' (Kara Kütük)—the secret record of every false-flag raid {Dost.Name} orchestrated! He hires deserters to slaughter frontier villages under rival banners, forcing kings into wars so the Pigeons can sell protection and intelligence at extortionate prices!</Text>
+      <Text>{=sp_kb_dlg_k_ledger_reveal}Defense archives? Lies! These ciphers contain the Black Ledger, the secret record of every false-flag raid {Dost.Name} orchestrated! He hires deserters to slaughter frontier villages under rival banners, forcing kings into wars so the Pigeons can sell protection and intelligence at extortionate prices!</Text>
     </DialogNode>
 
     <!-- Adim 5: Oyuncu Ikilemi Tartar -->

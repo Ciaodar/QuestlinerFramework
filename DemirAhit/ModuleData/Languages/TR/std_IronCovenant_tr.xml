@@ -56,12 +56,14 @@
     <string id="da_log_2_1" text="Kara haber tez ulaştı: Usta demirci {EfsaneviDemirci_Link}, intikam peşindeki tüccar {RakipTuccar_Link} tarafından atölyesine gece kundaklaması planlandığını öğrendi. Derhal ustanın atölyesine git." />
     <string id="da_log_2_2A" text="Atölyeyi korumak için 5 gün boyunca köyde nöbet tutmayı seçtin. Gözcülerini uyanık, kılıçlarını keskin tut; sabotajcılar gecenin zifiri karanlığında saldıracak." />
     <string id="da_sabotajci" text="Rakip Atölye Sabotajcıları" />
+    <string id="da_sabotajcilar_dlg_intro" text="Tüccar bu ocağı küle çevirmemiz için bize bir servet ödedi! Çekil önümüzden, yoksa örsle birlikte yanarsın!" />
+    <string id="da_sabotajcilar_p_savas" text="Bu gece küle dönecek tek şey sizin kundakçı çeteniz. Çekin pusatları!" />
     <string id="da_log_2_2A_savas" text="Meşaleler geceyi yardı! Sabotajcılar atölye sınırına saldırdı. Körükler ateşe verilmeden önce hepsini bertaraf et!" />
     <string id="da_log_2_2B" text="Alevlerin yükselmesini beklemek yerine yılanın başını kaynağında ezmeye karar verdin. {RakipTuccar_Link} denen harisi bul ve bu kalleşliğe son ver." />
     <string id="da_log_2_2B_savas" text="{RakipTuccar_Link} geri adım atmayı reddetti ve kiralık muhafızlarını üzerine saldı. Klanının kudretini göstermek için onları savaşta yere ser." />
     <string id="da_log_2_3" text="Ocak dimdik ayakta kaldı! Gösterdiğin sarsılmaz sadakat ve savaş ustalığının nişanesi olarak {EfsaneviDemirci_Link} sana Kalfa Mührü'nü takdim etti." />
     <string id="da_kalfa_p_giris" text="Kötü dedikodular duydum usta, ocağına ne musallat oldu?" />
-    <string id="da_kalfa_dlg_1" text="Örsün üzerine kara bir gölge düştü dostum. {RakipTuccar_Link}, atölyemi yerle bir etmek için haydutlar ve kundakçılar toplamış. Ateş sönerse kılıç asla tamamlanamaz. Bu şerri nasıl defedeceğiz?" />
+    <string id="da_kalfa_dlg_1" text="Örsün üzerine kara bir gölge düştü yoldaşım. {RakipTuccar_Link}, atölyemi yerle bir etmek için haydutlar ve kundakçılar toplamış. Ateş sönerse kılıç asla tamamlanamaz. Bu şerri nasıl defedeceğiz?" />
     <string id="da_kalfa_p1" text="Köyde kalıp nöbet tutacağım, tek bir kundakçı dahi ocağın yakınına nefes alamayacak." />
     <string id="da_kalfa_p2" text="Savunmada kalmak zaaf doğurur. Doğrudan {RakipTuccar_Link} karşısına dikilip meşaleler yakılmadan hesabını göreceğim." />
     <string id="da_kalfa_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
@@ -74,6 +76,8 @@
     <string id="da_kalfa_t_p3" text="Senin gibi kalleş akbabalara söz kâr etmez. Çağır adamlarını; bu topraklarda kimin hükmünün geçeceğine çelik karar versin!" />
     <string id="da_kalfa_dlg_4" text="Hadsiz küstah! Muhafızlar, paralayın şunu ve leşini hendeğe atın!" />
     <string id="da_koruma" text="Tüccar Korumaları" />
+    <string id="da_korumalar_dlg_intro" text="Efendimiz bu hadsizin kellesini istiyor! Parçalayın şunları!" />
+    <string id="da_korumalar_p_savas" text="Efendinizin altını sizi kılıcımdan koruyamaz. Hücum!" />
     <string id="da_kalfa_takip_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
 
     <!-- Görev 3: Ustanın Yükü (QLF_DemirAhit_Usta) -->
@@ -89,10 +93,12 @@
     <string id="da_kalan_p_giris" text="Sessiz ol usta, sesini alçalt. Ağabeyinin yeminiyle zincirlerini kırmaya geldim." />
     <string id="da_kalan_dlg_1" text="Ağabeyim mi yolladı seni? Şükürler olsun ata tanrılarına! Lakin demir parmaklıklar kapalı ve muhafızlar her çanda avluda devriye geziyor. Buradan nasıl sağ çıkacağız?" />
     <string id="da_kalan_p1" text="Adımlarımı takip et ve yalnızca meşaleler döndüğünde ilerle. Bütün devriye nöbetlerini ezberledim. [Serserilik]" />
-    <string id="da_kalan_dlg_2" text="Taşların arasından süzülen bir hayalet gibi... Yolu göster dostum, yeni nöbetçiler gelmeden çıkalım!" />
+    <string id="da_kalan_dlg_2" text="Taşların arasından süzülen bir hayalet gibi... Yolu göster yoldaşım, yeni nöbetçiler gelmeden çıkalım!" />
     <string id="da_kalan_p2" text="Buradan sessizce sıyrılamayız. Kılıcını çek ya da bir meşale kap; kapıya kadar kanla yolumuzu açacağız!" />
     <string id="da_kalan_dlg_3" text="Kalede alarmlar çalıyor! Muhafızlar bizi fark etti! Dayan!" />
     <string id="da_muhafiz" text="Garnizon Muhafızları" />
+    <string id="da_muhafizlar_dlg_intro" text="Zindan basıldı! Mahkum kaçıyor! İsyancıları biçin!" />
+    <string id="da_muhafizlar_p_savas" text="Usta Kalan bugün özgürlüğüne kavuşacak! Yolumuzdan çekilin ya da ölün!" />
     <string id="da_usta_kalan_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
 
     <!-- Görev 4: Mirasın Dövülüşü (QLF_DemirAhit_Miras) -->
@@ -230,12 +236,12 @@
     <string id="da_m4_p_sorgu_zaman" text="Potaları hazırlamak ve mavi alevi harlandırmak ne kadar sürer usta?" />
     <string id="da_m4_p_sorgu_kader" text="Kılıç ateşten çıktığında onun nihai kaderini tayin etme hakkı kimdedir?" />
     <string id="da_m4_npc_detay_zaman" text="Altınlar teslim edildiği an kardeşim Kalan ile tuzları karıştırmamız birkaç saat sürer. Kömürler şimdiden uğuldamaya başladı." />
-    <string id="da_m4_npc_detay_kader" text="Yalnızca senindir warlord! Bu kılıç senin soyunun kanıyla mühürlendi. İster kendi hanene miras kıl, ister hükümdarına sun, karar senin bileğindedir." />
+    <string id="da_m4_npc_detay_kader" text="Yalnızca senindir yiğit! Bu kılıç senin soyunun kanıyla mühürlendi. İster kendi hanene miras kıl, ister hükümdarına sun, karar senin bileğindedir." />
     <string id="da_m4_k_p_sorgu_bilek" text="Hakiki hükümranlık tahtlardan ve taçlardan mı doğar, yoksa çeliği tutan bileğin kudretinden mi?" />
     <string id="da_m4_k_npc_lore_bilek" text="Tahtlar yıkılır, taçlar paslanır ama efsanevi çelik baki kalır. Kılıcı ister sancağına bağla ister kralına sun; ona ruhunu veren taşıyanın şerefidir." />
     <string id="da_m4_k_p_sorgu_ustagorus" text="Peki senin gönlünden ne geçer usta? Bu ocağın başında saçını ağartan bir zanaatkar olarak, bu kılıcın hangi elde parlamasını istersin?" />
     <string id="da_m4_k_npc_lore_ustagorus" text="Çeliğin kralı olmaz yiğit; o sadece kabzasını kavrayan iradeyi tanır. Benim çekicim vazifesini tamamladı; bu destanın son mısrasını yazmak sana aittir." />
-    <string id="da_m4_npc_sonuc_klan" text="Al o vakit, Ahdin Hakiki Varisi! Bu gök çeliği kalkanları bölsün, zırhları parçalasın ve ardıllarını Kalradya'nın efendisi yapsın! (Akkor kılıcı iki eliyle kaldırıp örsün üzerinde sana takdim eder) Şerefle kuşan warlord!" />
+    <string id="da_m4_npc_sonuc_klan" text="Al o vakit, Ahdin Hakiki Varisi! Bu gök çeliği kalkanları bölsün, zırhları parçalasın ve ardıllarını Kalradya'nın efendisi yapsın! (Akkor kılıcı iki eliyle kaldırıp örsün üzerinde sana takdim eder) Şerefle kuşan yiğit!" />
     <string id="da_m4_npc_sonuc_kral" text="Asil ve dirayetli bir karar! Bir imparatorun eline layık bir silah... (Kılıcı altın işlemeli kadife kınına yerleştirir ve hürmetle sana uzatır) Bunu Kral {IttifakKrali_Link}'e sun. Minneti yüz kış boyunca şarkılarda anılacaktır!" />
   </strings>
 </base>
