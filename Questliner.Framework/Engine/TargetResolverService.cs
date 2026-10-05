@@ -19,7 +19,29 @@ namespace Questliner.Framework.Engine
 
             if (!string.IsNullOrEmpty(model.SpecificId))
             {
+                if (model.SpecificId.StartsWith("GlobalHero(") && model.SpecificId.EndsWith(")"))
+                {
+                    var gKey = model.SpecificId.Substring(11, model.SpecificId.Length - 12).Trim();
+                    var gh = GlobalStateManager.Instance.GetGlobalHero(gKey);
+                    if (gh != null && gh.IsAlive) return gh;
+                }
                 return Hero.AllAliveHeroes.FirstOrDefault(h => h.StringId == model.SpecificId);
+            }
+
+            // Check if Filters explicitly requires an existing GlobalHero
+            if (!string.IsNullOrEmpty(model.Filters))
+            {
+                var globalFilter = model.Filters.Split(',').Select(f => f.Trim())
+                    .FirstOrDefault(f => !f.StartsWith("!") && f.StartsWith("GlobalHero(") && f.EndsWith(")"));
+                if (globalFilter != null)
+                {
+                    var gKey = globalFilter.Substring(11, globalFilter.Length - 12).Trim();
+                    var gh = GlobalStateManager.Instance.GetGlobalHero(gKey);
+                    if (gh != null && gh.IsAlive)
+                    {
+                        return gh;
+                    }
+                }
             }
 
             IEnumerable<Hero> candidates = Hero.AllAliveHeroes;
@@ -411,11 +433,32 @@ namespace Questliner.Framework.Engine
         {
             if (model.TargetType != "Hero") return false;
             if (hero == Hero.MainHero) return false;
-            if (!string.IsNullOrEmpty(model.SpecificId) && hero.StringId != model.SpecificId) return false;
+            if (!string.IsNullOrEmpty(model.SpecificId))
+            {
+                if (model.SpecificId.StartsWith("GlobalHero(") && model.SpecificId.EndsWith(")"))
+                {
+                    var gKey = model.SpecificId.Substring(11, model.SpecificId.Length - 12).Trim();
+                    var gh = GlobalStateManager.Instance.GetGlobalHero(gKey);
+                    return gh == hero;
+                }
+                if (hero.StringId != model.SpecificId) return false;
+            }
 
             // To check if a single hero matches the triggers, pass them through the filter pipeline!
             if (!string.IsNullOrEmpty(model.Filters))
             {
+                var globalFilter = model.Filters.Split(',').Select(f => f.Trim())
+                    .FirstOrDefault(f => !f.StartsWith("!") && f.StartsWith("GlobalHero(") && f.EndsWith(")"));
+                if (globalFilter != null)
+                {
+                    var gKey = globalFilter.Substring(11, globalFilter.Length - 12).Trim();
+                    var gh = GlobalStateManager.Instance.GetGlobalHero(gKey);
+                    if (gh != null)
+                    {
+                        return gh == hero;
+                    }
+                }
+
                 var filters = model.Filters.Split(',').Select(f => f.Trim());
                 foreach (var filter in filters)
                 {

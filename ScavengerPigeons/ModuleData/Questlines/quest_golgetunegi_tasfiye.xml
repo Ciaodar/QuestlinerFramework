@@ -3,6 +3,7 @@
 
   <Prerequisites>
     <Condition Type="IsQuestCompleted" ObjectId="QLF_GolgeTunegi_Cagri" Amount="1" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_GolgeTunegi_Tasfiye" Amount="1" />
   </Prerequisites>
 
   <Triggers>
@@ -19,7 +20,7 @@
 
   <Stages>
     <Stage Id="Stage1_Muhbir1" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_gt2_s1_log}The Shadow Roost demands all compromised channels severed. Track down the merchant informant {Muhbir1_Link} who funded Dost's black market network and silence him forever.</LogText>
+      <LogText>{=sp_gt2_s1_log}The Shadow Roost demands all compromised channels severed. Track down the merchant informant {Muhbir1_Link} who funded {Dost.Name}'s black market network and silence him forever.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="Muhbir1" />
@@ -143,7 +144,7 @@
 
     <!-- DOST ILE YUZLESME: 8 ADIMLI HESAPLASMA VE IKONIK DIALOG -->
     <DialogNode Type="Player" Id="GT2_Dost_Player" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_gt2_dost_a1" Priority="200">
-      <Text>{=sp_gt2_dlg6_p}We meet again, Dost. It seems our paths end here.</Text>
+      <Text>{=sp_gt2_dlg6_p}We meet again, {Dost.Name}. It seems our paths end here.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_DostYuzlesme" />
       </Conditions>
@@ -162,7 +163,7 @@
 
     <!-- Tur 1: Oyuncu Tepkisi -->
     <DialogNode Type="Player" Id="GT2_D_P1_Inq" TargetAlias="Dost" InputToken="ql_gt2_dost_step1_choices" OutputToken="ql_gt2_dost_a2">
-      <Text>{=sp_gt2_dlg_p1_inq}We were allies once, Dost. I served you through four seasons. How long have you been playing both sides?</Text>
+      <Text>{=sp_gt2_dlg_p1_inq}We were allies once, {Dost.Name}. I served you through four seasons. How long have you been playing both sides?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P1_Direct" TargetAlias="Dost" InputToken="ql_gt2_dost_step1_choices" OutputToken="ql_gt2_dost_a2">
       <Text>{=sp_gt2_dlg_p1_direct}I know about the Black Ledger and the manufactured wars. Your web of lies has unraveled.</Text>
@@ -174,12 +175,12 @@
       <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Tur 2: DOST'UN KULLANICI DİREKTİFİNDEKİ İKONİK REPLİĞİ -->
+    <!-- Tur 2: KULLANICI DIREKTIFINDEKI IKONIK REPLIK -->
     <DialogNode Type="Npc" Id="GT2_Dost_A2" TargetAlias="Dost" InputToken="ql_gt2_dost_a2" OutputToken="ql_gt2_dost_step2_choices">
       <Text>{=sp_gt2_dlg6_reply}Ever since you didn't kill that traitor, my eyes were upon you... You shall pay for your betrayal with your life!</Text>
     </DialogNode>
 
-    <!-- Tur 3: Oyuncu İhanetin Gerçek Yüzünü Ortaya Koyar -->
+    <!-- Tur 3: Oyuncu Ihanetin Gercek Yuzunu Ortaya Koyar -->
     <DialogNode Type="Player" Id="GT2_D_P2_Truth" TargetAlias="Dost" InputToken="ql_gt2_dost_step2_choices" OutputToken="ql_gt2_dost_a3">
       <Text>{=sp_gt2_dlg_p2_truth}You call sparing a courier treason? Treason was setting Calradia on fire so your Pigeons could sell the ashes!</Text>
     </DialogNode>
@@ -190,17 +191,17 @@
       <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Tur 4: Dost Devlet Aklını Savunur -->
+    <!-- Tur 4: Devlet Aklini Savunur -->
     <DialogNode Type="Npc" Id="GT2_Dost_A3" TargetAlias="Dost" InputToken="ql_gt2_dost_a3" OutputToken="ql_gt2_dost_step3_choices">
       <Text>{=sp_gt2_dlg_dost_statecraft}You fool... You understand nothing of statecraft! Kings and emperors are arrogant toddlers who would drown Calradia in blood for sport. The Pigeons control the flow of wars so the realm survives in balance! Without our guided hand, chaos would swallow everything!</Text>
     </DialogNode>
 
-    <!-- Tur 5: Oyuncunun Felsefi Karşı Çıkışı -->
+    <!-- Tur 5: Oyuncunun Felsefi Karsi Cikisi -->
     <DialogNode Type="Player" Id="GT2_D_P3_Heroic" TargetAlias="Dost" InputToken="ql_gt2_dost_step3_choices" OutputToken="ql_gt2_dost_a4">
-      <Text>{=sp_gt2_dlg_p3_heroic}Balance? You call slaughtering innocents balance?! You are not a protector, Dost—you are a cancer on the Motherland.</Text>
+      <Text>{=sp_gt2_dlg_p3_heroic}Balance? You call slaughtering innocents balance?! You are not a protector, {Dost.Name}, you are a cancer on the Motherland.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P3_Dark" TargetAlias="Dost" InputToken="ql_gt2_dost_step3_choices" OutputToken="ql_gt2_dost_a4">
-      <Text>{=sp_gt2_dlg7}You are weak, Dost. Your courts, your kings, and your lies only protect the weak. Pigeons do not soar in the skies, they feast above tombs.</Text>
+      <Text>{=sp_gt2_dlg7}You are weak, {Dost.Name}. Your courts, your kings, and your lies only protect the weak. Pigeons do not soar in the skies, they feast above tombs.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P3_Ertele" TargetAlias="Dost" InputToken="ql_gt2_dost_step3_choices" OutputToken="close_window">
       <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Helpers;
 using Questliner.Shared.Models;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Settlements;
@@ -103,41 +104,181 @@ namespace Questliner.Framework.Core
         public string GetString(string key) => TrackedStrings.TryGetValue(key, out var val) ? val : string.Empty;
         public void SetStringVariable(string key, string value) => TrackedStrings[key] = value;
 
+        public static void BindHeroToMBTextManager(string key, Hero hero)
+        {
+            if (string.IsNullOrEmpty(key) || hero == null) return;
+            var heroText = new TextObject(hero.Name.ToString());
+            heroText.SetTextVariable("Name", hero.Name);
+            heroText.SetTextVariable("NAME", hero.Name);
+            heroText.SetTextVariable("Link", hero.EncyclopediaLinkWithName);
+            heroText.SetTextVariable("LINK", hero.EncyclopediaLinkWithName);
+            heroText.SetTextVariable("Gender", hero.IsFemale ? 1 : 0);
+            heroText.SetTextVariable("GENDER", hero.IsFemale ? 1 : 0);
+
+            MBTextManager.SetTextVariable(key, heroText);
+            MBTextManager.SetTextVariable(key + ".Name", hero.Name);
+            MBTextManager.SetTextVariable(key + ".NAME", hero.Name);
+            MBTextManager.SetTextVariable(key + "_Name", hero.Name);
+            MBTextManager.SetTextVariable(key + "_Link", hero.EncyclopediaLinkWithName);
+            MBTextManager.SetTextVariable(key + "_LINK", hero.EncyclopediaLinkWithName);
+            if (hero.CharacterObject != null)
+            {
+                StringHelpers.SetCharacterProperties(key, hero.CharacterObject);
+            }
+        }
+
+        public static void BindSettlementToMBTextManager(string key, Settlement settlement)
+        {
+            if (string.IsNullOrEmpty(key) || settlement == null) return;
+            var settText = new TextObject(settlement.Name.ToString());
+            settText.SetTextVariable("Name", settlement.Name);
+            settText.SetTextVariable("NAME", settlement.Name);
+            settText.SetTextVariable("Link", settlement.EncyclopediaLinkWithName);
+            settText.SetTextVariable("LINK", settlement.EncyclopediaLinkWithName);
+
+            MBTextManager.SetTextVariable(key, settText);
+            MBTextManager.SetTextVariable(key + ".Name", settlement.Name);
+            MBTextManager.SetTextVariable(key + ".NAME", settlement.Name);
+            MBTextManager.SetTextVariable(key + "_Name", settlement.Name);
+            MBTextManager.SetTextVariable(key + "_Link", settlement.EncyclopediaLinkWithName);
+            MBTextManager.SetTextVariable(key + "_LINK", settlement.EncyclopediaLinkWithName);
+            StringHelpers.SetSettlementProperties(key, settlement);
+        }
+
+        public static void BindPartyToMBTextManager(string key, TaleWorlds.CampaignSystem.Party.MobileParty party)
+        {
+            if (string.IsNullOrEmpty(key) || party == null) return;
+            var partyText = new TextObject(party.Name.ToString());
+            partyText.SetTextVariable("Name", party.Name);
+            partyText.SetTextVariable("NAME", party.Name);
+            partyText.SetTextVariable("Link", party.Name);
+            partyText.SetTextVariable("LINK", party.Name);
+
+            MBTextManager.SetTextVariable(key, partyText);
+            MBTextManager.SetTextVariable(key + ".Name", party.Name);
+            MBTextManager.SetTextVariable(key + ".NAME", party.Name);
+            MBTextManager.SetTextVariable(key + "_Name", party.Name);
+            MBTextManager.SetTextVariable(key + "_Link", party.Name);
+            MBTextManager.SetTextVariable(key + "_LINK", party.Name);
+        }
+
+        public static void BindHeroToTextObject(TextObject textObject, string key, Hero hero)
+        {
+            if (textObject == null || string.IsNullOrEmpty(key) || hero == null) return;
+            var heroText = new TextObject(hero.Name.ToString());
+            heroText.SetTextVariable("Name", hero.Name);
+            heroText.SetTextVariable("NAME", hero.Name);
+            heroText.SetTextVariable("Link", hero.EncyclopediaLinkWithName);
+            heroText.SetTextVariable("LINK", hero.EncyclopediaLinkWithName);
+            heroText.SetTextVariable("Gender", hero.IsFemale ? 1 : 0);
+            heroText.SetTextVariable("GENDER", hero.IsFemale ? 1 : 0);
+
+            textObject.SetTextVariable(key, heroText);
+            textObject.SetTextVariable(key + ".Name", hero.Name);
+            textObject.SetTextVariable(key + ".NAME", hero.Name);
+            textObject.SetTextVariable(key + "_Name", hero.Name);
+            textObject.SetTextVariable(key + "_Link", hero.EncyclopediaLinkWithName);
+            textObject.SetTextVariable(key + "_LINK", hero.EncyclopediaLinkWithName);
+            if (hero.CharacterObject != null)
+            {
+                StringHelpers.SetCharacterProperties(key, hero.CharacterObject, textObject);
+            }
+        }
+
+        public static void BindSettlementToTextObject(TextObject textObject, string key, Settlement settlement)
+        {
+            if (textObject == null || string.IsNullOrEmpty(key) || settlement == null) return;
+            var settText = new TextObject(settlement.Name.ToString());
+            settText.SetTextVariable("Name", settlement.Name);
+            settText.SetTextVariable("NAME", settlement.Name);
+            settText.SetTextVariable("Link", settlement.EncyclopediaLinkWithName);
+            settText.SetTextVariable("LINK", settlement.EncyclopediaLinkWithName);
+
+            textObject.SetTextVariable(key, settText);
+            textObject.SetTextVariable(key + ".Name", settlement.Name);
+            textObject.SetTextVariable(key + ".NAME", settlement.Name);
+            textObject.SetTextVariable(key + "_Name", settlement.Name);
+            textObject.SetTextVariable(key + "_Link", settlement.EncyclopediaLinkWithName);
+            textObject.SetTextVariable(key + "_LINK", settlement.EncyclopediaLinkWithName);
+            StringHelpers.SetSettlementProperties(key, settlement, textObject);
+        }
+
+        public static void BindPartyToTextObject(TextObject textObject, string key, TaleWorlds.CampaignSystem.Party.MobileParty party)
+        {
+            if (textObject == null || string.IsNullOrEmpty(key) || party == null) return;
+            var partyText = new TextObject(party.Name.ToString());
+            partyText.SetTextVariable("Name", party.Name);
+            partyText.SetTextVariable("NAME", party.Name);
+            partyText.SetTextVariable("Link", party.Name);
+            partyText.SetTextVariable("LINK", party.Name);
+
+            textObject.SetTextVariable(key, partyText);
+            textObject.SetTextVariable(key + ".Name", party.Name);
+            textObject.SetTextVariable(key + ".NAME", party.Name);
+            textObject.SetTextVariable(key + "_Name", party.Name);
+            textObject.SetTextVariable(key + "_Link", party.Name);
+            textObject.SetTextVariable(key + "_LINK", party.Name);
+        }
+
         public void InjectVariablesToTextManager()
         {
+            // 1. Inject Global Heroes
+            if (GlobalStateManager.Instance.GlobalHeroes != null)
+            {
+                foreach (var kvp in GlobalStateManager.Instance.GlobalHeroes)
+                {
+                    if (kvp.Value != null)
+                    {
+                        BindHeroToMBTextManager(kvp.Key, kvp.Value);
+                    }
+                }
+            }
+
+            // 2. Inject Quest Target Heroes (overrides globals if duplicate key)
             foreach (var kvp in TargetHeroes)
             {
                 if (kvp.Value != null)
                 {
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                    BindHeroToMBTextManager(kvp.Key, kvp.Value);
                 }
             }
+
+            // 3. Inject Settlements
             foreach (var kvp in TargetSettlements)
             {
                 if (kvp.Value != null)
                 {
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                    BindSettlementToMBTextManager(kvp.Key, kvp.Value);
                 }
             }
+
+            // 4. Inject Mobile Parties
             foreach (var kvp in TargetParties)
             {
                 if (kvp.Value != null)
                 {
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key, kvp.Value.Name);
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key + "_Link", kvp.Value.Name);
+                    BindPartyToMBTextManager(kvp.Key, kvp.Value);
                 }
             }
+
+            // 5. Tracked Counters & Strings
             foreach (var kvp in TrackedCounters)
             {
-                TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key, kvp.Value);
+                MBTextManager.SetTextVariable(kvp.Key, kvp.Value);
             }
             foreach (var kvp in TrackedStrings)
             {
                 if (!string.IsNullOrEmpty(kvp.Value))
-                    TaleWorlds.Localization.MBTextManager.SetTextVariable(kvp.Key, new TaleWorlds.Localization.TextObject(kvp.Value));
+                    MBTextManager.SetTextVariable(kvp.Key, new TextObject(kvp.Value));
+            }
+
+            // 6. Main Hero / Player
+            if (Hero.MainHero != null)
+            {
+                BindHeroToMBTextManager("Player", Hero.MainHero);
+                BindHeroToMBTextManager("PLAYER", Hero.MainHero);
+                MBTextManager.SetTextVariable("PlayerName", Hero.MainHero.Name);
+                MBTextManager.SetTextVariable("PLAYER_NAME", Hero.MainHero.Name);
             }
         }
 
@@ -332,23 +473,36 @@ namespace Questliner.Framework.Core
                 {
                     TextObject parsedLogText = new TextObject(nextStageModel.LogText);
 
+                    if (GlobalStateManager.Instance.GlobalHeroes != null)
+                    {
+                        foreach (var kvp in GlobalStateManager.Instance.GlobalHeroes)
+                        {
+                            if (kvp.Value != null)
+                            {
+                                BindHeroToTextObject(parsedLogText, kvp.Key, kvp.Value);
+                            }
+                        }
+                    }
+
                     foreach (var kvp in TargetHeroes)
                     {
-                        parsedLogText.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
-                        parsedLogText.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                        if (kvp.Value != null)
+                        {
+                            BindHeroToTextObject(parsedLogText, kvp.Key, kvp.Value);
+                        }
                     }
                     foreach (var kvp in TargetSettlements)
                     {
-                        parsedLogText.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
-                        parsedLogText.SetTextVariable(kvp.Key + "_Link", kvp.Value.EncyclopediaLinkWithName);
+                        if (kvp.Value != null)
+                        {
+                            BindSettlementToTextObject(parsedLogText, kvp.Key, kvp.Value);
+                        }
                     }
                     foreach (var kvp in TargetParties)
                     {
                         if (kvp.Value != null)
                         {
-                            parsedLogText.SetTextVariable(kvp.Key, kvp.Value.Name);
-                            parsedLogText.SetTextVariable(kvp.Key + ".Name", kvp.Value.Name);
-                            parsedLogText.SetTextVariable(kvp.Key + "_Link", kvp.Value.Name);
+                            BindPartyToTextObject(parsedLogText, kvp.Key, kvp.Value);
                         }
                     }
                     foreach (var kvp in TrackedCounters)
@@ -360,14 +514,27 @@ namespace Questliner.Framework.Core
                         if (!string.IsNullOrEmpty(kvp.Value))
                             parsedLogText.SetTextVariable(kvp.Key, new TextObject(kvp.Value));
                     }
-                    parsedLogText.SetTextVariable("Player.Name", Hero.MainHero.Name);
-                    parsedLogText.SetTextVariable("PlayerName", Hero.MainHero.Name);
+                    if (Hero.MainHero != null)
+                    {
+                        BindHeroToTextObject(parsedLogText, "Player", Hero.MainHero);
+                        BindHeroToTextObject(parsedLogText, "PLAYER", Hero.MainHero);
+                        parsedLogText.SetTextVariable("PlayerName", Hero.MainHero.Name);
+                        parsedLogText.SetTextVariable("PLAYER_NAME", Hero.MainHero.Name);
+                    }
 
                     // Track objects mentioned in the log text dynamically
                     foreach (var kvp in TargetHeroes)
                     {
                         if (nextStageModel.LogText.Contains("{" + kvp.Key) && !IsTracked(kvp.Value))
                             AddTrackedObject(kvp.Value);
+                    }
+                    if (GlobalStateManager.Instance.GlobalHeroes != null)
+                    {
+                        foreach (var kvp in GlobalStateManager.Instance.GlobalHeroes)
+                        {
+                            if (kvp.Value != null && nextStageModel.LogText.Contains("{" + kvp.Key) && !IsTracked(kvp.Value))
+                                AddTrackedObject(kvp.Value);
+                        }
                     }
                     foreach (var kvp in TargetSettlements)
                     {

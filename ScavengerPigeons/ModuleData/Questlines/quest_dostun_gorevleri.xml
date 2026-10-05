@@ -96,7 +96,7 @@
 
     <!-- Final A: Kör Sadakat -->
     <Stage Id="StageSuccess_KorSadakat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_dg_s_korsadakat_log}You refused to entertain the words of a traitor and struck down {DerinKanatUlagi_Link} where he stood. You rode to {Dost.Name} and reported the coup attempt within the ranks. Overwhelmed by your unyielding, incorruptible loyalty, Dost gifted you 50,000 denars and named you his eternal champion. You remained a steadfast guardian of the Motherland.</LogText>
+      <LogText>{=sp_dg_s_korsadakat_log}You refused to entertain the words of a traitor and struck down {DerinKanatUlagi_Link} where he stood. You rode to {Dost.Name} and reported the coup attempt within the ranks. Overwhelmed by your unyielding, incorruptible loyalty, {Dost.Name} gifted you 50,000 denars and named you his eternal champion. You remained a steadfast guardian of the Motherland.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="AddGold" Amount="50000" />
@@ -107,7 +107,7 @@
 
     <!-- Final B: Gölge Rotası -->
     <Stage Id="StageSuccess_GolgeRotasi" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_dg_s_golgerotasi_log}You held your blade and listened to {DerinKanatUlagi_Link}. The documents he provided tore the veil from your eyes: {Dost.Name} has orchestrated every crisis, every border war, and every death to line his own pockets. The courier handed you the Raven Bone Cipher and directed you to the hidden sanctuary of the Shadow Roost (Gölge Tüneği). But Dost already senses your defiance...</LogText>
+      <LogText>{=sp_dg_s_golgerotasi_log}You held your blade and listened to {DerinKanatUlagi_Link}. The documents he provided tore the veil from your eyes: {Dost.Name} has orchestrated every crisis, every border war, and every death to line his own pockets. The courier handed you the Raven Bone Cipher and directed you to the hidden sanctuary of the Shadow Roost. But {Dost.Name} already senses your defiance...</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="GiveItem" ObjectId="raven_bone_cipher" Amount="1" />
@@ -219,56 +219,56 @@
       <Text>{=sp_dg_dlg_p_angry}Why are you committing such treachery?! Don't you know what happened to the last person who gave me this mission?! I hunted that artisan down and put him to the sword!</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="DG_D_P1_Skep" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step1_choices" OutputToken="ql_dg_derin_a2">
-      <Text>{=sp_dg_dlg_p_skep}Another assassination order against Dost? Is this another twisted loyalty test orchestrated by the Pigeons, or have you all lost your minds?</Text>
+      <Text>{=sp_dg_dlg_p_skep}Another assassination order against {Dost.Name}? Is this another twisted loyalty test orchestrated by the Pigeons, or have you all lost your minds?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="DG_D_P1_Prag" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step1_choices" OutputToken="ql_dg_derin_a2">
-      <Text>{=sp_dg_dlg_p_prag}Dost rewarded me with gold and honor, while you whisper treason in dark corners. Give me one reason not to take your head right now.</Text>
+      <Text>{=sp_dg_dlg_p_prag}{Dost.Name} rewarded me with gold and honor, while you whisper treason in dark corners. Give me one reason not to take your head right now.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="DG_D_P1_Ertele" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step1_choices" OutputToken="close_window">
       <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Tur 2: Derin Kanat Ulağının Yalvarışı ve İtirafı (Kullanıcı Direktif Metni) -->
+    <!-- Tur 2: Derin Kanat Ulaginin Yalvarisi ve Itirafi -->
     <DialogNode Type="Npc" Id="DG_Derin_A2" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_a2" OutputToken="ql_dg_derin_step2_choices">
-      <Text>{=sp_dg_dlg_d_reply}We are desperately trying to rid the realm of the true traitor to the motherland! Dost is the real puppeteer of fabricated wars. The artisan you killed saw the darkness coming and tried to warn you! The dispatches you carried through four seasons didn't protect peace—they sparked border clashes for his personal profit!</Text>
+      <Text>{=sp_dg_dlg_d_reply}We are desperately trying to rid the realm of the true traitor to the motherland! {Dost.Name} is the real puppeteer of fabricated wars. The artisan you killed saw the darkness coming and tried to warn you! The dispatches you carried through four seasons didn't protect peace, they sparked border clashes for his personal profit!</Text>
     </DialogNode>
 
-    <!-- Tur 3: Oyuncu Dört Mevsimlik Hizmetini ve Çelişkiyi Sorgular -->
+    <!-- Tur 3: Oyuncu Dort Mevsimlik Hizmetini ve Celiskiyi Sorgular -->
     <DialogNode Type="Player" Id="DG_D_P2_ServiceDoubt" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step2_choices" OutputToken="ql_dg_derin_a3">
       <Text>{=sp_dg_dlg_p2_doubt}I served him through Spring, Summer, Autumn, and Winter! I carried dispatches, crushed deserters, planted directives. Are you saying all of it was a puppet show?!</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="DG_D_P2_AccuseCourier" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step2_choices" OutputToken="ql_dg_derin_a3">
-      <Text>{=sp_dg_dlg_p2_accuse}And who gave your shadowy faction the right to pass judgment? Are you just another ambitious butcher seeking Dost's seat?</Text>
+      <Text>{=sp_dg_dlg_p2_accuse}And who gave your shadowy faction the right to pass judgment? Are you just another ambitious butcher seeking {Dost.Name}'s seat?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="DG_D_P2_Ertele" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step2_choices" OutputToken="close_window">
       <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Tur 4: Ulak Belgeleri ve Gerçekleri Açar -->
+    <!-- Tur 4: Ulak Belgeleri ve Gercekleri Acar -->
     <DialogNode Type="Npc" Id="DG_Derin_A3" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_a3" OutputToken="ql_dg_derin_step3_choices">
-      <Text>{=sp_dg_dlg_d_facts}Yes, a puppet show of blood! The summer dispatches provoked a grain blockade, and the winter registry starved a rival loyalist clan. Dost orchestrates every crisis so kings must grovel before the Scavenger Pigeons for information! We are the inner circle—the Shadow Council who refuse to let the Motherland burn for one man's greed!</Text>
+      <Text>{=sp_dg_dlg_d_facts}Yes, a puppet show of blood! The summer dispatches provoked a grain blockade, and the winter registry starved a rival loyalist clan. {Dost.Name} orchestrates every crisis so kings must grovel before the Scavenger Pigeons for information! We are the inner circle, the Shadow Council who refuse to let the Motherland burn for one man's greed!</Text>
     </DialogNode>
 
-    <!-- Tur 5: Oyuncu İspat İster -->
+    <!-- Tur 5: Oyuncu Ispat Ister -->
     <DialogNode Type="Player" Id="DG_D_P3_DemandProof" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step3_choices" OutputToken="ql_dg_derin_a4">
-      <Text>{=sp_dg_dlg_p3_proof}Show me your proof. If Dost is the monster you claim, prove it before my blade draws your blood.</Text>
+      <Text>{=sp_dg_dlg_p3_proof}Show me your proof. If {Dost.Name} is the monster you claim, prove it before my blade draws your blood.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="DG_D_P3_DefendDost" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step3_choices" OutputToken="ql_dg_derin_a4">
-      <Text>{=sp_dg_dlg_p3_defend}Words are cheap, and traitors always cloak themselves in righteousness. Why should I believe you over Dost?</Text>
+      <Text>{=sp_dg_dlg_p3_defend}Words are cheap, and traitors always cloak themselves in righteousness. Why should I believe you over {Dost.Name}?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="DG_D_P3_Ertele" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_step3_choices" OutputToken="close_window">
       <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Tur 6: Ulak Boynunu Kılıca Uzatır (KULLANICI DİREKTİFİ: İKNA OLMAZSAN BOYNUM KILICINA KURBANDIR) -->
+    <!-- Tur 6: Ulak Boynunu Kilica Uzatir -->
     <DialogNode Type="Npc" Id="DG_Derin_A4" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_a4" OutputToken="ql_dg_derin_final_choices">
-      <Text>{=sp_dg_dlg_d_plea}Listen to me; do not kill me right now, and let me prove to you that you are mistaken. If you are not convinced, my neck is forfeit to your blade! Here is the Raven Bone Cipher bearing the seal of the Shadow Council. Read the orders Dost signed in secret, then make your choice!</Text>
+      <Text>{=sp_dg_dlg_d_plea}Listen to me; do not kill me right now, and let me prove to you that you are mistaken. If you are not convinced, my neck is forfeit to your blade! Here is the Raven Bone Cipher bearing the seal of the Shadow Council. Read the orders {Dost.Name} signed in secret, then make your choice!</Text>
     </DialogNode>
 
-    <!-- Tur 7: NİHAİ BÜYÜK KARAR ANI -->
-    <!-- Seçim 1: Haini Öldür (Kör Sadakat Finali) -->
+    <!-- Tur 7: NIHAI BUYUK KARAR ANI -->
+    <!-- Secim 1: Haini Oldur (Kor Sadakat Finali) -->
     <DialogNode Type="Player" Id="DG_Derin_Choice_Kill" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_final_choices" OutputToken="close_window">
-      <Text>{=sp_dg_dlg_ch_kill}I swore an oath to Dost and the Motherland. No traitor's silver tongue will sway me! Die! (Execute the Courier &amp; Stand with Dost)</Text>
+      <Text>{=sp_dg_dlg_ch_kill}I swore an oath to {Dost.Name} and the Motherland. No traitor's silver tongue will sway me! Die! (Execute the Courier &amp; Stand with {Dost.Name})</Text>
       <Consequences>
         <Action Type="KillHero" TargetAlias="DerinKanatUlagi" />
         <Action Type="SetGlobalFlag" ObjectId="SP_DerinKanat_Olduruldu" Amount="1" />
@@ -276,9 +276,9 @@
       </Consequences>
     </DialogNode>
 
-    <!-- Seçim 2: Haini Dinle / Bağışla (Gölge Tüneği Rotası) -->
+    <!-- Secim 2: Haini Dinle / Bagisla (Golge Tunegi Rotasi) -->
     <DialogNode Type="Player" Id="DG_Derin_Choice_Listen" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_final_choices" OutputToken="close_window">
-      <Text>{=sp_dg_dlg_ch_listen}If what you say about Dost's false wars is true, the realm has bled for a lie. Put away your fear; show me the proof of the Shadow Council. (Spare &amp; Listen to the Courier)</Text>
+      <Text>{=sp_dg_dlg_ch_listen}If what you say about {Dost.Name}'s false wars is true, the realm has bled for a lie. Put away your fear; show me the proof of the Shadow Council. (Spare &amp; Listen to the Courier)</Text>
       <Consequences>
         <Action Type="SetGlobalFlag" ObjectId="SP_DerinKanat_Dinlendi" Amount="1" />
         <Action Type="ChangeStage" ObjectId="StageSuccess_GolgeRotasi" />

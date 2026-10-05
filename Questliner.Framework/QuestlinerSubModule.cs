@@ -31,6 +31,7 @@ namespace Questliner.Framework
                 CampaignGameStarter campaignStarter = (CampaignGameStarter)gameStarterObject;
 
                 campaignStarter.AddBehavior(new QuestlinerCampaignBehavior());
+                campaignStarter.AddModel(new Models.QuestlinerTradeItemPriceFactorModel());
             }
         }
     }

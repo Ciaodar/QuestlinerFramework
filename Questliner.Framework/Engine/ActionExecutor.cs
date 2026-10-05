@@ -1,9 +1,11 @@
+using System;
 using Questliner.Shared.Models;
 using Questliner.Framework.Core;
 using TaleWorlds.CampaignSystem;
 using System.Linq;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.Party;
+using Helpers;
 using TaleWorlds.Core;
 using TaleWorlds.ObjectSystem;
 
@@ -96,6 +98,17 @@ namespace Questliner.Framework.Engine
                     if (TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.Current != null)
                     {
                         TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.LeaveEncounter = true;
+                        TaleWorlds.CampaignSystem.Campaign.Current.ConversationManager.ConversationEndOneShot += () =>
+                        {
+                            if (TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.Current != null)
+                            {
+                                TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.Finish(true);
+                            }
+                            if (TaleWorlds.CampaignSystem.Campaign.Current.CurrentMenuContext != null)
+                            {
+                                TaleWorlds.CampaignSystem.GameMenus.GameMenu.ExitToLast();
+                            }
+                        };
                     }
                     break;
                 case "DestroyEncounteredParty":
@@ -130,21 +143,91 @@ namespace Questliner.Framework.Engine
                 }
 
                 case "SpawnBanditParty":
+                {
                     string templateId = string.IsNullOrEmpty(action.PartyTemplateId) ? "looters_template" : action.PartyTemplateId;
-                    string clanId = templateId.Replace("_template", ""); // e.g. looters, sea_raiders
+                    string clanId = templateId.Replace("_template", ""); // e.g. looters, sea_raiders, deserters
                     
-                    var looterTemplate = TaleWorlds.CampaignSystem.Campaign.Current.ObjectManager.GetObject<TaleWorlds.CampaignSystem.Party.PartyTemplateObject>(templateId);
-                    
-                    if (looterTemplate != null)
+                    CultureObject? contextCulture = null;
+                    if (quest != null && !string.IsNullOrEmpty(action.ObjectId))
                     {
-                        var party = TaleWorlds.CampaignSystem.Party.MobileParty.CreateParty("ql_spawned_" + clanId + "_" + TaleWorlds.Core.MBRandom.RandomInt(10000), null);
-                        
-                        party.ActualClan = TaleWorlds.CampaignSystem.Clan.BanditFactions.FirstOrDefault(c => c.StringId == clanId) ?? TaleWorlds.CampaignSystem.Clan.BanditFactions.FirstOrDefault(c => c.StringId == "looters");
-                        
-                        TaleWorlds.CampaignSystem.CampaignVec2 spawnPosition = TaleWorlds.CampaignSystem.Party.MobileParty.MainParty.Position;
-                        if (quest != null && !string.IsNullOrEmpty(action.ObjectId))
+                        contextCulture = quest.GetTargetSettlement(action.ObjectId)?.Culture;
+                    }
+                    contextCulture ??= TaleWorlds.CampaignSystem.Settlements.Settlement.CurrentSettlement?.Culture 
+                                    ?? Hero.MainHero.CurrentSettlement?.Culture 
+                                    ?? Hero.MainHero.Culture;
+
+                    // 1. Resolve Party Template with robust fallback chain
+                    PartyTemplateObject? partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>(templateId);
+                    if (partyTemplate == null && !templateId.EndsWith("_template"))
+                    {
+                        partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>(templateId + "_template");
+                    }
+                    if (partyTemplate == null && templateId.EndsWith("_template"))
+                    {
+                        partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>(clanId);
+                    }
+                    if (partyTemplate == null)
+                    {
+                        var matchingClan = Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals(clanId, StringComparison.OrdinalIgnoreCase));
+                        if (matchingClan?.DefaultPartyTemplate != null)
                         {
-                            var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
+                            partyTemplate = matchingClan.DefaultPartyTemplate;
+                        }
+                    }
+                    if (partyTemplate == null)
+                    {
+                        if (contextCulture != null && (clanId.Contains("deserter") || clanId.Contains("assassin") || clanId.Contains("mercenary") || clanId.Contains("caravan")))
+                        {
+                            partyTemplate = contextCulture.DefaultPartyTemplate ?? contextCulture.BanditBossPartyTemplate;
+                        }
+                    }
+                    if (partyTemplate == null)
+                    {
+                        partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>("looters_template");
+                        if (!string.IsNullOrEmpty(action.PartyTemplateId))
+                        {
+                            TaleWorlds.Library.Debug.Print($"[Questliner Warning] PartyTemplate '{action.PartyTemplateId}' not found! Falling back to 'looters_template'.");
+                        }
+                    }
+                    if (partyTemplate == null)
+                    {
+                        partyTemplate = Campaign.Current.ObjectManager.GetObjectTypeList<PartyTemplateObject>().FirstOrDefault();
+                    }
+
+                    if (partyTemplate == null)
+                    {
+                        TaleWorlds.Library.Debug.Print($"[Questliner Error] Could not find any valid PartyTemplateObject for action '{action.TargetAlias}'.");
+                        break;
+                    }
+
+                    // 2. Resolve Bandit Clan / Faction
+                    CultureObject? partyCulture = contextCulture ?? partyTemplate.Stacks?.FirstOrDefault().Character?.Culture;
+                    Clan? partyClan = Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals(clanId, StringComparison.OrdinalIgnoreCase));
+                    if (partyClan == null && partyCulture != null)
+                    {
+                        partyClan = Clan.BanditFactions.FirstOrDefault(c => c.Culture == partyCulture);
+                    }
+                    partyClan ??= Clan.BanditFactions.FirstOrDefault(c => c.StringId == "looters") ?? Clan.BanditFactions.FirstOrDefault();
+
+                    // 3. Determine Spawn Position & Navigation Mesh
+                    CampaignVec2 spawnPosition = MobileParty.MainParty.Position;
+                    if (Hero.MainHero.CurrentSettlement != null)
+                    {
+                        spawnPosition = Hero.MainHero.CurrentSettlement.GatePosition;
+                    }
+
+                    if (quest != null && !string.IsNullOrEmpty(action.ObjectId))
+                    {
+                        if (action.ObjectId.Equals("Player", StringComparison.OrdinalIgnoreCase))
+                        {
+                            spawnPosition = Hero.MainHero.CurrentSettlement != null 
+                                ? Hero.MainHero.CurrentSettlement.GatePosition 
+                                : MobileParty.MainParty.Position;
+                        }
+                        else
+                        {
+                            var targetSettlement = quest.GetTargetSettlement(action.ObjectId)
+                                                ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault(s => s.StringId.Equals(action.ObjectId, StringComparison.OrdinalIgnoreCase));
                             if (targetSettlement != null)
                             {
                                 spawnPosition = targetSettlement.GatePosition;
@@ -156,82 +239,138 @@ namespace Questliner.Framework.Engine
                                 {
                                     spawnPosition = targetParty.Position;
                                 }
+                                else
+                                {
+                                    var targetHeroObj = quest.GetTargetHero(action.ObjectId);
+                                    if (targetHeroObj != null)
+                                    {
+                                        spawnPosition = targetHeroObj.CurrentSettlement?.GatePosition 
+                                                     ?? targetHeroObj.HomeSettlement?.GatePosition 
+                                                     ?? targetHeroObj.PartyBelongedTo?.Position 
+                                                     ?? spawnPosition;
+                                    }
+                                }
                             }
                         }
+                    }
 
-                        party.InitializeMobilePartyAroundPosition(looterTemplate, spawnPosition, action.SpawnRadius > 0 ? action.SpawnRadius : 2f, action.SpawnDistance > 0 ? action.SpawnDistance : 1f);
-                        
-                        if (quest != null && !string.IsNullOrEmpty(action.TargetAlias))
-                        {
-                            quest.TargetParties[action.TargetAlias] = party;
-                        }
-                        
-                        string partyName = "{=!}Bandits";
-                        if (!string.IsNullOrEmpty(action.StringValue) && 
-                            !action.StringValue.Equals("Hold", System.StringComparison.OrdinalIgnoreCase) &&
-                            !action.StringValue.Equals("PatrolAroundSettlement", System.StringComparison.OrdinalIgnoreCase) &&
-                            !action.StringValue.Equals("GoToSettlement", System.StringComparison.OrdinalIgnoreCase) &&
-                            !action.StringValue.Equals("EngagePlayer", System.StringComparison.OrdinalIgnoreCase))
-                        {
-                            partyName = action.StringValue;
-                        }
-                        else if (!string.IsNullOrEmpty(action.TargetAlias))
-                        {
-                            partyName = action.TargetAlias;
-                        }
-                        party.Party.SetCustomName(new TaleWorlds.Localization.TextObject(partyName));
+                    float spawnDist = action.SpawnDistance > 0 ? action.SpawnDistance : 2f;
+                    float spawnRad = action.SpawnRadius > 0 ? action.SpawnRadius : 3f;
+                    float maxDist = Math.Max(spawnDist, spawnRad);
+                    float minDist = Math.Min(spawnDist, spawnRad);
 
-                        // Set troop count
-                        int targetAmount = action.Amount > 0 ? action.Amount : 15;
-                        TaleWorlds.CampaignSystem.CharacterObject? fillCharacter = null;
-                        if (looterTemplate.Stacks != null && looterTemplate.Stacks.Count > 0)
-                        {
-                            fillCharacter = looterTemplate.Stacks[0].Character;
-                        }
-                        if (fillCharacter == null)
-                        {
-                            fillCharacter = TaleWorlds.CampaignSystem.Campaign.Current.ObjectManager.GetObject<TaleWorlds.CampaignSystem.CharacterObject>("looter");
-                        }
+                    CampaignVec2 reachablePosition = NavigationHelper.FindReachablePointAroundPosition(
+                        spawnPosition, 
+                        MobileParty.NavigationType.Default, 
+                        maxDist, 
+                        minDist
+                    );
+                    if (reachablePosition.Face.IsValid())
+                    {
+                        spawnPosition = reachablePosition;
+                    }
 
-                        if (fillCharacter != null && party.MemberRoster.TotalManCount < targetAmount)
-                        {
-                            party.MemberRoster.AddToCounts(fillCharacter, targetAmount - party.MemberRoster.TotalManCount);
-                        }
-                        
-                        // Prevent AI from attacking them for 24 hours
-                        party.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.HoursFromNow(24));
-                        
-                        party.Ai.SetDoNotMakeNewDecisions(true);
+                    // 4. Create and Initialize Party
+                    string partyStringId = "ql_spawned_" + clanId + "_" + MBRandom.RandomInt(10000);
+                    var party = MobileParty.CreateParty(partyStringId, null);
+                    if (partyClan != null)
+                    {
+                        party.ActualClan = partyClan;
+                    }
 
-                        // AI Movement
-                        string aiBehavior = action.StringValue ?? "";
-                        if (aiBehavior.Equals("Hold", System.StringComparison.OrdinalIgnoreCase))
+                    party.InitializeMobilePartyAroundPosition(partyTemplate, spawnPosition, maxDist, minDist);
+                    party.SetPartyUsedByQuest(true);
+
+                    if (quest != null && !string.IsNullOrEmpty(action.TargetAlias))
+                    {
+                        quest.TargetParties[action.TargetAlias] = party;
+                    }
+
+                    // 5. Custom Name
+                    string partyName = "{=!}Bandits";
+                    if (!string.IsNullOrEmpty(action.StringValue) && 
+                        !action.StringValue.Equals("Hold", StringComparison.OrdinalIgnoreCase) &&
+                        !action.StringValue.Equals("PatrolAroundSettlement", StringComparison.OrdinalIgnoreCase) &&
+                        !action.StringValue.Equals("GoToSettlement", StringComparison.OrdinalIgnoreCase) &&
+                        !action.StringValue.Equals("EngagePlayer", StringComparison.OrdinalIgnoreCase) &&
+                        !action.StringValue.Equals("EngageParty", StringComparison.OrdinalIgnoreCase) &&
+                        !action.StringValue.Equals("IgnoreAi", StringComparison.OrdinalIgnoreCase) &&
+                        !action.StringValue.Equals("UnignoreAi", StringComparison.OrdinalIgnoreCase))
+                    {
+                        partyName = action.StringValue;
+                    }
+                    else if (!string.IsNullOrEmpty(action.TargetAlias))
+                    {
+                        partyName = action.TargetAlias;
+                    }
+                    party.Party.SetCustomName(new TaleWorlds.Localization.TextObject(partyName));
+
+                    // 6. Set Troop Count & Diverse Troop Distribution
+                    int targetAmount = action.Amount > 0 ? action.Amount : 15;
+                    if (party.MemberRoster.TotalManCount < targetAmount)
+                    {
+                        int deficit = targetAmount - party.MemberRoster.TotalManCount;
+                        if (partyTemplate.Stacks != null && partyTemplate.Stacks.Count > 0)
                         {
-                            party.SetMoveModeHold();
-                        }
-                        else if (aiBehavior.Equals("PatrolAroundSettlement", System.StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(action.ObjectId))
-                        {
-                            var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
-                            if (targetSettlement != null)
-                                party.SetMovePatrolAroundSettlement(targetSettlement, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default, false);
-                            else
-                                party.SetMoveModeHold();
-                        }
-                        else if (aiBehavior.Equals("GoToSettlement", System.StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(action.ObjectId))
-                        {
-                            var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
-                            if (targetSettlement != null)
-                                party.SetMoveGoToSettlement(targetSettlement, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default, false);
-                            else
-                                party.SetMoveModeHold();
+                            int stackCount = partyTemplate.Stacks.Count;
+                            int perStack = deficit / stackCount;
+                            int remainder = deficit % stackCount;
+
+                            for (int i = 0; i < stackCount; i++)
+                            {
+                                var stackChar = partyTemplate.Stacks[i].Character;
+                                if (stackChar != null)
+                                {
+                                    int countToAdd = perStack + (i < remainder ? 1 : 0);
+                                    if (countToAdd > 0)
+                                    {
+                                        party.MemberRoster.AddToCounts(stackChar, countToAdd);
+                                    }
+                                }
+                            }
                         }
                         else
                         {
-                            // Default: engage player
-                            party.SetMoveEngageParty(TaleWorlds.CampaignSystem.Party.MobileParty.MainParty, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
+                            var fillChar = Campaign.Current.ObjectManager.GetObject<CharacterObject>("looter");
+                            if (fillChar != null)
+                            {
+                                party.MemberRoster.AddToCounts(fillChar, deficit);
+                            }
                         }
                     }
+
+                    // 7. Protection and AI
+                    party.IgnoreByOtherPartiesTill(CampaignTime.HoursFromNow(24));
+                    party.Ai.SetDoNotMakeNewDecisions(true);
+
+                    string aiBehavior = action.StringValue ?? "";
+                    if (aiBehavior.Equals("Hold", StringComparison.OrdinalIgnoreCase) || aiBehavior.Equals("IgnoreAi", StringComparison.OrdinalIgnoreCase))
+                    {
+                        party.SetMoveModeHold();
+                    }
+                    else if (aiBehavior.Equals("PatrolAroundSettlement", StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(action.ObjectId))
+                    {
+                        var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
+                        if (targetSettlement != null)
+                            party.SetMovePatrolAroundSettlement(targetSettlement, MobileParty.NavigationType.Default, false);
+                        else
+                            party.SetMoveModeHold();
+                    }
+                    else if (aiBehavior.Equals("GoToSettlement", StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(action.ObjectId))
+                    {
+                        var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
+                        if (targetSettlement != null)
+                            party.SetMoveGoToSettlement(targetSettlement, MobileParty.NavigationType.Default, false);
+                        else
+                            party.SetMoveModeHold();
+                    }
+                    else
+                    {
+                        // Default: engage player
+                        party.SetMoveEngageParty(MobileParty.MainParty, MobileParty.NavigationType.Default);
+                    }
                     break;
+                }
                 case "MakeMet":
                 {
                     Hero? target = quest?.GetTargetHero(action.TargetAlias);
@@ -431,9 +570,19 @@ namespace Questliner.Framework.Engine
                 case "StartQuest":
                 {
                     var model = Questliner.Framework.Services.QuestModuleScanner.LoadedQuests.FirstOrDefault(q => q.Id == action.ObjectId);
-                    if (model != null && !TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.OfType<Questliner.Framework.Core.DynamicQuest>().Any(q => q.Model?.Id == model.Id))
+                    if (model != null)
                     {
-                        Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.TryAutoStartQuest(model);
+                        if (Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance != null &&
+                            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance.CompletedQuestIds.Contains(model.Id))
+                        {
+                            TaleWorlds.Library.Debug.Print($"[Questliner] Quest '{model.Id}' is already marked as completed. Skipping StartQuest.");
+                            break;
+                        }
+
+                        if (!TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.OfType<Questliner.Framework.Core.DynamicQuest>().Any(q => q.Model?.Id == model.Id))
+                        {
+                            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.TryAutoStartQuest(model);
+                        }
                     }
                     break;
                 }
@@ -446,9 +595,20 @@ namespace Questliner.Framework.Engine
                 case "SaveHeroToGlobal":
                 {
                     Hero? target = quest?.GetTargetHero(action.TargetAlias);
+                    if (target == null && (action.TargetAlias.Equals("Speaker", System.StringComparison.OrdinalIgnoreCase) || 
+                                           action.TargetAlias.Equals("ConversationHero", System.StringComparison.OrdinalIgnoreCase)))
+                    {
+                        target = Hero.OneToOneConversationHero;
+                    }
+                    if (target == null)
+                    {
+                        target = GlobalStateManager.Instance.GetGlobalHero(action.TargetAlias)
+                              ?? Hero.AllAliveHeroes.FirstOrDefault(h => h.StringId == action.TargetAlias);
+                    }
                     if (target != null && !string.IsNullOrEmpty(action.StringValue))
                     {
                         Questliner.Framework.Core.GlobalStateManager.Instance.SetGlobalHero(action.StringValue, target);
+                        TaleWorlds.Library.Debug.Print($"[Questliner] Saved GlobalHero '{action.StringValue}' -> {target.Name} ({target.StringId})");
                     }
                     break;
                 }

@@ -86,6 +86,7 @@ Aksiyonlar, diyalogların sonunda (`Consequences`), aşamalar tamamlandığında
 | **StartQuest** | Belirtilen XML görevini otomatik olarak başlatır. (`ObjectId`: Görev ID'si) | `<Action Type="StartQuest" ObjectId="QLF_DemirAhit_Kalfa" />` |
 | **MakeMet** | Oyuncunun hedefle daha önce tanışmış (HasMet = true) sayılmasını sağlar. Native oyunun "Tanışma" diyaloglarının araya girmesini engellemek için ForceConversation'dan hemen önce kullanılır. | `<Action Type="MakeMet" TargetAlias="Tüccar" />` |
 | **ForceConversation** | Oyun ekranını keserek doğrudan hedefle bir diyalog penceresi açar. Genellikle "OnSettlementEnter" tetikleyicisiyle oyuncuyu aniden karşılamak için kullanılır. Öncesinde MakeMet kullanmanız önerilir. | `<Action Type="ForceConversation" TargetAlias="Tüccar" />` |
+| **LeaveEncounter** | Karşılaşma/diyalog arayüzünü güvenle sonlandırıp oyuncuyu doğrudan dünya haritasına döndürür. | `<Action Type="LeaveEncounter" />` |
 
 ### 3.1. SpawnBanditParty ve SetPartyAi Detayları
 `SpawnBanditParty` oyuncuya düşman partiler üretmek için harikadır.
@@ -146,9 +147,23 @@ Görevlerin oyun dünyasında nasıl başlayacağını belirleyen ana mekanizmal
 
 ---
 
-## 6. UI ve Dinamik Takip Sistemi (Tracked Objects)
+## 6. UI, Metin Değişkenleri ve Dinamik Takip Sistemi (Tracked Objects)
 
-- **Aşama Logları (`LogText`):** Aşamada yazan LogText ekranda görünür. Eğer text içerisinde süslü parantez ile `{HedefAlias_Link}` yazarsanız, oyun otomatik olarak bu ismi mavi yapar ve haritada/ansiklopedide o hedefi **Quest Marker (Mavi Ünlem)** ile işaretler! Manuel bir tracking koduna gerek yoktur.
+- **Aşama Logları (`LogText`) ve Diyalog Metin Değişkenleri:**
+  - `{TargetAlias}`: Hedefin adını düz metin olarak basar.
+  - `{TargetAlias.Name}` / `{TargetAlias_Name}`: Hedefin karakter/yerleşke/parti adını döner.
+  - `{TargetAlias_Link}`: Ansiklopedi bağlantılı tıklanabilir renkli isim oluşturur.
+  - `{Player.Name}`, `{PlayerName}`, `{PLAYER.NAME}`: Oyuncunun adını döner.
+  - `{Player_Link}`, `{PLAYER_LINK}`: Oyuncunun ansiklopedi bağlantılı adını döner.
+- **Otomatik Hedef Takibi (Dynamic UI Tracking):**
+  - Aşama `LogText` metninde `{Alias}` veya `{Alias_Link}` geçtiğinde (TargetHeroes, GlobalHeroes, TargetSettlements, TargetParties dahil), oyun otomatik olarak haritada/ansiklopedide o hedefi **Quest Marker (Mavi Ünlem)** ile işaretler!
+  - Ayrıca aşama koşullarında (`Conditions`) `TargetAlias` olarak tanımlı tüm canlı kahramanlar, yerleşkeler ve partiler otomatik takibe alınır.
+
+---
+
+## 6.1. Görev Eşyaları ve Satılamazlık Koruması
+- Framework, `QuestlinerTradeItemPriceFactorModel` üzerinden TaleWorlds ticaret motorunu genişletir.
+- Değeri 0 olan, `NotMerchandise` (`is_merchandise="false"`) olarak tanımlanan veya hikaye görev nesneleri (`raven_bone_cipher`, `black_ledger`, `shadow_master_ring` vb.) tüccarlara satılırken 0 Dinar değerindedir ve satılamaz. Bu sayede oyuncuların kritik görev eşyalarını kazaen tüccarlara 1 Dinara satarak görevleri kilitlemesi engellenir.
 
 ---
 

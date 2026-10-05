@@ -3,6 +3,7 @@
 
   <Prerequisites>
     <Condition Type="IsQuestCompleted" ObjectId="QLF_GolgeTunegi_Tasfiye" Amount="1" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_GolgeTunegi_NihaiSon" Amount="1" />
   </Prerequisites>
 
   <Triggers>
@@ -37,44 +38,47 @@
 
     <!-- Son 1: Golge Bas Efendi -->
     <Stage Id="StageSuccess_GolgeBasEfendi" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_gt3_s_bas_efendi_log}The Blind Master's breath ceased under your fingers. The Shadow Master Ring now gleams upon your hand. While Calradia's kings sit pompously upon their thrones, each morning they will wake to a raven feather beneath their pillow—reminding them who truly rules Calradia from the dark.</LogText>
+      <LogText>{=sp_gt3_s_bas_efendi_log}The Blind Master's breath ceased under your fingers. The Shadow Master Ring now gleams upon your hand. While Calradia's kings sit pompously upon their thrones, each morning they will wake to a raven feather beneath their pillow, reminding them who truly rules Calradia from the dark.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="KillHero" TargetAlias="KorUsta" />
         <Action Type="GiveItem" ObjectId="shadow_master_ring" Amount="1" />
         <Action Type="AddGold" Amount="100000" />
         <Action Type="ChangeRenown" Amount="100" />
+        <Action Type="ChangeCrimeRating" Amount="50" />
       </OnEnterActions>
     </Stage>
 
-    <!-- Son 2: Kirik Kukla -->
+    <!-- Son 2: Kirik Kukla (Tünek Yakildi) -->
     <Stage Id="StageSuccess_KirikKukla" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_gt3_s_kirik_kukla_log}As the Shadow Roost collapsed in flames, you walked away without looking back. The ciphers turned to ash, the masters perished. Now, bound to no cult and no crown, you wander the Calradian plains as a feared ghost whose name is only whispered in terror.</LogText>
+      <LogText>{=sp_gt3_s_kirik_kukla_log}The roost burned to ashes beneath the mountain stars. You shattered the puppeteer's strings and buried the secret order forever. Calradia is free of the Shadow Roost, and you earned 75,000 denars and the renown of a true liberator.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="KillHero" TargetAlias="KorUsta" />
-        <Action Type="ChangeCrimeRating" Amount="60" />
+        <Action Type="AddGold" Amount="75000" />
+        <Action Type="ChangeRenown" Amount="80" />
         <Action Type="GiveItem" ObjectId="pigeon_blood_claymore" Amount="1" />
       </OnEnterActions>
     </Stage>
 
-    <!-- Son 3: Kuller Imparatorlugu (Kaos) -->
+    <!-- Son 3: Kuller Imparatorlugu (Kaos ve Kitasal Savas) -->
     <Stage Id="StageSuccess_Kaos" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_gt3_s_kaos_log}That very night, false pigeons cooed inside imperial palaces. By morning, empires declared war upon one another. Cities fell to siege, villages burned, and across this continental inferno, you hold the gold and armies to tear down dynasties as you please.</LogText>
+      <LogText>{=sp_gt3_s_kaos_log}You chose absolute chaos. By releasing the forged decrees across every faction, war horns now echo from every mountain peak. Blood will wash the lands, and above the slaughter, your name will be whispered with dread. You claimed 150,000 denars from the ensuing collapse.</LogText>
       <Conditions />
       <OnEnterActions>
-        <Action Type="DeclareWar" TargetAlias="HedefKral" ObjectId="empire" />
-        <Action Type="AddGold" Amount="250000" />
-        <Action Type="ChangeRenown" Amount="150" />
+        <Action Type="DeclareWar" TargetAlias="HedefKral" />
+        <Action Type="AddGold" Amount="150000" />
+        <Action Type="ChangeRenown" Amount="120" />
+        <Action Type="ChangeCrimeRating" Amount="80" />
       </OnEnterActions>
     </Stage>
   </Stages>
 
   <CustomDialogs>
     <!-- DOST ILE YUZLESME: GOLGE TUNEGI GIRISI -->
-    <!-- Turn 1 (NPC/Dost): Entry via hero_main_options -->
+    <!-- Turn 1: Entry via hero_main_options -->
     <DialogNode Type="Player" Id="GT3_Dost_Player_Entry" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_gt3_dost_a1" Priority="250">
-      <Text>{=sp_gt3_dost_p_entry}So you have finally come out of the shadows, Dost.</Text>
+      <Text>{=sp_gt3_dost_p_entry}So you have finally come out of the shadows, {Dost.Name}.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
         <Condition Type="GlobalFlag" ObjectId="SP_Zanaatkar_Kacti" Amount="1" />
@@ -87,7 +91,7 @@
 
     <!-- Turn 2 (Player choices) -->
     <DialogNode Type="Player" Id="GT3_Dost_P1_Defiant" TargetAlias="Dost" InputToken="ql_gt3_dost_step1_choices" OutputToken="ql_gt3_dost_a2">
-      <Text>{=sp_gt3_dost_p1_defiant}Your surveillance ends here, Dost. The Motherland was never your puppet stage!</Text>
+      <Text>{=sp_gt3_dost_p1_defiant}Your surveillance ends here, {Dost.Name}. The Motherland was never your puppet stage!</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_Dost_P1_Cunning" TargetAlias="Dost" InputToken="ql_gt3_dost_step1_choices" OutputToken="ql_gt3_dost_a2">
       <Text>{=sp_gt3_dost_p1_cunning}You speak of betrayal, yet you manufactured wars for profit and called it patriotism.</Text>
@@ -99,9 +103,9 @@
       <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Turn 3 (NPC/Dost) -->
+    <!-- Turn 3 -->
     <DialogNode Type="Npc" Id="GT3_Dost_A2" TargetAlias="Dost" InputToken="ql_gt3_dost_a2" OutputToken="ql_gt3_dost_step2_choices">
-      <Text>{=sp_gt3_dost_a2}Profit? No, you blind fool! ORDER! While kings played their games of crowns, I kept Calradia from tearing itself apart! And you—you threw away everything for the word of a runaway artisan and a pack of shadow fanatics!</Text>
+      <Text>{=sp_gt3_dost_a2}Profit? No, you blind fool! ORDER! While kings played their games of crowns, I kept Calradia from tearing itself apart! And you, you threw away everything for the word of a runaway artisan and a pack of shadow fanatics!</Text>
     </DialogNode>
 
     <!-- Turn 4 (Player choices) -->
@@ -115,33 +119,33 @@
       <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Turn 5 (NPC/Dost) -->
+    <!-- Turn 5 -->
     <DialogNode Type="Npc" Id="GT3_Dost_A3" TargetAlias="Dost" InputToken="ql_gt3_dost_a3" OutputToken="ql_gt3_dost_step3_choices">
-      <Text>{=sp_gt3_dost_a3}He saw too much! A craftsman playing at philosophy, imagining himself the conscience of the realm. I built this network with blood and sleepless decades—no artisan's sentimentality was going to unravel it! And now you stand in the threshold of my roost, blade in hand, thinking yourself a hero? You are nothing but the last loose thread I must trim.</Text>
+      <Text>{=sp_gt3_dost_a3}He saw too much! A craftsman playing at philosophy, imagining himself the conscience of the realm. I built this network with blood and sleepless decades, no artisan's sentimentality was going to unravel it! And now you stand in the threshold of my roost, blade in hand, thinking yourself a hero? You are nothing but the last loose thread I must trim.</Text>
     </DialogNode>
 
-    <!-- Turn 6 (Player choices — both lead to Dost dying) -->
+    <!-- Turn 6 (Player choices) -->
     <DialogNode Type="Player" Id="GT3_Dost_P3_Fight" TargetAlias="Dost" InputToken="ql_gt3_dost_step3_choices" OutputToken="close_window">
-      <Text>{=sp_gt3_dost_p3_fight}Then trim it, Dost. Or die trying!</Text>
+      <Text>{=sp_gt3_dost_p3_fight}Then trim it, {Dost.Name}. Or die trying!</Text>
       <Consequences>
         <Action Type="KillHero" TargetAlias="Dost" />
       </Consequences>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_Dost_P3_Negotiate" TargetAlias="Dost" InputToken="ql_gt3_dost_step3_choices" OutputToken="ql_gt3_dost_a4">
-      <Text>{=sp_gt3_dost_p3_negotiate}Dost. Stand down. You are outnumbered and your network is exposed. This ends without more bloodshed.</Text>
+      <Text>{=sp_gt3_dost_p3_negotiate}{Dost.Name}. Stand down. You are outnumbered and your network is exposed. This ends without more bloodshed.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_Dost_P3_Ertele" TargetAlias="Dost" InputToken="ql_gt3_dost_step3_choices" OutputToken="close_window">
       <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Turn 7 (NPC/Dost — negotiate path) -->
+    <!-- Turn 7 -->
     <DialogNode Type="Npc" Id="GT3_Dost_A4" TargetAlias="Dost" InputToken="ql_gt3_dost_a4" OutputToken="ql_gt3_dost_final_choices">
       <Text>{=sp_gt3_dost_a4}Trial? Ha! I taught those council lords everything they know about surviving a trial. But perhaps... perhaps there is a final move on this board. Forgive me, old friend. Some games have only one ending.</Text>
     </DialogNode>
 
-    <!-- Turn 8 (Player — negotiate path conclusion) -->
+    <!-- Turn 8 -->
     <DialogNode Type="Player" Id="GT3_Dost_Final_Kill" TargetAlias="Dost" InputToken="ql_gt3_dost_final_choices" OutputToken="close_window">
-      <Text>{=sp_gt3_dost_p4_final}It is over, Dost. The roost falls with you.</Text>
+      <Text>{=sp_gt3_dost_p4_final}It is over, {Dost.Name}. The roost falls with you.</Text>
       <Consequences>
         <Action Type="KillHero" TargetAlias="Dost" />
       </Consequences>
@@ -159,25 +163,25 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="GT3_Usta_Npc" TargetAlias="KorUsta" InputToken="start" OutputToken="ql_gt3_usta_step1_choices" Priority="200">
-      <Text>{=sp_gt3_dlg1}Step forward, little pigeon... I cannot see your eyes, but I hear the rhythm of your stride. The blood of Dost, the scent of burning ledgers, and the cold steel of ambition clinging to your mantle.</Text>
+      <Text>{=sp_gt3_dlg1}Step forward, little pigeon... I cannot see your eyes, but I hear the rhythm of your stride. The blood of {Dost.Name}, the scent of burning ledgers, and the cold steel of ambition clinging to your mantle.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="GT3_Usta_A1" TargetAlias="KorUsta" InputToken="ql_gt3_usta_a1" OutputToken="ql_gt3_usta_step1_choices">
-      <Text>{=sp_gt3_dlg1}Step forward, little pigeon... I cannot see your eyes, but I hear the rhythm of your stride. The blood of Dost, the scent of burning ledgers, and the cold steel of ambition clinging to your mantle.</Text>
+      <Text>{=sp_gt3_dlg1}Step forward, little pigeon... I cannot see your eyes, but I hear the rhythm of your stride. The blood of {Dost.Name}, the scent of burning ledgers, and the cold steel of ambition clinging to your mantle.</Text>
     </DialogNode>
 
     <!-- Tur 1: Oyuncu Tepkisi -->
     <DialogNode Type="Player" Id="GT3_U_P1_Inq" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step1_choices" OutputToken="ql_gt3_usta_a2">
-      <Text>{=sp_gt3_dlg_p1_inq}So you are the Blind Master—the hidden phantom who birthed the Scavenger Pigeons from the shadows.</Text>
+      <Text>{=sp_gt3_dlg_p1_inq}So you are the Blind Master, the hidden phantom who birthed the Scavenger Pigeons from the shadows.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_U_P1_Angry" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step1_choices" OutputToken="ql_gt3_usta_a2">
       <Text>{=sp_gt3_dlg_p1_angry}Breathe that scent deeply, old man. It is the butcher's bill for your decades of conspiracy and deceit.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_U_P1_Prag" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step1_choices" OutputToken="ql_gt3_usta_a2">
-      <Text>{=sp_gt3_dlg_p1_prag}I didn't scale this fortress for poetic metaphors. Dost is dead, and the master ciphers are mine. What is your will?</Text>
+      <Text>{=sp_gt3_dlg_p1_prag}I didn't scale this fortress for poetic metaphors. {Dost.Name} is dead, and the master ciphers are mine. What is your will?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_U_P1_Ertele" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step1_choices" OutputToken="close_window">
       <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
@@ -188,31 +192,28 @@
       <Text>{=sp_gt3_dlg_u_philosophy}Deceit? No, little bird... Harmony! Calradia's monarchs are vain beasts who would drown this continent in blood for a patch of barren soil. The Shadow Roost gives their bloodlust a script. We whisper, we forge, we harvest their gold, and in return, we keep humanity from self-annihilation.</Text>
     </DialogNode>
 
-    <!-- Tur 3: Oyuncu Elestirisi ve Sorgusu -->
-    <DialogNode Type="Player" Id="GT3_U_P2_Critique" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step2_choices" OutputToken="ql_gt3_usta_a3">
-      <Text>{=sp_gt3_dlg_p2_critique}You speak of harmony while you orchestrated fake wars, burned frontier settlements, and starved loyal clans!</Text>
+    <!-- Tur 3: Oyuncu Liderligi ve Bedelleri Sorgular -->
+    <DialogNode Type="Player" Id="GT3_U_P2_Peace" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step2_choices" OutputToken="ql_gt3_usta_a3">
+      <Text>{=sp_gt3_dlg_u_peace_query}You justify starvation and border raids in the name of peace. How many innocent lives were sacrificed to write your 'script'?</Text>
     </DialogNode>
-    <DialogNode Type="Player" Id="GT3_U_P2_Future" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step2_choices" OutputToken="ql_gt3_usta_a3">
-      <Text>{=sp_gt3_dlg_p2_future}And now that the script has failed and your greatest puppet lies slain on the battlefield, what becomes of this roost?</Text>
+    <DialogNode Type="Player" Id="GT3_U_P2_SelfDeceit" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step2_choices" OutputToken="ql_gt3_usta_a3">
+      <Text>{=sp_gt3_dlg_u_selfdeceit}You are a master of illusions who ended up deceiving yourself. You didn't stop wars; you merely industrialized them.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_U_P2_Ertele" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step2_choices" OutputToken="close_window">
       <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Tur 4: Kor Usta 3 Buyuk Yolu Sunar -->
+    <!-- Tur 4: Kor Usta Dunyanin Acimasiz Gercegini Haykirir -->
     <DialogNode Type="Npc" Id="GT3_Usta_A3" TargetAlias="KorUsta" InputToken="ql_gt3_usta_a3" OutputToken="ql_gt3_usta_step3_choices">
-      <Text>{=sp_gt3_dlg_u_three_paths}Now comes the anvil of destiny. The throne of the Roost is empty. You can claim the Shadow Master Ring and guide the realm from behind the curtain; you can burn this nest to ashes and walk away as an unchained ghost; or you can loose the forged decrees and watch three empires tear each other to shreds!</Text>
+      <Text>{=sp_gt3_dlg_u_script_reveal}Ten thousand died in our border clashes so ten million wouldn't burn in a continental apocalypse! Do you think kingdoms survive on virtue? Calradia breathes because the Shadow Roost operates in the dark. Without a puppeteer, the realm descends into madness.</Text>
     </DialogNode>
 
-    <!-- Tur 5: Oyuncu Kendi Yolu Uzerine Dusunur -->
-    <DialogNode Type="Player" Id="GT3_U_P3_Throne" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step3_choices" OutputToken="ql_gt3_usta_a4">
-      <Text>{=sp_gt3_dlg_p3_throne}Kings on thrones are easy to unseat, but the unseen puppeteer rules forever.</Text>
+    <!-- Tur 5: Oyuncu Nihai Iktidar Sorusunu Sorar -->
+    <DialogNode Type="Player" Id="GT3_U_P3_Power" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step3_choices" OutputToken="ql_gt3_usta_a4">
+      <Text>{=sp_gt3_dlg_u_power_claim}Then the seat of the puppeteer belongs to someone stronger. Your vision is obsolete, Master.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_U_P3_Burn" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step3_choices" OutputToken="ql_gt3_usta_a4">
-      <Text>{=sp_gt3_dlg_p3_burn}Every brick of this roost was laid with innocent blood. It deserves nothing but flame.</Text>
-    </DialogNode>
-    <DialogNode Type="Player" Id="GT3_U_P3_Fire" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step3_choices" OutputToken="ql_gt3_usta_a4">
-      <Text>{=sp_gt3_dlg_p3_fire}Why settle for ruling shadows when the entire world can be engulfed in glorious fire?</Text>
+      <Text>{=sp_gt3_dlg_u_burn_threat}The world doesn't need your false gods in the dark. The realm deserves the truth, even if it burns in fire.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_U_P3_Ertele" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step3_choices" OutputToken="close_window">
       <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
@@ -234,7 +235,7 @@
 
     <!-- Secenek 2: Kirik Kukla -->
     <DialogNode Type="Player" Id="GT3_Choice_KirikKukla" TargetAlias="KorUsta" InputToken="ql_gt3_usta_final_choices" OutputToken="close_window">
-      <Text>{=sp_gt3_dlg3}You are no mastermind; you are a sewer rat lurking in the dark! No motherland, no honor—only lies and slaughter. This roost burns tonight! (Torch the Roost &amp; Slaughter the Fanatics)</Text>
+      <Text>{=sp_gt3_dlg3}You are no mastermind; you are a sewer rat lurking in the dark! No motherland, no honor, only lies and slaughter. This roost burns tonight! (Torch the Roost &amp; Slaughter the Fanatics)</Text>
       <Consequences>
         <Action Type="SpawnBanditParty" TargetAlias="FanatikMuhafizlar" Amount="40" SettlementAlias="TunekSehri" StringValue="EngageParty" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="FanatikMuhafizlar" StringValue="EngageParty" ObjectId="Player" />

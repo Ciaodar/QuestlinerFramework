@@ -2,6 +2,33 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.6.0] - 05 Ekim 2026 (Global Variable Engine, Bandit Party Spawning, Quest Restart Prevention & Non-Sellable Quest Items)
+
+### Düzeltildi & Geliştirildi (Fixed & Improved)
+- **Görev Eşyaları Satılamazlık Modeli (`QuestlinerTradeItemPriceFactorModel`):**
+  - TaleWorlds Native ticaret modelindeki 1 Dinar alt sınır zorlaması (`MathF.Max(price, 1)`) geçersiz kılındı.
+  - Değeri 0 olan, `NotMerchandise` işaretli veya hikaye görev eşyaları (`raven_bone_cipher`, `black_ledger`, `shadow_master_ring` vb.) tüccarlara satılırken 0 Dinar fiyatlandırılarak satılması engellendi.
+- **`SpawnBanditParty` ve Şablon/Navmesh Desteği:**
+  - `deserters_template`, `assassins_template` vb. şablonların Native MBObjectManager'da bulunamaması durumunda bölge kültürünün şablonlarına veya `looters_template`'e kademeli fallback eklendi.
+  - `NavigationHelper.FindReachablePointAroundPosition` ile doğma konumu doğrulanarak su veya erişilemez dağ alanlarına takılma önlendi.
+  - Oluşturulan parti `party.SetPartyUsedByQuest(true)` ile korumaya alındı, birlikler şablon yığınlarına orantılı dağıtıldı ve `quest.TargetParties[TargetAlias]` sözlüğüne doğrudan kaydedildi.
+- **Metin Değişkenleri & Ansiklopedi Linkleri (`DynamicQuest.cs`):**
+  - `{Alias}`, `{Alias.Name}`, `{Alias_Link}`, `{Alias_Name}` değişkenleri `StringHelpers.SetCharacterProperties` ve `SetSettlementProperties` ile eksiksiz bağlandı.
+  - `GlobalStateManager.Instance.GlobalHeroes` içindeki tüm kalıcı karakterler aşama günlüklerine (`LogText`) ve diyaloglara otomatik enjekte edilir hale getirildi.
+  - Oyuncu değişkenleri (`Player`, `PLAYER`, `Player.Name`, `PlayerName`, `PLAYER.NAME`, `Player_Link`) eksiksiz tanımlandı.
+- **Sonsuz Görev Döngüsü & Otomatik Başlatma Güvenliği (`QuestlinerCampaignBehavior.cs`):**
+  - Tamamlanmış (`_completedQuestIds`) görevlerin saatlik tick'te veya yerleşkeye girişte tekrar başlaması kalıcı olarak engellendi.
+  - `questModel.StartType == "AutoStart"` ve `Triggers.EventType == "AutoStart"` şartları senkronize edildi.
+  - `CheckQuestStartCondition` içerisine `_completedQuestIds` ve önkoşul (`Prerequisites`) kontrolleri eklendi.
+- **Karşılaşma Sonlandırma (`LeaveEncounter`):**
+  - `ActionExecutor` ve `OnConversationEnded` entegrasyonuyla `PlayerEncounter.LeaveEncounter` bayrağı işlendiğinde karşılaşma ve menü temizliği güvenle tamamlanır.
+- **Global Karakter Çözümleme (`TargetResolverService.cs`):**
+  - `SpecificId` veya `Filters` içinde `GlobalHero(Key)` kullanıldığında yerleşke kısıtları ve `usedHeroes` filtresi atlanarak doğrudan hedef global kahramanın döndürülmesi sağlandı.
+- **Diyalog Performansı Temizliği:**
+  - Her diyalog koşul kontrolünde diske senkron log yazan `File.AppendAllText("QuestlinerDebug.txt")` çağrıları temizlendi.
+
+---
+
 ## [v1.5.0] - 28 Eylül 2026 (Effective Kingdom Resolving, Chained Quest Timing & War Fallback)
 
 ### Düzeltildi & Geliştirildi (Fixed & Improved)

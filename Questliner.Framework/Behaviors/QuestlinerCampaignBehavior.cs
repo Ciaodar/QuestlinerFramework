@@ -151,10 +151,27 @@ namespace Questliner.Framework.Behaviors
 
         private bool DynamicDialogCondition(QuestModel questModel, CustomDialogModel dialogNode)
         {
-            System.IO.File.AppendAllText("QuestlinerDebug.txt", $"[{System.DateTime.Now}] EVALUATING {dialogNode.Id} for Quest {questModel.Id}\n");
+            // TaleWorlds.Library.Debug.Print($"[Questliner] EVALUATING {dialogNode.Id} for Quest {questModel.Id}");
+            
             // Set global text variables for dialog substitution
-            TaleWorlds.Localization.MBTextManager.SetTextVariable("Player.Name", Hero.MainHero.Name);
-            TaleWorlds.Localization.MBTextManager.SetTextVariable("PlayerName", Hero.MainHero.Name);
+            if (GlobalStateManager.Instance.GlobalHeroes != null)
+            {
+                foreach (var kvp in GlobalStateManager.Instance.GlobalHeroes)
+                {
+                    if (kvp.Value != null)
+                    {
+                        DynamicQuest.BindHeroToMBTextManager(kvp.Key, kvp.Value);
+                    }
+                }
+            }
+
+            if (Hero.MainHero != null)
+            {
+                DynamicQuest.BindHeroToMBTextManager("Player", Hero.MainHero);
+                DynamicQuest.BindHeroToMBTextManager("PLAYER", Hero.MainHero);
+                TaleWorlds.Localization.MBTextManager.SetTextVariable("PlayerName", Hero.MainHero.Name);
+                TaleWorlds.Localization.MBTextManager.SetTextVariable("PLAYER_NAME", Hero.MainHero.Name);
+            }
 
             // Find ongoing dynamic quest matching QuestId (may be null if quest hasn't started yet)
             var quest = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(q => q.Model?.Id == questModel.Id && q.IsOngoing);
@@ -268,7 +285,7 @@ namespace Questliner.Framework.Behaviors
                     if (quest != null)
                     {
                         var expectedHero = quest.GetTargetHero(dialogNode.TargetAlias);
-                        System.IO.File.AppendAllText("QuestlinerDebug.txt", $"[{System.DateTime.Now}] Dialog: {dialogNode.Id} | Expected Hero for {dialogNode.TargetAlias}: {expectedHero?.Name} ({expectedHero?.StringId}) | Speaker: {speaker?.Name} ({speaker?.StringId})\n");
+                        // TaleWorlds.Library.Debug.Print($"[Questliner] Dialog: {dialogNode.Id} | Expected Hero for {dialogNode.TargetAlias}: {expectedHero?.Name} ({expectedHero?.StringId}) | Speaker: {speaker?.Name} ({speaker?.StringId})");
                         if (expectedHero != speaker) return false;
                     }
                     else
@@ -354,9 +371,28 @@ namespace Questliner.Framework.Behaviors
 
             foreach (var questModel in Questliner.Framework.Services.QuestModuleScanner.LoadedQuests)
             {
+                // Don't show option if quest is already completed
+                if (_completedQuestIds.Contains(questModel.Id))
+                    continue;
+
                 // Don't show option if quest is already ongoing
                 if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.Model?.Id == questModel.Id))
                     continue;
+
+                // Check prerequisites before offering the quest
+                if (questModel.Prerequisites != null && questModel.Prerequisites.Count > 0)
+                {
+                    bool prereqsMet = true;
+                    foreach (var prereq in questModel.Prerequisites)
+                    {
+                        if (!Engine.ConditionEvaluator.IsConditionMet(prereq, null))
+                        {
+                            prereqsMet = false;
+                            break;
+                        }
+                    }
+                    if (!prereqsMet) continue;
+                }
 
                 var startTrigger = questModel.Triggers.FirstOrDefault(t => t.EventType == "OnConversation");
                 if (startTrigger != null)
@@ -544,6 +580,15 @@ namespace Questliner.Framework.Behaviors
             // Removed automatic blind-fire TalkedTo flag setting.
             // TalkedTo is now strictly driven by the "About the task..." dialogue option.
             
+            if (TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.Current != null && TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.LeaveEncounter)
+            {
+                TaleWorlds.CampaignSystem.Encounters.PlayerEncounter.Finish(true);
+                if (Campaign.Current.CurrentMenuContext != null)
+                {
+                    TaleWorlds.CampaignSystem.GameMenus.GameMenu.ExitToLast();
+                }
+            }
+
             foreach (var quest in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
             {
                 quest.CheckStageProgression();
@@ -571,6 +616,9 @@ namespace Questliner.Framework.Behaviors
             // 2. Check for OnSettlementEnter Triggers
             foreach (var questModel in Questliner.Framework.Services.QuestModuleScanner.LoadedQuests)
             {
+                if (_completedQuestIds.Contains(questModel.Id))
+                    continue;
+
                 if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.Model?.Id == questModel.Id))
                     continue; // Zaten aktif
 
@@ -745,10 +793,13 @@ namespace Questliner.Framework.Behaviors
             // Check for AutoStart quests
             foreach (var questModel in Questliner.Framework.Services.QuestModuleScanner.LoadedQuests)
             {
+                if (_completedQuestIds.Contains(questModel.Id))
+                    continue;
+
                 if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.Model?.Id == questModel.Id))
                     continue;
 
-                if (questModel.Triggers.Any(t => t.EventType == "AutoStart"))
+                if (questModel.StartType == "AutoStart" || questModel.Triggers.Any(t => t.EventType == "AutoStart"))
                 {
                     TryAutoStartQuest(questModel);
                 }
@@ -757,6 +808,10 @@ namespace Questliner.Framework.Behaviors
 
         public void TryAutoStartQuest(QuestModel questModel)
         {
+            if (_completedQuestIds.Contains(questModel.Id)) return;
+            if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.Model?.Id == questModel.Id))
+                return;
+
             var duration = TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(questModel.TimeLimitInDays > 0 ? questModel.TimeLimitInDays : 9999);
             var tempQuest = new DynamicQuest(questModel, Hero.MainHero, duration); // AutoStart quests default to MainHero as giver if no other giver is specified, but TargetResolvers should assign proper heroes.
             
