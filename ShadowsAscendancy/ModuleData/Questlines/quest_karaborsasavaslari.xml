@@ -20,37 +20,45 @@
 
   <Stages>
     <Stage Id="Stage1_Suikast" NextStageId="Stage2_Sorgu" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q2_s1_log}Your clan is now known throughout the realm (Tier 3). However, your past isn't letting you go. A large bounty has been placed on your head, and hired assassins are after you. Defeat them and survive!</LogText>
+      <LogText>{=shdw_q2_s1_log}Your clan is now known throughout the realm, having reached Clan Tier 3. However, your past isn't letting you go. A large bounty has been placed on your head, and hired assassins are after you. Defeat them and survive!</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="KiralikKatiller" Amount="1" />
       </Conditions>
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="60" PartyTemplateId="deserters_template" StringValue="{=shdw_q2_katiller}Hired Assassins" />
+        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="50" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q2_katiller}Hired Assassins" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="KiralikKatiller" StringValue="EngageParty" ObjectId="Player" />
       </OnEnterActions>
       <OnExitActions>
         <!-- Katiller yenilince yaralı bir komutan partisi spawn edip beklemesini sağlıyoruz -->
-        <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" PartyTemplateId="deserters_template" StringValue="{=shdw_q2_komutan}Wounded Commander" />
+        <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q2_komutan}Wounded Commander" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="KatilKomutan" StringValue="Hold" />
       </OnExitActions>
     </Stage>
 
-    <Stage Id="Stage2_Sorgu" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+    <Stage Id="Stage2_Sorgu" NextStageId="Stage3_Intikam" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=shdw_q2_s2_log}You defeated the hired assassins and survived. Find {KatilKomutan_Link} waiting on the map and interrogate him.</LogText>
       <Conditions />
+      <OnExitActions>
+        <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
+        <Action Type="DestroyParty" TargetAlias="KatilKomutan" />
+        <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
+      </OnExitActions>
     </Stage>
 
-    <Stage Id="Stage3_Intikam" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q2_s3_log}You learned that {YozlasmisLord_Link} was behind the assassination attempt and secured the evidence (Lord's Sealed Order). Now it's time to confront him.</LogText>
+    <Stage Id="Stage3_Intikam" NextStageId="Stage4_Hukumdar" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=shdw_q2_s3_log}You learned that {YozlasmisLord_Link} was behind the assassination attempt and secured the evidence, the Lord's Sealed Order. Now it is time to confront him.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
       </OnEnterActions>
     </Stage>
 
-    <Stage Id="Stage4_Hukumdar" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+    <Stage Id="Stage4_Hukumdar" NextStageId="StageSuccess_Politik" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=shdw_q2_s4_log}You rejected the lord's bribe. Now you must speak with {Hukumdar_Link} to prove his betrayal.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="MakeMet" TargetAlias="Hukumdar" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="StageSuccess_Santaj" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
@@ -222,14 +230,12 @@
       <Text>{=shdw_q2_dlg_kom_teslim}(Trembling, handing over the parchment) Here, take it! It has his personal coat of arms. The red seal is unbroken! Just let me vanish before his scouts find me!</Text>
     </DialogNode>
 
-    <!-- Tur 8: Nihai Ayrılış Seçenekleri -->
     <DialogNode Type="Player" Id="Kom_Sonuc_Direct" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_karar" OutputToken="close_window">
       <Text>{=shdw_q2_dlg4}Get out of here! Give my regards to your lord, tell him I am coming for him.</Text>
       <Consequences>
         <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="DestroyEncounteredParty" />
         <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
-        <Action Type="MakeMet" TargetAlias="HedefLord" />
         <Action Type="LeaveEncounter" />
         <Action Type="ChangeStage" ObjectId="Stage3_Intikam" />
       </Consequences>
@@ -241,7 +247,6 @@
         <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="DestroyEncounteredParty" />
         <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
-        <Action Type="MakeMet" TargetAlias="HedefLord" />
         <Action Type="LeaveEncounter" />
         <Action Type="ChangeStage" ObjectId="Stage3_Intikam" />
       </Consequences>
@@ -257,7 +262,22 @@
     <!-- ========================================== -->
     <!-- 2. LORD İLE YÜZLEŞME (YozlasmisLord - 8 Adımlı Asilzade Çatışması) -->
     <!-- ========================================== -->
-    <!-- Tur 1: Lordun Kibirli Girişi -->
+    <!-- Tur 1 (Player / hero_main_options): Şehir/Kale Menüsü veya Ziyaret Girişi -->
+    <DialogNode Type="Player" Id="Lord_Giris_Player" TargetAlias="YozlasmisLord" InputToken="hero_main_options" OutputToken="ql_shdw_lord_entry_npc" Priority="200">
+      <Text>{=shdw_q2_dlg_lord_player_entry}We have unfinished business regarding your hired cutthroats, my lord.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_Intikam" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Lord_Giris_Npc_Reply" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_entry_npc" OutputToken="ql_shdw_lord_yuzlesme" Priority="200">
+      <Text>{=shdw_q2_lord_turn1}(Takes a sip from his silver goblet and scoffs with aristocratic arrogance) You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate.</Text>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Tur 1: Lordun Kibirli Girişi (start token doğrudan giriş) -->
     <DialogNode Type="Npc" Id="Lord_Giris" TargetAlias="YozlasmisLord" InputToken="start" OutputToken="ql_shdw_lord_yuzlesme" Priority="200">
       <Text>{=shdw_q2_lord_turn1}(Takes a sip from his silver goblet and scoffs with aristocratic arrogance) You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate.</Text>
       <Conditions>
@@ -403,7 +423,22 @@
     <!-- ========================================== -->
     <!-- 3. HÜKÜMDAR İLE GÖRÜŞME (Hukumdar - Saray Yargılaması - Çok Adımlı Divan) -->
     <!-- ========================================== -->
-    <!-- Tur 1: Hükümdarın Açılışı -->
+    <!-- Tur 1 (Player / hero_main_options): Divan/Saray Menüsü veya Ziyaret Girişi -->
+    <DialogNode Type="Player" Id="Hukumdar_Giris_Player" TargetAlias="Hukumdar" InputToken="hero_main_options" OutputToken="ql_shdw_huk_entry_npc" Priority="200">
+      <Text>{=shdw_q2_dlg_huk_player_entry}My liege, I bring urgent evidence concerning high treason within your court.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage4_Hukumdar" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Hukumdar_Giris_Npc_Reply" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_entry_npc" OutputToken="ql_shdw_huk_kanit" Priority="200">
+      <Text>{=shdw_q2_dlg_huk_intro}Welcome to our court. What urgent matter brings you before the throne?</Text>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="Hukumdar" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Tur 1: Hükümdarın Açılışı (start token doğrudan giriş) -->
     <DialogNode Type="Npc" Id="Hukumdar_Giris" TargetAlias="Hukumdar" InputToken="start" OutputToken="ql_shdw_huk_kanit" Priority="200">
       <Text>{=shdw_q2_dlg_huk_intro}Welcome to our court. What urgent matter brings you before the throne?</Text>
       <Conditions>

@@ -8,6 +8,7 @@
 
   <Prerequisites>
     <Condition Type="ClanTier" Amount="2" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_GolgelerinFisiltisi" />
     <Condition Type="!GlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />
   </Prerequisites>
 
@@ -21,7 +22,6 @@
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="GorevVeren" />
-        <Action Type="ForceConversation" TargetAlias="GorevVeren" />
       </OnEnterActions>
     </Stage>
 
@@ -35,8 +35,8 @@
       </OnExitActions>
     </Stage>
 
-    <Stage Id="Stage3_Kanit" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q1_s3_log}You destroyed the caravan and obtained the Encrypted Ledger. Now you must head to the back alleys of {HedefSehir_Link} and confront the Gang Leader {KacakciLideri_Link}.</LogText>
+    <Stage Id="Stage3_Kanit" NextStageId="Stage4_PusuBekleyis" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=shdw_q1_s3_log}You destroyed the caravan and obtained the Encrypted Ledger. Now visit {HedefSehir_Link} and confront Gang Leader {KacakciLideri_Link} at their hideout or via the town menu.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="KacakciLideri" />
@@ -50,7 +50,7 @@
         <Condition Type="!IsPlayerInSettlement" />
       </Conditions>
       <OnExitActions>
-        <Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="50" StringValue="{=shdw_q1_cetepartisi}Gang Members" />
+        <Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="45" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_cetepartisi}Gang Members" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="CetePartisi" StringValue="EngageParty" ObjectId="Player" />
       </OnExitActions>
     </Stage>
@@ -95,7 +95,22 @@
     <!-- ========================================== -->
     <!-- 1. TÜCCAR İLK GÖRÜŞME (GorevVeren - 8 ADIMLI RPG SOHBETİ) -->
     <!-- ========================================== -->
-    <!-- Adım 1 (NPC): Tüccarın Açılışı -->
+    <!-- Adım 1 (Player / hero_main_options): Şehir Menüsü veya Ziyaret Girişi -->
+    <DialogNode Type="Player" Id="Tuccar_Giris_Player" TargetAlias="GorevVeren" InputToken="hero_main_options" OutputToken="ql_shdw_t_start_npc" Priority="200">
+      <Text>{=shdw_q1_dlg_merchant_entry}I heard you were looking for capable blades regarding your disappearing caravans.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_TuccarDiyalog" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Tuccar_Giris_Npc_Reply" TargetAlias="GorevVeren" InputToken="ql_shdw_t_start_npc" OutputToken="ql_shdw_t1" Priority="200">
+      <Text>{=shdw_q1_dlg2}My caravans... Someone is attacking them! Bandits are stealing my goods, but this is no ordinary robbery; it's as if they know our routes. Please find them and finish them off.</Text>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="GorevVeren" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Adım 1 (NPC): Tüccarın Açılışı (start token doğrudan giriş) -->
     <DialogNode Type="Npc" Id="Tuccar_Giris" TargetAlias="GorevVeren" InputToken="start" OutputToken="ql_shdw_t1" Priority="200">
       <Text>{=shdw_q1_dlg2}My caravans... Someone is attacking them! Bandits are stealing my goods, but this is no ordinary robbery; it's as if they know our routes. Please find them and finish them off.</Text>
       <Conditions>
@@ -110,7 +125,7 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Hizli" TargetAlias="GorevVeren" InputToken="ql_shdw_t1" OutputToken="close_window">
       <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
@@ -193,7 +208,7 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Detayli" TargetAlias="GorevVeren" InputToken="ql_shdw_t_karar" OutputToken="close_window">
       <Text>{=shdw_q1_dlg3}I'll track down your caravans. Have my gold ready.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
@@ -202,7 +217,7 @@
     <DialogNode Type="Player" Id="Tuccar_Kabul_Adalet" TargetAlias="GorevVeren" InputToken="ql_shdw_t_karar" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_t_kabul_adalet}I will hunt down those raiders for the safety of the roads, merchant. But once I hold that ledger, we will have words about your transactions.</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="deserters_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Takip" />
       </Consequences>
@@ -257,7 +272,22 @@
     <!-- ========================================== -->
     <!-- 3. ÇETE LİDERİ YÜZLEŞME DİYALOĞU (KacakciLideri - 8 ADIMLI YERALTI SOHBETİ) -->
     <!-- ========================================== -->
-    <!-- Tur 1: NPC Açılış (Tehditkar/Fısıltılı Giriş) -->
+    <!-- Tur 1 (Player / hero_main_options): Şehir Menüsü veya Ziyaret Girişi -->
+    <DialogNode Type="Player" Id="Cete_Giris_Player" TargetAlias="KacakciLideri" InputToken="hero_main_options" OutputToken="ql_shdw_c_intro_p" Priority="200">
+      <Text>{=shdw_q1_dlg_cete_entry}I am looking for the master of the city's alley operations. We need to talk.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_Kanit" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Cete_Giris_Npc_Reply" TargetAlias="KacakciLideri" InputToken="ql_shdw_c_intro_p" OutputToken="ql_shdw_c1" Priority="200">
+      <Text>{=shdw_q1_cete_turn1}(Pushes his goblet aside and studies you cold-eyed) Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat.</Text>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="KacakciLideri" />
+      </Consequences>
+    </DialogNode>
+
+    <!-- Tur 1: NPC Açılış (start token doğrudan giriş) -->
     <DialogNode Type="Npc" Id="Cete_Giris" TargetAlias="KacakciLideri" InputToken="start" OutputToken="ql_shdw_c1" Priority="200">
       <Text>{=shdw_q1_cete_turn1}(Pushes his goblet aside and studies you cold-eyed) Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat.</Text>
       <Conditions>
@@ -270,7 +300,7 @@
 
     <!-- Tur 2: Oyuncu Sorgusu & Tehdidi & Kurnazlık -->
     <DialogNode Type="Player" Id="Cete_P_Threat" TargetAlias="KacakciLideri" InputToken="ql_shdw_c1" OutputToken="ql_shdw_c2_threat">
-      <Text>{=shdw_q1_dlg_cete_threat}If you lie to me, this tavern will be your tomb. I butchered your caravan dogs and took this encrypted ledger. Who is behind you?</Text>
+      <Text>{=shdw_q1_dlg_cete_threat}If you lie to me, this den will be your tomb. I butchered your caravan dogs and took this encrypted ledger. Who is behind you?</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Cete_P_Sorgu" TargetAlias="KacakciLideri" InputToken="ql_shdw_c1" OutputToken="ql_shdw_c2_calm">
@@ -377,6 +407,10 @@
       <Text>{=shdw_q1_dlg8}I am a noble, I don't do dirty work like assassinations. But pay me a hefty cut, and I'll force the merchant to pay you your tribute.</Text>
     </DialogNode>
 
+    <DialogNode Type="Player" Id="Cete_P_Karar_Ertele" TargetAlias="KacakciLideri" InputToken="ql_shdw_c8_nihai_karar" OutputToken="close_window">
+      <Text>{=shdw_q1_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
     <DialogNode Type="Npc" Id="Cete_Tehdit" TargetAlias="KacakciLideri" InputToken="ql_shdw_c_kanun_son" OutputToken="close_window">
       <Text>{=shdw_q1_dlg_tehdit}Is that so? The outside of the city can be very dangerous these days. Watch your back on the roads, fool.</Text>
       <Consequences>
@@ -394,6 +428,19 @@
     <!-- ========================================== -->
     <!-- 4. TÜCCAR ŞANTAJ DİYALOĞU (GorevVeren - Stage 4) -->
     <!-- ========================================== -->
+    <!-- Stage 4 (Player / hero_main_options): Şehir Menüsü veya Ziyaret Girişi -->
+    <DialogNode Type="Player" Id="Tuccar_Santaj_Player" TargetAlias="GorevVeren" InputToken="hero_main_options" OutputToken="ql_shdw_t4_npc_p" Priority="200">
+      <Text>{=shdw_q1_dlg_santaj_entry}We need to discuss your debts and your business with the syndicate.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage4_TuccarSantaj" />
+      </Conditions>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="Tuccar_Santaj_Npc_Reply" TargetAlias="GorevVeren" InputToken="ql_shdw_t4_npc_p" OutputToken="ql_shdw_t4" Priority="200">
+      <Text>{=shdw_q1_dlg_tuccar_santaj_intro}You have returned! Tell me, did you deal with the bandits? Are my goods and caravans safe?</Text>
+    </DialogNode>
+
+    <!-- Stage 4: NPC Açılış (start token doğrudan giriş) -->
     <DialogNode Type="Npc" Id="Tuccar_Santaj_Giris" TargetAlias="GorevVeren" InputToken="start" OutputToken="ql_shdw_t4" Priority="200">
       <Text>{=shdw_q1_dlg_tuccar_santaj_intro}You have returned! Tell me, did you deal with the bandits? Are my goods and caravans safe?</Text>
       <Conditions>

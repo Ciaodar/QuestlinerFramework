@@ -164,6 +164,11 @@
     <string id="shdw_q2_katiller" text="Kiralık Katiller" />
     <string id="shdw_q2_komutan" text="Yaralı Komutan" />
     <string id="shdw_item_order" text="Lordun Mühürlü Emri" />
+    <string id="shdw_q1_dlg_merchant_entry" text="Kaybolan kervanların için güvenilir kılıçlar aradığını duydum." />
+    <string id="shdw_q1_dlg_cete_entry" text="Şehrin arka sokaklarını yöneten kişiyle görüşmek istiyorum. Konuşmamız gerek." />
+    <string id="shdw_q1_dlg_santaj_entry" text="Sendikayla olan borçlarını ve karanlık işlerini konuşmamız gerek." />
+    <string id="shdw_q2_dlg_lord_player_entry" text="Tuttuğun kiralık katiller hakkında yarım kalmış bir hesabımız var, lordum." />
+    <string id="shdw_q2_dlg_huk_player_entry" text="Yüce hükümdarım, sarayınızdaki açık bir vatana ihanet hakkında mühim kanıtlar getirdim." />
 
   </strings>
 </base>
