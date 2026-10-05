@@ -4,7 +4,7 @@
   <Prerequisites>
     <Condition Type="GlobalFlag" ObjectId="SP_Zanaatkar_Katledildi" Amount="1" />
     <Condition Type="IsQuestCompleted" ObjectId="QLF_KopukBaglar" Amount="1" />
-    <Condition Type="!IsQuestCompleted" ObjectId="QLF_DostunGorevleri" />
+    <Condition Type="!IsQuestCompleted" ObjectId="QLF_DostunGorevleri" Amount="1" />
   </Prerequisites>
 
   <Triggers>
@@ -55,7 +55,7 @@
       <LogText>{=sp_dg_s3_wait_log}The dispatch reached its destination. As autumn leaves fall, {Dost.Name} summons your martial strength for a critical frontier operation...</LogText>
       <Conditions />
       <OnTimeoutActions>
-        <Action Type="SpawnBanditParty" TargetAlias="SonbaharHaydutlar" Amount="35" StringValue="{=sp_dg_raiders}Hostile Deserters" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="SonbaharHaydutlar" Amount="35" PartyTemplateId="deserters_template" StringValue="{=sp_dg_raiders}Hostile Deserters" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="SonbaharHaydutlar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage3_Sonbahar_Savas" />
       </OnTimeoutActions>
@@ -285,9 +285,18 @@
       </Consequences>
     </DialogNode>
 
-    <!-- Erteleme Seçeneği -->
-    <DialogNode Type="Player" Id="DG_Derin_Choice_Ertele" TargetAlias="DerinKanatUlagi" InputToken="ql_dg_derin_final_choices" OutputToken="close_window">
-      <Text>{=sp_dg_ertele}I cannot deal with this right now. We will speak later.</Text>
+    <!-- SONBAHAR SAVASI: FIRARI GRUBU ILE KARSILASMA DIYALOGU -->
+    <DialogNode Type="Npc" Id="DG_Haydutlar_Giris" TargetAlias="SonbaharHaydutlar" InputToken="start" OutputToken="ql_dg_haydutlar_choices" Priority="200">
+      <Text>{=sp_dg_dlg_raiders_intro}Stand your ground! This mountain road belongs to us. Yield your coin or feed the crows!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_Sonbahar_Savas" />
+      </Conditions>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_Haydutlar_P1" TargetAlias="SonbaharHaydutlar" InputToken="ql_dg_haydutlar_choices" OutputToken="close_window">
+      <Text>{=sp_dg_dlg_raiders_p1}You picked the wrong supply line to raid. Draw your steel! (Fight)</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="DG_Haydutlar_P2" TargetAlias="SonbaharHaydutlar" InputToken="ql_dg_haydutlar_choices" OutputToken="close_window">
+      <Text>{=sp_dg_dlg_raiders_p2}The Motherland's justice leaves no raiders breathing! (Fight)</Text>
     </DialogNode>
   </CustomDialogs>
 </Questline>

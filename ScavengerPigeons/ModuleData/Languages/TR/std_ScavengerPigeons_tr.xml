@@ -275,7 +275,7 @@
     <string id="sp_kb_dlg_k_offer" text="Evet! Calradia'yı kıtasal bir kıyımdan kurtarmak için onun canını almak istemiştim ama sen reddettin! Artık tek arzum hayatta kalmak. Sınırı geçmeme izin ver {PlayerName}. 25.000 altınımı ve Gizli Güvercin Hançeri'mi al. {Dost.Name} bunu asla öğrenemez. Zengin ve vicdanın hür olarak buradan ayrılabilirsin!" />
     <string id="sp_kb_dlg_fight_prag" text="Cesedin toprağa düştüğünde hançerin de altınların da zaten benim olacak. Kılıcını çek! (Savaş)" />
 
-    <!-- Karanlik Ag ve Golgelerin Agi (Kara Kutuk) -->
+    <!-- Karanlik Ag ve Golgelerin Agi -->
     <string id="sp_ka_title" text="Kara Kütük ve Gölgelerin Ağı" />
     <string id="sp_ka_s0_log" text="Can çekişen siyah bir güvercin kamp ateşinizin yanına düştü; pençelerinde firari zanaatkarın titreyen eliyle yazdığı yanık bir parşömen vardı: '{Dost.Name} Anavatan'a hizmet etmiyor; onu bir mezbahaya çeviriyor. Tezgahlanan her sahte savaşın ve suikastın kaydını tutan Kara Kütük, {GizliSehir_Link} şehrinde gizli. Cellatlar gerçeği gömmeden önce aracı {KaraMuhbir_Link}'ı bul.'" />
     <string id="sp_ka_s1_log" text="Can çekişen siyah bir güvercin kamp ateşinizin yanına düştü; pençelerinde firari zanaatkarın titreyen eliyle yazdığı yanık bir parşömen vardı: '{Dost.Name} Anavatan'a hizmet etmiyor; onu bir mezbahaya çeviriyor. Tezgahlanan her sahte savaşın ve suikastın kaydını tutan Kara Kütük, {GizliSehir_Link} şehrinde gizli. Cellatlar gerçeği gömmeden önce aracı {KaraMuhbir_Link}'ı bul.' {GizliSehir_Link} şehrine at sür ve {KaraMuhbir_Link}'ı bul!" />
@@ -405,5 +405,23 @@
     <string id="sp_gt1_dlg_p3_task" text="Ulak yabancı bir birlikten bahsetti. {Dost.Name}'ın bu büyük tezgahındaki rolleri nedir?" />
     <string id="sp_gt1_dlg_p3_risk" text="Dağ sığınağının yanında silahlı yabancı bir müfrezeye saldırmak yerel garnizonla açık bir savaşı tetikleyebilir." />
     <string id="sp_gt1_dlg_u_test" text="50 kişilik yabancı bir müfreze, {Dost.Name}'ın çaldığı krallık savunma planlarını satın almak için {GolgeSiginagi_Link} yakınında bekliyor! Bu istihbarat sınırı aşarsa binlerce ocak söner. Hepsini kılıçtan geçir. {Dost.Name} altın beklediği yerde sadece soğuk çelik bulsun!" />
+
+    <!-- Encounter Dialogues & Hostile Parties -->
+    <string id="sp_kb_dlg_map_greet" text="Ah, {PlayerName}! Arkandan en hızlı güvercinimi göndermiştim. Şükürler olsun ki karşılaştık." />
+    <string id="sp_dg_dlg_raiders_intro" text="Dur bakalım! Bu dağ yolu bize aittir. Altınlarını teslim et ya da kargalara yem ol!" />
+    <string id="sp_dg_dlg_raiders_p1" text="Baskın yapmak için yanlış ikmal hattını seçtiniz. Çekin çeliğinizi! (Savaş)" />
+    <string id="sp_dg_dlg_raiders_p2" text="Anavatan'ın adaleti ardında tek bir yağmacı bile nefes alamaz! (Savaş)" />
+    <string id="sp_gt1_foreign_agents" text="Yabancı Müfreze" />
+    <string id="sp_gt1_dlg_agents_intro" text="Özel müzakerelerin arasına giriyorsun, Calradialı! Silahlarını indir yoksa yere serilirsin!" />
+    <string id="sp_gt1_dlg_agents_p1" text="O çalınan savunma planları dağların bu tarafında kalacak! (Savaş)" />
+    <string id="sp_gt1_dlg_agents_p2" text="Ben nefes aldığım sürece hiçbir yabancı paralı asker Calradia sırlarını satın alamaz! (Savaş)" />
+    <string id="sp_gt2_thugs" text="Sokak Muhafızları" />
+    <string id="sp_gt2_dlg_thugs_intro" text="Patronumuzu soğukkanlılıkla katlettiniz! Hiçbiriniz bu sokaktan canlı çıkamayacaksınız!" />
+    <string id="sp_gt2_dlg_thugs_p1" text="Patronunuz seçimini yaptı, şimdi siz de ona katılacaksınız! (Savaş)" />
+    <string id="sp_gt2_dlg_thugs_p2" text="Sokağı boşaltın ya da durduğunuz yerde can verin! (Savaş)" />
+    <string id="sp_gt3_fanatics" text="Tünek Fanatikleri" />
+    <string id="sp_gt3_dlg_fanatic_intro" text="Mülhit! Kör Usta'ya karşı geldin ve Tünek'e ihanet ettin! Bedenin kargalara ziyafet olsun!" />
+    <string id="sp_gt3_dlg_fanatic_p1" text="Ustanız bir deliden ibaretti ve tüneği bugün küle dönecek! (Savaş)" />
+    <string id="sp_gt3_dlg_fanatic_p2" text="Tünek'in yalanları sizinle birlikte yok oluyor! (Savaş)" />
   </strings>
 </base>

@@ -237,9 +237,10 @@
     <DialogNode Type="Player" Id="GT3_Choice_KirikKukla" TargetAlias="KorUsta" InputToken="ql_gt3_usta_final_choices" OutputToken="close_window">
       <Text>{=sp_gt3_dlg3}You are no mastermind; you are a sewer rat lurking in the dark! No motherland, no honor, only lies and slaughter. This roost burns tonight! (Torch the Roost &amp; Slaughter the Fanatics)</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="FanatikMuhafizlar" Amount="40" SettlementAlias="TunekSehri" StringValue="EngageParty" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="FanatikMuhafizlar" Amount="40" PartyTemplateId="deserters_template" SettlementAlias="TunekSehri" StringValue="{=sp_gt3_fanatics}Roost Fanatics" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="FanatikMuhafizlar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_KirikKukla_Savas" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
@@ -248,12 +249,27 @@
       <Text>{=sp_gt3_dlg4}The world does not seek order, Master. The world hungers for fire! I have dispatched the forged decrees to the monarchs of Calradia. At dawn, war horns shall sound! (Unleash Continental War)</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="StageSuccess_Kaos" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
     <!-- Erteleme Secenegi -->
     <DialogNode Type="Player" Id="GT3_Choice_Ertele" TargetAlias="KorUsta" InputToken="ql_gt3_usta_final_choices" OutputToken="close_window">
       <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- FANATIK SAVASI: KOR USTANIN MUHAFIZLARI ILE KARSILASMA DIYALOGU -->
+    <DialogNode Type="Npc" Id="GT3_Fanatik_Giris" TargetAlias="FanatikMuhafizlar" InputToken="start" OutputToken="ql_gt3_fanatik_choices" Priority="200">
+      <Text>{=sp_gt3_dlg_fanatic_intro}Heretic! You defied the Blind Master and betrayed the Roost! Feed the crows with your flesh!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_KirikKukla_Savas" />
+      </Conditions>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_Fanatik_P1" TargetAlias="FanatikMuhafizlar" InputToken="ql_gt3_fanatik_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_dlg_fanatic_p1}Your master was a madman, and his roost burns today! (Fight)</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT3_Fanatik_P2" TargetAlias="FanatikMuhafizlar" InputToken="ql_gt3_fanatik_choices" OutputToken="close_window">
+      <Text>{=sp_gt3_dlg_fanatic_p2}The Roost's lies die with you! (Fight)</Text>
     </DialogNode>
   </CustomDialogs>
 </Questline>

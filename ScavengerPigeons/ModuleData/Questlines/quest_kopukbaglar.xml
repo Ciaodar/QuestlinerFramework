@@ -54,7 +54,7 @@
         <Condition Type="BattleResolvedAs" TargetAlias="Konvoy" StringValue="Victory" />
       </Conditions>
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="Konvoy" Amount="70" StringValue="{=sp_kb_convoy}Traitor's Convoy" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="Konvoy" Amount="70" PartyTemplateId="deserters_template" StringValue="{=sp_kb_convoy}Traitor's Convoy" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="Konvoy" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="MakeMet" TargetAlias="HainZanaatkar" />
       </OnEnterActions>
@@ -101,6 +101,16 @@
 
   <CustomDialogs>
     <!-- 1. DOST ILE BULUSMA: 7 ADIMLI DERIN LORE VE SOHBET AGACI -->
+    <DialogNode Type="Npc" Id="KB_Dost_Giris_Map" TargetAlias="Dost" InputToken="start" OutputToken="ql_kb_dost_a1" Priority="200">
+      <Text>{=sp_kb_dlg_map_greet}Ah, {PlayerName}! I sent my swiftest pigeon after you. Thank the heavens we crossed paths.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage1_Mesaj" />
+      </Conditions>
+      <Consequences>
+        <Action Type="MakeMet" TargetAlias="Dost" />
+      </Consequences>
+    </DialogNode>
+
     <DialogNode Type="Player" Id="KB_Dost_Giris" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_kb_dost_a1" Priority="100">
       <Text>{=sp_kb_dlg1}I received your bloody pigeon message. What is the emergency?</Text>
       <Conditions>
@@ -169,7 +179,7 @@
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
-    <DialogNode Type="Player" Id="KB_Dost_P4_Ertele" TargetAlias="Dost" InputToken="ql_kb_dost_step4_choices" OutputToken="hero_main_options">
+    <DialogNode Type="Player" Id="KB_Dost_P4_Ertele" TargetAlias="Dost" InputToken="ql_kb_dost_step4_choices" OutputToken="close_window">
       <Text>{=sp_kb_ertele}I cannot deal with this right now. We will speak later.</Text>
       <Consequences>
         <Action Type="LeaveEncounter" />

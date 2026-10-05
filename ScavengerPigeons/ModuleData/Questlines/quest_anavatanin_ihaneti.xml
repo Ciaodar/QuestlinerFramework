@@ -47,6 +47,7 @@
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="Dost" />
         <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
+        <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
       </OnEnterActions>
       <OnTimeoutActions>
         <Action Type="StartQuest" ObjectId="QLF_HainGuvercin" />
@@ -57,6 +58,9 @@
     <Stage Id="Stage_Bekleme_Guvercin" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_ai_s_bekleme_log}{ArtisanTarget_Link} has been slandering you behind your back. When he gave you that suspicious assassination mission, you should have spoken to someone. Your name is quickly being tarnished among the looters. You have no choice but to retreat to a dark corner and wait, perhaps there is another way to solve this.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="Stage4_Dost_Savas" NextStageId="Stage5_KaranlikSon" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
@@ -218,14 +222,18 @@
     <DialogNode Type="Player" Id="Art_B4a" TargetAlias="ArtisanTarget" InputToken="ql_art_b4" OutputToken="close_window">
       <Text>{=sp_ai_dlg25}What?! I was told this man is my friend. This is absurd, you are hiding something. I will not do this!</Text>
       <Consequences>
+        <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
         <Action Type="ChangeStage" ObjectId="Stage3_SuikastRed" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Art_B4b" TargetAlias="ArtisanTarget" InputToken="ql_art_b4" OutputToken="close_window">
       <Text>{=sp_ai_dlg26}At your command! The looter's order is the pigeon's duty, if you'll excuse me...</Text>
       <Consequences>
+        <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
         <Action Type="ChangeStage" ObjectId="Stage3_SuikastKabul" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 

@@ -132,14 +132,29 @@
       <Text>{=sp_gt2_dlg5}Shadows swallow the alleys. Die! (Attack)</Text>
       <Consequences>
         <Action Type="KillHero" TargetAlias="Muhbir2" />
-        <Action Type="SpawnBanditParty" TargetAlias="CeteMuhafizlari" Amount="30" StringValue="EngagePlayer" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="CeteMuhafizlari" Amount="30" PartyTemplateId="deserters_template" StringValue="{=sp_gt2_thugs}Alley Enforcers" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="CeteMuhafizlari" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_CeteSavasi" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="GT2_M2_Choice_Ertele" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_intro" OutputToken="close_window">
       <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- CETE SAVASI: MUHAFIZLAR ILE KARSILASMA DIYALOGU -->
+    <DialogNode Type="Npc" Id="GT2_Muhafizlar_Giris" TargetAlias="CeteMuhafizlari" InputToken="start" OutputToken="ql_gt2_muhafizlar_choices" Priority="200">
+      <Text>{=sp_gt2_dlg_thugs_intro}You butchered our boss in cold blood! None of you leave this street alive!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_CeteSavasi" />
+      </Conditions>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT2_Muhafizlar_P1" TargetAlias="CeteMuhafizlari" InputToken="ql_gt2_muhafizlar_choices" OutputToken="close_window">
+      <Text>{=sp_gt2_dlg_thugs_p1}Your boss made his choice, and now you will join him! (Fight)</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT2_Muhafizlar_P2" TargetAlias="CeteMuhafizlari" InputToken="ql_gt2_muhafizlar_choices" OutputToken="close_window">
+      <Text>{=sp_gt2_dlg_thugs_p2}Clear the street or die where you stand! (Fight)</Text>
     </DialogNode>
 
     <!-- DOST ILE YUZLESME: 8 ADIMLI HESAPLASMA VE IKONIK DIALOG -->

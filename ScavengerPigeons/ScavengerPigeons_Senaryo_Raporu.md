@@ -1,4 +1,4 @@
-# Scavenger Pigeons (Çapulcu Güvercinler) — Kapsamlı Senaryo ve Teknik Tasarım Raporu: Gölge Tüneği & Çifte Rota Mimarisi
+# Scavenger Pigeons (Çapulcu Güvercinler): Kapsamlı Senaryo ve Teknik Tasarım Raporu: Gölge Tüneği & Çifte Rota Mimarisi
 
 Bu belge, Questliner Framework üzerinde çalışan **Scavenger Pigeons (Çapulcu Güvercinler)** senaryo paketinin hem kanuni/sadakat yolunu hem de karanlık "Kör Sadakat / Gölge Tüneği" rotasını kapsayan nihai senaryo ve teknik tasarım dökümüdür.
 

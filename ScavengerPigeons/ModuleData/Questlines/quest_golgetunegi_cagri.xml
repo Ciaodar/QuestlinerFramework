@@ -132,32 +132,49 @@
     <DialogNode Type="Player" Id="GT1_Ulak_Choice_Resolute" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step4_choices" OutputToken="close_window">
       <Text>{=sp_gt1_dlg3}{Dost.Name}'s lies end now. Their blood will water the mountain. (Accept Mission)</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="RakipAjanlar" Amount="50" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="Hold" />
+        <Action Type="SpawnBanditParty" TargetAlias="RakipAjanlar" Amount="50" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="{=sp_gt1_foreign_agents}Foreign Detachment" />
         <Action Type="SetPartyAi" TargetAlias="RakipAjanlar" StringValue="Hold" />
         <Action Type="ChangeStage" ObjectId="Stage2_AjanBaskini" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="GT1_Ulak_Choice_Pragmatic" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step4_choices" OutputToken="close_window">
       <Text>{=sp_gt1_dlg3_prag}Fifty foreign deserters will fall beneath my steel. The Shadow Roost better have gold ready when I return. (Accept Mission)</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="RakipAjanlar" Amount="50" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="Hold" />
+        <Action Type="SpawnBanditParty" TargetAlias="RakipAjanlar" Amount="50" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="{=sp_gt1_foreign_agents}Foreign Detachment" />
         <Action Type="SetPartyAi" TargetAlias="RakipAjanlar" StringValue="Hold" />
         <Action Type="ChangeStage" ObjectId="Stage2_AjanBaskini" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="GT1_Ulak_Choice_Inquisitive" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step4_choices" OutputToken="close_window">
       <Text>{=sp_gt1_dlg3_inq}If {Dost.Name} is trading with foreign powers, destroying this detachment will strike at his core. I will ride immediately. (Accept Mission)</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="RakipAjanlar" Amount="50" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="Hold" />
+        <Action Type="SpawnBanditParty" TargetAlias="RakipAjanlar" Amount="50" PartyTemplateId="deserters_template" ObjectId="GolgeSiginagi" StringValue="{=sp_gt1_foreign_agents}Foreign Detachment" />
         <Action Type="SetPartyAi" TargetAlias="RakipAjanlar" StringValue="Hold" />
         <Action Type="ChangeStage" ObjectId="Stage2_AjanBaskini" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="GT1_Ulak_Choice_Ertele" TargetAlias="GolgeUlagi" InputToken="ql_gt1_step4_choices" OutputToken="close_window">
       <Text>{=sp_gt1_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <!-- AJAN BASKINI: YABANCI MUFREZE ILE KARSILASMA DIYALOGU -->
+    <DialogNode Type="Npc" Id="GT1_Ajan_Giris" TargetAlias="RakipAjanlar" InputToken="start" OutputToken="ql_gt1_ajan_choices" Priority="200">
+      <Text>{=sp_gt1_dlg_agents_intro}You are intruding on private negotiations, Calradian! Lower your weapons or be put down!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage2_AjanBaskini" />
+      </Conditions>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT1_Ajan_P1" TargetAlias="RakipAjanlar" InputToken="ql_gt1_ajan_choices" OutputToken="close_window">
+      <Text>{=sp_gt1_dlg_agents_p1}Those stolen defense blueprints stay on this side of the mountains! (Fight)</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT1_Ajan_P2" TargetAlias="RakipAjanlar" InputToken="ql_gt1_ajan_choices" OutputToken="close_window">
+      <Text>{=sp_gt1_dlg_agents_p2}No foreign mercenaries buy Calradian secrets while I draw breath! (Fight)</Text>
     </DialogNode>
   </CustomDialogs>
 </Questline>

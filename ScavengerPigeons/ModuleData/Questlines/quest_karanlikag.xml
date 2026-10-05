@@ -142,6 +142,7 @@
         <Action Type="SpawnBanditParty" TargetAlias="GolgeSuikastcilar" Amount="45" PartyTemplateId="deserters_template" StringValue="{=sp_ka_assassins}Shadow Silencers" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="GolgeSuikastcilar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_PusuSavasi" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
     <DialogNode Type="Player" Id="KA_M_P4_Fight_Prag" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step4_choices" OutputToken="close_window">
@@ -150,6 +151,7 @@
         <Action Type="SpawnBanditParty" TargetAlias="GolgeSuikastcilar" Amount="45" PartyTemplateId="deserters_template" StringValue="{=sp_ka_assassins}Shadow Silencers" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="GolgeSuikastcilar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_PusuSavasi" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
     <DialogNode Type="Player" Id="KA_M_P4_Ertele" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step4_choices" OutputToken="close_window">
@@ -216,12 +218,14 @@
       <Text>{=sp_ka_dlg_fin_ruler}With this ledger, {Dost.Name}'s puppet empire is finished. From now on, the shadows answer to me. (Claim the Black Ledger)</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="StageSuccess" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
     <DialogNode Type="Player" Id="KA_K_P2_Prag" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_final_choices" OutputToken="close_window">
       <Text>{=sp_ka_dlg_fin_prag}Power and gold always follow the truth. I will keep this weapon close. (Claim the Black Ledger)</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="StageSuccess" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
     <DialogNode Type="Player" Id="KA_K_P2_Ertele" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_final_choices" OutputToken="close_window">

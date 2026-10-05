@@ -128,7 +128,7 @@
     <!-- Itibar Dersi -->
     <string id="sp_id_title" text="A Lesson in Reputation from a Looter" />
     <string id="sp_id_s1_log" text="The mysterious man dressed as a looter told you that you needed to go to the barber in the city of {GizemliSehir_Link}. Out of respect for his deception skills, you released him and his crew. Perhaps there is some truth to his words? Go to the city of {GizemliSehir_Link} and find the barber." />
-    <string id="sp_id_s_success_log" text="You found the barber and asked him 'What is the name of the looter?'. He told you about the slanders against you. An old friend from your motherland asked for your help from the secret cult 'Scavenger Pigeons', of which he is a member. They gave you some money and told you to gather a party of 70 men and find the elder of a nearby village." />
+    <string id="sp_id_s_success_log" text="You found the barber and asked him 'What is the name of the looter?'. He told you about the slanders against you. An old friend from your motherland, {Dost.Name}, asked for your help from the secret cult 'Scavenger Pigeons', of which he is a member. They gave you some money and told you to gather a party of 70 men and find the elder of a nearby village." />
     
     <string id="sp_id_dlg10" text="What is the name of the looter?" />
     <string id="sp_id_dlg11" text="Anubis. Looters are the most suspicious birds of the realm. What did you want, stranger?" />
@@ -267,16 +267,16 @@
     <string id="sp_kb_dlg_p_inq" text="Why run like a common thief? Why steal the very ciphers you swore to protect?" />
     <string id="sp_kb_dlg_p_harsh" text="Save your breath, rat. Hand over the master ciphers and get on your knees." />
     <string id="sp_kb_dlg_p_prag" text="You hired 70 deserters and spent a fortune to flee. What is in those ciphers that makes you run for your life?" />
-    <string id="sp_kb_dlg_k_layer1" text="You speak of theft, but you don't even know whose blood is on your hands! You think you are fighting for the Motherland and your noble friend. But you are nothing more than his blinded executioner!" />
+    <string id="sp_kb_dlg_k_layer1" text="You speak of theft, but you don't even know whose blood is on your hands! You think you are fighting for the Motherland and your noble contact, {Dost.Name}. But you are nothing more than his blinded executioner!" />
     <string id="sp_kb_dlg_p2_accuse" text="{Dost.Name} warned me you would spew poison. You're selling our defense archives to foreign crowns to save your own hide!" />
     <string id="sp_kb_dlg_p2_curious" text="Whose blood? What did you discover in those master ciphers that made you turn against your own brothers?" />
     <string id="sp_kb_dlg_k_ledger_reveal" text="Defense archives? Lies! These ciphers contain the Black Ledger, the secret record of every false-flag raid {Dost.Name} orchestrated! He hires deserters to slaughter frontier villages under rival banners, forcing kings into wars so the Pigeons can sell protection and intelligence at extortionate prices!" />
-    <string id="sp_kb_dlg_p3_doubt" text="Manufactured wars... Is that why you gave me an assassination contract against your friend when we first met?" />
-    <string id="sp_kb_dlg_p3_skep" text="Even if my friend is ruthless, you are surrounded by 70 cutthroats. Why should I trust a mercenary commander over a kingdom lord?" />
-    <string id="sp_kb_dlg_k_offer" text="Yes! I tried to have him killed to save Calradia from another continental bloodbath, but you refused! Now my only desire is to live. Let me cross this border, {PlayerName}. Take my 25,000 gold and my Pigeon's Secret Dagger. Your friend will never know. You can walk away wealthy and unburdened!" />
+    <string id="sp_kb_dlg_p3_doubt" text="Manufactured wars... Is that why you gave me an assassination contract against {Dost.Name} when we first met?" />
+    <string id="sp_kb_dlg_p3_skep" text="Even if {Dost.Name} is ruthless, you are surrounded by 70 cutthroats. Why should I trust a mercenary commander over a kingdom lord?" />
+    <string id="sp_kb_dlg_k_offer" text="Yes! I tried to have him killed to save Calradia from another continental bloodbath, but you refused! Now my only desire is to live. Let me cross this border, {PlayerName}. Take my 25,000 gold and my Pigeon's Secret Dagger. {Dost.Name} will never know. You can walk away wealthy and unburdened!" />
     <string id="sp_kb_dlg_fight_prag" text="Your dagger and your gold will be mine once your corpse hits the dirt anyway. Draw your steel! (Fight)" />
 
-    <!-- Karanlik Ag & The Web of Shadows (The Black Ledger) -->
+    <!-- Karanlik Ag and The Web of Shadows -->
     <string id="sp_ka_title" text="The Black Ledger &amp; The Web of Shadows" />
     <string id="sp_ka_s0_log" text="A dying black pigeon collapsed onto your campfire, its claws clutching a scorched parchment written in the fugitive artisan's trembling hand: '{Dost.Name} is not serving the Motherland; he is turning it into an abattoir. The Black Ledger detailing every manufactured war and staged assassination is hidden in {GizliSehir_Link}. Find the broker {KaraMuhbir_Link} before the silencers bury the truth.'" />
     <string id="sp_ka_s1_log" text="A dying black pigeon collapsed onto your campfire, its claws clutching a scorched parchment written in the fugitive artisan's trembling hand: '{Dost.Name} is not serving the Motherland; he is turning it into an abattoir. The Black Ledger detailing every manufactured war and staged assassination is hidden in {GizliSehir_Link}. Find the broker {KaraMuhbir_Link} before the silencers bury the truth.' Ride to {GizliSehir_Link} and locate {KaraMuhbir_Link}!" />
@@ -406,5 +406,23 @@
     <string id="sp_gt1_dlg_p3_task" text="The courier spoke of a foreign force. What is their role in {Dost.Name}'s grand design?" />
     <string id="sp_gt1_dlg_p3_risk" text="Attacking an armed foreign detachment near a mountain hideout could spark an open war with the local garrison." />
     <string id="sp_gt1_dlg_u_test" text="A 50-man foreign detachment waits near {GolgeSiginagi_Link} to purchase {Dost.Name}'s stolen realm defense blueprints! If that intelligence crosses the frontier, thousands will burn. Slay them all. Let him find only cold steel where he expected gold!" />
+
+    <!-- Encounter Dialogues & Hostile Parties -->
+    <string id="sp_kb_dlg_map_greet" text="Ah, {PlayerName}! I sent my swiftest pigeon after you. Thank the heavens we crossed paths." />
+    <string id="sp_dg_dlg_raiders_intro" text="Stand your ground! This mountain road belongs to us. Yield your coin or feed the crows!" />
+    <string id="sp_dg_dlg_raiders_p1" text="You picked the wrong supply line to raid. Draw your steel! (Fight)" />
+    <string id="sp_dg_dlg_raiders_p2" text="The Motherland's justice leaves no raiders breathing! (Fight)" />
+    <string id="sp_gt1_foreign_agents" text="Foreign Detachment" />
+    <string id="sp_gt1_dlg_agents_intro" text="You are intruding on private negotiations, Calradian! Lower your weapons or be put down!" />
+    <string id="sp_gt1_dlg_agents_p1" text="Those stolen defense blueprints stay on this side of the mountains! (Fight)" />
+    <string id="sp_gt1_dlg_agents_p2" text="No foreign mercenaries buy Calradian secrets while I draw breath! (Fight)" />
+    <string id="sp_gt2_thugs" text="Alley Enforcers" />
+    <string id="sp_gt2_dlg_thugs_intro" text="You butchered our boss in cold blood! None of you leave this street alive!" />
+    <string id="sp_gt2_dlg_thugs_p1" text="Your boss made his choice, and now you will join him! (Fight)" />
+    <string id="sp_gt2_dlg_thugs_p2" text="Clear the street or die where you stand! (Fight)" />
+    <string id="sp_gt3_fanatics" text="Roost Fanatics" />
+    <string id="sp_gt3_dlg_fanatic_intro" text="Heretic! You defied the Blind Master and betrayed the Roost! Feed the crows with your flesh!" />
+    <string id="sp_gt3_dlg_fanatic_p1" text="Your master was a madman, and his roost burns today! (Fight)" />
+    <string id="sp_gt3_dlg_fanatic_p2" text="The Roost's lies die with you! (Fight)" />
   </strings>
 </base>
