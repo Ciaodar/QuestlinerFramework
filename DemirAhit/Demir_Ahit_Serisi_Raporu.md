@@ -81,11 +81,11 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
   - `RakipTuccar` (`GlobalHero(DemirAhit_RakipTuccar)`)
 - **Akış ve Aşamalar:**
   1. **Uyarı (Stage1_Uyari):** Demirci, rakip tüccarın atölyeyi ateşe vermek üzere kundakçılar tuttuğunu bildirir.
-  2. **Yol A - Nöbet (Stage2A_Nobet & Stage2A_Savas):** Atölye çevresinde 5 gün nöbet tutulur. Gece vakti saldıran 60 kişilik `Sabotajcilar` grubu (`mercenary_template`) özel karşılaşma diyaloğunun ardından savaşta püskürtülür.
+  2. **Yol A - Nöbet (Stage2A_Nobet & Stage2A_Savas):** Atölye çevresinde 5 gün nöbet tutulur. Gece vakti saldıran 60 kişilik `Sabotajcilar` grubu (`mountain_bandits_template`) özel karşılaşma diyaloğunun ardından savaşta püskürtülür.
   3. **Yol B - Yüzleşme (Stage2B_Takip & Stage2B_Savas):** Tüccar ile doğrudan yüzleşilir:
      - *Rüşvet:* 2.000 altın ödenerek kalleşliğe son verdirilir (`ShowWhenDisabled="true"`).
      - *Tehdit:* `SkillCheck(Roguery, 50)` ile tüccar korkutulur (`ShowWhenDisabled="true"`).
-     - *Savaş:* 40 kişilik paralı asker grubu (`Korumalar`, `mercenary_template`) özel karşılaşma diyaloğunun ardından darmadağın edilir.
+     - *Savaş:* 40 kişilik zırhlı muhafız grubu (`Korumalar`, `sea_raiders_template`) özel karşılaşma diyaloğunun ardından darmadağın edilir.
   4. **Başarı (Stage3_Basari):** Demirci oyuncuya `KalfaMuhru` takdim eder, +10 İlişki ve +30 Renown kazanılır. `DemirAhit2_Basarili=1` set edilir.
 
 ---
@@ -101,7 +101,7 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
   1. **Haber (Stage1_Haber):** Demircinin kardeşi Kalan, kadim su verme tuzlarını taşırken esir düşmüştür.
   2. **Kurtarma (Stage2_Kurtarma):** Oyuncu kaleyi kuşatabilir, fidye ödeyebilir veya zindana sızabilir:
      - *Gizli Sızma:* `SkillCheck(Roguery, 80)` ile nöbetçiler sessizce atlatılır (`ShowWhenDisabled="true"`). Başarılı sızma doğrudan `Stage3_Zafer`'e ulaştırır.
-     - *Açık Savaş:* Zindanda yakalanılırsa 150 kişilik kale garnizonu (`GarnizonMuhafizlari`, `deserters_template`) özel karşılaşma diyaloğunun ardından savaşılır.
+     - *Açık Savaş:* Zindanda yakalanılırsa 75 kişilik seçkin kale muhafızı (`GarnizonMuhafizlari`, `sea_raiders_template`) özel karşılaşma diyaloğunun ardından savaşılır.
   3. **Zafer (Stage3_Zafer):** Kalan kurtarıldığında (`!TargetIsPrisoner`) görev tamamlanır; Kalan hafızaya alınır (`DemirAhit_Kalan`). +20 Demirci İlişkisi, +20 Kalan İlişkisi, +30 Renown. `DemirAhit3_Basarili=1` set edilir.
 
 ---
