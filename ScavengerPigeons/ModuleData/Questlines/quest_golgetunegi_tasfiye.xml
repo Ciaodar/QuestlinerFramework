@@ -36,7 +36,7 @@
     </Stage>
 
     <Stage Id="Stage2_CeteSavasi" NextStageId="Stage3_DostYuzlesme" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_gt2_s2_fight_log}{Muhbir2_Link}'s 30 cutthroats have ambushed you in the back streets! Cut through them to complete the underworld purge.</LogText>
+      <LogText>{=sp_gt2_s2_fight_log}{Muhbir2_Link}'s 30 mercenary enforcers ({CeteMuhafizlari_Link}) have ambushed you in the back streets! Cut through them to complete the underworld purge.</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="CeteMuhafizlari" Amount="1" />
       </Conditions>

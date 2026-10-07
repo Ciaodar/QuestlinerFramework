@@ -9,8 +9,8 @@
     <string id="sp_hg_s0_log" text="Şüpheli suikast emrini reddettikten sonra adınıza yayılan dedikoduları araştırmak için gizli bir tahkikat başlattınız. Gözcüleriniz ve sokak muhbirlerinizden kışkırtmaları yapan çapulcular hakkında istihbarat gelmesini bekleyin... (1 Gün)" />
     <string id="sp_hg_s1_log" text="Suikast görevinden şüphelendin ve araştırmaya başladın. {PlayerName} adını kullanarak etrafta dolaşan 3 farklı çapulcu partisi bulup yenmelisin. Gözcüleri sorguladığında gerçek ortaya çıkacak." />
     <string id="sp_hg_s2_log" text="Esir aldığınız çapulcuları sorguluyorsunuz... Elebaşlarının yerini itiraf etmelerini bekleyin. (1 Gün)" />
-    <string id="sp_hg_spawn1" text="Hain Çapulcular" />
-    <string id="sp_hg_s3_log" text="Esirlerle sorgulama vakti geldi. Yakındaki bir çapulcu partisine (Saha Koordinatörü) gidip onlarla konuşmalısın." />
+    <string id="sp_hg_spawn1" text="Şüpheli Saha Ajanları" />
+    <string id="sp_hg_s3_log" text="Saha ajanlarını sorgulama vakti geldi. Yakındaki müfrezelerine (Saha Koordinatörü) gidip onlarla konuşmalısın." />
     <string id="sp_hg_s4_log" text="Esirler sana elebaşının yerini söyledi. Biraz beklersen asıl güvercinler sana gelecek." />
     <string id="sp_hg_s5_log" text="Asıl hainin kim olduğunu öğrendin. Artık tek yapman gereken krallığa bağlılık yemini etmek." />
     
@@ -18,7 +18,7 @@
     <string id="sp_hg_dlg2" text="Bana bildiklerinizi anlatın yoksa hepinizi kılıçtan geçiririm!" />
     <string id="sp_hg_dlg3" text="Biz sadece saha elemanıyız. Zanaatkar bize kimi hedef göstereceğini söylüyor. Ama asıl patron yakında burada olacak. Bırak onu sana getirelim!" />
     <string id="sp_hg_dlg4" text="Pekala sizi bırakıyorum. Zaten başka bir işe de yaramıyorsunuz. Elebaşınızı bekliyorum." />
-    <string id="sp_hg_spawn2" text="Çapulcu Elebaşı" />
+    <string id="sp_hg_spawn2" text="Güvercin Saha Koordinatörü" />
     
     <string id="sp_hg_dlg5" text="Dur! Kılıç çekmeye gelmedik... Askerlerimi serbest bırakmışsın. Ben Saha koordinatörü bir çapulcuyum. Bu ne demek oluyor? Bir şey mi anlatmaya çalışıyorsun?" />
     <string id="sp_hg_dlg6" text="Evet, dostumuz denen adamı öldürmediğimi kanıtlamak için çıkıyorum karşına. İftiraların kimden çıktığını öğrenmem gerek." />
@@ -127,7 +127,7 @@
     <!-- Itibar Dersi -->
     <string id="sp_id_title" text="Çapulcudan İtibar Dersi" />
     <string id="sp_id_s1_log" text="Çapulcu kılığındaki gizemli adam sana {GizemliSehir_Link} şehrindeki berbere gitmen gerektiğini söylemişti. Kandırmaca yeteneğine duyduğun saygıdan onu ve ekibini serbest bıraktın. Belki de dediklerinde bir doğruluk payı vardır? {GizemliSehir_Link} şehrine git ve berberi bul." />
-    <string id="sp_id_s_success_log" text="Berberi bulup ona 'Çapulcunun adı ne?' diye sordun. Sana hakkındaki iftiralardan bahsetti. Anavatanından eski bir dostun, onun da bulunduğu 'Çapulcu Güvercinler' isimli gizli kültten senin için yardım istemiş. Sana bir miktar para vererek 70 kişilik bir parti toplayıp yakınlardaki bir köyün büyüğünü bulmanı söylediler." />
+    <string id="sp_id_s_success_log" text="Berberi bulup ona 'Çapulcunun adı ne?' diye sordun. Sana hakkındaki iftiralardan bahsetti. Anavatanından eski bir dostun, {Dost.Name}, onun da bulunduğu 'Çapulcu Güvercinler' isimli gizli kültten senin için yardım istemiş. Sana bir miktar para vererek 70 kişilik bir parti toplayıp yakınlardaki bir köyün büyüğünü bulmanı söylediler." />
     
     <string id="sp_id_dlg10" text="Çapulcunun ismi ne?" />
     <string id="sp_id_dlg11" text="Anubis. Çapulcular diyarın en kuşkulu kuşlarıdır. Ne istemiştin, yabancı?" />
@@ -151,8 +151,8 @@
     <string id="sp_kb_s2_log" text="{Dost_Link} ile konuştun. Zanaatkar {HainZanaatkar_Link}'ın Güvercin şifrelerini çalıp kaçan gerçek bir hain olduğunu açıkladı. Ana firari müfrezesini bulmak için önce diyarda dolaşan 3 sahte çapulcu grubunu sınırları terk etmeden yakalayıp yok etmelisin. (Süre Sınırı: 10 Gün)" />
     <string id="sp_kb_convoy" text="Hainin Firari Müfrezesi" />
     <string id="sp_kb_s3_log" text="Yem gruplarını yok ettikten sonra, hainin seçkin firari müfrezesi seni ortadan kaldırmak için ortaya çıktı! Sınırı geçip kaçmadan önce onlarla yüzleş ve şifreleri geri al. (Süre Sınırı: 5 Gün)" />
-    <string id="sp_kb_success_log" text="Müfrezeyi imha ettin ve hain {HainZanaatkar_Link}'ı idam ettin. Şifreler {Dost_Link}'a teslim edildi ve Çapulcu Güvercinler'e olan mutlak sadakatin kesin olarak kanıtlandı." />
-    <string id="sp_kb_yozlasma_log" text="Hainin rüşvetini kabul ettin. {HainZanaatkar_Link}'ın şifrelerle birlikte rakip krallığa kaçmasına izin verdin. Artık daha zenginsin ve Güvercin'in Gizli Hançeri'ni taşıyorsun, ancak Anavatan'a ihanet ettin. {Dost_Link} yozlaşmandan habersiz kalmaya devam ediyor." />
+    <string id="sp_kb_success_log" text="Müfrezeyi imha ettin ve hain {HainZanaatkar_Link}'ı idam ettin. Şifreler {Dost_Link}'a teslim edildi ve Çapulcu Güvercinler'e olan mutlak sadakatin kesin olarak kanıtlandı. 25.000 dinar ve yüksek itibar ile ödüllendirildin." />
+    <string id="sp_kb_yozlasma_log" text="Zanaatkarın uyarısına kulak verdin ve teklifini kabul ettin. 25.000 dinar ve Gizli Güvercin Hançeri karşılığında {HainZanaatkar_Link}'ın canını bağışlayıp sınırı geçmesine izin verdin. Çok geçmeden can çekişen siyah bir güvercin sana Kara Kütük'ün koordinatlarını getirecek..." />
     <string id="sp_kb_fail_log" text="Hain {HainZanaatkar_Link} ve firari müfrezesi, sen onları durduramadan sınırı aşıp kaçmayı başardı. Gizli şifreler sonsuza dek kayboldu ve Çapulcu Güvercinler sana olan tüm güvenini yitirdi." />
     
     <string id="sp_kb_dlg1" text="Kanlı güvercin mesajını aldım. Acil durum nedir?" />
@@ -164,32 +164,32 @@
     <string id="sp_kb_dlg7" text="Demek beni buldun, {PlayerName}... Ben {HainZanaatkar.Name}. Siz Güvercinler gerçekten amansızsınız." />
     <string id="sp_kb_dlg8" text="Şifreleri ver hain. Ölümün hızlı olacak." />
     <string id="sp_kb_dlg9" text="Dur! {Dost_Link} ve Anavatan için körü körüne savaşıyorsun. Bu şifrelerin ne içerdiğini biliyor musun? Haksız bir savaş başlatmak için sahte bayrak suikast emirleri! Anavatan yozlaşmış dostum. Gitmeme izin ver, sana bir servet ve efsanevi hançerimi vereyim." />
-    <string id="sp_kb_dlg10" text="Bir hainin yalanları benim için bir şey ifade etmez. Askerler, hücum! (Saldır)" />
-    <string id="sp_kb_dlg11" text="Sahte bayrak savaşı mı? Altınları ve hançeri ver, gözümün önünden kaybol." />
-    <string id="sp_kb_dlg12" text="Akıllıca bir seçim. Güvercinler aptaldır. Elveda, {PlayerName}." />
+    <string id="sp_kb_dlg10" text="Bir hainin yalanları benim için bir şey ifade etmez. Anavatan'a olan yeminim mutlaktır! Askerler, hücum! (Haini İnfaz Et)" />
+    <string id="sp_kb_dlg11" text="Eğer {Dost.Name} sahte savaşlar tezgahlıyorsa gerçek ortaya çıkmalı. Altınları ve hançeri bırak, kanıtı nerede bulacağımı söyle. (Zanaatkarı Bağışla)" />
+    <string id="sp_kb_dlg12" text="Akıllıca bir seçim, {PlayerName}. Gökyüzünü kollamaya devam et; sınırı geçtiğimde siyah bir güvercin sana Kara Kütük'ün koordinatlarını getirecek. Elveda." />
 
     <!-- Golge Tunegi: Golge Tuneginin Cagri -->
     <string id="sp_gt1_title" text="Gölge Tüneği'nin Çağrısı" />
-    <string id="sp_gt1_s0_log" text="Zanaatkarı atölyesinde cansız bıraktın. Şehir muhafızları katili ararken bir süre kuytuda kalıp izini kaybettirmelisin. Sokakların sakinleşmesini bekle... (1 Gün)" />
-    <string id="sp_gt1_s1_log" text="Sokaklar durulduğunda pelerininin altına siyah tüylü bir güvercin kondu. Zanaatkarın cesedinden aldığın kemik mührü bilen biri var. {GolgeSehri_Link} şehrine git ve Gölge Ulağı {GolgeUlagi_Link} ile konuş." />
-    <string id="sp_gt1_s2_log" text="Ulak, zanaatkarın örgüt sırlarını Calradia krallıklarına sızdıran bir köstebek olduğunu doğruladı. Ancak senin kör sadakatini kanıtlaman gerek: Zanaatkarın kaçırdığı şifreleri satın almak için bekleyen 50 kişilik yabancı muhafız müfrezesini {GolgeSiginagi_Link} eteklerinde pusuya düşür ve yok et." />
-    <string id="sp_gt1_s_success_log" text="Yabancı casusları kılıçtan geçirdin. Gölge Tüneği senin acımasızlığını ve sorgusuz sadakatini onayladı. Artık örgütün dış kapısındaki bir çapulcu değil, gölgelerin içindeki bir cellatsın. Sana 'Gölge Kemik Hançeri' ve 30.000 altın sunuldu." />
-    <string id="sp_gt1_dlg1" text="Öldürülen zanaatkardan aldığın kuzgun kemiği mührünü taşıyorsun... Gölge Tüneği ne yaptığını biliyor." />
-    <string id="sp_gt1_dlg1_p" text="Burada birinin bu kuzgun kemiği şifresini tanıdığı söylendi." />
+    <string id="sp_gt1_s0_log" text="Derin Kanat ulağının canını bağışladın ve {Dost.Name} tarafından imzalanan gizli emirleri okudun. {Dost.Name}'ın tazılarının şimdiden peşine düştüğünü bilerek bir süre kuytuda gizlen ve Gölge Tüneği'nin seninle temas kurmasını bekle... (1 Gün)" />
+    <string id="sp_gt1_s1_log" text="Ortalık durulduğunda pelerininin altına siyah tüylü bir güvercin kondu. İç çember Kuzgun Kemiği Şifresi'ni taşıyan kişiyi bekliyor. {GolgeSehri_Link} şehrine git ve Gölge Fısıltıcısı {GolgeUlagi_Link} ile konuş." />
+    <string id="sp_gt1_s2_log" text="{GolgeUlagi_Link}, {Dost.Name}'ın kazançlı yeni bir savaş çıkarmak için krallık savunma sırlarını yabancı güçlere sattığını açıkladı. {GolgeSiginagi_Link} yakınlarında bekleyen 50 kişilik yabancı müfrezeyi ({RakipAjanlar_Link}) yakala ve imha et!" />
+    <string id="sp_gt1_s_success_log" text="Yabancı müfrezeyi imha ettin ve çalınan savunma planlarını ele geçirdin. Gölge Tüneği artık {Dost.Name}'ın yozlaşmış imparatorluğunu yıkma kararlılığına güveniyor. Gölge Kemiği Hançeri ve 30.000 dinar kazandın." />
+    <string id="sp_gt1_dlg1" text="Ulağımızın verdiği Kuzgun Kemiği Şifresi'ni taşıyorsun... Demek {Dost.Name}'ın yaldızlı yalanları yerine hakikati seçtin." />
+    <string id="sp_gt1_dlg1_p" text="Kuzgun Kemiği Şifresi'ni getirdim. Ulak, {Dost.Name}'ın savaşlarının ardındaki gerçeği bildiğini söyledi." />
     <string id="sp_gt1_dlg2" text="Zanaatkar sadece bir çıbanbaşı değildi; en derin şifre arşivlerimizi yabancı krallıklara satıyordu. Nefesini kestin, fakat kör sadakatini kanla kanıtlaman gerek. {GolgeSiginagi_Link} yakınlarında çalınan şifreleri satın almak için bekleyen 50 kişilik bir yabancı firari birliği var. Hepsini kılıçtan geçir. Geride anlatacak tek bir dil bile kalmasın." />
-    <string id="sp_gt1_dlg3" text="Kör sadakat tereddüt tanımaz. Kanları dağı sulayacak." />
+    <string id="sp_gt1_dlg3" text="{Dost.Name}'ın ihaneti burada bitiyor. O yabancı ajanların hiçbiri o dağdan sağ çıkamayacak. (Görevi Kabul Et)" />
 
     <!-- Golge Tunegi: Kanli Sifreler ve Buyuk Tasfiye -->
     <string id="sp_gt2_title" text="Kanlı Şifreler ve Büyük Tasfiye" />
-    <string id="sp_gt2_s1_log" text="Zanaatkarın ölümü ılımlıları dehşete düşürdü. Gölge Tüneği ele geçen tüm kanalların koparılmasını emrediyor. Tüccar muhbir {Muhbir1_Link}'ı bul ve onu sonsuza dek sustur." />
-    <string id="sp_gt2_s2_log" text="{Muhbir1_Link} artık konuşamayacak. Şimdi arka sokaklardaki yeraltı çete lideri {Muhbir2_Link}'ı bul, onu ve şebekesini ortadan kaldır." />
-    <string id="sp_gt2_s2_fight_log" text="{Muhbir2_Link}'ın 30 sokak haydutu arka sokaklarda pusu kurdu! Yeraltı tasfiyesini tamamlamak için hepsini kılıçtan geçir." />
-    <string id="sp_gt2_s3_log" text="Eski müttefikin {Dost_Link}, seni kana susamış bir canavar olarak görüp peşine bir ordu ({DostOrdusu_Link}) taktı. Savaş meydanında ordusuyla yüzleş ve bu işi bitir!" />
-    <string id="sp_gt2_s_success_log" text="{Dost_Link}'ın ordusunu darmadağın ettin ve onu soğukkanlılıkla idam ettin. Anavatan tasfiyesi tamamlandı. Gölge Tüneği sana 50.000 altın ve 50 nam gönderdi." />
-    <string id="sp_gt2_dlg1" text="Sen... Zanaatkarı katleden o uğursuz gölgesin! Benden ne istiyorsun? Bütün defterleri yaktım, yemin ederim!" />
+    <string id="sp_gt2_s1_log" text="{Dost_Link}'ı gücünden koparmak için finansal ve yeraltı ağlarını kesmelisin. Onun yozlaşmış savaş vurguncusu {Muhbir1_Link}'ı bul ve sonsuza dek sustur." />
+    <string id="sp_gt2_s2_log" text="{Muhbir1_Link}'ın savaş kasası kapandı. Şimdi kenar mahallelerde {Dost_Link}'ın yeraltı infazcısı {Muhbir2_Link}'ı bul ve suikast şebekesini çökert." />
+    <string id="sp_gt2_s2_fight_log" text="{Muhbir2_Link}'ın 30 paralı muhafızı ({CeteMuhafizlari_Link}) arka sokaklarda pusu kurdu! Yeraltı tasfiyesini tamamlamak için hepsini kılıçtan geçir." />
+    <string id="sp_gt2_s3_log" text="Köşeye sıkışan ve öfkeden deliye dönen eski hamîn {Dost_Link}, seni ortadan kaldırmak için bir ordu ({DostOrdusu_Link}) topladı. Savaş meydanında ordusuyla yüzleş ve aldatmaca saltanatına son ver!" />
+    <string id="sp_gt2_s_success_log" text="{Dost_Link}'ın ordusunu darmadağın ettin ve yozlaşmış kuklacıyı savaş meydanında infaz ettin. Sahte savaşların intikamı alındı ve Gölge Tüneği son hesaplaşma için seni bekliyor. 50.000 dinar ve 50 nam kazandın." />
+    <string id="sp_gt2_dlg1" text="Sen... {Dost.Name}'a sırt çeviren o kılıçsın! Benden ne istiyorsun? Tahıl ablukalarını sadece o emrettiği için finanse ettim!" />
     <string id="sp_gt2_dlg1_p" text="Satın aldığın şifreler için buradayım." />
     <string id="sp_gt2_dlg1_reply" text="Ne?! Seni kim gönderdi?! Kurye tarikatı mı?! Yemin ederim tüm defterleri yaktım, ne istersen al, canımı bağışla!" />
-    <string id="sp_gt2_dlg2" text="Kör Sadakat af tanımaz. Gölge Tüneği selamını iletti. (Tüccarı İnfaz Et)" />
+    <string id="sp_gt2_dlg2" text="Kanlı paraların koca eyaletleri açlığa mahkum etti. Diyar adalet istiyor! (Finansörü İnfaz Et)" />
     <string id="sp_gt2_dlg3" text="Önce kasanın anahtarlarını ver, sonra ecelinle tanış. (15.000 Altın Al ve İnfaz Et)" />
     <string id="sp_gt2_dlg4" text="Sokakları temizleyebileceğini mi sanırsın Güvercin? Tüccarı katletmiş olabilirsin ama bu inimizden sağ çıkamayacaksın! Çocuklar, deşin şu köpeği!" />
     <string id="sp_gt2_dlg4_p" text="Gölge Tüneği senin sessizliğini emrediyor, çete başı." />
@@ -202,12 +202,12 @@
 
     <!-- Golge Tunegi: Calradia'nin Kuklacisi (Nihai Son) -->
     <string id="sp_gt3_title" text="Calradia'nın Kuklacısı" />
-    <string id="sp_gt3_s1_log" text="Bütün şahitler susturuldu. Gölgelerin efendisi seni {TunekSehri_Link} şehrine çağırıyor. Kör Usta {KorUsta_Link} ile buluş ve Çapulcu Güvercinlerin nihai kaderine karar ver." />
-    <string id="sp_gt3_s2_kirikkukla_log" text="Tüneği ateşe verdin! {KorUsta_Link}'nın 40 fanatik muhafızı öfkeyle etrafını sardı. Hepsini yok et ve tarikatın zincirlerini kır!" />
+    <string id="sp_gt3_s1_log" text="{Dost.Name}'ın yozlaşmış ağı çökertildikten sonra, Gölge Tüneği'nin kadim kurucusu seni huzuruna çağırıyor. {TunekSehri_Link} şehrine git, Kör Usta {KorUsta_Link} ile buluş ve Çapulcu Güvercinler ile Calradia'nın nihai kaderine karar ver." />
+    <string id="sp_gt3_s2_kirikkukla_log" text="Tüneği ateşe verdin! {KorUsta_Link}'nın 40 fanatik muhafızı ({FanatikMuhafizlar_Link}) öfkeyle etrafını sardı. Hepsini yok et ve tarikatın zincirlerini kır!" />
     <string id="sp_gt3_s_bas_efendi_log" text="Kör Usta'nın nefesi senin ellerinde tükendi. Gölge Ustası Mührü artık senin parmağında. Calradia kralları tahtlarında gururla otururken, her gece yastıklarının altına bırakılan siyah tüylerle kimin gerçek efendi olduğunu bilecekler. Sen Gölge Tüneği'nin mutlak hükümdarısın." />
-    <string id="sp_gt3_s_kirik_kukla_log" text="Gölge Tüneği alevler içinde çökerken arkana bile bakmadın. Şifreler küle döndü, efendiler can verdi. Artık hiçbir tarikata, hiçbir krala boyun eğmeyen; Calradia bozkırlarında adı sadece fısıltıyla anılan yalnız bir hayaletsin." />
-    <string id="sp_gt3_s_kaos_log" text="Aynı gece üç kraliyet sarayında da sahte güvercinler öttü. Sabah olduğunda imparatorluklar birbirine savaş ilan etti. Şehirler kuşatıldı, köyler yakıldı. Sen ise servetin ve ordunla bu devasa yangının ortasında tahtları dilediğin gibi deviriyorsun." />
-    <string id="sp_gt3_dlg1" text="Bunca kan, bunca sadakat... Şimdi bana mı kılıç çekiyorsun yavru güvercin? Calradia önümüzde diz çökmeye hazır. Son arzun nedir?" />
+    <string id="sp_gt3_s_kirik_kukla_log" text="Gölge Tüneği alevler içinde çökerken arkana bile bakmadın. Şifreler küle döndü, kuklacılar can verdi. Artık hiçbir tarikata, hiçbir taca boyun eğmeyen özgür bir efsane olarak Güvercin Kanı Kılıcı ile Calradia bozkırlarında at sürüyorsun." />
+    <string id="sp_gt3_s_kaos_log" text="Aynı gece imparatorluk saraylarında sahte güvercinler öttü. Sabah olduğunda imparatorluklar birbirine savaş ilan etti. Şehirler kuşatıldı, köyler yakıldı. Sen ise bu kıtasal yangının ortasında 200.000 dinar ve ordularınla hanedanları dilediğin gibi deviriyorsun." />
+    <string id="sp_gt3_dlg1" text="Duman ve dökülen kan kokusu... En yüksek tüneğe kadar tırmandın küçük güvercin. Calradia'nın taçları sessizlik içinde titriyor." />
     <string id="sp_gt3_dlg1_p" text="Tüneğin efendisi ile yüzleşmeye geldim." />
     <string id="sp_gt3_dlg1_reply" text="Ne çok kan, ne sarsılmaz bir kör sadakat... Zirveye ulaştın küçük güvercin. Calradia'nın tahtları önümüzde titriyor. İraden nedir?" />
     <string id="sp_gt3_dlg2" text="Bana öğrettiğin ilk kuralı unuttun Usta: 'En keskin gaga, en yaşlı tüneği parçalar.' Artık emirleri sen değil, ben vereceğim. (Kör Usta'yı Zehirle &amp; Tahtı Ele Geçir)" />
@@ -242,7 +242,7 @@
     <string id="sp_ai_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="sp_ai_dlg47_p" text="Geri döndüm, dostum." />
     <string id="sp_ai_dlg50" text="Teşekkürler. Sana sunacağım bu bağış hem açtığım zahmetin bir telafisi olacak hem de yeni hizmetinde sana güç katacaktır." />
-    <string id="sp_ai_dlg51" text="Başka bir şey hakkında konuşmak ister miydin?" />
+    <string id="sp_ai_dlg51" text="Kılıcın diyara layıkıyla hizmet etsin. Yolun açık olsun, dostum." />
 
     <!-- Hain Guvercin / Ya Dogruysa / Itibar Dersi (Erteleme Secenekleri) -->
     <string id="sp_hg_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
@@ -266,7 +266,7 @@
     <string id="sp_kb_dlg_p_inq" text="Neden adi bir hırsız gibi kaçıyorsun? Korumaya yemin ettiğin şifreleri neden çaldın?" />
     <string id="sp_kb_dlg_p_harsh" text="Nefesini tüketme lağım faresi. Ana şifreleri teslim et ve diz çök." />
     <string id="sp_kb_dlg_p_prag" text="Yetmiş firari kiralayıp kaçmak için bir servet döktün. Bu şifrelerde canını kurtarmak için kaçmanı gerektirecek ne var?" />
-    <string id="sp_kb_dlg_k_layer1" text="Hırsızlıktan bahsediyorsun ama ellerinde kimin kanının olduğunu bile bilmiyorsun! Anavatan ve asil dostun sandığın adam için savaştığını zannediyorsun. Oysa sen onun gözü kör celladından başka bir şey değilsin!" />
+    <string id="sp_kb_dlg_k_layer1" text="Hırsızlıktan bahsediyorsun ama ellerinde kimin kanının olduğunu bile bilmiyorsun! Anavatan ve asil dostun {Dost.Name} için savaştığını zannediyorsun. Oysa sen onun gözü kör celladından başka bir şey değilsin!" />
     <string id="sp_kb_dlg_p2_accuse" text="{Dost.Name} zehir saçacağını söylemişti. Kendi postunu kurtarmak için savunma arşivlerimizi yabancı tahtlara satıyorsun!" />
     <string id="sp_kb_dlg_p2_curious" text="Kimin kanı? O ana şifrelerde kendi kardeşlerine sırt çevirmene sebep olacak ne keşfettin?" />
     <string id="sp_kb_dlg_k_ledger_reveal" text="Savunma arşivleri mi? Koca bir yalan! Bu şifreler Kara Kütük'ü barındırıyor; {Dost.Name}'ın tezgahladığı her sahte bayrak baskınının gizli kaydı! Sınır köylerini rakip sancaklar altında katletsinler diye firariler kiralıyor, kralları savaşa mecbur ediyor ki Güvercinler fahiş fiyata istihbarat ve koruma satsın!" />
@@ -318,7 +318,7 @@
     <string id="sp_dg_s2_log" text="Yaz Hizmeti - Ulak Sevkiyatı: {YazSehir_Link} şehrine at sür ve balmumu mühürlü diplomatik silindiri mührünü kırmadan ulak {YazKuryesi_Link}'a teslim et." />
     <string id="sp_dg_s3_wait_log" text="Sevkiyat hedefine ulaştı. Sonbahar yaprakları dökülürken, {Dost_Link} kritik bir sınır harekatı için senin kılıcının kudretini göreve çağırıyor..." />
     <string id="sp_dg_raiders" text="Düşman Firariler" />
-    <string id="sp_dg_s3_log" text="Sonbahar Hizmeti - Muharebe: Düşman çapulcular {SonbaharHaydutlar_Link} sınır boyundaki Güvercin ikmal yollarını taciz ediyor. Diyarın güvenli geçişini sağlamak için onları avla ve yok et." />
+    <string id="sp_dg_s3_log" text="Sonbahar Hizmeti - Muharebe: Düşman firariler {SonbaharHaydutlar_Link} sınır boyundaki Güvercin ikmal yollarını taciz ediyor. Diyarın güvenli geçişini sağlamak için onları avla ve yok et." />
     <string id="sp_dg_s4_wait_log" text="Sınır güvenliği sağlandı. Kışın ayazı diyarı sararken, saraydaki hassas meseleler pek yakında senin dirayetini gerektirecek..." />
     <string id="sp_dg_s4_log" text="Kış Hizmeti - Saray Entrikası: {KisSehir_Link} şehrine git ve soylular konseyini yönlendirmek amacıyla sahte yönergeleri kütüğe yerleştirmek için saraylı {KisSarayli_Link} ile temas kur." />
     <string id="sp_dg_s5_log" text="Dört mevsimlik hizmet tamamlandı. Ancak işaretsiz kara bir kuzgun geldi ve seni {DerinKanatUlagi_Link} ile buluşmaya çağırdı. İç konsey akılalmaz, emsalsiz bir infaz fermanı çıkardı: Hedef bizzat {Dost_Link}!" />
@@ -366,7 +366,7 @@
     <string id="sp_gt2_dlg_p2_truth" text="Bir ulağın canını bağışlamama ihanet mi diyorsun? Asıl ihanet Güvercinlerin külleri satabilsin diye Calradia'yı ateşe vermekti!" />
     <string id="sp_gt2_dlg_p2_accuse" text="Ulak bana bizzat imzaladığın emirleri gösterdi. Kışın koca klanları açlığa mahkum ettin, yazın sınır baskınlarını kışkırttın!" />
     <string id="sp_gt2_dlg_dost_statecraft" text="Ahmak... Devlet aklından zerre anladığın yok! Krallar ve imparatorlar Calradia'yı zevk için kana bulayacak kibirli veletlerdir. Güvercinler savaşların akışını yönetir ki diyar dengede kalabilsin! Bizim rehber elimiz olmasa kaos her şeyi yutardı!" />
-    <string id="sp_gt2_dlg_p3_heroic" text="Denge mi? Masumları boğazlamaya denge mi diyorsun?! Sen koruyucu falan değilsin, {Dost.Name}; Anavatan'ın bağrındaki bir kansersin." />
+    <string id="sp_gt2_dlg_p3_heroic" text="Denge mi? Masumları boğazlamaya denge mi diyorsun?! Sen koruyucu falan değilsin, eski dostum; Anavatan'ın bağrındaki bir kansersin." />
     <string id="sp_gt2_dlg_dost_battlecry" text="Öyleyse söz bitti. Gölge Tüneği bugün seninle birlikte düşecek. Anavatan'ın şövalyeleri, kılıçlarınızı çekin! Bu haini katledin!" />
     <string id="sp_gt2_dlg7_heroic" text="Hakiki Calradia için! Bugün Anavatan senin zehrinden kurtulacak! (Kılıcını Çek ve Hücum Et)" />
     <string id="sp_gt2_dlg7_dark" text="Kılıcını çek kuklacı! Hiçbir kafes seni kurtaramaz! (Saldır)" />

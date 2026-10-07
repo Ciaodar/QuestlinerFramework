@@ -13,12 +13,12 @@
   <TargetResolvers>
     <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
     <Resolver Alias="HainZanaatkar" TargetType="Hero" Filters="GlobalHero(SP_HainZanaatkar)" />
-    <Resolver Alias="looters" TargetType="MobileParty" Filters="BanditParty, Faction(looters)" Selector="Random" />
+    <Resolver Alias="looters" TargetType="MobileParty" Filters="BanditParty, Faction(looters)" Selector="Random" IsOptional="true" />
   </TargetResolvers>
 
   <Stages>
     <Stage Id="Stage0_Bekleme" NextStageId="Stage1_Mesaj" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=sp_kb_s0_log}You are waiting for news about the traitorous looter {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you.</LogText>
+      <LogText>{=sp_kb_s0_log}You are waiting for news about the traitorous artisan {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you.</LogText>
       <Conditions />
       <OnTimeoutActions>
         <Action Type="ChangeStage" ObjectId="Stage1_Mesaj" />

@@ -62,7 +62,7 @@
     </Stage>
 
     <Stage Id="Stage3_Sonbahar_Savas" NextStageId="Stage4_Kis_Bekleme" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_dg_s3_log}Autumn Service - Combat: Hostile raiders {SonbaharHaydutlar_Link} are harassing Pigeon supply routes along the frontier. Hunt them down and eliminate them to ensure secure transit for the realm.</LogText>
+      <LogText>{=sp_dg_s3_log}Autumn Service - Combat: Hostile deserters {SonbaharHaydutlar_Link} are harassing Pigeon supply routes along the frontier. Hunt them down and eliminate them to ensure secure transit for the realm.</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="SonbaharHaydutlar" Amount="1" />
       </Conditions>
