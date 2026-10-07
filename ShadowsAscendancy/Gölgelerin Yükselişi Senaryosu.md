@@ -14,7 +14,7 @@ Bu belge, Questliner Framework üzerinde çalışacak, oyuncunun Klan Seviyesine
 ### Hedef Çözümlemeleri (Target Resolvers)
 1. **GorevVeren (Hero):** Görevin tetiklendiği şehirdeki bir Tüccar (Merchant). (CurrentSettlement -> Notable).
 2. **KacakciLideri (Hero):** Aynı şehirdeki bir Çete Lideri (GangLeader). (Nearest to GorevVeren).
-3. **HedefKervan (MobileParty):** "Kaçakçı Kervanı" adıyla spawn edilecek özel bir parti. (Sistem tarafından sonradan yaratılacak).
+3. **HedefKervan (MobileParty):** "Kaçakçı Kervanı" adıyla spawn edilecek özel bir parti (`caravan_guards_template`). (Sistem tarafından sonradan yaratılacak).
 4. **GizliSığınak (Settlement):** Şehre en yakın Haydut Sığınağı (Hideout).
 
 ### Aşama 1: Tüccarın Derdi (Stage1_TuccarDiyalog)

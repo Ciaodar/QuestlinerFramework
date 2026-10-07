@@ -106,7 +106,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Katiller_Saldir" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_1" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_assassin_fight}You'll have to take my head from my cold corpse, bandit scum. Draw your steel!</Text>
+      <Text>{=shdw_q2_dlg_assassin_fight}You'll have to take my head from my cold corpse, hired scum. Draw your steel!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Katiller_Sorgu" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_1" OutputToken="ql_shdw_katil_sorgu_c">
@@ -114,7 +114,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Katiller_Tehdit" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_1" OutputToken="ql_shdw_katil_tehdit_c">
-      <Text>{=shdw_q2_dlg_assassin_threat}You gathered sixty men just to die in the mud. Let us see if your courage matches your numbers!</Text>
+      <Text>{=shdw_q2_dlg_assassin_threat}You gathered fifty men just to die in the mud. Let us see if your courage matches your numbers!</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Katiller_Cevap_Sorgu" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_sorgu_c" OutputToken="ql_shdw_katil_fight">

@@ -484,7 +484,7 @@
     </DialogNode>
 
     <!-- ========================================== -->
-    <!-- 5. HAYDUT PUSUSU DİYALOĞU (CetePartisi - Mobil Parti) -->
+    <!-- 5. ÇETE PUSUSU DİYALOĞU (CetePartisi - Mobil Parti) -->
     <!-- ========================================== -->
     <DialogNode Type="Npc" Id="Pusu_Giris" TargetAlias="CetePartisi" InputToken="start" OutputToken="ql_shdw_pusu1" Priority="200">
       <Text>{=shdw_q1_dlg_pusu2}So you think crossing {KacakciLideri_Link} is a good idea? Prepare to die! We will send you and that talkative merchant to your ancestors!</Text>
