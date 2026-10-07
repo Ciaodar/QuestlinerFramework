@@ -132,7 +132,7 @@
       <Text>{=sp_gt2_dlg5}Shadows swallow the alleys. Die! (Attack)</Text>
       <Consequences>
         <Action Type="KillHero" TargetAlias="Muhbir2" />
-        <Action Type="SpawnBanditParty" TargetAlias="CeteMuhafizlari" Amount="30" PartyTemplateId="deserters_template" StringValue="{=sp_gt2_thugs}Alley Enforcers" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="CeteMuhafizlari" Amount="30" PartyTemplateId="mercenary_template" StringValue="{=sp_gt2_thugs}Alley Enforcers" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="CeteMuhafizlari" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_CeteSavasi" />
         <Action Type="LeaveEncounter" />

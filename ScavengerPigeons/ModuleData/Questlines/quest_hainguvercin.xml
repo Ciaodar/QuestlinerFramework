@@ -35,7 +35,7 @@
       <OnEnterActions />
       <OnExitActions />
       <OnTimeoutActions>
-        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="5" StringValue="{=sp_hg_spawn1}Traitor Looters" />
+        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="5" PartyTemplateId="deserters_template" StringValue="{=sp_hg_spawn1}Traitor Looters" />
         <Action Type="SetPartyAi" TargetAlias="looters" StringValue="IgnoreAi" />
         <Action Type="ChangeStage" ObjectId="Stage3_EsirSorgu" />
       </OnTimeoutActions>
@@ -88,7 +88,7 @@
         <Action Type="LeaveEncounter" />
         <Action Type="DestroyEncounteredParty" />
         <Action Type="ChangeStage" ObjectId="Stage4_ElebasiBekleme" />
-        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="25" StringValue="{=sp_hg_spawn2}Looter Ringleader" />
+        <Action Type="SpawnBanditParty" TargetAlias="looters" Amount="25" PartyTemplateId="mercenary_template" StringValue="{=sp_hg_spawn2}Looter Ringleader" />
         <Action Type="SetPartyAi" TargetAlias="looters" StringValue="IgnoreAi" />
       </Consequences>
     </DialogNode>

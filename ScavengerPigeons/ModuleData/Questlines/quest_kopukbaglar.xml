@@ -54,7 +54,7 @@
         <Condition Type="BattleResolvedAs" TargetAlias="Konvoy" StringValue="Victory" />
       </Conditions>
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="Konvoy" Amount="70" PartyTemplateId="deserters_template" StringValue="{=sp_kb_convoy}Traitor's Convoy" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="Konvoy" Amount="70" PartyTemplateId="caravan_guards_template" StringValue="{=sp_kb_convoy}Traitor's Convoy" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="Konvoy" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="MakeMet" TargetAlias="HainZanaatkar" />
       </OnEnterActions>

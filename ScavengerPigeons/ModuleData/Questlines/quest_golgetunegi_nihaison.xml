@@ -237,7 +237,7 @@
     <DialogNode Type="Player" Id="GT3_Choice_KirikKukla" TargetAlias="KorUsta" InputToken="ql_gt3_usta_final_choices" OutputToken="close_window">
       <Text>{=sp_gt3_dlg3}You are no mastermind; you are a sewer rat lurking in the dark! No motherland, no honor, only lies and slaughter. This roost burns tonight! (Torch the Roost &amp; Slaughter the Fanatics)</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="FanatikMuhafizlar" Amount="40" PartyTemplateId="deserters_template" SettlementAlias="TunekSehri" StringValue="{=sp_gt3_fanatics}Roost Fanatics" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="FanatikMuhafizlar" Amount="40" PartyTemplateId="garrison_guards_template" SettlementAlias="TunekSehri" StringValue="{=sp_gt3_fanatics}Roost Fanatics" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="FanatikMuhafizlar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_KirikKukla_Savas" />
         <Action Type="LeaveEncounter" />
