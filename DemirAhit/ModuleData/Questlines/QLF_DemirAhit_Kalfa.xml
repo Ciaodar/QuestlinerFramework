@@ -34,7 +34,7 @@
       <OnEnterActions />
       <OnExitActions />
       <OnTimeoutActions>
-        <Action Type="SpawnBanditParty" TargetAlias="Sabotajcilar" Amount="60" PartyTemplateId="mountain_bandits_template" SpawnDistance="1" SpawnRadius="3" StringValue="{=da_sabotajci}Rival Workshop Saboteurs" />
+        <Action Type="SpawnBanditParty" TargetAlias="Sabotajcilar" Amount="60" PartyTemplateId="deserters_template" SpawnDistance="1" SpawnRadius="3" StringValue="{=da_sabotajci}Rival Workshop Saboteurs" />
         <Action Type="SetPartyAi" TargetAlias="Sabotajcilar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2A_Savas" />
       </OnTimeoutActions>
@@ -320,7 +320,7 @@
     <DialogNode Type="Npc" Id="Kalfa_Takip_Savas_Cevap" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t7_savas" OutputToken="close_window">
       <Text>{=da_kalfa_dlg_4}Insolent dog! Guards, seize this meddler and toss their corpse into the gutters!</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="Korumalar" Amount="40" PartyTemplateId="sea_raiders_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_koruma}Merchant Guards" />
+        <Action Type="SpawnBanditParty" TargetAlias="Korumalar" Amount="40" PartyTemplateId="mercenary_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_koruma}Merchant Guards" />
         <Action Type="SetPartyAi" TargetAlias="Korumalar" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2B_Savas" />
         <Action Type="LeaveEncounter" />

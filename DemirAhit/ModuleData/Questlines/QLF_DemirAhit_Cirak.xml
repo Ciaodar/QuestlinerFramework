@@ -37,7 +37,7 @@
       <OnEnterActions />
       <OnExitActions />
       <OnTimeoutActions>
-        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="30" PartyTemplateId="sea_raiders_template" SpawnDistance="3" SpawnRadius="5" StringValue="{=da_katiller}Hired Assassins" />
+        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="30" PartyTemplateId="assassins_template" SpawnDistance="3" SpawnRadius="5" StringValue="{=da_katiller}Hired Assassins" />
         <Action Type="SetPartyAi" TargetAlias="KiralikKatiller" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Pusu" />
       </OnTimeoutActions>
@@ -334,7 +334,7 @@
     <DialogNode Type="Npc" Id="Muhtar_Savas_Cevap" TargetAlias="KoyMuhtari" InputToken="ql_da_m_savas_cevap" OutputToken="close_window">
       <Text>{=da_muhtar_dlg_savas}May the heavens strengthen your arm! They cannot have gone far, so ride out and strike before they escape with our ore!</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="30" PartyTemplateId="sea_raiders_template" SpawnDistance="2" SpawnRadius="4" StringValue="{=da_katiller}Hired Assassins" />
+        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="30" PartyTemplateId="assassins_template" SpawnDistance="2" SpawnRadius="4" StringValue="{=da_katiller}Hired Assassins" />
         <Action Type="SetPartyAi" TargetAlias="KiralikKatiller" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2_Pusu" />
         <Action Type="LeaveEncounter" />

@@ -265,7 +265,7 @@
     <DialogNode Type="Npc" Id="Kalan_Sizma_Basarisiz_Cevap" TargetAlias="Kalan" InputToken="ql_da_kalan_yakalanma" OutputToken="close_window">
       <Text>{=da_kalan_dlg_3}Alarms in the keep! The garrison has spotted us! Stand fast!</Text>
       <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="GarnizonMuhafizlari" Amount="75" PartyTemplateId="sea_raiders_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_muhafiz}Garrison Guards" />
+        <Action Type="SpawnBanditParty" TargetAlias="GarnizonMuhafizlari" Amount="75" PartyTemplateId="garrison_guards_template" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_muhafiz}Garrison Guards" />
         <Action Type="SetPartyAi" TargetAlias="GarnizonMuhafizlari" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="ChangeStage" ObjectId="Stage2B_Savunma" />
         <Action Type="LeaveEncounter" />
