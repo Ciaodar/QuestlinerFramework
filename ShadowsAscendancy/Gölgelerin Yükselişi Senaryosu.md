@@ -23,7 +23,7 @@ Bu belge, Questliner Framework üzerinde çalışacak, oyuncunun Klan Seviyesine
 **Özel Diyaloglar:**
 - **Tüccar:** "Adın buralarda duyulmaya başladı dostum. Şehrin muhafızları kör ve sağır; kervanlarım şehre varmadan hemen önce buharlaşıyor. Çapulcu işi değil, içeriden birileri onlara haber uçuruyor. Bunu çözersen sana yüklü ödeme yaparım."
 - **Oyuncu Cevap:** "Kervanlarının izini süreceğim. Eğer içeriden biri varsa, onu da bulurum."
-**Tetiklenen Olay:** Diyalog bittiğinde, şehre yakın bir noktada "HedefKervan" spawn edilir. `<Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="30" />` ve partiye şehirden uzaklaşma emri verilir. Aşama `Stage2_Takip` olarak güncellenir.
+**Tetiklenen Olay:** Diyalog bittiğinde, şehre yakın bir noktada "HedefKervan" spawn edilir (`<Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="caravan_guards_template" />`) ve partiye saldırı/hareket emri verilir. Aşama `Stage2_Takip` olarak güncellenir.
 
 ### Aşama 2: Kaçakçıların İzi (Stage2_Takip)
 **Durum:** Oyuncu haritada kaçan kervanı yakalamalıdır.
@@ -42,7 +42,7 @@ Bu belge, Questliner Framework üzerinde çalışacak, oyuncunun Klan Seviyesine
 
 ### Aşama 4A: Kanun Yolu (Stage4_PusuBekleyis ve Stage5_PusuSavas)
 **Durum:** Oyuncu mafyaya boyun eğmeyi ve rüşveti reddeder. Çete lideri şehirden çıkışın tehlikeli olacağını fısıldayarak gizliden oyuncuyu tehdit eder.
-**Tetiklenen Olay:** Şehir içindeki diyalog güvenle kapanır (`Stage4_PusuBekleyis`). Oyuncu yerleşkeden çıkıp açık haritaya adım attığında (`<Condition Type="!IsPlayerInSettlement" />`), 50 kişilik çete grubu aniden belirir (`SpawnBanditParty`) ve oyuncuya saldırır (`SetPartyAi EngageParty`).
+**Tetiklenen Olay:** Şehir içindeki diyalog güvenle kapanır (`Stage4_PusuBekleyis`). Oyuncu yerleşkeden çıkıp açık haritaya adım attığında (`<Condition Type="!IsPlayerInSettlement" />`), 45 kişilik paralı çete grubu aniden belirir (`<Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="45" PartyTemplateId="mercenary_template" />`) ve oyuncuya saldırır (`SetPartyAi EngageParty`).
 **Özel Diyalog:** Çete mensupları saldırmadan önce oyuncuya çete lideriyle zıtlaşmanın bedelini ödeteceklerini söyler.
 **Sonuç:** Pusu partisi yenildiğinde görev başarıyla tamamlanır.
 - **Ödüller:** +5000 Denar, Tüccar ile +15 ilişki, Çete Lideri ile -30 ilişki.
@@ -67,17 +67,17 @@ Bu belge, Questliner Framework üzerinde çalışacak, oyuncunun Klan Seviyesine
 
 ### Hedef Çözümlemeleri (Target Resolvers)
 1. **YozlasmisLord (Hero):** İlk görevin geçtiği şehrin sahibi olan veya o krallıkta bulunan Lord. *(Geliştirici Notu: Artık motorumuz Trait filtrelemeyi destekliyor. `Filters="Lord, Trait(Cruel)"` veya `Filters="Lord, Trait(Devious)"` kullanarak zalim veya sinsi lordları otomatik hedefleyebilirsiniz!)*
-2. **KiralikKatiller (MobileParty):** Sadece oyuncuyu avlamak için spawn olacak paralı asker grubu.
+2. **KiralikKatiller (MobileParty):** Sadece oyuncuyu avlamak için spawn olacak paralı suikastçı grubu (`assassins_template`).
 
 ### Aşama 1: Geçmişin Hayaletleri (Stage1_Suikast)
 **Durum:** Oyuncunun yanına bir ulak gelir. (Ulağın metni, ilk görevdeki seçime göre dinamik değişir).
 - **Condition (KanunAdami == True):** Ulak: "Lord {YozlasmisLord.Name}, çeteyi çökertip gelirlerine mani olduğunuz için başınıza ödül koydu! Dikkatli olun!"
 - **Condition (KaranlikOrtak == True):** Ulak: "Lord {YozlasmisLord.Name}, çeteyle yaptığınız anlaşmada kendi payını alamadığı için sizi ortadan kaldırmak istiyor!"
-**Tetiklenen Olay:** `<Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="60" />` ve `SetPartyAi` ile `EngageParty` emri verilir. Kiralık katiller oyuncuya doğru hızla ilerler.
+**Tetiklenen Olay:** `<Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="50" PartyTemplateId="assassins_template" />` ve `SetPartyAi` ile `EngageParty` emri verilir. Kiralık katiller oyuncuya doğru hızla ilerler.
 **Hedef:** Kiralık Katiller partisinden sağ kurtul.
 
 ### Aşama 2: Sessizliği Bozmak (Stage2_Sorgu)
-**Durum:** Kiralık katiller yenildikten sonra oyuncu, katillerin komutanını sorguya çeker.
+**Durum:** Kiralık katiller yenildikten sonra haritada yaralı komutan (`<Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" PartyTemplateId="deserters_template" />`) belirir ve oyuncu katillerin komutanını sorguya çeker.
 **Özel Diyalog:**
 - **Komutan:** "Canımı bağışla! Emri {YozlasmisLord.Name} verdi. Karaborsanın asıl patronu odur. Kanıt istersen, mühürlü emri zırhımın içindedir."
 **Sonuç:** Komutan serbest bırakılır. Oyuncu envanterine `Lordun_Muhurlu_Emri` eklenir. Hedef `Stage3_Intikam` olarak güncellenir.

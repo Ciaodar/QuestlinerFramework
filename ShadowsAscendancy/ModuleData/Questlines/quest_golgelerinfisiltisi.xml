@@ -31,7 +31,7 @@
         <Condition Type="DefeatedParties" TargetAlias="HedefKervan" Amount="1" />
       </Conditions>
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="caravan_guards_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
       </OnEnterActions>
       <OnExitActions>
@@ -61,7 +61,7 @@
         <Condition Type="DefeatedParties" TargetAlias="CetePartisi" Amount="1" />
       </Conditions>
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="45" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q1_cetepartisi}Gang Members" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="45" PartyTemplateId="mercenary_template" StringValue="{=shdw_q1_cetepartisi}Gang Members" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="CetePartisi" StringValue="EngageParty" ObjectId="Player" />
       </OnEnterActions>
       <OnExitActions>

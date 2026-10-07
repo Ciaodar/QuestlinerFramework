@@ -25,7 +25,7 @@
         <Condition Type="DefeatedParties" TargetAlias="KiralikKatiller" Amount="1" />
       </Conditions>
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="50" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q2_katiller}Hired Assassins" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="50" PartyTemplateId="assassins_template" StringValue="{=shdw_q2_katiller}Hired Assassins" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="KiralikKatiller" StringValue="EngageParty" ObjectId="Player" />
       </OnEnterActions>
       <OnExitActions>
@@ -37,7 +37,7 @@
       <LogText>{=shdw_q2_s2_log}You defeated the hired assassins and survived. Find {KatilKomutan_Link} waiting on the map and interrogate him.</LogText>
       <Conditions />
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" PartyTemplateId="sea_raiders_template" StringValue="{=shdw_q2_komutan}Wounded Commander" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" PartyTemplateId="deserters_template" StringValue="{=shdw_q2_komutan}Wounded Commander" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="KatilKomutan" StringValue="Hold" />
       </OnEnterActions>
       <OnExitActions>
