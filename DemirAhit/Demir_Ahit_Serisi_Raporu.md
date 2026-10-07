@@ -50,11 +50,11 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
   - **4 Görevde Toplam 116 Diyalog Düğümü:** Çırağın Yemini (38 düğüm), Kalfa Sınavı (28 düğüm), Ustanın Yükü (23 düğüm), Mirasın Dövülüşü (27 düğüm).
 
 ### F. Kültür Duyarlı Dinamik Parti Şablonları (Dynamic Non-Bandit Party Templates)
-- Senaryo düşmanlarının sıradan haydutlar (`sea_raiders_template`, `mountain_bandits_template`) yerine anlatı bağlamına ve yerel kültüre uygun profesyonel askeri/paralı birliklerden oluşması için motorun yeni şablon mimarisi entegre edilmiştir:
-  - `KiralikKatiller` (Çırağın Yemini) → `assassins_template` (Seçkin kiralık katiller, Hired Blades ve çevik kılıçlılar)
-  - `Sabotajcilar` (Kalfa Sınavı) → `deserters_template` (Yerel krallık kültüründen Tier 2-4 nizami asker kaçakları)
+- Senaryo düşmanlarının sıradan haydutlar (`sea_raiders_template`, `mountain_bandits_template`) yerine anlatı bağlamına ve yerel kültüre uygun profesyonel askeri/paralı birliklerden oluşması için motorun yeni şablon mimarisi entegre edilmiş; TR/EN yerelleştirme metinlerindeki eski "haydut/çapulcu/brigand" ifadeleri yeni birlik kimlikleriyle uyumlu hale getirilmiştir:
+  - `KiralikKatiller` (Çırağın Yemini) → `assassins_template` (Seçkin kiralık katiller, Hired Blades ve çevik kılıçlılar; köy pususunda `ObjectId="HammadeKaynagi"` ile yerel köy kültürü ve kapı konumu bağlanmıştır)
+  - `Sabotajcilar` (Kalfa Sınavı) → `deserters_template` (Yerel krallık kültüründen Tier 2-4 nizami asker kaçakları ve kundakçılar)
   - `Korumalar` (Kalfa Sınavı) → `mercenary_template` (Taverna paralı askerleri: Hired Blades, Mercenary Swordsmen, Mercenary Crossbowmen)
-  - `GarnizonMuhafizlari` (Ustanın Yükü) → `garrison_guards_template` (Yerel kültürden ağır zırhlı Tier 3-5 kale garnizon muhafızları)
+  - `GarnizonMuhafizlari` (Ustanın Yükü) → `garrison_guards_template` (`ObjectId="DusmanKale"` ile esir tutulan kalenin kültüründen ağır zırhlı Tier 3-5 kale garnizon muhafızları)
 
 ---
 

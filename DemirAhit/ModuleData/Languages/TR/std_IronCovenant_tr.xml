@@ -27,8 +27,8 @@
     <string id="da_katiller" text="Kiralık Katiller" />
     <string id="da_katiller_dlg_intro" text="O yıldız demiri efendimize ait! Geri dön beyzade, yoksa kanın madene su olur!" />
     <string id="da_katiller_p_savas" text="Benim yerime çeliğim konuşacak. Çekin pusatları!" />
-    <string id="da_log_2" text="Rakip tüccarın kiraladığı haydutlar çalınan Yıldız Demirleri ile birlikte yakınlarda pusuda! Madenleri geri almak için onları savaşta alt et." />
-    <string id="da_log_2_win" text="Pusu kuran haydutları darmadağın ettin ve heybelerinden 5 adet Yıldız Demiri filizini söke söke aldın! Kılıcın dövülmesi için {EfsaneviDemirci_Link}'e geri dön." />
+    <string id="da_log_2" text="Rakip tüccarın tuttuğu kiralık katiller çalınan Yıldız Demirleri ile birlikte yakınlarda pusuda! Madenleri geri almak için onları savaşta alt et." />
+    <string id="da_log_2_win" text="Pusu kuran kiralık katilleri darmadağın ettin ve heybelerinden 5 adet Yıldız Demiri filizini söke söke aldın! Kılıcın dövülmesi için {EfsaneviDemirci_Link}'e geri dön." />
     <string id="da_log_kestirme" text="Maden toplamakla vakit kaybetmeyip ustanın tezgahındaki hazır dövülmüş kılıcı 10.000 altın gibi yüklü bir bedelle satın aldın." />
     <string id="da_log_1_success" text="5 parça Yıldız Demirini {EfsaneviDemirci_Link} ustaya teslim ettin. Kadim zanaat ve gürleyen ocak ateşinde, ustanın elleri klanının şerefine Ahit Kılıcı'nı dövdü!" />
     <string id="da_log_3" text="Heybende 5 adet parıldayan Yıldız Demiri var. Ahit Kılıcı'nın dövülebilmesi için bunları {EfsaneviDemirci_Link}'e teslim et." />
@@ -40,11 +40,11 @@
     <string id="da_tek_npc_kestirme" text="Gerçek bir kılıç ustasının sabrından uzaksın evlat. Lakin savaşını altınla vermek istiyorsan, öyle olsun. Al bu kılıcı; alın teriyle hak edilmemiş olsa da ocağımın kanını taşır. Bakalım bundan sonra gelecek olanlara göğüs gerebilecek misin..." />
     <string id="da_cirak_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="da_muhtar_p_giris" text="Usta demirci {EfsaneviDemirci_Link}'in selamıyla geldim. Taş ocağınızdan çıkarılan Yıldız Demiri filizlerini teslim almaya geldim." />
-    <string id="da_muhtar_dlg_1" text="Tanrılar yardımcımız olsun! Tam bir felaketin ortasına geldin yiğit! Taş ocağından beş parça som Yıldız Demiri çıkarmıştık lakin daha bir saat önce {RakipTuccar_Link}'ın altınını yiyen gözü dönmüş paralı haydutlar köy çıkışında arabamızı bastı! Madenlerin hepsine el koydular, peşlerine düşecek olanı boğazlamak için hemen köy sınırında pusuya yattılar!" />
+    <string id="da_muhtar_dlg_1" text="Tanrılar yardımcımız olsun! Tam bir felaketin ortasına geldin yiğit! Taş ocağından beş parça som Yıldız Demiri çıkarmıştık lakin daha bir saat önce {RakipTuccar_Link}'ın altınını yiyen gözü dönmüş kiralık katiller köy çıkışında arabamızı bastı! Madenlerin hepsine el koydular, peşlerine düşecek olanı boğazlamak için hemen köy sınırında pusuya yattılar!" />
     <string id="da_muhtar_p_savas" text="Yanlış kervana musallat olmuşlar. O çakalların peşine düşüp Yıldız Demirlerimizi kanla geri alacağım." />
     <string id="da_muhtar_dlg_savas" text="Kılıcın keskin, bileğin bükülmez olsun! Çok uzaklaşmış olamazlar, madenlerimizle birlikte kaçmadan önce sür atını üstlerine!" />
     <string id="da_muhtar_p_satinal" text="Köy ambarında sakladığınız bir yedek maden yok mudur? Madencilerinizin zararını karşılamak için hemen şimdi 2.000 altın ödemeye hazırım." />
-    <string id="da_muhtar_dlg_satinal" text="Vardır yiğit, usta başı ne olur ne olmaz diye ocak mahzeninde beş parça kaba külçe saklamıştı. İki bin altınla bu köy kışı çıkarır, ocağını tüttürür. Al madenleri, haydutlar kokusunu almadan ustanın ocağına yetiştir!" />
+    <string id="da_muhtar_dlg_satinal" text="Vardır yiğit, usta başı ne olur ne olmaz diye ocak mahzeninde beş parça kaba külçe saklamıştı. İki bin altınla bu köy kışı çıkarır, ocağını tüttürür. Al madenleri, kiralık katiller kokusunu almadan ustanın ocağına yetiştir!" />
     <string id="da_cirak_muhtar_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="da_teslim_p_giris" text="Usta, emrettiğin gibi beş parça Yıldız Demirini sağ salim getirdim." />
     <string id="da_teslim_ready" text="Kadimlerin örsü hakkı için! Şu karanlık, yıldız parıltısına bak... Bu hakiki göktaşından başkası değil! Tüccarın çakallarına boyun eğmeyip hakkın olanı almışsın." />
@@ -63,7 +63,7 @@
     <string id="da_log_2_2B_savas" text="{RakipTuccar_Link} geri adım atmayı reddetti ve kiralık muhafızlarını üzerine saldı. Klanının kudretini göstermek için onları savaşta yere ser." />
     <string id="da_log_2_3" text="Ocak dimdik ayakta kaldı! Gösterdiğin sarsılmaz sadakat ve savaş ustalığının nişanesi olarak {EfsaneviDemirci_Link} sana Kalfa Mührü'nü takdim etti." />
     <string id="da_kalfa_p_giris" text="Kötü dedikodular duydum usta, ocağına ne musallat oldu?" />
-    <string id="da_kalfa_dlg_1" text="Örsün üzerine kara bir gölge düştü yoldaşım. {RakipTuccar_Link}, atölyemi yerle bir etmek için haydutlar ve kundakçılar toplamış. Ateş sönerse kılıç asla tamamlanamaz. Bu şerri nasıl defedeceğiz?" />
+    <string id="da_kalfa_dlg_1" text="Örsün üzerine kara bir gölge düştü yoldaşım. {RakipTuccar_Link}, atölyemi yerle bir etmek için asker kaçakları ve kundakçılar toplamış. Ateş sönerse kılıç asla tamamlanamaz. Bu şerri nasıl defedeceğiz?" />
     <string id="da_kalfa_p1" text="Köyde kalıp nöbet tutacağım, tek bir kundakçı dahi ocağın yakınına nefes alamayacak." />
     <string id="da_kalfa_p2" text="Savunmada kalmak zaaf doğurur. Doğrudan {RakipTuccar_Link} karşısına dikilip meşaleler yakılmadan hesabını göreceğim." />
     <string id="da_kalfa_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
@@ -149,7 +149,7 @@
     <string id="da_k2_p_sorgu_lonca" text="Bu atölye kaç kuşaktır ayakta usta? Bir tüccar nasıl böylesi kadim bir ocağı yakmaya cüret edebilir?" />
     <string id="da_k2_p_sorgu_taktik" text="Kaç kundakçı topladı, saldırıyı nereden ve ne zaman başlatmayı planlıyorlar?" />
     <string id="da_k2_npc_lore_lonca" text="Üç yüz yıldır bu ocakta kralların taçları, hanelerin mühürleri dövüldü. Lakin o tüccar loncamızın su verme sırlarını ve kadim kalıplarını ele geçiremeyince, 'benim olmayan kül olsun' dedi. Altının gücüyle adaleti satın alabileceğini sanıyor." />
-    <string id="da_k2_npc_lore_taktik" text="Altmıştan fazla çapulcu tuttukları söyleniyor. Gece vakti, nöbetçilerin en yorgun olduğu saatte katranlı meşalelerle atölyenin çatısına tırmanacaklar. Eğer ateş ahşap kirişlere sıçrarsa ocağı kurtarmak imkansız olur." />
+    <string id="da_k2_npc_lore_taktik" text="Altmıştan fazla asker kaçağı ve kundakçı tuttukları söyleniyor. Gece vakti, nöbetçilerin en yorgun olduğu saatte katranlı meşalelerle atölyenin çatısına tırmanacaklar. Eğer ateş ahşap kirişlere sıçrarsa ocağı kurtarmak imkansız olur." />
     <string id="da_k2_npc_onay_savunma" text="Metanetini takdir ederim yiğit. Ocağın etrafına gözcülerini yerleştir, beş gece boyunca tetikte ol. Alevler yükselirse şerefimiz de yanar!" />
     <string id="da_k2_npc_onay_saldiri" text="Gözü pek bir savaşçının sözleri bunlar! {RakipTuccar_Link}'ı bul ve o kalleş sözleşmeyi iptal ettir. Lakin dikkat et; parayla tuttuğu muhafızlar da kılıç kuşanmıştır." />
     <string id="da_k2_m_p_sorgu" text="Bir tekel kurmak uğruna asırlık bir zanaatı ve masum canları yakmaya değer mi? Kalradya kanunları sana bunu mu öğretti?" />
@@ -211,10 +211,10 @@
     <string id="da_k2_npc_lore_hukuk" text="Yargıçlar ve lonca büyükleri o tüccarın altınlarıyla beslenir evlat! Kalradya'da altın şıngırdadığında adalet kör olur. Eğer mahkemeleri beklersek atölyemiz kül olur, külümüzün üstünde de tüccar kervan yürütür." />
     <string id="da_k2_p_sorgu_tahkimat" text="Atölyenin savunma hatları ne durumda? Ateşe ve meşalelere karşı nasıl tedbir aldık usta?" />
     <string id="da_k2_p_sorgu_onleyici" text="Kundakçıları beklemek felakete davetiye çıkarmaktır. Tüccarın yazıhanesi nerede? Yılanın başını kendi ininde ezmeliyiz." />
-    <string id="da_k2_npc_detay_tahkimat" text="Su sarnıçlarını doldurduk, avluya barikatlar kurduk. Eğer savaşçılarınla beş gece boyunca tetikte beklersen, o çapulcular meşalelerini yakamadan onları derede boğarsın." />
+    <string id="da_k2_npc_detay_tahkimat" text="Su sarnıçlarını doldurduk, avluya barikatlar kurduk. Eğer savaşçılarınla beş gece boyunca tetikte beklersen, o asker kaçakları meşalelerini yakamadan onları derede boğarsın." />
     <string id="da_k2_npc_detay_onleyici" text="Tüccar mahallesindeki kervansarayda oturur, kapısında kırk kiralık mızraklı bekler. Doğrudan üzerine yürürsen o meşum sözleşmeyi daha kıvılcım çıkmadan yırtabilirsin." />
     <string id="da_k2_m_p_baski" text="Kırk kiralık muhafızına güveniyorsun ama lordlarının boğazına çelik dayandığında paralı askerler buhar olur. Hayatını bu kiralık itlere mi emanet ediyorsun? [Roguery]" />
-    <string id="da_k2_m_p_finans" text="İki bin altın bir avuç çapulcu için büyük bir servet. Altını verdiğimde bir sonraki dolunayda yeniden saldırmayacağının teminatı nedir?" />
+    <string id="da_k2_m_p_finans" text="İki bin altın bir avuç kundakçı için büyük bir servet. Altını verdiğimde bir sonraki dolunayda yeniden saldırmayacağının teminatı nedir?" />
     <string id="da_k2_m_npc_baski" text="(Tüccar yutkunur, kılıcının kabzasındaki eline bakarak geriler) Y-yeraltındaki namını duymuştum... Çabuk karar ver o halde: Altın mı, korku mu, yoksa sokakta kan mı?" />
     <string id="da_k2_m_npc_finans" text="Benim parşömene attığım imza tüm loncalarda geçerlidir! Altın avucuma değdiği an o kundakçıların sözleşmesini gözlerinin önünde yakarım." />
 

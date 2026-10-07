@@ -100,7 +100,7 @@
 
     <!-- Turn 2: NPC explains the arson plot -->
     <DialogNode Type="Npc" Id="Kalfa_Uyari_Giris" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t1" OutputToken="ql_da_k2_t2" Priority="200">
-      <Text>{=da_kalfa_dlg_1}A shadow hangs over the anvil, my friend. {RakipTuccar_Link} has gathered brigands and cutthroats to burn my workshop to the ground. If the hearth turns cold, the great blade shall never be finished. How shall we meet this malice?</Text>
+      <Text>{=da_kalfa_dlg_1}A shadow hangs over the anvil, my friend. {RakipTuccar_Link} has gathered deserters and cutthroats to burn my workshop to the ground. If the hearth turns cold, the great blade shall never be finished. How shall we meet this malice?</Text>
       <Conditions />
     </DialogNode>
 
@@ -157,7 +157,7 @@
 
     <!-- Turn 6: NPC Strategic Outlines -->
     <DialogNode Type="Npc" Id="Kalfa_Detay_Tahkimat" TargetAlias="EfsaneviDemirci" InputToken="ql_da_k2_t5_savunma" OutputToken="ql_da_k2_t6">
-      <Text>{=da_k2_npc_detay_tahkimat}We filled the cisterns and barricaded the courtyard. If you and your warriors keep a 5-night vigil, you can drown those brigands in the ditch before they ever light a torch.</Text>
+      <Text>{=da_k2_npc_detay_tahkimat}We filled the cisterns and barricaded the courtyard. If you and your warriors keep a 5-night vigil, you can drown those saboteurs in the ditch before they ever light a torch.</Text>
       <Conditions />
     </DialogNode>
 
