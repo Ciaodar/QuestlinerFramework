@@ -168,6 +168,9 @@ namespace Questliner.Shared.Models
         [XmlAttribute("PartyTemplateId")]
         public string PartyTemplateId { get; set; } = string.Empty;
 
+        [XmlAttribute("SettlementAlias")]
+        public string SettlementAlias { get; set; } = string.Empty;
+
         // Optional parameters for spawning
         [XmlAttribute("SpawnDistance")]
         public float SpawnDistance { get; set; } = 3f;

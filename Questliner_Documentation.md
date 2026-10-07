@@ -88,17 +88,31 @@ Aksiyonlar, diyalogların sonunda (`Consequences`), aşamalar tamamlandığında
 | **ForceConversation** | Oyun ekranını keserek doğrudan hedefle bir diyalog penceresi açar. Genellikle "OnSettlementEnter" tetikleyicisiyle oyuncuyu aniden karşılamak için kullanılır. Öncesinde MakeMet kullanmanız önerilir. | `<Action Type="ForceConversation" TargetAlias="Tüccar" />` |
 | **LeaveEncounter** | Karşılaşma/diyalog arayüzünü güvenle sonlandırıp oyuncuyu doğrudan dünya haritasına döndürür. | `<Action Type="LeaveEncounter" />` |
 
-### 3.1. SpawnBanditParty ve SetPartyAi Detayları
-`SpawnBanditParty` oyuncuya düşman partiler üretmek için harikadır.
-- `TargetAlias`: Üretilen partinin Alias'ı. Daha sonra bu partiye emir vermek için kullanılır.
-- `Amount`: Partideki asker sayısı.
-- `PartyTemplateId`: Doğacak partinin şablonu (Örn: `looters_template`, `sea_raiders_template`).
-- `ObjectId`: (Opsiyonel) Partinin hangi Settlement veya diğer Party etrafında doğacağı. Boş bırakılırsa oyuncunun etrafında doğar.
-- `StringValue`: (Opsiyonel) Haritada görünecek özel parti ismi.
+### 3.1. SpawnBanditParty, Dinamik Şablonlar ve Özel Asker Dizilimi (`PartyTemplateId`)
+`SpawnBanditParty` haritada oyuncuya düşman partiler, firari müfrezeleri, paralı asker çeteleri, kervan muhafızları veya tamamen özel asker grupları üretmek için kullanılır.
+- `TargetAlias`: Üretilen partinin Alias'ı. Daha sonra bu partiye emir vermek veya savaş sonucunu (`BattleResolvedAs`) kontrol etmek için kullanılır.
+- `Amount`: Partideki toplam asker sayısı (`custom:` diziliminde adet belirtilmemişse bu sayı eşit dağıtılır).
+- `ObjectId` / `SettlementAlias`: (Opsiyonel) Partinin hangi Settlement, Hero veya Party etrafında doğacağı. Boş bırakılırsa veya `Player` verilirse oyuncunun etrafında doğar.
+- `StringValue`: (Opsiyonel) Haritada görünecek özel parti ismi (Örn: `{=da_muhafiz}Garrison Guards`).
 
-`SetPartyAi` ile bu partiye ne yapacağını söyleyebilirsiniz:
+#### A) Kültür Duyarlı Dinamik Şablonlar (Dynamic Archetype Templates)
+`PartyTemplateId` içinde (`_template` sonekiyle veya soneksiz) aşağıdaki arketipler kullanıldığında motor, doğma noktasına en yakın yerleşkenin kültürünü (`empire`, `vlandia`, `battania`, `sturgia`, `khuzait`, `aserai`) otomatik çözümler ve o kültüre uygun gerçek askerlerden karma bir birlik oluşturur:
+- **`deserters` / `deserters_template`**: Bölge kültürünün düzenli ordu ağacından (`BasicTroop` yükseltmeleri) **Tier 2 - Tier 4** piyade ve menzilli askerleri seçerek gerçekçi bir **Asker Kaçağı / Firari (Deserters)** müfrezesi kurar.
+- **`mercenary` / `mercenaries` / `mercenary_template`**: Hanlarda bulunan profesyonel paralı askerlerden (`mercenary_swordsman`, `hired_blade`, `mercenary_crossbowman`, `hired_crossbow`, `mercenary_scout`, `veteran_borrowed_troop`) oluşan bir paralı asker birliği kurar.
+- **`assassins` / `assassins_template` / `shadow_assassins_template`**: Seçkin kiralık kılıçlar (`hired_blade`, `mercenary_swordsman`, `hired_crossbow`) ve bölge kültürünün çevik **Tier 3 - Tier 4** yaya savaşçılarından oluşan suikastçı/vurucu tim kurar.
+- **`caravan_guards` / `caravan_guards_template` / `smuggler_caravan_template`**: Gerçek kervan muhafızları ve silahlı tüccarlardan (`caravan_guard`, `veteran_caravan_guard`, `armed_trader` ve kültüre özel kervan koruma yükseltmeleri) oluşan, haritada kervan katırı/devesi görseliyle dolaşan bir kervan/kaçakçı birliği kurar.
+- **`garrison_guards` / `garrison_guards_template` / `elite_guards_template`**: Bölge kültürünün **Tier 3 - Tier 5** ağır zırhlı garnizon piyade ve okçularından oluşan seçkin bir muhafız birliği kurar.
+- **Native Haydut Şablonları**: `looters_template`, `sea_raiders_template`, `mountain_bandits_template`, `forest_bandits_template`, `steppe_bandits_template`, `desert_bandits_template` doğrudan Native şablonlarıyla çalışmaya devam eder.
+
+#### B) Özel Satır-İçi Asker Dizilimi (`custom:troop1:count1,troop2:count2`)
+XML içerisinden partideki asker tiplerini ve sayılarını birebir belirlemek için `custom:` öneki (veya doğrudan virgül/iki nokta üst üste formatı) kullanılabilir:
+- **Adet Belirterek:** `PartyTemplateId="custom:imperial_legionary:20,imperial_palatine_guard:15"`
+- **Adet Belirtmeden (`Amount` Üzerinden Eşit Dağıtım):** `PartyTemplateId="custom:vlandian_swordsman,vlandian_sharpshooter"` (`Amount="40"` ise 20'şer adet ekler).
+
+`SetPartyAi` ile doğan bu partiye ne yapacağını söyleyebilirsiniz:
 - `StringValue="EngageParty"` ve `ObjectId="Player"`: Doğrudan oyuncuya saldırması emrini verir.
 - `StringValue="Hold"`: Olduğu yerde beklemesini sağlar.
+- `StringValue="PatrolAroundSettlement"` / `StringValue="GoToSettlement"`: `ObjectId` ile belirtilen yerleşke etrafında devriye gezmesini veya oraya yürümesini sağlar.
 
 ---
 

@@ -2,6 +2,23 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.7.0] - 07 Ekim 2026 (Culture-Aware Dynamic Party Archetypes & Custom Inline Troop Rosters)
+
+### Eklendi & Geliştirildi (Added & Improved)
+- **Kültür Duyarlı Dinamik Parti Şablonları (`ActionExecutor.cs` - `SpawnBanditParty`):**
+  - `PartyTemplateId` niteliği artık büyük/küçük harf duyarsız olarak ve `_template` sonekiyle veya soneksiz şekilde 5 yeni dinamik arketipi destekler:
+    - **`deserters` / `deserters_template`**: Doğma konumuna en yakın şehir/kale/köyün kültürünü (`ResolveLocalCulture`) bularak o kültürün `BasicTroop` terfi ağacındaki (`UpgradeTargets`) **Tier 2 - Tier 4** düzenli piyade ve okçulardan gerçekçi bir firari (asker kaçağı) birliği oluşturur.
+    - **`mercenary` / `mercenaries` / `mercenary_template`**: Hanlarda bulunan profesyonel paralı askerlerden (`mercenary_swordsman`, `hired_blade`, `mercenary_crossbowman`, `hired_crossbow`, `mercenary_scout`, `veteran_borrowed_troop`) oluşan paralı asker müfrezesi kurar.
+    - **`assassins` / `assassins_template` / `shadow_assassins_template`**: Kiralık kılıçlar (`hired_blade`, `mercenary_swordsman`, `hired_crossbow`) ve yerel kültürün çevik **Tier 3 - Tier 4** yaya savaşçılarından oluşan suikastçı timi kurar.
+    - **`caravan_guards` / `caravan_guards_template` / `smuggler_caravan_template`**: Gerçek kervan muhafızları ve silahlı tüccarlardan (`caravan_guard`, `veteran_caravan_guard`, `armed_trader` ve kültüre özel kervan koruma yükseltmeleri) oluşan, haritada kervan katırı/devesi görseliyle dolaşan kervan/kaçakçı birliği kurar.
+    - **`garrison_guards` / `garrison_guards_template` / `elite_guards_template`**: Yerel kültürün **Tier 3 - Tier 5** ağır zırhlı düzenli garnizon piyade ve menzilli birliklerinden oluşan seçkin muhafız müfrezesi kurar.
+- **Özel Satır-İçi Asker Dizilimi (`custom:troop1:count1,troop2:count2`):**
+  - `PartyTemplateId` içerisinde `custom:` önekiyle veya doğrudan virgül/iki nokta üst üste formatıyla (`custom:imperial_legionary:20,imperial_palatine_guard:15` ya da adet belirtmeden `custom:vlandian_swordsman,vlandian_sharpshooter`) istenen askerlerin doğrudan `party.MemberRoster`'a eklenmesi sağlandı.
+- **`SettlementAlias` Öznitelik Desteği (`QuestModel.cs` & `ActionExecutor.cs`):**
+  - `ActionModel` içerisine `SettlementAlias` XML niteliği eklendi; `SpawnBanditParty`, `PatrolAroundSettlement` ve `GoToSettlement` aksiyonlarında `ObjectId` yerine `SettlementAlias` yazıldığında da hedef yerleşkenin sorunsuz çözümlenmesi sağlandı.
+
+---
+
 ## [v1.6.1] - 05 Ekim 2026 (Case-Insensitive Text Binding, Native CustomParty Spawning, Quest Loop Prevention & True Quest Item Protection)
 
 ### Düzeltildi & Geliştirildi (Fixed & Improved)

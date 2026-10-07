@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Questliner.Shared.Models;
 using Questliner.Framework.Core;
 using TaleWorlds.CampaignSystem;
@@ -154,81 +155,22 @@ namespace Questliner.Framework.Engine
 
                 case "SpawnBanditParty":
                 {
-                    string templateId = string.IsNullOrEmpty(action.PartyTemplateId) ? "looters_template" : action.PartyTemplateId;
-                    string clanId = templateId.Replace("_template", ""); // e.g. looters, sea_raiders, deserters
-                    
-                    CultureObject? contextCulture = null;
-                    if (quest != null && !string.IsNullOrEmpty(action.ObjectId))
-                    {
-                        contextCulture = quest.GetTargetSettlement(action.ObjectId)?.Culture;
-                    }
-                    contextCulture ??= TaleWorlds.CampaignSystem.Settlements.Settlement.CurrentSettlement?.Culture 
-                                    ?? Hero.MainHero.CurrentSettlement?.Culture 
-                                    ?? Hero.MainHero.Culture;
+                    string rawTemplateId = string.IsNullOrWhiteSpace(action.PartyTemplateId) ? "looters_template" : action.PartyTemplateId.Trim();
+                    string clanId = rawTemplateId.EndsWith("_template", StringComparison.OrdinalIgnoreCase)
+                        ? rawTemplateId.Substring(0, rawTemplateId.Length - 9).Trim()
+                        : rawTemplateId;
+                    string locationRefId = !string.IsNullOrEmpty(action.ObjectId) ? action.ObjectId : action.SettlementAlias;
 
-                    // 1. Resolve Party Template with robust fallback chain
-                    PartyTemplateObject? partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>(templateId);
-                    if (partyTemplate == null && !templateId.EndsWith("_template"))
-                    {
-                        partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>(templateId + "_template");
-                    }
-                    if (partyTemplate == null && templateId.EndsWith("_template"))
-                    {
-                        partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>(clanId);
-                    }
-                    if (partyTemplate == null)
-                    {
-                        var matchingClan = Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals(clanId, StringComparison.OrdinalIgnoreCase));
-                        if (matchingClan?.DefaultPartyTemplate != null)
-                        {
-                            partyTemplate = matchingClan.DefaultPartyTemplate;
-                        }
-                    }
-                    if (partyTemplate == null)
-                    {
-                        if (contextCulture != null && (clanId.Contains("deserter") || clanId.Contains("assassin") || clanId.Contains("mercenary") || clanId.Contains("caravan")))
-                        {
-                            partyTemplate = contextCulture.DefaultPartyTemplate ?? contextCulture.BanditBossPartyTemplate;
-                        }
-                    }
-                    if (partyTemplate == null)
-                    {
-                        partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>("looters_template");
-                        if (!string.IsNullOrEmpty(action.PartyTemplateId))
-                        {
-                            TaleWorlds.Library.Debug.Print($"[Questliner Warning] PartyTemplate '{action.PartyTemplateId}' not found! Falling back to 'looters_template'.");
-                        }
-                    }
-                    if (partyTemplate == null)
-                    {
-                        partyTemplate = Campaign.Current.ObjectManager.GetObjectTypeList<PartyTemplateObject>().FirstOrDefault();
-                    }
-
-                    if (partyTemplate == null)
-                    {
-                        TaleWorlds.Library.Debug.Print($"[Questliner Error] Could not find any valid PartyTemplateObject for action '{action.TargetAlias}'.");
-                        break;
-                    }
-
-                    // 2. Resolve Bandit Clan / Faction
-                    CultureObject? partyCulture = contextCulture ?? partyTemplate.Stacks?.FirstOrDefault().Character?.Culture;
-                    Clan? partyClan = Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals(clanId, StringComparison.OrdinalIgnoreCase));
-                    if (partyClan == null && partyCulture != null)
-                    {
-                        partyClan = Clan.BanditFactions.FirstOrDefault(c => c.Culture == partyCulture);
-                    }
-                    partyClan ??= Clan.BanditFactions.FirstOrDefault(c => c.StringId == "looters") ?? Clan.BanditFactions.FirstOrDefault();
-
-                    // 3. Determine Spawn Position & Navigation Mesh
+                    // 1. Determine Spawn Position & Navigation Mesh FIRST (so local culture can use actual spawn position)
                     CampaignVec2 spawnPosition = MobileParty.MainParty.Position;
                     if (Hero.MainHero.CurrentSettlement != null)
                     {
                         spawnPosition = Hero.MainHero.CurrentSettlement.GatePosition;
                     }
 
-                    if (quest != null && !string.IsNullOrEmpty(action.ObjectId))
+                    if (quest != null && !string.IsNullOrEmpty(locationRefId))
                     {
-                        if (action.ObjectId.Equals("Player", StringComparison.OrdinalIgnoreCase))
+                        if (locationRefId.Equals("Player", StringComparison.OrdinalIgnoreCase))
                         {
                             spawnPosition = Hero.MainHero.CurrentSettlement != null 
                                 ? Hero.MainHero.CurrentSettlement.GatePosition 
@@ -236,22 +178,22 @@ namespace Questliner.Framework.Engine
                         }
                         else
                         {
-                            var targetSettlement = quest.GetTargetSettlement(action.ObjectId)
-                                                ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault(s => s.StringId.Equals(action.ObjectId, StringComparison.OrdinalIgnoreCase));
+                            var targetSettlement = quest.GetTargetSettlement(locationRefId)
+                                                ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault(s => s.StringId.Equals(locationRefId, StringComparison.OrdinalIgnoreCase));
                             if (targetSettlement != null)
                             {
                                 spawnPosition = targetSettlement.GatePosition;
                             }
                             else
                             {
-                                var targetParty = quest.TargetParties.TryGetValue(action.ObjectId, out var p) ? p : null;
+                                var targetParty = quest.TargetParties.TryGetValue(locationRefId, out var p) ? p : null;
                                 if (targetParty != null && targetParty.IsActive)
                                 {
                                     spawnPosition = targetParty.Position;
                                 }
                                 else
                                 {
-                                    var targetHeroObj = quest.GetTargetHero(action.ObjectId);
+                                    var targetHeroObj = quest.GetTargetHero(locationRefId);
                                     if (targetHeroObj != null)
                                     {
                                         spawnPosition = targetHeroObj.CurrentSettlement?.GatePosition 
@@ -281,7 +223,78 @@ namespace Questliner.Framework.Engine
                         spawnPosFinal = reachablePosition;
                     }
 
-                    // 4. Resolve Custom Name
+                    // 2. Resolve Local Main Culture (nearest town/castle/village to spawnPosFinal, or current settlement, or empire fallback)
+                    CultureObject? localCulture = ResolveLocalCulture(spawnPosFinal, quest, locationRefId);
+
+                    // 3. Check for Dynamic Archetypes or Custom Inline Troop Composition
+                    int targetAmount = action.Amount > 0 ? action.Amount : 30;
+                    bool isDynamicRoster = TryBuildDynamicTroopRoster(rawTemplateId, targetAmount, localCulture, out var dynamicRoster);
+
+                    // 4. Resolve Base PartyTemplateObject (required by CustomPartyComponent.CreateCustomPartyWithPartyTemplate)
+                    PartyTemplateObject? partyTemplate = null;
+                    if (!isDynamicRoster)
+                    {
+                        partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>(rawTemplateId);
+                        if (partyTemplate == null && !rawTemplateId.EndsWith("_template", StringComparison.OrdinalIgnoreCase))
+                        {
+                            partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>(rawTemplateId + "_template");
+                        }
+                        if (partyTemplate == null && rawTemplateId.EndsWith("_template", StringComparison.OrdinalIgnoreCase))
+                        {
+                            partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>(clanId);
+                        }
+                        if (partyTemplate == null)
+                        {
+                            var matchingClan = Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals(clanId, StringComparison.OrdinalIgnoreCase));
+                            if (matchingClan?.DefaultPartyTemplate != null)
+                            {
+                                partyTemplate = matchingClan.DefaultPartyTemplate;
+                            }
+                        }
+                        if (partyTemplate == null &&
+                            !rawTemplateId.Equals("looters_template", StringComparison.OrdinalIgnoreCase) &&
+                            !rawTemplateId.Equals("looters", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var singleTroop = FindCharacter(rawTemplateId) ?? FindCharacter(clanId);
+                            if (singleTroop != null)
+                            {
+                                dynamicRoster = new List<(CharacterObject character, int count)> { (singleTroop, targetAmount) };
+                                isDynamicRoster = true;
+                            }
+                            else
+                            {
+                                isDynamicRoster = TryBuildDynamicTroopRoster("deserters_template", targetAmount, localCulture, out dynamicRoster);
+                            }
+                        }
+                    }
+
+                    if (partyTemplate == null)
+                    {
+                        partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>("looters_template")
+                                     ?? Clan.BanditFactions.FirstOrDefault(c => c.DefaultPartyTemplate != null)?.DefaultPartyTemplate
+                                     ?? Campaign.Current.ObjectManager.GetObjectTypeList<PartyTemplateObject>().FirstOrDefault();
+                    }
+
+                    if (partyTemplate == null)
+                    {
+                        TaleWorlds.Library.Debug.Print($"[Questliner Error] Could not find any valid PartyTemplateObject for action '{action.TargetAlias}'.");
+                        break;
+                    }
+
+                    // 5. Resolve Hostile Bandit Clan / Faction
+                    CultureObject? partyCulture = localCulture ?? partyTemplate.Stacks?.FirstOrDefault().Character?.Culture;
+                    Clan? partyClan = Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals(clanId, StringComparison.OrdinalIgnoreCase));
+                    if (partyClan == null && clanId.IndexOf("deserter", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        partyClan = Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals("deserters", StringComparison.OrdinalIgnoreCase));
+                    }
+                    if (partyClan == null && partyCulture != null)
+                    {
+                        partyClan = Clan.BanditFactions.FirstOrDefault(c => c.Culture == partyCulture);
+                    }
+                    partyClan ??= Clan.BanditFactions.FirstOrDefault(c => c.StringId == "looters") ?? Clan.BanditFactions.FirstOrDefault();
+
+                    // 6. Resolve Custom Name
                     string partyName = "{=!}Bandits";
                     if (!string.IsNullOrEmpty(action.StringValue) && 
                         !action.StringValue.Equals("Hold", StringComparison.OrdinalIgnoreCase) &&
@@ -300,8 +313,17 @@ namespace Questliner.Framework.Engine
                     }
                     var customPartyNameObj = new TaleWorlds.Localization.TextObject(partyName);
 
-                    // 5. Create and Initialize Party using CustomPartyComponent
+                    // 7. Create and Initialize Party using CustomPartyComponent
                     var homeSettlement = Hero.MainHero.CurrentSettlement ?? Hero.MainHero.HomeSettlement ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault();
+                    string mountId = "";
+                    string harnessId = "";
+                    if (clanId.IndexOf("caravan", StringComparison.OrdinalIgnoreCase) >= 0 || clanId.IndexOf("smuggler", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        bool useCamel = localCulture != null && (localCulture.StringId == "aserai" || localCulture.StringId == "khuzait");
+                        mountId = useCamel ? "camel" : "mule";
+                        harnessId = useCamel ? "camel_saddle_a" : "mule_load_a";
+                    }
+
                     var party = TaleWorlds.CampaignSystem.Party.PartyComponents.CustomPartyComponent.CreateCustomPartyWithPartyTemplate(
                         spawnPosFinal,
                         0f,
@@ -309,31 +331,31 @@ namespace Questliner.Framework.Engine
                         customPartyNameObj,
                         partyClan,
                         partyTemplate,
-                        null!
+                        null!,
+                        mountId,
+                        harnessId
                     );
 
-                    party.Party.SetCustomName(customPartyNameObj);
-                    party.SetPartyUsedByQuest(true);
-                    party.IsVisible = true;
-                    party.Party.SetVisualAsDirty();
-
-                    if (quest != null && !string.IsNullOrEmpty(action.TargetAlias))
+                    // 8. Populate Troop Roster (Dynamic Archetype / Custom Roster vs Standard PartyTemplate)
+                    if (isDynamicRoster && dynamicRoster.Count > 0)
                     {
-                        quest.TargetParties[action.TargetAlias] = party;
-                        quest.AddTrackedObject(party);
-                        DynamicQuest.BindPartyToMBTextManager(action.TargetAlias, party);
+                        party.MemberRoster.Clear();
+                        foreach (var (character, count) in dynamicRoster)
+                        {
+                            if (character != null && count > 0)
+                            {
+                                party.MemberRoster.AddToCounts(character, count);
+                            }
+                        }
                     }
-
-                    // 6. Set Troop Count & Diverse Troop Distribution
-                    int targetAmount = action.Amount > 0 ? action.Amount : 15;
-                    if (party.MemberRoster.TotalManCount < targetAmount)
+                    else
                     {
-                        int deficit = targetAmount - party.MemberRoster.TotalManCount;
                         if (partyTemplate.Stacks != null && partyTemplate.Stacks.Count > 0)
                         {
+                            party.MemberRoster.Clear();
                             int stackCount = partyTemplate.Stacks.Count;
-                            int perStack = deficit / stackCount;
-                            int remainder = deficit % stackCount;
+                            int perStack = targetAmount / stackCount;
+                            int remainder = targetAmount % stackCount;
 
                             for (int i = 0; i < stackCount; i++)
                             {
@@ -348,17 +370,50 @@ namespace Questliner.Framework.Engine
                                 }
                             }
                         }
-                        else
+
+                        if (party.MemberRoster.TotalManCount < targetAmount)
                         {
-                            var fillChar = Campaign.Current.ObjectManager.GetObject<CharacterObject>("looter");
-                            if (fillChar != null)
+                            int deficit = targetAmount - party.MemberRoster.TotalManCount;
+                            var fillChar = partyTemplate.Stacks?.FirstOrDefault().Character
+                                        ?? localCulture?.BasicTroop
+                                        ?? Campaign.Current.ObjectManager.GetObject<CharacterObject>("looter");
+                            if (fillChar != null && deficit > 0)
                             {
                                 party.MemberRoster.AddToCounts(fillChar, deficit);
                             }
                         }
                     }
 
-                    // 7. Protection and AI
+                    if (party.MemberRoster.TotalManCount <= 0)
+                    {
+                        var emergencyTroop = localCulture?.BasicTroop
+                                          ?? Campaign.Current.ObjectManager.GetObject<CharacterObject>("looter")
+                                          ?? CharacterObject.All.FirstOrDefault(c => c.IsSoldier && !c.IsHero && !c.IsTemplate);
+                        if (emergencyTroop != null)
+                        {
+                            party.MemberRoster.AddToCounts(emergencyTroop, Math.Max(1, targetAmount));
+                        }
+                    }
+
+                    var grainItem = DefaultItems.Grain ?? MBObjectManager.Instance.GetObject<ItemObject>("grain");
+                    if (grainItem != null)
+                    {
+                        party.ItemRoster.AddToCounts(grainItem, Math.Max(15, targetAmount / 2));
+                    }
+
+                    party.Party.SetCustomName(customPartyNameObj);
+                    party.SetPartyUsedByQuest(true);
+                    party.IsVisible = true;
+                    party.Party.SetVisualAsDirty();
+
+                    if (quest != null && !string.IsNullOrEmpty(action.TargetAlias))
+                    {
+                        quest.TargetParties[action.TargetAlias] = party;
+                        quest.AddTrackedObject(party);
+                        DynamicQuest.BindPartyToMBTextManager(action.TargetAlias, party);
+                    }
+
+                    // 9. Protection and AI
                     party.IgnoreByOtherPartiesTill(CampaignTime.HoursFromNow(24));
                     party.Ai.SetDoNotMakeNewDecisions(true);
 
@@ -367,17 +422,17 @@ namespace Questliner.Framework.Engine
                     {
                         party.SetMoveModeHold();
                     }
-                    else if (aiBehavior.Equals("PatrolAroundSettlement", StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(action.ObjectId))
+                    else if (aiBehavior.Equals("PatrolAroundSettlement", StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(locationRefId))
                     {
-                        var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
+                        var targetSettlement = quest.GetTargetSettlement(locationRefId);
                         if (targetSettlement != null)
                             party.SetMovePatrolAroundSettlement(targetSettlement, MobileParty.NavigationType.Default, false);
                         else
                             party.SetMoveModeHold();
                     }
-                    else if (aiBehavior.Equals("GoToSettlement", StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(action.ObjectId))
+                    else if (aiBehavior.Equals("GoToSettlement", StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(locationRefId))
                     {
-                        var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
+                        var targetSettlement = quest.GetTargetSettlement(locationRefId);
                         if (targetSettlement != null)
                             party.SetMoveGoToSettlement(targetSettlement, MobileParty.NavigationType.Default, false);
                         else
@@ -670,6 +725,527 @@ namespace Questliner.Framework.Engine
                     break;
                 }
             }
+        }
+
+        private static bool IsValidMainCulture(CultureObject? culture)
+        {
+            return culture != null && !culture.IsBandit && (culture.IsMainCulture || culture.BasicTroop != null);
+        }
+
+        private static CultureObject? ResolveLocalCulture(CampaignVec2 spawnPosition, DynamicQuest? quest, string? locationRefId)
+        {
+            string refId = locationRefId ?? string.Empty;
+            if (quest != null && !string.IsNullOrEmpty(refId) && !refId.Equals("Player", StringComparison.OrdinalIgnoreCase))
+            {
+                var targetSettlement = quest.GetTargetSettlement(refId)
+                                    ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault(s => s.StringId.Equals(refId, StringComparison.OrdinalIgnoreCase));
+                if (targetSettlement != null && IsValidMainCulture(targetSettlement.Culture))
+                {
+                    return targetSettlement.Culture;
+                }
+
+                var targetHero = quest.GetTargetHero(refId);
+                if (targetHero != null && IsValidMainCulture(targetHero.Culture))
+                {
+                    return targetHero.Culture;
+                }
+            }
+
+            var currentSettlementCulture = TaleWorlds.CampaignSystem.Settlements.Settlement.CurrentSettlement?.Culture
+                                        ?? Hero.MainHero.CurrentSettlement?.Culture;
+            if (IsValidMainCulture(currentSettlementCulture))
+            {
+                return currentSettlementCulture;
+            }
+
+            var pos2D = spawnPosition.ToVec2();
+            var nearestSettlement = TaleWorlds.CampaignSystem.Settlements.Settlement.All
+                .Where(s => (s.IsTown || s.IsCastle || s.IsVillage) && IsValidMainCulture(s.Culture))
+                .OrderBy(s => s.GetPosition2D.DistanceSquared(pos2D))
+                .FirstOrDefault();
+
+            if (nearestSettlement?.Culture != null)
+            {
+                return nearestSettlement.Culture;
+            }
+
+            var empireCulture = MBObjectManager.Instance.GetObject<CultureObject>("empire")
+                             ?? Campaign.Current?.ObjectManager?.GetObject<CultureObject>("empire");
+            if (empireCulture != null)
+            {
+                return empireCulture;
+            }
+
+            if (IsValidMainCulture(Hero.MainHero.Culture))
+            {
+                return Hero.MainHero.Culture;
+            }
+
+            return CharacterObject.All.FirstOrDefault(c => c.IsSoldier && !c.IsHero && IsValidMainCulture(c.Culture))?.Culture;
+        }
+
+        private static CharacterObject? FindCharacter(string troopId)
+        {
+            if (string.IsNullOrWhiteSpace(troopId))
+                return null;
+
+            string trimmed = troopId.Trim();
+            var direct = MBObjectManager.Instance.GetObject<CharacterObject>(trimmed)
+                      ?? Campaign.Current?.ObjectManager?.GetObject<CharacterObject>(trimmed);
+            if (direct != null && !direct.IsHero && !direct.IsTemplate && !direct.IsChildTemplate)
+                return direct;
+
+            var caseInsensitive = CharacterObject.All.FirstOrDefault(c =>
+                !c.IsHero && !c.IsTemplate && !c.IsChildTemplate &&
+                c.StringId.Equals(trimmed, StringComparison.OrdinalIgnoreCase));
+            if (caseInsensitive != null)
+                return caseInsensitive;
+
+            return CharacterObject.All.FirstOrDefault(c =>
+                !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
+                c.StringId.IndexOf(trimmed, StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        private static List<CharacterObject> CollectUpgradeTree(CharacterObject? root, int minTier, int maxTier)
+        {
+            var result = new List<CharacterObject>();
+            if (root == null)
+                return result;
+
+            var visited = new HashSet<CharacterObject>();
+            var queue = new Queue<CharacterObject>();
+            queue.Enqueue(root);
+            visited.Add(root);
+
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                if (!current.IsHero && !current.IsTemplate && !current.IsChildTemplate && !current.IsObsolete &&
+                    current.Tier >= minTier && current.Tier <= maxTier)
+                {
+                    result.Add(current);
+                }
+
+                if (current.UpgradeTargets != null)
+                {
+                    foreach (var next in current.UpgradeTargets)
+                    {
+                        if (next != null && visited.Add(next))
+                        {
+                            queue.Enqueue(next);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static List<(CharacterObject character, int count)> DistributeTroops(
+            IEnumerable<CharacterObject?> candidatePool,
+            int totalTroops,
+            int minTypes = 2,
+            int maxTypes = 4)
+        {
+            var roster = new List<(CharacterObject character, int count)>();
+            var distinctPool = candidatePool
+                .Where(c => c != null && !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete)
+                .Select(c => c!)
+                .Distinct()
+                .ToList();
+
+            if (distinctPool.Count == 0)
+            {
+                var fallback = FindCharacter("imperial_infantryman")
+                            ?? FindCharacter("mercenary_swordsman")
+                            ?? FindCharacter("looter");
+                if (fallback != null)
+                {
+                    roster.Add((fallback, Math.Max(1, totalTroops)));
+                }
+                return roster;
+            }
+
+            int desiredTypes = Math.Min(distinctPool.Count, Math.Min(maxTypes, Math.Max(1, totalTroops)));
+            if (desiredTypes < minTypes && distinctPool.Count >= minTypes && totalTroops >= minTypes)
+            {
+                desiredTypes = minTypes;
+            }
+
+            // Pick a balanced mix of infantry and ranged/other units across tiers
+            var selected = new List<CharacterObject>();
+            var infantry = distinctPool.Where(c => c.IsInfantry).ToList();
+            var ranged = distinctPool.Where(c => c.IsRanged).ToList();
+            var others = distinctPool.Where(c => !c.IsInfantry && !c.IsRanged).ToList();
+
+            int infIdx = 0, rngIdx = 0, othIdx = 0;
+            while (selected.Count < desiredTypes)
+            {
+                bool addedAny = false;
+                if (infIdx < infantry.Count && selected.Count < desiredTypes)
+                {
+                    selected.Add(infantry[infIdx++]);
+                    addedAny = true;
+                }
+                if (rngIdx < ranged.Count && selected.Count < desiredTypes)
+                {
+                    selected.Add(ranged[rngIdx++]);
+                    addedAny = true;
+                }
+                if (othIdx < others.Count && selected.Count < desiredTypes)
+                {
+                    selected.Add(others[othIdx++]);
+                    addedAny = true;
+                }
+                if (!addedAny)
+                    break;
+            }
+
+            if (selected.Count == 0)
+            {
+                selected.AddRange(distinctPool.Take(desiredTypes));
+            }
+
+            int typeCount = selected.Count;
+            int perType = totalTroops / typeCount;
+            int remainder = totalTroops % typeCount;
+
+            for (int i = 0; i < typeCount; i++)
+            {
+                int count = perType + (i < remainder ? 1 : 0);
+                if (count > 0)
+                {
+                    roster.Add((selected[i], count));
+                }
+            }
+
+            return roster;
+        }
+
+        private static bool TryBuildDynamicTroopRoster(
+            string rawTemplateId,
+            int totalTroops,
+            CultureObject? localCulture,
+            out List<(CharacterObject character, int count)> roster)
+        {
+            roster = new List<(CharacterObject character, int count)>();
+            if (string.IsNullOrWhiteSpace(rawTemplateId))
+                return false;
+
+            string trimmed = rawTemplateId.Trim();
+
+            // 1. Custom Inline Troop Composition ("custom:troop1:count1,troop2:count2" or "troop1:count1,troop2:count2")
+            if (trimmed.StartsWith("custom:", StringComparison.OrdinalIgnoreCase) ||
+                trimmed.Contains(":") ||
+                trimmed.Contains(","))
+            {
+                string body = trimmed.StartsWith("custom:", StringComparison.OrdinalIgnoreCase)
+                    ? trimmed.Substring(7).Trim()
+                    : trimmed;
+
+                var entries = body.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var uncountedCharacters = new List<CharacterObject>();
+
+                foreach (var rawEntry in entries)
+                {
+                    string entry = rawEntry.Trim();
+                    if (string.IsNullOrEmpty(entry))
+                        continue;
+
+                    int colonIdx = entry.IndexOf(':');
+                    if (colonIdx >= 0)
+                    {
+                        string troopId = entry.Substring(0, colonIdx).Trim();
+                        string countStr = entry.Substring(colonIdx + 1).Trim();
+                        var character = FindCharacter(troopId) ?? localCulture?.BasicTroop ?? FindCharacter("mercenary_swordsman");
+                        if (character != null)
+                        {
+                            if (int.TryParse(countStr, out int parsedCount) && parsedCount > 0)
+                            {
+                                roster.Add((character, parsedCount));
+                            }
+                            else
+                            {
+                                uncountedCharacters.Add(character);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var character = FindCharacter(entry) ?? localCulture?.BasicTroop ?? FindCharacter("mercenary_swordsman");
+                        if (character != null)
+                        {
+                            uncountedCharacters.Add(character);
+                        }
+                    }
+                }
+
+                if (uncountedCharacters.Count > 0)
+                {
+                    int alreadyAssigned = roster.Sum(r => r.count);
+                    int remainingTroops = Math.Max(uncountedCharacters.Count, totalTroops - alreadyAssigned);
+                    int perTroop = remainingTroops / uncountedCharacters.Count;
+                    int rem = remainingTroops % uncountedCharacters.Count;
+                    for (int i = 0; i < uncountedCharacters.Count; i++)
+                    {
+                        int count = Math.Max(1, perTroop + (i < rem ? 1 : 0));
+                        roster.Add((uncountedCharacters[i], count));
+                    }
+                }
+
+                return roster.Count > 0;
+            }
+
+            // 2. Built-in Culture-Aware & Archetype Templates (match case-insensitively, with or without "_template" suffix)
+            string archetype = trimmed.EndsWith("_template", StringComparison.OrdinalIgnoreCase)
+                ? trimmed.Substring(0, trimmed.Length - 9).Trim()
+                : trimmed;
+            archetype = archetype.ToLowerInvariant();
+
+            // A) Deserters ("deserters", "deserters_template")
+            if (archetype == "deserters" || archetype == "deserter" || archetype.Contains("deserter"))
+            {
+                var pool = new List<CharacterObject>();
+                if (localCulture?.BasicTroop != null)
+                {
+                    var treeTroops = CollectUpgradeTree(localCulture.BasicTroop, 2, 4);
+                    pool.AddRange(treeTroops.Where(c => !c.IsMounted));
+                    if (pool.Count < 2)
+                    {
+                        pool.AddRange(treeTroops);
+                    }
+                }
+
+                if (localCulture != null)
+                {
+                    pool.AddRange(CharacterObject.All.Where(c =>
+                        c.Culture == localCulture &&
+                        c.IsSoldier &&
+                        !c.IsHero &&
+                        !c.IsTemplate &&
+                        !c.IsChildTemplate &&
+                        !c.IsObsolete &&
+                        !c.IsMounted &&
+                        c.Tier >= 2 && c.Tier <= 4));
+
+                    if (pool.Count < 2)
+                    {
+                        pool.AddRange(CharacterObject.All.Where(c =>
+                            c.Culture == localCulture &&
+                            c.IsSoldier &&
+                            !c.IsHero &&
+                            !c.IsTemplate &&
+                            !c.IsChildTemplate &&
+                            !c.IsObsolete &&
+                            c.Tier >= 2 && c.Tier <= 4));
+                    }
+                }
+
+                if (pool.Count == 0)
+                {
+                    pool.AddRange(CharacterObject.All.Where(c =>
+                        c.IsSoldier && !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
+                        c.Culture != null && !c.Culture.IsBandit &&
+                        c.Tier >= 2 && c.Tier <= 4).Take(6));
+                }
+
+                roster = DistributeTroops(pool, totalTroops, 2, 4);
+                return roster.Count > 0;
+            }
+
+            // B) Mercenaries ("mercenary", "mercenaries", "mercenary_template")
+            if (archetype == "mercenary" || archetype == "mercenaries" || archetype.Contains("mercenar"))
+            {
+                string[] mercenaryIds =
+                {
+                    "mercenary_swordsman",
+                    "hired_blade",
+                    "mercenary_crossbowman",
+                    "hired_crossbow",
+                    "mercenary_scout",
+                    "veteran_borrowed_troop"
+                };
+
+                var pool = new List<CharacterObject>();
+                foreach (var id in mercenaryIds)
+                {
+                    var c = FindCharacter(id);
+                    if (c != null)
+                        pool.Add(c);
+                }
+
+                if (pool.Count < 2)
+                {
+                    pool.AddRange(CharacterObject.All.Where(c =>
+                        !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
+                        c.Occupation == Occupation.Mercenary &&
+                        c.Tier >= 3 && c.Tier <= 5));
+                }
+
+                if (pool.Count < 2 && localCulture != null)
+                {
+                    pool.AddRange(CharacterObject.All.Where(c =>
+                        c.Culture == localCulture &&
+                        c.IsSoldier && !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
+                        c.Tier >= 3 && c.Tier <= 4));
+                }
+
+                roster = DistributeTroops(pool, totalTroops, 2, 4);
+                return roster.Count > 0;
+            }
+
+            // C) Assassins ("assassins", "assassins_template", "shadow_assassins_template")
+            if (archetype == "assassins" || archetype == "assassin" || archetype == "shadow_assassins" ||
+                archetype.Contains("assassin") || archetype.Contains("hitman") || archetype.Contains("hitmen"))
+            {
+                string[] assassinCoreIds =
+                {
+                    "hired_blade",
+                    "mercenary_swordsman",
+                    "hired_crossbow"
+                };
+
+                var pool = new List<CharacterObject>();
+                foreach (var id in assassinCoreIds)
+                {
+                    var c = FindCharacter(id);
+                    if (c != null)
+                        pool.Add(c);
+                }
+
+                if (localCulture != null)
+                {
+                    var agileLocal = CharacterObject.All.Where(c =>
+                        c.Culture == localCulture &&
+                        c.IsSoldier &&
+                        !c.IsHero &&
+                        !c.IsTemplate &&
+                        !c.IsChildTemplate &&
+                        !c.IsObsolete &&
+                        !c.IsMounted &&
+                        c.Tier >= 3 && c.Tier <= 4).Take(2);
+                    pool.AddRange(agileLocal);
+                }
+
+                if (pool.Count < 2)
+                {
+                    pool.AddRange(CharacterObject.All.Where(c =>
+                        c.IsSoldier && !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
+                        !c.IsMounted && c.Tier >= 3 && c.Tier <= 4).Take(4));
+                }
+
+                roster = DistributeTroops(pool, totalTroops, 2, 4);
+                return roster.Count > 0;
+            }
+
+            // D) Caravan Guards ("caravan_guards", "caravan_guards_template", "smuggler_caravan_template")
+            if (archetype == "caravan_guards" || archetype == "caravan_guard" || archetype == "smuggler_caravan" ||
+                archetype.Contains("caravan") || archetype.Contains("smuggler") || archetype.Contains("armed_trader"))
+            {
+                var pool = new List<CharacterObject>();
+
+                string[] directCaravanIds =
+                {
+                    "caravan_guard",
+                    "veteran_caravan_guard",
+                    "armed_trader"
+                };
+
+                foreach (var id in directCaravanIds)
+                {
+                    var c = FindCharacter(id);
+                    if (c != null)
+                        pool.Add(c);
+                }
+
+                if (localCulture?.CaravanGuard != null)
+                {
+                    pool.AddRange(CollectUpgradeTree(localCulture.CaravanGuard, 1, 6));
+                }
+
+                if (localCulture != null)
+                {
+                    pool.AddRange(CharacterObject.All.Where(c =>
+                        c.Culture == localCulture &&
+                        !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
+                        (c.StringId.IndexOf("caravan_guard", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                         c.StringId.IndexOf("armed_trader", StringComparison.OrdinalIgnoreCase) >= 0)));
+                }
+
+                if (pool.Count < 2)
+                {
+                    pool.AddRange(CharacterObject.All.Where(c =>
+                        !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
+                        (c.StringId.IndexOf("caravan_guard", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                         c.StringId.IndexOf("armed_trader", StringComparison.OrdinalIgnoreCase) >= 0)).Take(4));
+                }
+
+                if (pool.Count < 2)
+                {
+                    var fallbackMerc1 = FindCharacter("mercenary_swordsman");
+                    var fallbackMerc2 = FindCharacter("mercenary_scout");
+                    if (fallbackMerc1 != null) pool.Add(fallbackMerc1);
+                    if (fallbackMerc2 != null) pool.Add(fallbackMerc2);
+                }
+
+                roster = DistributeTroops(pool, totalTroops, 2, 4);
+                return roster.Count > 0;
+            }
+
+            // E) Garrison Guards / Elite Guards ("garrison_guards", "garrison_guards_template", "elite_guards_template")
+            if (archetype == "garrison_guards" || archetype == "garrison_guard" ||
+                archetype == "elite_guards" || archetype == "elite_guard" ||
+                archetype.Contains("garrison") || archetype.Contains("guard"))
+            {
+                var pool = new List<CharacterObject>();
+                if (localCulture?.BasicTroop != null)
+                {
+                    var treeTroops = CollectUpgradeTree(localCulture.BasicTroop, 3, 5);
+                    pool.AddRange(treeTroops.Where(c => !c.IsMounted));
+                    if (pool.Count < 2)
+                    {
+                        pool.AddRange(treeTroops);
+                    }
+                }
+
+                if (localCulture != null)
+                {
+                    pool.AddRange(CharacterObject.All.Where(c =>
+                        c.Culture == localCulture &&
+                        c.IsSoldier &&
+                        !c.IsHero &&
+                        !c.IsTemplate &&
+                        !c.IsChildTemplate &&
+                        !c.IsObsolete &&
+                        !c.IsMounted &&
+                        c.Tier >= 3 && c.Tier <= 5));
+
+                    if (pool.Count < 2)
+                    {
+                        pool.AddRange(CharacterObject.All.Where(c =>
+                            c.Culture == localCulture &&
+                            c.IsSoldier &&
+                            !c.IsHero &&
+                            !c.IsTemplate &&
+                            !c.IsChildTemplate &&
+                            !c.IsObsolete &&
+                            c.Tier >= 3 && c.Tier <= 5));
+                    }
+                }
+
+                if (pool.Count == 0)
+                {
+                    pool.AddRange(CharacterObject.All.Where(c =>
+                        c.IsSoldier && !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
+                        c.Culture != null && !c.Culture.IsBandit &&
+                        !c.IsMounted && c.Tier >= 3 && c.Tier <= 5).Take(6));
+                }
+
+                roster = DistributeTroops(pool, totalTroops, 2, 4);
+                return roster.Count > 0;
+            }
+
+            return false;
         }
     }
 }
