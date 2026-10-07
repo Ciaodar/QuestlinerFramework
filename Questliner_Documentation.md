@@ -110,9 +110,10 @@ XML içerisinden partideki asker tiplerini ve sayılarını birebir belirlemek i
 - **Adet Belirtmeden (`Amount` Üzerinden Eşit Dağıtım):** `PartyTemplateId="custom:vlandian_swordsman,vlandian_sharpshooter"` (`Amount="40"` ise 20'şer adet ekler).
 
 `SetPartyAi` ile doğan bu partiye ne yapacağını söyleyebilirsiniz:
-- `StringValue="EngageParty"` ve `ObjectId="Player"`: Doğrudan oyuncuya saldırması emrini verir.
+- `StringValue="EngageParty"` ve `ObjectId="Player"` (veya `StringValue="EngagePlayer"`): Doğrudan oyuncuya saldırması emrini verir.
 - `StringValue="Hold"`: Olduğu yerde beklemesini sağlar.
-- `StringValue="PatrolAroundSettlement"` / `StringValue="GoToSettlement"`: `ObjectId` ile belirtilen yerleşke etrafında devriye gezmesini veya oraya yürümesini sağlar.
+- `StringValue="IgnoreAi"`: Partiyi diğer harita partilerine karşı görünmez/dokunulmaz kılar ve olduğu yerde sabit bekletir (`SetMoveModeHold`).
+- `StringValue="PatrolAroundSettlement"` / `StringValue="GoToSettlement"`: `ObjectId` veya `SettlementAlias` ile belirtilen yerleşke etrafında devriye gezmesini veya oraya yürümesini sağlar.
 
 ---
 

@@ -255,7 +255,8 @@ namespace Questliner.Framework.Engine
                             !rawTemplateId.Equals("looters_template", StringComparison.OrdinalIgnoreCase) &&
                             !rawTemplateId.Equals("looters", StringComparison.OrdinalIgnoreCase))
                         {
-                            var singleTroop = FindCharacter(rawTemplateId) ?? FindCharacter(clanId);
+                            var singleTroop = FindCharacter(rawTemplateId, allowSubstring: false)
+                                           ?? FindCharacter(clanId, allowSubstring: false);
                             if (singleTroop != null)
                             {
                                 dynamicRoster = new List<(CharacterObject character, int count)> { (singleTroop, targetAmount) };
@@ -314,7 +315,13 @@ namespace Questliner.Framework.Engine
                     var customPartyNameObj = new TaleWorlds.Localization.TextObject(partyName);
 
                     // 7. Create and Initialize Party using CustomPartyComponent
-                    var homeSettlement = Hero.MainHero.CurrentSettlement ?? Hero.MainHero.HomeSettlement ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault();
+                    var homeSettlement = (!string.IsNullOrEmpty(locationRefId) && quest != null
+                                            ? (quest.GetTargetSettlement(locationRefId)
+                                               ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault(s => s.StringId.Equals(locationRefId, StringComparison.OrdinalIgnoreCase)))
+                                            : null)
+                                      ?? Hero.MainHero.CurrentSettlement
+                                      ?? Hero.MainHero.HomeSettlement
+                                      ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault();
                     string mountId = "";
                     string harnessId = "";
                     if (clanId.IndexOf("caravan", StringComparison.OrdinalIgnoreCase) >= 0 || clanId.IndexOf("smuggler", StringComparison.OrdinalIgnoreCase) >= 0)
@@ -418,13 +425,19 @@ namespace Questliner.Framework.Engine
                     party.Ai.SetDoNotMakeNewDecisions(true);
 
                     string aiBehavior = action.StringValue ?? "";
-                    if (aiBehavior.Equals("Hold", StringComparison.OrdinalIgnoreCase) || aiBehavior.Equals("IgnoreAi", StringComparison.OrdinalIgnoreCase))
+                    if (aiBehavior.Equals("IgnoreAi", StringComparison.OrdinalIgnoreCase))
+                    {
+                        party.IgnoreByOtherPartiesTill(CampaignTime.Never);
+                        party.SetMoveModeHold();
+                    }
+                    else if (aiBehavior.Equals("Hold", StringComparison.OrdinalIgnoreCase))
                     {
                         party.SetMoveModeHold();
                     }
                     else if (aiBehavior.Equals("PatrolAroundSettlement", StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(locationRefId))
                     {
-                        var targetSettlement = quest.GetTargetSettlement(locationRefId);
+                        var targetSettlement = quest.GetTargetSettlement(locationRefId)
+                                            ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault(s => s.StringId.Equals(locationRefId, StringComparison.OrdinalIgnoreCase));
                         if (targetSettlement != null)
                             party.SetMovePatrolAroundSettlement(targetSettlement, MobileParty.NavigationType.Default, false);
                         else
@@ -432,7 +445,8 @@ namespace Questliner.Framework.Engine
                     }
                     else if (aiBehavior.Equals("GoToSettlement", StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(locationRefId))
                     {
-                        var targetSettlement = quest.GetTargetSettlement(locationRefId);
+                        var targetSettlement = quest.GetTargetSettlement(locationRefId)
+                                            ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault(s => s.StringId.Equals(locationRefId, StringComparison.OrdinalIgnoreCase));
                         if (targetSettlement != null)
                             party.SetMoveGoToSettlement(targetSettlement, MobileParty.NavigationType.Default, false);
                         else
@@ -614,23 +628,41 @@ namespace Questliner.Framework.Engine
                 {
                     if (quest != null && quest.TargetParties.TryGetValue(action.TargetAlias, out var p) && p != null && p.IsActive)
                     {
-                        if (action.StringValue == "IgnoreAi") p.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.Never);
-                        else if (action.StringValue == "UnignoreAi") p.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.Now);
-                        else if (action.StringValue == "Hold") p.SetMoveModeHold();
-                        else if (!string.IsNullOrEmpty(action.ObjectId))
+                        string targetRefId = !string.IsNullOrEmpty(action.ObjectId) ? action.ObjectId : action.SettlementAlias;
+                        if (action.StringValue == "IgnoreAi")
+                        {
+                            p.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.Never);
+                            p.SetMoveModeHold();
+                        }
+                        else if (action.StringValue == "UnignoreAi")
+                        {
+                            p.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.Now);
+                        }
+                        else if (action.StringValue == "Hold")
+                        {
+                            p.SetMoveModeHold();
+                        }
+                        else if (action.StringValue == "EngagePlayer")
+                        {
+                            p.SetMoveEngageParty(TaleWorlds.CampaignSystem.Party.MobileParty.MainParty, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
+                        }
+                        else if (!string.IsNullOrEmpty(targetRefId))
                         {
                             if (action.StringValue == "EngageParty")
                             {
-                                if (action.ObjectId.Equals("Player", System.StringComparison.OrdinalIgnoreCase))
+                                if (targetRefId.Equals("Player", System.StringComparison.OrdinalIgnoreCase))
                                     p.SetMoveEngageParty(TaleWorlds.CampaignSystem.Party.MobileParty.MainParty, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
-                                else if (quest.TargetParties.TryGetValue(action.ObjectId, out var targetP) && targetP != null)
+                                else if (quest.TargetParties.TryGetValue(targetRefId, out var targetP) && targetP != null)
                                     p.SetMoveEngageParty(targetP, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
                             }
-                            else if (action.StringValue == "EscortParty" && quest.TargetParties.TryGetValue(action.ObjectId, out var escortP) && escortP != null)
+                            else if (action.StringValue == "EscortParty" && quest.TargetParties.TryGetValue(targetRefId, out var escortP) && escortP != null)
+                            {
                                 p.SetMoveEscortParty(escortP, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default, false);
+                            }
                             else
                             {
-                                var targetSettlement = quest.GetTargetSettlement(action.ObjectId);
+                                var targetSettlement = quest.GetTargetSettlement(targetRefId)
+                                                    ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault(s => s.StringId.Equals(targetRefId, System.StringComparison.OrdinalIgnoreCase));
                                 if (targetSettlement != null)
                                 {
                                     if (action.StringValue == "GoToSettlement") p.SetMoveGoToSettlement(targetSettlement, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default, false);
@@ -735,7 +767,9 @@ namespace Questliner.Framework.Engine
         private static CultureObject? ResolveLocalCulture(CampaignVec2 spawnPosition, DynamicQuest? quest, string? locationRefId)
         {
             string refId = locationRefId ?? string.Empty;
-            if (quest != null && !string.IsNullOrEmpty(refId) && !refId.Equals("Player", StringComparison.OrdinalIgnoreCase))
+            bool hasExplicitRemoteTarget = !string.IsNullOrEmpty(refId) && !refId.Equals("Player", StringComparison.OrdinalIgnoreCase);
+
+            if (quest != null && hasExplicitRemoteTarget)
             {
                 var targetSettlement = quest.GetTargetSettlement(refId)
                                     ?? TaleWorlds.CampaignSystem.Settlements.Settlement.All.FirstOrDefault(s => s.StringId.Equals(refId, StringComparison.OrdinalIgnoreCase));
@@ -745,17 +779,22 @@ namespace Questliner.Framework.Engine
                 }
 
                 var targetHero = quest.GetTargetHero(refId);
-                if (targetHero != null && IsValidMainCulture(targetHero.Culture))
+                if (targetHero != null)
                 {
-                    return targetHero.Culture;
+                    if (IsValidMainCulture(targetHero.CurrentSettlement?.Culture))
+                        return targetHero.CurrentSettlement!.Culture;
+                    if (IsValidMainCulture(targetHero.Culture))
+                        return targetHero.Culture;
                 }
             }
-
-            var currentSettlementCulture = TaleWorlds.CampaignSystem.Settlements.Settlement.CurrentSettlement?.Culture
-                                        ?? Hero.MainHero.CurrentSettlement?.Culture;
-            if (IsValidMainCulture(currentSettlementCulture))
+            else
             {
-                return currentSettlementCulture;
+                var currentSettlementCulture = TaleWorlds.CampaignSystem.Settlements.Settlement.CurrentSettlement?.Culture
+                                            ?? Hero.MainHero.CurrentSettlement?.Culture;
+                if (IsValidMainCulture(currentSettlementCulture))
+                {
+                    return currentSettlementCulture;
+                }
             }
 
             var pos2D = spawnPosition.ToVec2();
@@ -767,6 +806,13 @@ namespace Questliner.Framework.Engine
             if (nearestSettlement?.Culture != null)
             {
                 return nearestSettlement.Culture;
+            }
+
+            var fallbackCurrentCulture = TaleWorlds.CampaignSystem.Settlements.Settlement.CurrentSettlement?.Culture
+                                      ?? Hero.MainHero.CurrentSettlement?.Culture;
+            if (IsValidMainCulture(fallbackCurrentCulture))
+            {
+                return fallbackCurrentCulture;
             }
 
             var empireCulture = MBObjectManager.Instance.GetObject<CultureObject>("empire")
@@ -784,7 +830,7 @@ namespace Questliner.Framework.Engine
             return CharacterObject.All.FirstOrDefault(c => c.IsSoldier && !c.IsHero && IsValidMainCulture(c.Culture))?.Culture;
         }
 
-        private static CharacterObject? FindCharacter(string troopId)
+        private static CharacterObject? FindCharacter(string troopId, bool allowSubstring = true)
         {
             if (string.IsNullOrWhiteSpace(troopId))
                 return null;
@@ -801,7 +847,14 @@ namespace Questliner.Framework.Engine
             if (caseInsensitive != null)
                 return caseInsensitive;
 
+            if (!allowSubstring)
+                return null;
+
             return CharacterObject.All.FirstOrDefault(c =>
+                !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
+                (c.IsSoldier || c.Occupation == Occupation.Mercenary || c.Occupation == Occupation.Bandit || c.Occupation == Occupation.CaravanGuard) &&
+                c.StringId.IndexOf(trimmed, StringComparison.OrdinalIgnoreCase) >= 0)
+                ?? CharacterObject.All.FirstOrDefault(c =>
                 !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
                 c.StringId.IndexOf(trimmed, StringComparison.OrdinalIgnoreCase) >= 0);
         }
@@ -841,6 +894,39 @@ namespace Questliner.Framework.Engine
             return result;
         }
 
+        private static List<CharacterObject> SpreadByTier(List<CharacterObject> units, bool descendingFirstPass)
+        {
+            if (units.Count <= 2)
+                return units;
+
+            var tierGroups = descendingFirstPass
+                ? units.GroupBy(u => u.Tier).OrderByDescending(g => g.Key).Select(g => g.ToList()).ToList()
+                : units.GroupBy(u => u.Tier).OrderBy(g => g.Key).Select(g => g.ToList()).ToList();
+
+            if (tierGroups.Count <= 1)
+                return units;
+
+            var spread = new List<CharacterObject>(units.Count);
+            int pass = 0;
+            while (spread.Count < units.Count)
+            {
+                bool addedInPass = false;
+                foreach (var group in tierGroups)
+                {
+                    if (pass < group.Count)
+                    {
+                        spread.Add(group[pass]);
+                        addedInPass = true;
+                    }
+                }
+                if (!addedInPass)
+                    break;
+                pass++;
+            }
+
+            return spread;
+        }
+
         private static List<(CharacterObject character, int count)> DistributeTroops(
             IEnumerable<CharacterObject?> candidatePool,
             int totalTroops,
@@ -872,11 +958,11 @@ namespace Questliner.Framework.Engine
                 desiredTypes = minTypes;
             }
 
-            // Pick a balanced mix of infantry and ranged/other units across tiers
+            // Pick a balanced mix of infantry and ranged/other units spread across tiers
             var selected = new List<CharacterObject>();
-            var infantry = distinctPool.Where(c => c.IsInfantry).ToList();
-            var ranged = distinctPool.Where(c => c.IsRanged).ToList();
-            var others = distinctPool.Where(c => !c.IsInfantry && !c.IsRanged).ToList();
+            var infantry = SpreadByTier(distinctPool.Where(c => c.IsInfantry).ToList(), descendingFirstPass: false);
+            var ranged = SpreadByTier(distinctPool.Where(c => c.IsRanged).ToList(), descendingFirstPass: true);
+            var others = SpreadByTier(distinctPool.Where(c => !c.IsInfantry && !c.IsRanged).ToList(), descendingFirstPass: false);
 
             int infIdx = 0, rngIdx = 0, othIdx = 0;
             while (selected.Count < desiredTypes)
@@ -1144,6 +1230,35 @@ namespace Questliner.Framework.Engine
             {
                 var pool = new List<CharacterObject>();
 
+                if (localCulture?.CaravanGuard != null)
+                {
+                    pool.AddRange(CollectUpgradeTree(localCulture.CaravanGuard, 1, 6));
+                }
+
+                if (localCulture != null)
+                {
+                    string cultureId = localCulture.StringId;
+                    string[] cultureCaravanIds =
+                    {
+                        $"caravan_guard_{cultureId}",
+                        $"veteran_caravan_guard_{cultureId}",
+                        $"armed_trader_{cultureId}"
+                    };
+                    foreach (var id in cultureCaravanIds)
+                    {
+                        var c = FindCharacter(id, allowSubstring: false);
+                        if (c != null)
+                            pool.Add(c);
+                    }
+
+                    pool.AddRange(CharacterObject.All.Where(c =>
+                        c.Culture == localCulture &&
+                        !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
+                        (c.StringId.IndexOf("caravan_guard", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                         c.StringId.IndexOf("armed_trader", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                         c.Occupation == Occupation.CaravanGuard)));
+                }
+
                 string[] directCaravanIds =
                 {
                     "caravan_guard",
@@ -1153,23 +1268,9 @@ namespace Questliner.Framework.Engine
 
                 foreach (var id in directCaravanIds)
                 {
-                    var c = FindCharacter(id);
+                    var c = FindCharacter(id, allowSubstring: false);
                     if (c != null)
                         pool.Add(c);
-                }
-
-                if (localCulture?.CaravanGuard != null)
-                {
-                    pool.AddRange(CollectUpgradeTree(localCulture.CaravanGuard, 1, 6));
-                }
-
-                if (localCulture != null)
-                {
-                    pool.AddRange(CharacterObject.All.Where(c =>
-                        c.Culture == localCulture &&
-                        !c.IsHero && !c.IsTemplate && !c.IsChildTemplate && !c.IsObsolete &&
-                        (c.StringId.IndexOf("caravan_guard", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                         c.StringId.IndexOf("armed_trader", StringComparison.OrdinalIgnoreCase) >= 0)));
                 }
 
                 if (pool.Count < 2)
