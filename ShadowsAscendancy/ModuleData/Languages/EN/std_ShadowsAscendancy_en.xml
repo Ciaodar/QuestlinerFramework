@@ -134,19 +134,19 @@
     <string id="shdw_q2_dlg_lord_pay_c" text="Twenty thousand denars! Pure imperial silver, enough to hire companies of knights. Hand over that sealed parchment and ride away rich." />
     <string id="shdw_q2_dlg_lord_moral" text="They say gold washes away blood, but a traitor wrapped in ermine is still a traitor. What makes you think you can buy justice?" />
     <string id="shdw_q2_dlg_lord_tehdit_2" text="Twenty thousand denars is pocket change for a lord of high treason. I could bleed you dry and still give this parchment to the realm." />
-    <string id="shdw_q2_dlg_lord_ders" text="(Slams his goblet on the table, eyes narrowing) In Calradia, justice is whatever the man with the largest army says it is! A mercenary with a scrap of parchment does not dictate terms to a lord. Either take the twenty thousand denars and leave, or face the wrath of my entire garrison. What is your choice?!" />
+    <string id="shdw_q2_dlg_lord_ders" text="In Calradia, justice is whatever the man with the largest army says it is! A mercenary with a scrap of parchment does not dictate terms to a lord. Either take the twenty thousand denars and leave, or face the wrath of my entire garrison. What is your choice?!" />
     <string id="shdw_q2_dlg7" text="Pay me 20,000 denars, and this matter is buried forever." />
     <string id="shdw_q2_dlg8" text="My honor cannot be bought with coin. Draw your weapon!" />
     <string id="shdw_q2_dlg9" text="I am taking this order straight to the ruler. Justice will be served." />
-    <string id="shdw_q2_dlg_lord_santaj_c" text="(Grins arrogantly and tosses a heavy iron-bound chest at your feet) Smart choice. Gold never lies. Take your silver and never let me see your face in my domain again." />
-    <string id="shdw_q2_dlg_lord_savas_c" text="(Draws his gilded sword, roaring to his guards) Insolent dog! You dare threaten me?! Guards, slay this wretch!" />
-    <string id="shdw_q2_dlg_lord_politik_c" text="(His face turns pale with fury) The ruler?! You will never reach the court alive, mercenary! Run to the ruler if you dare, but you will find Calradia's courts colder than my dungeons!" />
+    <string id="shdw_q2_dlg_lord_santaj_c" text="Smart choice. Gold never lies. Take your silver and never let me see your face in my domain again." />
+    <string id="shdw_q2_dlg_lord_savas_c" text="Insolent dog! You dare threaten me?! Guards, slay this wretch!" />
+    <string id="shdw_q2_dlg_lord_politik_c" text="The ruler?! You will never reach the court alive, mercenary! Run to the ruler if you dare, but you will find Calradia's courts colder than my dungeons!" />
 
     <string id="shdw_q2_dlg_huk_intro" text="Welcome to our court. What urgent matter brings you before us?" />
     <string id="shdw_q2_dlg10" text="Your Majesty, one of your lords, {YozlasmisLord_Link}, plotted behind your back and hired assassins to murder me. Here is the sealed proof of his treason!" />
     <string id="shdw_q2_dlg_huk_diplomasi" text="I bring grave news of betrayal threatening the realm's stability, Your Majesty. This royal decree proves {YozlasmisLord_Link} commands cutthroats from the shadows." />
     <string id="shdw_q2_dlg_huk_justice" text="Certain lords believe noble blood places them above the realm's laws. I bring proof of high treason, and I expect Calradian justice to be unyielding." />
-    <string id="shdw_q2_dlg_huk_inceleme" text="(Takes the parchment, inspecting the wax seal with intense scrutiny) Treason against the crown? {YozlasmisLord_Link} has served our house for generations. Yet this crimson seal bears his signet... Tell me, how did this document come into your possession? Can you prove this is not a forged fabrication?" />
+    <string id="shdw_q2_dlg_huk_inceleme" text="Treason against the crown? {YozlasmisLord_Link} has served our house for generations. Yet this crimson seal bears his signet... Tell me, how did this document come into your possession? Can you prove this is not a forged fabrication?" />
     <string id="shdw_q2_dlg_huk_kanit_pusu" text="I was ambushed by his hired assassins on the high road. Their commander carried this sealed order inside his armor before I defeated them." />
     <string id="shdw_q2_dlg_huk_kanit_sendika" text="This decree was dispatched to recover an encrypted ledger tying the lord directly to the black-market extortion syndicate." />
     <string id="shdw_q2_dlg_huk_hukum" text="The evidence is damning. Running illegal extortion syndicates and deploying cutthroats against fellow subjects strikes at the very legitimacy of our crown. Such corruption cannot be tolerated, regardless of bloodline." />
