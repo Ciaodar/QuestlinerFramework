@@ -115,17 +115,17 @@
     <string id="shdw_q2_dlg_kom_savunma_c" text="His castle is heavily garrisoned, but during daytime audiences he sits upon his dais guarded only by personal retainers. Take the sealed order as proof!" />
     <string id="shdw_q2_dlg_kom_moral" text="A highborn nobleman paying cutthroats to butcher his rivals in the dark... Calradia's chivalry is truly dead." />
     <string id="shdw_q2_dlg_kom_cunning" text="This wax seal is worth a king's ransom in blackmail or political leverage. Hand it over, and maybe you'll live to see tomorrow." />
-    <string id="shdw_q2_dlg_kom_teslim" text="(Trembling, handing over the parchment) Here, take it! It has his personal coat of arms. The red seal is unbroken! Just let me vanish before his scouts find me!" />
+    <string id="shdw_q2_dlg_kom_teslim" text="Here, take it! It has his personal coat of arms. The red seal is unbroken! Just let me vanish before his scouts find me!" />
     <string id="shdw_q2_dlg4" text="Get out of here! Give my regards to your lord, tell him I am coming for him." />
     <string id="shdw_q2_dlg_kom_al" text="Give me the sealed order and crawl back to your hole. If I ever lay eyes on you again, you will lose more than your pride." />
     <string id="shdw_q2_dlg_kom_final" text="I have the proof. Now crawl back to your hole and tell your master that justice is riding toward his keep." />
 
-    <string id="shdw_q2_lord_turn1" text="(Takes a sip from his silver goblet and scoffs with aristocratic arrogance) You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate." />
+    <string id="shdw_q2_lord_turn1" text="You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate." />
     <string id="shdw_q2_dlg_lord_intro" text="You... So you are still breathing? What insolence brings you before me?" />
     <string id="shdw_q2_dlg_lord_tehdit" text="If you lie to me, this castle will be your tomb! I slaughtered the assassins you sent, and I hold your sealed treason in my grasp!" />
     <string id="shdw_q2_dlg5" text="I slaughtered the dogs you sent. I hold your sealed order. If I reveal this to the realm, your honor is forfeit!" />
     <string id="shdw_q2_dlg_lord_kurnaz" text="Did you honestly believe a handful of gutter cutthroats could slay me, my lord? Look closely at this wax seal." />
-    <string id="shdw_q2_dlg6" text="(Laughs) I am a noble, and you are merely a mercenary for hire. Who will the ruler believe, me or you? Still, I care little for headaches. What is your price?" />
+    <string id="shdw_q2_dlg6" text="I am a noble, and you are merely a mercenary for hire. Who will the ruler believe, me or you? Still, I care little for headaches. What is your price?" />
     <string id="shdw_q2_dlg_lord_motiv" text="Why does a highborn lord of the realm stoop to funding cutthroats and dirty street syndicates? Are your fiefs not enough for your greed?" />
     <string id="shdw_q2_dlg_lord_sendika" text="How far does your black-market network extend? Does the ruler know their own nobility trade in contraband and blood?" />
     <string id="shdw_q2_dlg_lord_pay_q" text="Hush money? If you expect me to bury high treason, your purse had better match your noble arrogance." />
