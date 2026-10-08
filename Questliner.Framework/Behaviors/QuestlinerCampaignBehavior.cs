@@ -25,6 +25,12 @@ namespace Questliner.Framework.Behaviors
             }
         }
 
+        public void RemoveCompletedQuest(string questId)
+        {
+            if (string.IsNullOrEmpty(questId)) return;
+            _completedQuestIds.Remove(questId);
+        }
+
         public override void RegisterEvents()
         {
             Instance = this;
@@ -41,7 +47,7 @@ namespace Questliner.Framework.Behaviors
 
         private void OnQuestCompleted(QuestBase quest, QuestBase.QuestCompleteDetails details)
         {
-            if (quest is DynamicQuest dynamicQuest)
+            if (quest is DynamicQuest dynamicQuest && details == QuestBase.QuestCompleteDetails.Success)
             {
                 MarkQuestAsCompleted(dynamicQuest.Model?.Id ?? dynamicQuest.StringId);
             }
@@ -159,6 +165,8 @@ namespace Questliner.Framework.Behaviors
                     }
                 }
             }
+
+            SanitizeQuestItemsInInventory();
         }
 
         private bool DynamicDialogCondition(QuestModel questModel, CustomDialogModel dialogNode)
@@ -606,6 +614,7 @@ namespace Questliner.Framework.Behaviors
                 quest.CheckStageProgression();
             }
 
+            SanitizeQuestItemsInInventory();
             _questsStartedInThisConversation.Clear();
             _currentConversationQuestId = null;
         }
@@ -614,17 +623,60 @@ namespace Questliner.Framework.Behaviors
         {
             if (MobileParty.MainParty?.ItemRoster == null) return;
             var roster = MobileParty.MainParty.ItemRoster;
+            var toConvert = new List<(EquipmentElement OldElement, EquipmentElement NewElement, int Amount)>();
+
             for (int i = 0; i < roster.Count; i++)
             {
                 var element = roster.GetElementCopyAtIndex(i);
-                if (element.EquipmentElement.Item != null && !element.EquipmentElement.IsQuestItem)
+                var item = element.EquipmentElement.Item;
+                if (item == null || element.Amount <= 0) continue;
+
+                if (element.EquipmentElement.IsQuestItem)
                 {
-                    if (Models.QuestlinerTradeItemPriceFactorModel.IsQuestItem(element.EquipmentElement.Item))
+                    // Native Bannerlord's InventoryLogic.TransferIsMovementValid blocks equipping any non-banner item
+                    // that has IsQuestItem == true. Convert equippable weapons/armor/mounts back to isQuestItem: false.
+                    if (Models.QuestlinerTradeItemPriceFactorModel.IsEquippableItem(item) &&
+                        item.BannerComponent?.BannerEffect == null)
                     {
-                        int amount = element.Amount;
-                        roster.AddToCounts(element.EquipmentElement, -amount);
-                        roster.AddToCounts(new EquipmentElement(element.EquipmentElement.Item, element.EquipmentElement.ItemModifier, null, isQuestItem: true), amount);
+                        var unlockedElement = new EquipmentElement(item, element.EquipmentElement.ItemModifier, element.EquipmentElement.CosmeticItem, isQuestItem: false);
+                        toConvert.Add((element.EquipmentElement, unlockedElement, element.Amount));
                     }
+                }
+                else
+                {
+                    if (Models.QuestlinerTradeItemPriceFactorModel.IsQuestItem(item))
+                    {
+                        var lockedElement = new EquipmentElement(item, element.EquipmentElement.ItemModifier, element.EquipmentElement.CosmeticItem, isQuestItem: true);
+                        toConvert.Add((element.EquipmentElement, lockedElement, element.Amount));
+                    }
+                }
+            }
+
+            foreach (var conversion in toConvert)
+            {
+                roster.AddToCounts(conversion.OldElement, -conversion.Amount);
+                roster.AddToCounts(conversion.NewElement, conversion.Amount);
+            }
+
+            if (Hero.MainHero != null)
+            {
+                SanitizeEquipment(Hero.MainHero.BattleEquipment);
+                SanitizeEquipment(Hero.MainHero.CivilianEquipment);
+                SanitizeEquipment(Hero.MainHero.StealthEquipment);
+            }
+        }
+
+        private static void SanitizeEquipment(Equipment? equipment)
+        {
+            if (equipment == null) return;
+            for (EquipmentIndex slot = EquipmentIndex.WeaponItemBeginSlot; slot < EquipmentIndex.NumEquipmentSetSlots; slot++)
+            {
+                var eqElement = equipment[slot];
+                if (eqElement.Item != null && eqElement.IsQuestItem &&
+                    Models.QuestlinerTradeItemPriceFactorModel.IsEquippableItem(eqElement.Item) &&
+                    eqElement.Item.BannerComponent?.BannerEffect == null)
+                {
+                    equipment[slot] = new EquipmentElement(eqElement.Item, eqElement.ItemModifier, eqElement.CosmeticItem, isQuestItem: false);
                 }
             }
         }
@@ -827,6 +879,7 @@ namespace Questliner.Framework.Behaviors
             }
             
             EvaluateAllQuests();
+            SanitizeQuestItemsInInventory();
         }
 
         

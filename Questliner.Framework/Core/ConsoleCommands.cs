@@ -92,5 +92,14 @@ namespace Questliner.Framework.Core
             if (heroes == null || heroes.Count == 0) return "No stored global heroes.";
             return "Stored Global Heroes:\n" + string.Join("\n", heroes.Select(kvp => $"- {kvp.Key}: {kvp.Value?.Name} ({kvp.Value?.StringId})"));
         }
+
+        [CommandLineFunctionality.CommandLineArgumentFunction("reset_completed", "qlf")]
+        public static string ResetCompleted(List<string> args)
+        {
+            if (args.Count < 1) return "Usage: qlf.reset_completed [QuestId]";
+            var id = args[0];
+            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.RemoveCompletedQuest(id);
+            return $"Quest {id} removed from completed quests.";
+        }
     }
 }

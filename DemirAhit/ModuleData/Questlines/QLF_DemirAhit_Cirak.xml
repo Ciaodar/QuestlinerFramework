@@ -346,6 +346,7 @@
       <Consequences>
         <Action Type="TakeGold" Amount="2000" />
         <Action Type="GiveItem" ObjectId="YildizDemiri" Amount="5" />
+        <Action Type="SetFlag" ObjectId="Mahzen_SatinAlindi" Amount="1" />
         <Action Type="ChangeStage" ObjectId="Stage3_Teslim" />
         <Action Type="LeaveEncounter" />
       </Consequences>
@@ -363,6 +364,55 @@
     <!-- Turn 2: Player battle reply (no postponement option in hostile encounter) -->
     <DialogNode Type="Player" Id="Katiller_Savas" TargetAlias="KiralikKatiller" InputToken="ql_da_katiller_secim" OutputToken="close_window">
       <Text>{=da_katiller_p_savas}My steel will speak for me. Draw!</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Optional Dialogue with Village Elder at HammadeKaynagi (Stage 3: Gratitude & Reminder) -->
+    <!-- Turn 1 (Combat Path): Player speaks with the village elder after defeating the hired cutthroats -->
+    <DialogNode Type="Player" Id="Muhtar_Tesekkur_Giris" TargetAlias="KoyMuhtari" InputToken="hero_main_options" OutputToken="ql_da_m_tesekkur_t1" Priority="200">
+      <Text>{=da_muhtar_tesekkur_p_giris}Elder, the hired cutthroats have been dealt with and the Star Iron is safe in my packs.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_Teslim" />
+        <Condition Type="!CheckFlag" ObjectId="Mahzen_SatinAlindi" Amount="1" />
+      </Conditions>
+    </DialogNode>
+
+    <!-- Turn 2 (Combat Path): Elder expresses gratitude for saving the village and quarry -->
+    <DialogNode Type="Npc" Id="Muhtar_Tesekkur_Yanit" TargetAlias="KoyMuhtari" InputToken="ql_da_m_tesekkur_t1" OutputToken="ql_da_m_tesekkur_t2">
+      <Text>{=da_muhtar_tesekkur_npc_1}Bless your blade, warrior! Since you broke the backs of {RakipTuccar_Link}'s cutthroats, our miners can finally breathe easy and work the quarry in peace. You have done this village a great service.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 3 (Combat Path): Player acknowledges and prepares to depart -->
+    <DialogNode Type="Player" Id="Muhtar_Tesekkur_P_Devam" TargetAlias="KoyMuhtari" InputToken="ql_da_m_tesekkur_t2" OutputToken="ql_da_m_tesekkur_t3">
+      <Text>{=da_muhtar_tesekkur_p_devam}Your quarry is safe now, elder. I shall take my leave soon.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 1 (Cellar Purchase Path): Player speaks with the village elder after buying the reserve ore -->
+    <DialogNode Type="Player" Id="Muhtar_Tesekkur_Mahzen_Giris" TargetAlias="KoyMuhtari" InputToken="hero_main_options" OutputToken="ql_da_m_tesekkur_mahzen_t1" Priority="200">
+      <Text>{=da_muhtar_tesekkur_mahzen_p_giris}Elder, the Star Iron from your cellar reserve is secure in my packs.</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_Teslim" />
+        <Condition Type="CheckFlag" ObjectId="Mahzen_SatinAlindi" Amount="1" />
+      </Conditions>
+    </DialogNode>
+
+    <!-- Turn 2 (Cellar Purchase Path): Elder expresses gratitude for the coin compensating the miners -->
+    <DialogNode Type="Npc" Id="Muhtar_Tesekkur_Mahzen_Yanit" TargetAlias="KoyMuhtari" InputToken="ql_da_m_tesekkur_mahzen_t1" OutputToken="ql_da_m_tesekkur_mahzen_t2">
+      <Text>{=da_muhtar_tesekkur_mahzen_npc_1}Bless your generosity, warrior! With the two thousand gold you paid for our reserve ingots, our miners' families will weather the winter and rebuild what {RakipTuccar_Link}'s raiders ruined. You have done this village a great service.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 3 (Cellar Purchase Path): Player acknowledges and prepares to depart -->
+    <DialogNode Type="Player" Id="Muhtar_Tesekkur_Mahzen_P_Devam" TargetAlias="KoyMuhtari" InputToken="ql_da_m_tesekkur_mahzen_t2" OutputToken="ql_da_m_tesekkur_t3">
+      <Text>{=da_muhtar_tesekkur_mahzen_p_devam}May your village recover swiftly, elder. I shall take my leave soon.</Text>
+      <Conditions />
+    </DialogNode>
+
+    <!-- Turn 4: Elder reminds player to take the Star Iron back to the master blacksmith -->
+    <DialogNode Type="Npc" Id="Muhtar_Tesekkur_Bitis" TargetAlias="KoyMuhtari" InputToken="ql_da_m_tesekkur_t3" OutputToken="close_window">
+      <Text>{=da_muhtar_tesekkur_npc_2}Keep your horses swift and carry those Star Iron chunks straight back to master smith {EfsaneviDemirci_Link} in {DemirciSehri_Link}! His hearth is already roaring for your return. May the heavens guard your road, friend.</Text>
       <Conditions />
     </DialogNode>
 

@@ -207,7 +207,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Miras_Kaynak_Bitis" TargetAlias="EfsaneviDemirci" InputToken="ql_da_miras_npc_3" OutputToken="close_window">
-      <Text>{=da_miras_dlg_3}The flames leap blue and white! Give us but a few hours... (The rhythmic thunder of twin hammers echoes through the valley as incandescent sparks cascade across the workshop floor) It is finished! Behold the Covenant Blade! Speak to me once more, warrior, for a fateful choice remains.</Text>
+      <Text>{=da_miras_dlg_3}The flames leap blue and white! Hear the twin hammers ring as incandescent sparks cascade across the anvil... It is finished! Behold the Covenant Blade! Speak to me once more, warrior, for a fateful choice remains.</Text>
       <Consequences>
         <Action Type="TakeGold" Amount="50000" />
         <Action Type="GiveItem" ObjectId="KalbinAtesi" Amount="1" />
@@ -303,7 +303,7 @@
 
     <!-- Turn 8: Grand Epilogue & Consequences -->
     <DialogNode Type="Npc" Id="Miras_Sonuc_Klan_Cevap" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_sonuc_klan" OutputToken="close_window">
-      <Text>{=da_m4_npc_sonuc_klan}Then take it, true Heir of the Covenant! May this celestial steel split shields, shatter armor, and guide your heirs to rule Calradia! (Lifts the gleaming blade and presents it upon the anvil cushion) Wear it with honor, warlord!</Text>
+      <Text>{=da_m4_npc_sonuc_klan}Then take it, true Heir of the Covenant! May this celestial steel split shields, shatter armor, and guide your heirs to rule Calradia! Grip its hilt and wear it with honor, warlord!</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage4_Miras" />
         <Action Type="LeaveEncounter" />
@@ -311,7 +311,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Miras_Sonuc_Kral_Cevap" TargetAlias="EfsaneviDemirci" InputToken="ql_da_m4_sonuc_kral" OutputToken="close_window">
-      <Text>{=da_m4_npc_sonuc_kral}A noble and far-sighted decision! A weapon worthy of an emperor's hand... (Carefully sheathes the blade into a velvet scabbard emblazoned with golden sigils and presents it) Present this to King {IttifakKrali_Link}. His gratitude shall echo in songs for a hundred winters!</Text>
+      <Text>{=da_m4_npc_sonuc_kral}A noble and far-sighted decision! A weapon worthy of an emperor's hand, resting in this velvet scabbard emblazoned with golden sigils. Present this to King {IttifakKrali_Link}. His gratitude shall echo in songs for a hundred winters!</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage4_Kral" />
         <Action Type="LeaveEncounter" />

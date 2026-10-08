@@ -9,8 +9,8 @@
     <string id="sp_hg_s0_log" text="You suspected the assassination mission and started an investigation. You are waiting for reports from your scouts to locate the looter parties carrying out provocations in your name... (1 Day)" />
     <string id="sp_hg_s1_log" text="You suspected the assassination mission and started investigating. You must find and defeat 3 different looter parties wandering around using the name {PlayerName}. The truth will be revealed when you interrogate their scouts." />
     <string id="sp_hg_s2_log" text="You are interrogating the captured looters in isolation... Wait for them to break and reveal the location of their ringleader. (1 Day)" />
-    <string id="sp_hg_spawn1" text="Suspect Field Operatives" />
-    <string id="sp_hg_s3_log" text="It is time to interrogate the field operatives. You must go to their nearby detachment (Field Coordinator) and speak with them." />
+    <string id="sp_hg_spawn1" text="Traitor Looters" />
+    <string id="sp_hg_s3_log" text="It is time to interrogate the captives. You must go to a nearby looter party (Field Coordinator) and speak with them." />
     <string id="sp_hg_s4_log" text="The captives told you the whereabouts of their ringleader. If you wait a bit, the real pigeons will come to you." />
     <string id="sp_hg_s5_log" text="You found out who the real traitor is. Now all you have to do is pledge your allegiance to the kingdom." />
     
@@ -18,7 +18,7 @@
     <string id="sp_hg_dlg2" text="Tell me what you know, or I will put you all to the sword!" />
     <string id="sp_hg_dlg3" text="We are just field operatives. The artisan tells us who to target. But the real boss will be here soon. Let us bring him to you!" />
     <string id="sp_hg_dlg4" text="Alright, I'm letting you go. You're of no other use anyway. I'll be waiting for your ringleader." />
-    <string id="sp_hg_spawn2" text="Pigeon Field Coordinator" />
+    <string id="sp_hg_spawn2" text="Looter Ringleader" />
     
     <string id="sp_hg_dlg5" text="Halt! We are not here to draw swords... You released my soldiers. I am a looter field coordinator. What is the meaning of this? Are you trying to tell us something?" />
     <string id="sp_hg_dlg6" text="Yes, I stand before you to prove I didn't kill the man we call our friend. I need to find out who started these slanderous rumors." />
@@ -122,7 +122,6 @@
     <string id="sp_yd_dlg19" text="As a token of our sincerity, we are gifting you some gold. Gather 70 men and find the village elder in the nearest village." />
     <string id="sp_yd_dlg20" text="I don't want your money. I'll also have to think a bit about taking a company of 70 men there." />
     <string id="sp_yd_dlg21" text="Thank you. I will gather that company with this money and meet with the village elder." />
-    <string id="sp_yd_dlg22" text="I am no longer interested in this nonsense. Find someone else to entertain yourselves with." />
     <string id="sp_yd_dlg23" text="Alright, see you later, baby pigeon..." />
 
     <!-- Itibar Dersi -->
@@ -142,32 +141,31 @@
     <string id="sp_id_dlg19" text="As a token of our sincerity, we are gifting you some gold. Gather 70 men and find the village elder in the nearest village." />
     <string id="sp_id_dlg20" text="I don't want your money. I'll also have to think a bit about taking a company of 70 men there." />
     <string id="sp_id_dlg21" text="Thank you. I will gather that company with this money and meet with the village elder." />
-    <string id="sp_id_dlg22" text="I am no longer interested in this nonsense. Find someone else to entertain yourselves with." />
     <string id="sp_id_dlg23" text="Alright, see you later, baby pigeon..." />
 
     <!-- Kopuk Baglar -->
     <string id="sp_kb_title" text="Severed Ties" />
-    <string id="sp_kb_s0_log" text="You are waiting for news about the traitorous artisan {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you." />
+    <string id="sp_kb_s0_log" text="You are waiting for news about the traitorous looter {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you." />
     <string id="sp_kb_s1_log" text="You received an urgent, blood-stained message from a pigeon. Your friend {Dost_Link} needs to see you immediately. Find him and ask what the emergency is." />
-    <string id="sp_kb_s2_log" text="You spoke to {Dost_Link}. He revealed that the artisan {HainZanaatkar_Link} is a traitor who stole the Pigeon ciphers and fled. To find his main convoy, you must first intercept and defeat 3 of his decoy looter parties roaming the lands before they disperse. (Time Limit: 10 Days)" />
+    <string id="sp_kb_s2_log" text="You spoke to {Dost.Name}. He revealed that the artisan {HainZanaatkar_Link} is a traitor who stole the Pigeon ciphers and fled. To find his main convoy, you must first intercept and defeat 3 of his decoy looter parties roaming the lands before they disperse. (Time Limit: 10 Days)" />
     <string id="sp_kb_convoy" text="Traitor's Convoy" />
-    <string id="sp_kb_s3_log" text="After defeating the decoys, the traitor's elite deserter escort has appeared to eliminate you! Confront them and retrieve the ciphers before they escape across the border. (Time Limit: 5 Days)" />
-    <string id="sp_kb_success_log" text="You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The ciphers were returned to {Dost_Link}, and your absolute loyalty to the Scavenger Pigeons has been proven once and for all. You were rewarded with 25,000 denars and high honors." />
-    <string id="sp_kb_yozlasma_log" text="You heeded the artisan's warning and accepted his offer. You let {HainZanaatkar_Link} escape across the border with his life, receiving 25,000 denars and the Secret Pigeon Dagger. Soon after, a dying black pigeon will bring you the coordinates to the Black Ledger..." />
-    <string id="sp_kb_fail_log" text="The traitor {HainZanaatkar_Link} and his deserter escort managed to slip across the border before you could intercept them. The secret ciphers are lost forever, and the Scavenger Pigeons have lost their trust in you." />
+    <string id="sp_kb_s3_log" text="After defeating the decoys, the traitor's looter convoy has appeared to eliminate you! Confront them and retrieve the ciphers before they escape across the border. (Time Limit: 5 Days)" />
+    <string id="sp_kb_success_log" text="You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost.Name}. Impressed by your unwavering devotion, your old contact welcomed you into the deeper ranks of the realm's shadow service, promising to call upon you for four seasons of service." />
+    <string id="sp_kb_yozlasma_log" text="You accepted the artisan's bribe and allowed {HainZanaatkar_Link} to vanish into the wilderness. You gained 25,000 gold and the Pigeon's Secret Dagger. Moments later, a dying black pigeon delivered the artisan's final cryptic message: {Dost.Name} is playing everyone; the Black Ledger hidden in the ciphers will burn Calradia. The hunt for the truth has begun!" />
+    <string id="sp_kb_fail_log" text="The traitor {HainZanaatkar_Link} and his convoy managed to slip across the border before you could intercept them. The secret ciphers are lost forever, and the Scavenger Pigeons have lost their trust in you." />
     
     <string id="sp_kb_dlg1" text="I received your bloody pigeon message. What is the emergency?" />
     <string id="sp_kb_dlg2" text="It's a disaster, my friend! The artisan, {HainZanaatkar_Link}... The one who gave you the fake assassination order. He wasn't just playing a role. He's a real double agent!" />
     <string id="sp_kb_dlg3" text="What did he do?" />
-    <string id="sp_kb_dlg4" text="He stole our master ciphers and fled the city. He's planning to sell them to the enemy. He hired a massive mercenary army disguised as looters to escort him. We must stop him before he crosses the border!" />
+    <string id="sp_kb_dlg4" text="He stole our master ciphers and fled the city. He's planning to sell them to the enemy. He gathered a massive looter convoy to escort him. We must stop him before he crosses the border!" />
     <string id="sp_kb_dlg5" text="Tell me what to do." />
     <string id="sp_kb_dlg6" text="Hunt down his decoy looter parties. Destroy three of them. This will force his main convoy out of hiding. I am counting on you, Pigeon." />
     <string id="sp_kb_dlg7" text="So, {PlayerName}... You actually found me. I am {HainZanaatkar.Name}. You Pigeons are truly relentless." />
     <string id="sp_kb_dlg8" text="Give me the ciphers, traitor. Your death will be quick." />
     <string id="sp_kb_dlg9" text="Wait! You blindly fight for {Dost_Link} and the Motherland. Do you even know what these ciphers contain? They are false-flag assassination orders to start an unjustified war! The Motherland is corrupt, my friend. Let me go, and I will give you a fortune and my legendary dagger." />
-    <string id="sp_kb_dlg10" text="The lies of a traitor mean nothing to me. My oath to the Motherland is absolute! Men, attack! (Execute the Traitor)" />
-    <string id="sp_kb_dlg11" text="If {Dost.Name} is orchestrating false wars, the truth must come out. Leave the gold and the dagger, and tell me where to find proof. (Spare the Artisan)" />
-    <string id="sp_kb_dlg12" text="A wise choice, {PlayerName}. Watch the skies; a black pigeon will bring you the coordinates to the Black Ledger once I am across the border. Farewell." />
+    <string id="sp_kb_dlg10" text="The poisoned tongue of a traitor cannot deceive me. The Motherland's justice will be served! Men, attack! (Fight)" />
+    <string id="sp_kb_dlg11" text="False-flag wars and puppet masters? Hand over the 25,000 gold and that dagger, and disappear across the border. (Accept Bribe &amp; Let Escape)" />
+    <string id="sp_kb_dlg12" text="A wise decision... The Pigeons are blind fools, but you have eyes to see. Take the gold and the dagger. Farewell, {PlayerName}!" />
 
     <!-- Golge Tunegi: Golge Tuneginin Cagri -->
     <string id="sp_gt1_title" text="Call of the Shadow Roost" />
@@ -258,21 +256,21 @@
     <string id="sp_kb_dlg_dost_leak" text="He held the master cipher archive, the true identities of every operative we planted across all kingdoms! Before dawn, he murdered two keepers and slipped through the gates. If he delivers those scrolls to the enemy, hundreds of our people will be rounded up and executed." />
     <string id="sp_kb_dlg_p2_risk" text="If our informants are exposed, will the high lords brand us as conspirators rather than protectors?" />
     <string id="sp_kb_dlg_p2_motive" text="He spent decades serving the Pigeons. What could possibly drive an elder craftsman to such reckless treachery?" />
-    <string id="sp_kb_dlg_dost_army" text="Gold, fear, and paranoia! He claims our society has become too powerful and orchestrates false wars. But he is a hypocrite: he hired 70 battle-hardened deserters disguised as common looters to guard his escape. He is marching toward the border passes right now." />
-    <string id="sp_kb_dlg_p3_tactics" text="Seventy deserters with baggage can move fast. How do we pin them down without fighting the entire garrison?" />
+    <string id="sp_kb_dlg_dost_army" text="Gold, fear, and paranoia! He claims our society has become too powerful and orchestrates false wars. But he is a hypocrite, he gathered a convoy of 70 cutthroat looters to guard his escape. He is marching toward the border passes right now." />
+    <string id="sp_kb_dlg_p3_tactics" text="Seventy looters with baggage can move fast. How do we pin them down before they slip through the passes?" />
     <string id="sp_kb_dlg_p3_force" text="Let him hire a thousand cutthroats. My blade will cut through his vanguard like straw. Where do I strike?" />
     <string id="sp_kb_dlg_dost_tactics" text="He deployed three decoy looter bands across the foothills to confuse our tracking hounds. Intercept and destroy those three decoy parties. Once his decoys are crushed, his main convoy will lose its screen and be forced to face you in the open." />
     <string id="sp_kb_dlg_p4_acc" text="Consider it done, friend. I will bring back the master ciphers and end this treason. (Accept Hunt)" />
     <string id="sp_kb_dlg_p4_prag" text="I will ride him down. But make sure the Motherland remembers who saved her throat today. (Accept Hunt)" />
     <string id="sp_kb_dlg_p_inq" text="Why run like a common thief? Why steal the very ciphers you swore to protect?" />
     <string id="sp_kb_dlg_p_harsh" text="Save your breath, rat. Hand over the master ciphers and get on your knees." />
-    <string id="sp_kb_dlg_p_prag" text="You hired 70 deserters and spent a fortune to flee. What is in those ciphers that makes you run for your life?" />
-    <string id="sp_kb_dlg_k_layer1" text="You speak of theft, but you don't even know whose blood is on your hands! You think you are fighting for the Motherland and your noble contact, {Dost.Name}. But you are nothing more than his blinded executioner!" />
+    <string id="sp_kb_dlg_p_prag" text="You gathered 70 looters and spent a fortune to flee. What is in those ciphers that makes you run for your life?" />
+    <string id="sp_kb_dlg_k_layer1" text="You speak of theft, but you don't even know whose blood is on your hands! You think you are fighting for the Motherland and your noble friend {Dost.Name}. But you are nothing more than his blinded executioner!" />
     <string id="sp_kb_dlg_p2_accuse" text="{Dost.Name} warned me you would spew poison. You're selling our defense archives to foreign crowns to save your own hide!" />
     <string id="sp_kb_dlg_p2_curious" text="Whose blood? What did you discover in those master ciphers that made you turn against your own brothers?" />
     <string id="sp_kb_dlg_k_ledger_reveal" text="Defense archives? Lies! These ciphers contain the Black Ledger, the secret record of every false-flag raid {Dost.Name} orchestrated! He hires deserters to slaughter frontier villages under rival banners, forcing kings into wars so the Pigeons can sell protection and intelligence at extortionate prices!" />
     <string id="sp_kb_dlg_p3_doubt" text="Manufactured wars... Is that why you gave me an assassination contract against {Dost.Name} when we first met?" />
-    <string id="sp_kb_dlg_p3_skep" text="Even if {Dost.Name} is ruthless, you are surrounded by 70 cutthroats. Why should I trust a mercenary commander over a kingdom lord?" />
+    <string id="sp_kb_dlg_p3_skep" text="Even if {Dost.Name} is ruthless, you are surrounded by 70 looters. Why should I trust a runaway looter over a kingdom lord?" />
     <string id="sp_kb_dlg_k_offer" text="Yes! I tried to have him killed to save Calradia from another continental bloodbath, but you refused! Now my only desire is to live. Let me cross this border, {PlayerName}. Take my 25,000 gold and my Pigeon's Secret Dagger. {Dost.Name} will never know. You can walk away wealthy and unburdened!" />
     <string id="sp_kb_dlg_fight_prag" text="Your dagger and your gold will be mine once your corpse hits the dirt anyway. Draw your steel! (Fight)" />
 

@@ -18,7 +18,7 @@
 
   <Stages>
     <Stage Id="Stage0_Bekleme" NextStageId="Stage1_Mesaj" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=sp_kb_s0_log}You are waiting for news about the traitorous artisan {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you.</LogText>
+      <LogText>{=sp_kb_s0_log}You are waiting for news about the traitorous looter {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you.</LogText>
       <Conditions />
       <OnTimeoutActions>
         <Action Type="ChangeStage" ObjectId="Stage1_Mesaj" />
@@ -49,12 +49,12 @@
     </Stage>
 
     <Stage Id="Stage3_Yuzlesme" NextStageId="StageSuccess" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="5">
-      <LogText>{=sp_kb_s3_log}After defeating the decoys, the traitor's elite deserter escort has appeared to eliminate you! Confront them and retrieve the ciphers before they escape across the border. (Time Limit: 5 Days)</LogText>
+      <LogText>{=sp_kb_s3_log}After defeating the decoys, the traitor's looter convoy has appeared to eliminate you! Confront them and retrieve the ciphers before they escape across the border. (Time Limit: 5 Days)</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="Konvoy" StringValue="Victory" />
       </Conditions>
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="Konvoy" Amount="70" PartyTemplateId="caravan_guards_template" StringValue="{=sp_kb_convoy}Traitor's Convoy" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="Konvoy" Amount="70" PartyTemplateId="looters_template" StringValue="{=sp_kb_convoy}Traitor's Convoy" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="Konvoy" StringValue="EngageParty" ObjectId="Player" />
         <Action Type="MakeMet" TargetAlias="HainZanaatkar" />
       </OnEnterActions>
@@ -91,7 +91,7 @@
     </Stage>
 
     <Stage Id="StageFail_Kacti" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
-      <LogText>{=sp_kb_fail_log}The traitor {HainZanaatkar_Link} and his deserter escort managed to slip across the border before you could intercept them. The secret ciphers are lost forever, and the Scavenger Pigeons have lost their trust in you.</LogText>
+      <LogText>{=sp_kb_fail_log}The traitor {HainZanaatkar_Link} and his convoy managed to slip across the border before you could intercept them. The secret ciphers are lost forever, and the Scavenger Pigeons have lost their trust in you.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="ChangeRelation" TargetAlias="Dost" Amount="-15" />
@@ -148,12 +148,12 @@
 
     <!-- Tur 4: Planin ve Dusman Birliklerinin Detayini Verir -->
     <DialogNode Type="Npc" Id="KB_Dost_A3" TargetAlias="Dost" InputToken="ql_kb_dost_a3" OutputToken="ql_kb_dost_step3_choices">
-      <Text>{=sp_kb_dlg_dost_army}Gold, fear, and paranoia! He claims our society has become too powerful and orchestrates false wars. But he is a hypocrite, he hired 70 battle-hardened deserters disguised as common looters to guard his escape. He is marching toward the border passes right now.</Text>
+      <Text>{=sp_kb_dlg_dost_army}Gold, fear, and paranoia! He claims our society has become too powerful and orchestrates false wars. But he is a hypocrite, he gathered a convoy of 70 cutthroat looters to guard his escape. He is marching toward the border passes right now.</Text>
     </DialogNode>
 
     <!-- Tur 5: Oyuncu Stratejiyi Tartar -->
     <DialogNode Type="Player" Id="KB_Dost_P3_Tactics" TargetAlias="Dost" InputToken="ql_kb_dost_step3_choices" OutputToken="ql_kb_dost_a4">
-      <Text>{=sp_kb_dlg_p3_tactics}Seventy deserters with baggage can move fast. How do we pin them down without fighting the entire garrison?</Text>
+      <Text>{=sp_kb_dlg_p3_tactics}Seventy looters with baggage can move fast. How do we pin them down before they slip through the passes?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="KB_Dost_P3_Force" TargetAlias="Dost" InputToken="ql_kb_dost_step3_choices" OutputToken="ql_kb_dost_a4">
       <Text>{=sp_kb_dlg_p3_force}Let him hire a thousand cutthroats. My blade will cut through his vanguard like straw. Where do I strike?</Text>
@@ -203,7 +203,7 @@
       <Text>{=sp_kb_dlg_p_harsh}Save your breath, rat. Hand over the master ciphers and get on your knees.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="KB_K_P1_Prag" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step1_choices" OutputToken="ql_kb_konvoy_a2">
-      <Text>{=sp_kb_dlg_p_prag}You hired 70 deserters and spent a fortune to flee. What is in those ciphers that makes you run for your life?</Text>
+      <Text>{=sp_kb_dlg_p_prag}You gathered 70 looters and spent a fortune to flee. What is in those ciphers that makes you run for your life?</Text>
     </DialogNode>
 
     <!-- Adim 2: Zanaatkar Ilk Katmani Acar -->
@@ -229,7 +229,7 @@
       <Text>{=sp_kb_dlg_p3_doubt}Manufactured wars... Is that why you gave me an assassination contract against {Dost.Name} when we first met?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="KB_K_P3_Skeptical" TargetAlias="Konvoy" InputToken="ql_kb_konvoy_step3_choices" OutputToken="ql_kb_konvoy_a4">
-      <Text>{=sp_kb_dlg_p3_skep}Even if {Dost.Name} is ruthless, you are surrounded by 70 cutthroats. Why should I trust a mercenary commander over a kingdom lord?</Text>
+      <Text>{=sp_kb_dlg_p3_skep}Even if {Dost.Name} is ruthless, you are surrounded by 70 looters. Why should I trust a runaway looter over a kingdom lord?</Text>
     </DialogNode>
 
     <!-- Adim 6: Zanaatkar Teklifini Yapar (Servet ve Hancer) -->

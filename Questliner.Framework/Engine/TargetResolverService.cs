@@ -156,33 +156,10 @@ namespace Questliner.Framework.Engine
             
             if (!string.IsNullOrEmpty(model.Filters))
             {
-                var filters = model.Filters.Split(',').Select(f => f.Trim());
+                var filters = model.Filters.Split(',').Select(f => f.Trim()).Where(f => !string.IsNullOrEmpty(f));
                 foreach (var filter in filters)
                 {
-                    if (filter == "Town") candidates = candidates.Where(s => s.IsTown);
-                    else if (filter == "Village") candidates = candidates.Where(s => s.IsVillage);
-                    else if (filter == "Castle") candidates = candidates.Where(s => s.IsCastle);
-                    else if (filter == "Hideout") candidates = candidates.Where(s => s.IsHideout);
-                    // Same culture as player
-                    else if (filter == "SameCultureAsPlayer") candidates = candidates.Where(s => s.Culture == Hero.MainHero.Culture);
-                    else if (filter.StartsWith("SameFactionAs("))
-                    {
-                        var alias = filter.Substring(14, filter.Length - 15);
-                        if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
-                        {
-                            var faction = GetEffectiveFaction(aliasHero);
-                            candidates = candidates.Where(s => s.MapFaction == faction);
-                        }
-                    }
-                    else if (filter.StartsWith("SameKingdomAs("))
-                    {
-                        var alias = filter.Substring(14, filter.Length - 15);
-                        if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
-                        {
-                            var kingdom = aliasHero.Clan?.Kingdom;
-                            candidates = candidates.Where(s => s.MapFaction != null && s.MapFaction.IsKingdomFaction && s.MapFaction == kingdom);
-                        }
-                    }
+                    candidates = candidates.Where(s => CheckSettlementFilter(s, filter, quest, questGiver));
                 }
             }
 
@@ -225,33 +202,144 @@ namespace Questliner.Framework.Engine
 
             if (!string.IsNullOrEmpty(model.Filters))
             {
-                var filters = model.Filters.Split(',').Select(f => f.Trim());
+                var filters = model.Filters.Split(',').Select(f => f.Trim()).Where(f => !string.IsNullOrEmpty(f));
                 foreach (var filter in filters)
                 {
-                    if (filter == "Town" && !settlement.IsTown) return false;
-                    else if (filter == "Village" && !settlement.IsVillage) return false;
-                    else if (filter == "Castle" && !settlement.IsCastle) return false;
-                    else if (filter == "Hideout" && !settlement.IsHideout) return false;
-                    else if (filter == "SameCultureAsPlayer" && settlement.Culture != Hero.MainHero.Culture) return false;
-                    else if (filter.StartsWith("SameFactionAs("))
-                    {
-                        var alias = filter.Substring(14, filter.Length - 15);
-                        if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
-                        {
-                            if (settlement.MapFaction != GetEffectiveFaction(aliasHero)) return false;
-                        }
-                    }
-                    else if (filter.StartsWith("SameKingdomAs("))
-                    {
-                        var alias = filter.Substring(14, filter.Length - 15);
-                        if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
-                        {
-                            if (settlement.MapFaction == null || !settlement.MapFaction.IsKingdomFaction || settlement.MapFaction != aliasHero.Clan?.Kingdom) return false;
-                        }
-                    }
+                    if (!CheckSettlementFilter(settlement, filter, quest, questGiver)) return false;
                 }
             }
             return true;
+        }
+
+        private static bool CheckSettlementFilter(Settlement settlement, string rawFilter, DynamicQuest? quest, Hero? questGiver = null)
+        {
+            if (string.IsNullOrWhiteSpace(rawFilter)) return true;
+
+            bool isNegated = false;
+            string filter = rawFilter.Trim();
+            if (filter.StartsWith("!"))
+            {
+                isNegated = true;
+                filter = filter.Substring(1).Trim();
+            }
+
+            bool matches = false;
+
+            if (filter == "Town") matches = settlement.IsTown;
+            else if (filter == "Village") matches = settlement.IsVillage;
+            else if (filter == "Castle") matches = settlement.IsCastle;
+            else if (filter == "Hideout") matches = settlement.IsHideout;
+            else if (filter == "SameCultureAsPlayer") matches = settlement.Culture == Hero.MainHero.Culture;
+            else if (filter.StartsWith("SameSettlementAs("))
+            {
+                int closeIdx = filter.LastIndexOf(')');
+                string alias = (closeIdx > 17) ? filter.Substring(17, closeIdx - 17).Trim() : filter.Substring(17).Trim();
+                Settlement? refSettlement = null;
+                if (quest != null)
+                {
+                    refSettlement = quest.GetTargetHero(alias)?.CurrentSettlement 
+                                 ?? quest.GetTargetSettlement(alias);
+                }
+                if (refSettlement == null)
+                {
+                    if (alias.Equals("Giver", StringComparison.OrdinalIgnoreCase) || alias.Equals("QuestGiver", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var giver = questGiver ?? quest?.QuestGiver;
+                        refSettlement = giver?.CurrentSettlement ?? giver?.HomeSettlement;
+                    }
+                    else if (alias.Equals("Player", StringComparison.OrdinalIgnoreCase) || alias.Equals("MainHero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        refSettlement = Hero.MainHero?.CurrentSettlement ?? Hero.MainHero?.HomeSettlement;
+                    }
+                    else
+                    {
+                        var hero = Campaign.Current?.AliveHeroes.FirstOrDefault(h => h.StringId == alias);
+                        refSettlement = hero?.CurrentSettlement ?? hero?.HomeSettlement ?? Settlement.All.FirstOrDefault(s => s.StringId == alias);
+                    }
+                }
+                matches = (refSettlement != null && settlement == refSettlement);
+            }
+            else if (filter.StartsWith("SameFactionAs("))
+            {
+                int closeIdx = filter.LastIndexOf(')');
+                string alias = (closeIdx > 14) ? filter.Substring(14, closeIdx - 14).Trim() : filter.Substring(14).Trim();
+                IFaction? faction = null;
+                if (quest != null)
+                {
+                    var aliasHero = quest.GetTargetHero(alias);
+                    if (aliasHero != null) faction = GetEffectiveFaction(aliasHero);
+                    else
+                    {
+                        var aliasSettlement = quest.GetTargetSettlement(alias);
+                        if (aliasSettlement != null) faction = aliasSettlement.MapFaction;
+                    }
+                }
+                if (faction == null)
+                {
+                    if (alias.Equals("Giver", StringComparison.OrdinalIgnoreCase) || alias.Equals("QuestGiver", StringComparison.OrdinalIgnoreCase))
+                    {
+                        faction = GetEffectiveFaction(questGiver ?? quest?.QuestGiver);
+                    }
+                    else if (alias.Equals("Player", StringComparison.OrdinalIgnoreCase) || alias.Equals("MainHero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        faction = Clan.PlayerClan?.MapFaction;
+                    }
+                    else
+                    {
+                        var hero = Campaign.Current?.AliveHeroes.FirstOrDefault(h => h.StringId == alias);
+                        if (hero != null) faction = GetEffectiveFaction(hero);
+                        else
+                        {
+                            var sett = Settlement.All.FirstOrDefault(s => s.StringId == alias);
+                            if (sett != null) faction = sett.MapFaction;
+                        }
+                    }
+                }
+                matches = (faction != null && settlement.MapFaction == faction);
+            }
+            else if (filter.StartsWith("SameKingdomAs("))
+            {
+                int closeIdx = filter.LastIndexOf(')');
+                string alias = (closeIdx > 14) ? filter.Substring(14, closeIdx - 14).Trim() : filter.Substring(14).Trim();
+                Kingdom? kingdom = null;
+                if (quest != null)
+                {
+                    var aliasHero = quest.GetTargetHero(alias);
+                    if (aliasHero != null) kingdom = GetEffectiveKingdom(aliasHero);
+                    else
+                    {
+                        var aliasSettlement = quest.GetTargetSettlement(alias);
+                        if (aliasSettlement != null) kingdom = aliasSettlement.MapFaction as Kingdom;
+                    }
+                }
+                if (kingdom == null)
+                {
+                    if (alias.Equals("Giver", StringComparison.OrdinalIgnoreCase) || alias.Equals("QuestGiver", StringComparison.OrdinalIgnoreCase))
+                    {
+                        kingdom = GetEffectiveKingdom(questGiver ?? quest?.QuestGiver);
+                    }
+                    else if (alias.Equals("Player", StringComparison.OrdinalIgnoreCase) || alias.Equals("MainHero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        kingdom = Clan.PlayerClan?.Kingdom;
+                    }
+                    else
+                    {
+                        var hero = Campaign.Current?.AliveHeroes.FirstOrDefault(h => h.StringId == alias);
+                        if (hero != null) kingdom = GetEffectiveKingdom(hero);
+                        else
+                        {
+                            kingdom = Kingdom.All.FirstOrDefault(k => k.StringId == alias);
+                        }
+                    }
+                }
+                matches = (kingdom != null && settlement.MapFaction != null && settlement.MapFaction.IsKingdomFaction && settlement.MapFaction == kingdom);
+            }
+            else
+            {
+                return true;
+            }
+
+            return isNegated ? !matches : matches;
         }
         
         private static int ParseSelectorSkip(string selector)

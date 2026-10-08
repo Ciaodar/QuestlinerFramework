@@ -235,7 +235,7 @@
 
     <!-- Turn 4: Merchant Counter-Arguments -->
     <DialogNode Type="Npc" Id="Kalfa_M_Cevap_Sorgu" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t3_sorgu" OutputToken="ql_da_k2_m_t4">
-      <Text>{=da_k2_m_npc_sorgu}The law? (Laughs harshly) Warlords extort tribute, lords gorge at banquets, and those with gold write the laws! That stubborn old smith refused to bow, so he must burn. Yet if you wish to close my ledger, either open your purse or let your steel speak!</Text>
+      <Text>{=da_k2_m_npc_sorgu}The law? Hah! Warlords extort tribute, lords gorge at banquets, and those with gold write the laws! That stubborn old smith refused to bow, so he must burn. Yet if you wish to close my ledger, either open your purse or let your steel speak!</Text>
       <Conditions />
     </DialogNode>
 
@@ -266,7 +266,7 @@
 
     <!-- Turn 6: Merchant Reaction & Ultimatums -->
     <DialogNode Type="Npc" Id="Kalfa_M_Cevap_Baski" TargetAlias="RakipTuccar" InputToken="ql_da_k2_m_t5_baski" OutputToken="ql_da_k2_m_t6">
-      <Text>{=da_k2_m_npc_baski}(The merchant swallows dryly, stepping back as he eyes your hand on the hilt) The... the underworld whispers of your ruthlessness. Choose quickly then: coin, terror, or blood in the street?</Text>
+      <Text>{=da_k2_m_npc_baski}Easy there, keep your hand off that hilt! The... the underworld whispers of your ruthlessness. Choose quickly then: coin, terror, or blood in the street?</Text>
       <Conditions />
     </DialogNode>
 

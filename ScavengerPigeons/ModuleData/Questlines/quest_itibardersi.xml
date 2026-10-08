@@ -92,13 +92,6 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Berber_B4c_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="close_window">
-      <Text>{=sp_id_dlg22}I am no longer interested in this nonsense. Find someone else to entertain yourselves with.</Text>
-      <Consequences>
-        <Action Type="FailQuest" />
-      </Consequences>
-    </DialogNode>
-
     <DialogNode Type="Player" Id="Berber_ID_Ertele" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="close_window">
       <Text>{=sp_id_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>

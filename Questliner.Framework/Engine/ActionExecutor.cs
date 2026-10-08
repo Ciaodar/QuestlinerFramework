@@ -26,7 +26,8 @@ namespace Questliner.Framework.Engine
                     ItemObject? giveItem = MBObjectManager.Instance.GetObject<ItemObject>(action.ObjectId);
                     if (giveItem != null)
                     {
-                        bool isQuest = Questliner.Framework.Models.QuestlinerTradeItemPriceFactorModel.IsQuestItem(giveItem);
+                        bool isQuest = !Questliner.Framework.Models.QuestlinerTradeItemPriceFactorModel.IsEquippableItem(giveItem) &&
+                                       Questliner.Framework.Models.QuestlinerTradeItemPriceFactorModel.IsQuestItem(giveItem);
                         var element = new EquipmentElement(giveItem, null, null, isQuestItem: isQuest);
                         MobileParty.MainParty.ItemRoster.AddToCounts(element, action.Amount);
                     }
@@ -35,16 +36,62 @@ namespace Questliner.Framework.Engine
                 case "TakeItem":
                 {
                     ItemObject? takeItem = MBObjectManager.Instance.GetObject<ItemObject>(action.ObjectId);
-                    if (takeItem != null)
+                    if (takeItem != null && action.Amount > 0)
                     {
-                        int questIndex = MobileParty.MainParty.ItemRoster.FindIndexOfElement(new EquipmentElement(takeItem, null, null, isQuestItem: true));
-                        if (questIndex >= 0)
+                        int remaining = action.Amount;
+                        var roster = MobileParty.MainParty?.ItemRoster;
+                        if (roster != null)
                         {
-                            MobileParty.MainParty.ItemRoster.AddToCounts(new EquipmentElement(takeItem, null, null, isQuestItem: true), -action.Amount);
+                            // First pass: deduct from IsQuestItem == true stacks, second pass: IsQuestItem == false stacks
+                            for (int pass = 0; pass < 2 && remaining > 0; pass++)
+                            {
+                                bool wantQuestFlag = (pass == 0);
+                                var matchingElements = new List<(EquipmentElement Element, int Amount)>();
+                                for (int i = 0; i < roster.Count; i++)
+                                {
+                                    var copy = roster.GetElementCopyAtIndex(i);
+                                    if (copy.EquipmentElement.Item == takeItem &&
+                                        copy.EquipmentElement.IsQuestItem == wantQuestFlag &&
+                                        copy.Amount > 0)
+                                    {
+                                        matchingElements.Add((copy.EquipmentElement, copy.Amount));
+                                    }
+                                }
+
+                                foreach (var match in matchingElements)
+                                {
+                                    if (remaining <= 0) break;
+                                    int toRemove = Math.Min(match.Amount, remaining);
+                                    if (toRemove > 0)
+                                    {
+                                        roster.AddToCounts(match.Element, -toRemove);
+                                        remaining -= toRemove;
+                                    }
+                                }
+                            }
                         }
-                        else
+
+                        // If the player equipped an equippable quest weapon, also check MainHero equipment slots
+                        if (remaining > 0 && Hero.MainHero != null)
                         {
-                            MobileParty.MainParty.ItemRoster.AddToCounts(takeItem, -action.Amount);
+                            Equipment?[] equipments = new Equipment?[]
+                            {
+                                Hero.MainHero.BattleEquipment,
+                                Hero.MainHero.CivilianEquipment,
+                                Hero.MainHero.StealthEquipment
+                            };
+                            foreach (var eq in equipments)
+                            {
+                                if (eq == null || remaining <= 0) continue;
+                                for (EquipmentIndex slot = EquipmentIndex.WeaponItemBeginSlot; slot < EquipmentIndex.NumEquipmentSetSlots && remaining > 0; slot++)
+                                {
+                                    if (eq[slot].Item == takeItem)
+                                    {
+                                        eq[slot] = EquipmentElement.Invalid;
+                                        remaining--;
+                                    }
+                                }
+                            }
                         }
                     }
                     break;
@@ -230,7 +277,90 @@ namespace Questliner.Framework.Engine
                     int targetAmount = action.Amount > 0 ? action.Amount : 30;
                     bool isDynamicRoster = TryBuildDynamicTroopRoster(rawTemplateId, targetAmount, localCulture, out var dynamicRoster);
 
-                    // 4. Resolve Base PartyTemplateObject (required by CustomPartyComponent.CreateCustomPartyWithPartyTemplate)
+                    // 4. Resolve Hostile Bandit Clan / Faction
+                    Clan? FindClanById(string targetId)
+                    {
+                        return Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals(targetId, StringComparison.OrdinalIgnoreCase))
+                            ?? Clan.All.FirstOrDefault(c => c.StringId.Equals(targetId, StringComparison.OrdinalIgnoreCase));
+                    }
+
+                    Clan? FindClanContains(string keyword)
+                    {
+                        return Clan.BanditFactions.FirstOrDefault(c => c.StringId.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                            ?? Clan.All.FirstOrDefault(c => c.IsBanditFaction && c.StringId.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                            ?? Clan.All.FirstOrDefault(c => c.StringId.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0);
+                    }
+
+                    Clan? partyClan = FindClanById(clanId);
+
+                    // A) Thematic military renegade / outlaw factions (assassins, mercenaries, deserters, garrison guards, caravan guards)
+                    if (partyClan == null)
+                    {
+                        bool isMilitaryRenegade = clanId.IndexOf("deserter", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                                  clanId.IndexOf("garrison", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                                  clanId.IndexOf("assassin", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                                  clanId.IndexOf("mercenar", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                                  clanId.IndexOf("guard", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                                  clanId.IndexOf("caravan", StringComparison.OrdinalIgnoreCase) >= 0;
+
+                        if (isMilitaryRenegade)
+                        {
+                            partyClan = FindClanContains("deserters");
+                        }
+                    }
+
+                    // B) Specific regional outlaw keywords in clanId
+                    if (partyClan == null)
+                    {
+                        if (clanId.IndexOf("steppe", StringComparison.OrdinalIgnoreCase) >= 0 || clanId.IndexOf("nomad", StringComparison.OrdinalIgnoreCase) >= 0)
+                            partyClan = FindClanContains("steppe_bandits");
+                        else if (clanId.IndexOf("desert", StringComparison.OrdinalIgnoreCase) >= 0 || clanId.IndexOf("bedouin", StringComparison.OrdinalIgnoreCase) >= 0)
+                            partyClan = FindClanContains("desert_bandits");
+                        else if (clanId.IndexOf("sea", StringComparison.OrdinalIgnoreCase) >= 0 || clanId.IndexOf("corsair", StringComparison.OrdinalIgnoreCase) >= 0 || clanId.IndexOf("raider", StringComparison.OrdinalIgnoreCase) >= 0)
+                            partyClan = FindClanContains("sea_raiders");
+                        else if (clanId.IndexOf("forest", StringComparison.OrdinalIgnoreCase) >= 0)
+                            partyClan = FindClanContains("forest_bandits");
+                        else if (clanId.IndexOf("mountain", StringComparison.OrdinalIgnoreCase) >= 0)
+                            partyClan = FindClanContains("mountain_bandits");
+                    }
+
+                    // C) Regional culture mapping
+                    if (partyClan == null && localCulture != null)
+                    {
+                        string cultId = localCulture.StringId.ToLowerInvariant();
+                        string targetBanditKeyword = cultId switch
+                        {
+                            "aserai" => "desert_bandits",
+                            "khuzait" => "steppe_bandits",
+                            "battania" => "forest_bandits",
+                            "sturgia" => "sea_raiders",
+                            "vlandia" => "mountain_bandits",
+                            "empire" => "mountain_bandits",
+                            _ => ""
+                        };
+
+                        if (!string.IsNullOrEmpty(targetBanditKeyword))
+                        {
+                            partyClan = FindClanContains(targetBanditKeyword);
+                        }
+                    }
+
+                    // D) Thematic fallback order (never default straight to looters)
+                    if (partyClan == null)
+                    {
+                        partyClan = FindClanContains("deserters")
+                                 ?? FindClanContains("mountain_bandits")
+                                 ?? FindClanContains("forest_bandits")
+                                 ?? FindClanContains("sea_raiders")
+                                 ?? FindClanContains("steppe_bandits")
+                                 ?? FindClanContains("desert_bandits")
+                                 ?? Clan.All.FirstOrDefault(c => c.IsBanditFaction && c.StringId.IndexOf("looter", StringComparison.OrdinalIgnoreCase) < 0);
+                    }
+
+                    // E) Absolute final fallback if no other bandit faction exists
+                    partyClan ??= FindClanContains("looters") ?? Clan.BanditFactions.FirstOrDefault() ?? Clan.All.FirstOrDefault();
+
+                    // 5. Resolve Base PartyTemplateObject (required by CustomPartyComponent.CreateCustomPartyWithPartyTemplate)
                     PartyTemplateObject? partyTemplate = null;
                     if (!isDynamicRoster)
                     {
@@ -245,7 +375,7 @@ namespace Questliner.Framework.Engine
                         }
                         if (partyTemplate == null)
                         {
-                            var matchingClan = Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals(clanId, StringComparison.OrdinalIgnoreCase));
+                            var matchingClan = partyClan ?? Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals(clanId, StringComparison.OrdinalIgnoreCase));
                             if (matchingClan?.DefaultPartyTemplate != null)
                             {
                                 partyTemplate = matchingClan.DefaultPartyTemplate;
@@ -271,7 +401,8 @@ namespace Questliner.Framework.Engine
 
                     if (partyTemplate == null)
                     {
-                        partyTemplate = Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>("looters_template")
+                        partyTemplate = partyClan?.DefaultPartyTemplate
+                                     ?? Campaign.Current.ObjectManager.GetObject<PartyTemplateObject>("looters_template")
                                      ?? Clan.BanditFactions.FirstOrDefault(c => c.DefaultPartyTemplate != null)?.DefaultPartyTemplate
                                      ?? Campaign.Current.ObjectManager.GetObjectTypeList<PartyTemplateObject>().FirstOrDefault();
                     }
@@ -281,19 +412,6 @@ namespace Questliner.Framework.Engine
                         TaleWorlds.Library.Debug.Print($"[Questliner Error] Could not find any valid PartyTemplateObject for action '{action.TargetAlias}'.");
                         break;
                     }
-
-                    // 5. Resolve Hostile Bandit Clan / Faction
-                    CultureObject? partyCulture = localCulture ?? partyTemplate.Stacks?.FirstOrDefault().Character?.Culture;
-                    Clan? partyClan = Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals(clanId, StringComparison.OrdinalIgnoreCase));
-                    if (partyClan == null && clanId.IndexOf("deserter", StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        partyClan = Clan.BanditFactions.FirstOrDefault(c => c.StringId.Equals("deserters", StringComparison.OrdinalIgnoreCase));
-                    }
-                    if (partyClan == null && partyCulture != null)
-                    {
-                        partyClan = Clan.BanditFactions.FirstOrDefault(c => c.Culture == partyCulture);
-                    }
-                    partyClan ??= Clan.BanditFactions.FirstOrDefault(c => c.StringId == "looters") ?? Clan.BanditFactions.FirstOrDefault();
 
                     // 6. Resolve Custom Name
                     string partyName = "{=!}Bandits";
@@ -405,8 +523,23 @@ namespace Questliner.Framework.Engine
                     var grainItem = DefaultItems.Grain ?? MBObjectManager.Instance.GetObject<ItemObject>("grain");
                     if (grainItem != null)
                     {
-                        party.ItemRoster.AddToCounts(grainItem, Math.Max(15, targetAmount / 2));
+                        party.ItemRoster.AddToCounts(grainItem, Math.Max(25, targetAmount));
                     }
+
+                    int footmenCount = party.Party.NumberOfMenWithoutHorse;
+                    if (footmenCount > 0)
+                    {
+                        var saddleHorse = MBObjectManager.Instance.GetObject<ItemObject>("saddle_horse")
+                                       ?? Campaign.Current.ObjectManager.GetObject<ItemObject>("saddle_horse")
+                                       ?? Campaign.Current.ObjectManager.GetObjectTypeList<ItemObject>()
+                                            .FirstOrDefault(i => i.HorseComponent != null && i.HorseComponent.IsRideable && !i.HorseComponent.IsPackAnimal);
+                        if (saddleHorse != null)
+                        {
+                            party.ItemRoster.AddToCounts(saddleHorse, footmenCount);
+                        }
+                    }
+
+                    party.RecentEventsMorale = 50f;
 
                     party.Party.SetCustomName(customPartyNameObj);
                     party.SetPartyUsedByQuest(true);

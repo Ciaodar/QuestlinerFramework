@@ -109,6 +109,11 @@ XML içerisinden partideki asker tiplerini ve sayılarını birebir belirlemek i
 - **Adet Belirterek:** `PartyTemplateId="custom:imperial_legionary:20,imperial_palatine_guard:15"`
 - **Adet Belirtmeden (`Amount` Üzerinden Eşit Dağıtım):** `PartyTemplateId="custom:vlandian_swordsman,vlandian_sharpshooter"` (`Amount="40"` ise 20'şer adet ekler).
 
+#### C) Hareket Hızı, Otomatik Binek & Tematik Fraksiyon Sistemi
+- **Otomatik Binek & Yiyecek Sağlama:** Partideki her yaya asker için envantere 1 adet `saddle_horse` ve bol miktarda `grain` eklenir. Bu sayede parti haritada Native "+%15 Atlı Piyade" bonusunu tam alır, sürü cezası yemez ve açlıktan moral kaybetmez (`RecentEventsMorale = 50f` ile yüksek moral hız bonusu da kazanır).
+- **Tematik Haydut Klanı Ataması:** Partiler artık varsayılan olarak "Looters" klanına düşmez. Firari/garnizon kaçakları `deserters` klanına; suikastçı, paralı asker ve kervan muhafızları ise bölgenin kültürüne uygun tematik klanlara (Empire/Vlandia -> `mountain_bandits`, Battania -> `forest_bandits`, Sturgia -> `sea_raiders`, Khuzait -> `steppe_bandits`, Aserai -> `desert_bandits`) atanır.
+- **Questliner Hız Modeli (`QuestlinerPartySpeedCalculatingModel`):** Lidersiz partilere Native motorun uyguladığı yapay "parti kapasitesi aşımı" hız cezası görev partileri için iptal edilir ve tüm görev partilerine +%20 takip/kovalama hız bonusu verilir.
+
 `SetPartyAi` ile doğan bu partiye ne yapacağını söyleyebilirsiniz:
 - `StringValue="EngageParty"` ve `ObjectId="Player"` (veya `StringValue="EngagePlayer"`): Doğrudan oyuncuya saldırması emrini verir.
 - `StringValue="Hold"`: Olduğu yerde beklemesini sağlar.
@@ -126,7 +131,7 @@ Başına `!` konursa tam tersini seçer (Örn: `!IsFemale` -> Sadece Erkekleri s
 **Desteklenen Filtreler:**
 - **Kimlik ve Durum:** `ClanLeader`, `KingdomLeader`, `Artisan`, `RuralNotable`, `Merchant`, `Headman`, `GangLeader`, `IsLord`, `IsHero`, `IsWanderer`, `IsNotable`, `IsPrisoner` (Herhangi bir esir), `IsPrisonerInSettlement` (Sadece şehir/kale zindanındaki esirler).
 - **Cinsiyet:** `IsFemale`, `IsMale`.
-- **Yerleşke Tipleri:** `Town` (veya `IsTown`), `Village` (veya `IsVillage`), `Castle` (veya `IsCastle`), `Hideout` (Haydut sığınağı).
+- **Yerleşke Tipleri ve Filtreleri (`TargetType="Settlement"`):** `Town`, `Village`, `Castle`, `Hideout`, `SameCultureAsPlayer`, `SameSettlementAs(Alias)`, `SameKingdomAs(Alias)`, `SameFactionAs(Alias)`. Tüm yerleşke filtreleri `!` olumsuzlama desteğine sahiptir (Örn: `!SameKingdomAs(HedefLord)`, `!Town`).
 - **Mesafe, Seçiciler (Selectors) ve Rastgelelik:** 
   - `Selector="Random"`: Adaylar arasından rastgele birini seçer.
   - `Selector="Nearest"`: Oyuncuya en yakın adayı seçer.
@@ -180,6 +185,24 @@ Görevlerin oyun dünyasında nasıl başlayacağını belirleyen ana mekanizmal
 - Framework, çift katmanlı görev eşyası koruma mekanizmasına sahiptir:
   1. **Native Görev Eşyası Kilidi (`EquipmentElement.IsQuestItem`):** `GiveItem` aksiyonu ile verilen görev eşyaları doğrudan Native `isQuestItem: true` bayrağıyla envantere eklenir. Ayrıca oyuncu şehre girdiğinde veya saatlik döngüde envanter taranarak (`SanitizeQuestItemsInInventory`) bilinen tüm görev eşyaları kilitlenir. Native envanter arayüzü görev eşyalarının tüccara sürüklenmesine veya satılmasına kesinlikle izin vermez.
   2. **Ticaret Fiyat Faktör Modeli (`QuestlinerTradeItemPriceFactorModel`):** TaleWorlds ticaret motorundaki `MathF.Max(price, 1)` alt sınırı geçersiz kılınır; `NotMerchandise` (`is_merchandise="false"`), değeri 0 olan veya özel görev eşyaları (`raven_bone_cipher`, `black_ledger`, `shadow_master_ring`, `sifreli_defter`, `lordun_muhurlu_emri`, `kalfamuhru`, `kalbinatesi`, `yildizdemiri`, `geciciahitkilici`, `ahitkilici_efsanevi`, `ql_quest_*`, `qlf_quest_*`) için satış fiyatı 0 Dinar olarak hesaplanır. Bu sayede oyuncuların kritik görev eşyalarını tüccarlara satarak görevi kilitlemesi engellenir.
+
+---
+
+## 6.2. Görev Partisi Hız Motoru ve Takip Dinamikleri (Quest Party Speed Engine)
+- Bannerlord Native harita motorunda lidersiz doğurulan partiler (`LeaderHero == null`), Native `DefaultPartySizeLimitModel` gereği yalnızca 20 kişilik bir birlik sınırına tabidir. 30 ila 75 kişilik görev müfrezeleri doğurulduğunda, TaleWorlds motoru partiye %30 ila %67 arasında ağır bir aşırı boyut hız cezası (`OverPartySizeEffect`) uygular ve yaya askerlerin atı/erzağı olmadığında partiler haritada hareket edemez hale gelir.
+- Framework bu sorunu üç katmanlı bir çözümle kökten çözer:
+  1. **Özel Hız Modeli (`QuestlinerPartySpeedCalculatingModel`):**
+     - Native `DefaultPartySpeedCalculatingModel` genişletilerek `QuestlinerSubModule.OnGameStart` aşamasında motora dahil edilir.
+     - Görevle ilişkili partiler (`IsCurrentlyUsedByAQuest` veya `DynamicQuest.TargetParties` içinde kayıtlı) için yapay `OverPartySizeEffect` cezası (`AttachedParties` de dahil edilerek) sıfırlanır (`Quest party mobilization`).
+     - Görev partilerine temiz bir **+%20 hareket bonusu** (`Quest movement modifier`) verilir.
+     - Oyuncuyu kovalayan (`EngageParty` / `EngagePlayer`) görev partilerine ek **+%15 takip bonusu** (`Quest pursuit`) eklenerek toplamda **+%35 takip çarpanı** sağlanır. Böylece pusu kuran suikastçılar veya kovalayan firariler haritada oyuncuyu rahatlıkla kovalayabilir.
+  2. **Yaya Askerlere Binek Atı Tahsisi (`ActionExecutor.SpawnBanditParty`):**
+     - Doğurulan partideki tüm yaya askerler (`party.Party.NumberOfMenWithoutHorse`) kadar binek atı (`saddle_horse`) partinin envanterine eklenir. Bu sayede parti haritada TaleWorlds'ün **+%15 Atlı Piyade (Footmen on horses)** hız bonusundan yararlanır ve sürü cezası almaz.
+  3. **Erzak ve Yüksek Moral:**
+     - Partiye açlık çekmemesi için bol tahıl (`grain`) tahsis edilir ve `RecentEventsMorale = 50f` atanarak yüksek moral bonusu (**+%5 hız**) garantilenir.
+  4. **Tematik Fraksiyon/Klan Eşleştirmesi:**
+     - Suikastçı (`assassins_template`), paralı asker (`mercenary_template`), garnizon kaçakları (`garrison_guards_template`), kervan muhafızları (`caravan_guards_template`) ve firariler (`deserters_template`) kanun kaçağı askeri kimlikleri doğrultusunda doğrudan `deserters` klanına bağlanır (varsayılan olarak "Looters" / Çapulcular'a düşmesi engellenir).
+     - Diğer şablonlar yerel kültüre göre tematik haydut klanlarına (`mountain_bandits`, `forest_bandits`, `sea_raiders`, `steppe_bandits`, `desert_bandits`) dağıtılır.
 
 ---
 

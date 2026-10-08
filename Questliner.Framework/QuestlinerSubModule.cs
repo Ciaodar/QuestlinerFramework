@@ -32,6 +32,7 @@ namespace Questliner.Framework
 
                 campaignStarter.AddBehavior(new QuestlinerCampaignBehavior());
                 campaignStarter.AddModel(new Models.QuestlinerTradeItemPriceFactorModel());
+                campaignStarter.AddModel(new Models.QuestlinerPartySpeedCalculatingModel());
             }
         }
     }

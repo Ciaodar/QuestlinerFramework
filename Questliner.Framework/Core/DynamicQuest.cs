@@ -420,7 +420,6 @@ namespace Questliner.Framework.Core
             else
             {
                 CompleteQuestWithFail(); 
-                Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
             }
         }
 
@@ -463,8 +462,72 @@ namespace Questliner.Framework.Core
             }
         }
 
+        public void EnsureGlobalHeroesPersisted()
+        {
+            if (Model == null) return;
+
+            var actionList = new List<ActionModel>();
+
+            if (Model.Stages != null)
+            {
+                foreach (var stage in Model.Stages)
+                {
+                    if (stage.OnEnterActions != null) actionList.AddRange(stage.OnEnterActions);
+                    if (stage.OnExitActions != null) actionList.AddRange(stage.OnExitActions);
+                    if (stage.OnTimeoutActions != null) actionList.AddRange(stage.OnTimeoutActions);
+                }
+            }
+
+            if (Model.CustomDialogs != null)
+            {
+                foreach (var diag in Model.CustomDialogs)
+                {
+                    if (diag.Consequences != null) actionList.AddRange(diag.Consequences);
+                }
+            }
+
+            if (Model.GameMenuOptions != null)
+            {
+                foreach (var menuOpt in Model.GameMenuOptions)
+                {
+                    if (menuOpt.Consequences != null) actionList.AddRange(menuOpt.Consequences);
+                }
+            }
+
+            foreach (var action in actionList)
+            {
+                if (string.Equals(action.ActionType, "SaveHeroToGlobal", System.StringComparison.OrdinalIgnoreCase)
+                    && !string.IsNullOrEmpty(action.TargetAlias)
+                    && !string.IsNullOrEmpty(action.StringValue))
+                {
+                    string globalKey = action.StringValue;
+                    if (GlobalStateManager.Instance.GetGlobalHero(globalKey) == null)
+                    {
+                        Hero? hero = GetTargetHero(action.TargetAlias)
+                                  ?? GlobalStateManager.Instance.GetGlobalHero(action.TargetAlias);
+                        if (hero == null && (action.TargetAlias.Equals("Speaker", System.StringComparison.OrdinalIgnoreCase) || action.TargetAlias.Equals("ConversationHero", System.StringComparison.OrdinalIgnoreCase)))
+                        {
+                            hero = Hero.OneToOneConversationHero;
+                        }
+                        if (hero == null)
+                        {
+                            hero = Campaign.Current?.AliveHeroes.FirstOrDefault(h => h.StringId == action.TargetAlias);
+                        }
+
+                        if (hero != null)
+                        {
+                            GlobalStateManager.Instance.SetGlobalHero(globalKey, hero);
+                            BindHeroToMBTextManager(globalKey, hero);
+                            TaleWorlds.Library.Debug.Print($"[Questliner] EnsureGlobalHeroesPersisted: saved '{globalKey}' -> {hero.Name} ({hero.StringId})");
+                        }
+                    }
+                }
+            }
+        }
+
         public void ForceSuccess() 
         { 
+            EnsureGlobalHeroesPersisted();
             var successStage = Model.Stages.FirstOrDefault(s => s.IsSuccessNode);
             if (successStage != null && CurrentStageId != successStage.Id)
             {
@@ -543,13 +606,13 @@ namespace Questliner.Framework.Core
                 // Transition
                 if (currentStageModel.IsSuccessNode)
                 {
+                    EnsureGlobalHeroesPersisted();
                     CompleteQuestWithSuccess();
                     Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
                 else if (currentStageModel.IsFailNode)
                 {
                     CompleteQuestWithFail();
-                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
                 else if (!string.IsNullOrEmpty(currentStageModel.NextStageId))
                 {
@@ -566,8 +629,9 @@ namespace Questliner.Framework.Core
             var nextStageModel = Model.Stages.FirstOrDefault(s => s.Id == nextStageId);
             if (nextStageModel != null)
             {
-                if (nextStageModel.IsSuccessNode || nextStageModel.IsFailNode)
+                if (nextStageModel.IsSuccessNode)
                 {
+                    EnsureGlobalHeroesPersisted();
                     Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
 
@@ -633,29 +697,61 @@ namespace Questliner.Framework.Core
                     // Track objects mentioned in the log text dynamically
                     foreach (var kvp in TargetHeroes)
                     {
-                        if (nextStageModel.LogText.Contains("{" + kvp.Key) && !IsTracked(kvp.Value))
-                            AddTrackedObject(kvp.Value);
+                        if (kvp.Value == null) continue;
+                        string key = kvp.Key;
+                        bool isMentioned = nextStageModel.LogText.IndexOf("{" + key, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                        if (isMentioned)
+                        {
+                            if (!IsTracked(kvp.Value))
+                            {
+                                AddTrackedObject(kvp.Value);
+                            }
+                            if (kvp.Value.CurrentSettlement != null && !IsTracked(kvp.Value.CurrentSettlement))
+                            {
+                                AddTrackedObject(kvp.Value.CurrentSettlement);
+                            }
+                        }
                     }
+
                     if (GlobalStateManager.Instance.GlobalHeroes != null)
                     {
                         foreach (var kvp in GlobalStateManager.Instance.GlobalHeroes)
                         {
-                            if (kvp.Value != null && nextStageModel.LogText.Contains("{" + kvp.Key) && !IsTracked(kvp.Value))
-                                AddTrackedObject(kvp.Value);
+                            if (kvp.Value == null) continue;
+                            string key = kvp.Key;
+                            bool isMentioned = nextStageModel.LogText.IndexOf("{" + key, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                            if (isMentioned)
+                            {
+                                if (!IsTracked(kvp.Value))
+                                {
+                                    AddTrackedObject(kvp.Value);
+                                }
+                                if (kvp.Value.CurrentSettlement != null && !IsTracked(kvp.Value.CurrentSettlement))
+                                {
+                                    AddTrackedObject(kvp.Value.CurrentSettlement);
+                                }
+                            }
                         }
                     }
+
                     foreach (var kvp in TargetSettlements)
                     {
-                        if (nextStageModel.LogText.Contains("{" + kvp.Key) && !IsTracked(kvp.Value))
+                        if (kvp.Value != null && nextStageModel.LogText.IndexOf("{" + kvp.Key, StringComparison.OrdinalIgnoreCase) >= 0 && !IsTracked(kvp.Value))
+                        {
                             AddTrackedObject(kvp.Value);
+                        }
                     }
+
                     foreach (var kvp in TargetParties)
                     {
                         if (kvp.Value != null && kvp.Value.IsActive && !IsTracked(kvp.Value))
                         {
-                            if (nextStageModel.LogText.Contains("{" + kvp.Key) ||
-                                nextStageModel.Conditions.Any(c => c.TargetAlias == kvp.Key) ||
-                                nextStageModel.OnEnterActions.Any(a => a.TargetAlias == kvp.Key))
+                            string key = kvp.Key;
+                            if (nextStageModel.LogText.IndexOf("{" + key, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                nextStageModel.Conditions.Any(c => string.Equals(c.TargetAlias, key, StringComparison.OrdinalIgnoreCase)) ||
+                                nextStageModel.OnEnterActions.Any(a => string.Equals(a.TargetAlias, key, StringComparison.OrdinalIgnoreCase)))
                             {
                                 AddTrackedObject(kvp.Value);
                             }
@@ -667,13 +763,35 @@ namespace Questliner.Framework.Core
                         if (!string.IsNullOrEmpty(cond.TargetAlias))
                         {
                             var targetHero = GetTargetHero(cond.TargetAlias);
-                            if (targetHero != null && !IsTracked(targetHero)) AddTrackedObject(targetHero);
+                            if (targetHero != null)
+                            {
+                                if (!IsTracked(targetHero)) AddTrackedObject(targetHero);
+                                if (targetHero.CurrentSettlement != null && !IsTracked(targetHero.CurrentSettlement))
+                                    AddTrackedObject(targetHero.CurrentSettlement);
+                            }
 
                             var targetSettlement = GetTargetSettlement(cond.TargetAlias);
                             if (targetSettlement != null && !IsTracked(targetSettlement)) AddTrackedObject(targetSettlement);
 
                             var targetParty = GetTargetParty(cond.TargetAlias);
                             if (targetParty != null && !IsTracked(targetParty)) AddTrackedObject(targetParty);
+                        }
+                    }
+
+                    foreach (var act in nextStageModel.OnEnterActions)
+                    {
+                        if (!string.IsNullOrEmpty(act.TargetAlias))
+                        {
+                            var targetHero = GetTargetHero(act.TargetAlias);
+                            if (targetHero != null)
+                            {
+                                if (act.ActionType == "MakeMet" || act.ActionType == "TalkTo" || act.ActionType == "ChangeRelation")
+                                {
+                                    if (!IsTracked(targetHero)) AddTrackedObject(targetHero);
+                                    if (targetHero.CurrentSettlement != null && !IsTracked(targetHero.CurrentSettlement))
+                                        AddTrackedObject(targetHero.CurrentSettlement);
+                                }
+                            }
                         }
                     }
 
@@ -697,13 +815,13 @@ namespace Questliner.Framework.Core
 
                 if (nextStageModel.IsSuccessNode)
                 {
+                    EnsureGlobalHeroesPersisted();
                     CompleteQuestWithSuccess();
                     Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
                 else if (nextStageModel.IsFailNode)
                 {
                     CompleteQuestWithFail();
-                    Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(Model.Id);
                 }
             }
         }
@@ -755,37 +873,44 @@ namespace Questliner.Framework.Core
         protected override void OnCompleteWithSuccess()
         {
             base.OnCompleteWithSuccess();
+            EnsureGlobalHeroesPersisted();
             Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
         }
 
         protected override void OnFinalize()
         {
             base.OnFinalize();
-            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
+
+            if (_targetParties != null)
+            {
+                foreach (var kvp in _targetParties)
+                {
+                    if (kvp.Value != null && kvp.Value.IsActive)
+                    {
+                        kvp.Value.SetPartyUsedByQuest(false);
+                    }
+                }
+            }
         }
 
         public override void OnFailed()
         {
             base.OnFailed();
-            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
         }
 
         public override void OnCanceled()
         {
             base.OnCanceled();
-            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
         }
 
         protected override void OnTimedOut()
         {
             base.OnTimedOut();
-            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
         }
 
         protected override void OnBetrayal()
         {
             base.OnBetrayal();
-            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.MarkQuestAsCompleted(_modelId ?? Model?.Id ?? string.Empty);
         }
     }
 }

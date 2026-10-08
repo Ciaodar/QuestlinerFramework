@@ -26,7 +26,7 @@ Oyuncu, sokak dedikoduları ve berber fısıltıları ile bu kültün içine çe
                         ▼                                                 ▼
            [GÖREV 5A: KOPUK BAĞLAR]                         [GÖREV 5B: GÖLGE TÜNEĞİ'NİN ÇAĞRISI]
         Firari Zanaatkarın 70 kişilik                                     │
-        firari müfrezesi avlanır.                                         ▼
+        çapulcu konvoyu avlanır.                                          ▼
                                                             [GÖREV 6B: KANLI ŞİFRELER & TASFİYE]
                                                                           │
                                                                           ▼
@@ -58,9 +58,9 @@ Oyuncu, sokak dedikoduları ve berber fısıltıları ile bu kültün içine çe
 - **Ödül:** Dost oyuncuya 50.000 altın hediye eder. `SP_Dost` ve `SP_HainZanaatkar` hafızaya kaydedilir (`SaveHeroToGlobal`).
 
 ### Görev 5A: Kopuk Bağlar (QLF_KopukBaglar)
-- **Konsept:** Finalden 7 gün sonra Dost'tan kanlı bir mektup gelir (`Stage0_Bekleme TimeoutInDays="7"`).
+- **Konsept:** Finalden 2 gün sonra Dost'tan kanlı bir mektup gelir (`Stage0_Bekleme TimeoutInDays="2"`).
 - **Tehdit:** Hain Zanaatkar, Güvercin ana şifrelerini çalarak firar etmiştir.
-- **Dinamik Müfreze:** 100 kişilik hantal çapulcular yerine 70 kişilik seçkin firari müfrezesi (`PartyTemplateId="deserters_template"`, `Amount="70"`) koyulmuştur.
+- **Dinamik Konvoy:** Çapulcu kılığındaki 70 kişilik konvoy (`PartyTemplateId="looters_template"`, `Amount="70"`) koyulmuştur.
 - **Zaman Kısıtı:**
   - Aşama 2 (Yem Partileri): 10 Gün içinde 3 parti yok edilmelidir.
   - Aşama 3 (Konvoy Yüzleşmesi): 5 Gün içinde müfreze durdurulmalıdır. Süre dolarsa konvoy sınırı aşar ve görev başarısız olur (`StageFail_Kacti`).

@@ -2,8 +2,8 @@
 <Questline Id="QLF_DemirAhit_Usta" Title="{=demirahit3_title}Master's Burden" TimeLimitInDays="90">
   <TargetResolvers>
     <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="GlobalHero(DemirAhit_AnaDemirci)" Selector="Nearest" />
-    <Resolver Alias="Kalan" TargetType="Hero" Filters="IsPrisonerInSettlement" Selector="Random" />
-    <Resolver Alias="DusmanKale" TargetType="Settlement" Filters="SameSettlementAs(Kalan)" Selector="Nearest" />
+    <Resolver Alias="Kalan" TargetType="Hero" Filters="IsPrisonerInSettlement, HasKingdom, SameKingdomAs(EfsaneviDemirci)" Selector="Random" />
+    <Resolver Alias="DusmanKale" TargetType="Settlement" Filters="SameSettlementAs(Kalan), !SameKingdomAs(EfsaneviDemirci)" Selector="NearestTo(Kalan)" />
   </TargetResolvers>
 
   <Prerequisites>
@@ -201,7 +201,7 @@
 
     <!-- Turn 4: Kalan's Faith Restored & Intel -->
     <DialogNode Type="Npc" Id="Kalan_Lore_Guven" TargetAlias="Kalan" InputToken="ql_da_kalan_t3_ahit" OutputToken="ql_da_kalan_t4">
-      <Text>{=da_u3_k_npc_lore_guven}The covenant watchword... You are truly my brother's sworn companion! (Tears glisten on his soot-streaked cheeks) The gods be praised! The dungeon key rests on the head jailer's belt, and two torchbearers pace the courtyard.</Text>
+      <Text>{=da_u3_k_npc_lore_guven}The covenant watchword... You are truly my brother's sworn companion! The gods be praised! The dungeon key rests on the head jailer's belt, and two torchbearers pace the courtyard.</Text>
       <Conditions />
     </DialogNode>
 

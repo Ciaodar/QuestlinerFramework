@@ -2,6 +2,42 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.7.3] - 08 Ekim 2026 (Global Heroes Persistence on ForceSuccess, Timeout/Fail vs Completion Distinction & Enhanced Settlement Resolver)
+
+### Eklendi & Düzeltildi (Added & Fixed)
+- **`GlobalHeroes` Kalıcılığı & Aşama Atlama Koruması (`DynamicQuest.cs`):**
+  - `ForceSuccess()`, `ForceCompleteCurrentStage()` veya görev tamamlanma anında (`OnCompleteWithSuccess`), görev şablonundaki (`Model.Stages`, `CustomDialogs`, `GameMenuOptions`) tüm `<Action Type="SaveHeroToGlobal" TargetAlias="..." StringValue="..." />` tanımları taranarak eksik kalan `GlobalHeroes` kayıtları otomatik olarak `GlobalStateManager.Instance.SetGlobalHero` ile hafızaya aktarılır. Böylece `QLF_AnavataninIhaneti` gibi görevler konsoldan veya aşama atlayarak bitirilse dahi ardışık görevler (`QLF_KopukBaglar`) ihtiyaç duydukları `GlobalHero` hedeflerini sorunsuz bulur.
+- **Dinamik Harita Takibi (`AddTrackedObject`) İyileştirmesi (`DynamicQuest.cs` - `TransitionToStage`):**
+  - Aşama geçişlerinde günlük metninde (`LogText`) `{Alias_Link}`, `{Alias.Link}` veya `{Alias}` geçen tüm NPC ve yerleşkeler büyük/küçük harf duyarsız olarak taranıp harita takip sistemine (`AddTrackedObject`) eklenir. NPC bir yerleşkedeyse (`CurrentSettlement`), dünya haritasında mavi görev işaretinin görünmesi için yerleşkesi de otomatik olarak takibe alınır.
+- **Başarı vs Zaman Aşımı / Başarısızlık Ayrımı (`DynamicQuest.cs` & `QuestlinerCampaignBehavior.cs`):**
+  - Daha önce zaman aşımına uğrayan (`OnTimedOut`) veya başarısız olan (`OnFailed`, `ForceFail`, `IsFailNode`) görevler hatalı şekilde `_completedQuestIds` listesine eklenerek kalıcı olarak kilitleniyordu.
+  - Yalnızca başarıyla tamamlanan (`OnCompleteWithSuccess` / `QuestCompleteDetails.Success`) görevlerin `_completedQuestIds` listesine işlenmesi sağlandı. Zaman aşımına uğrayan görevler (ör. `QLF_YaDogruysa`, `QLF_ItibarDersi`) tekrar alınabilir hale getirildi.
+  - Geliştirici ve test kolaylığı için `qlf.reset_completed [QuestId]` konsol komutu eklendi.
+- **Yerleşke Çözümleyici (`TargetResolverService.cs` - `ResolveSettlement` & `IsSettlementMatch`):**
+  - `SameSettlementAs(alias)` filtresi eklendi; verilen hedefin (`TargetHero` veya `TargetSettlement`) bulunduğu yerleşkeyi seçer.
+  - Tüm yerleşke filtreleri için dinamik ünlem (`!`) olumsuzlama desteği eklendi (ör. `!SameKingdomAs(alias)` ile hedefin krallığı dışındaki yerleşkeleri filtreleme).
+
+---
+
+## [v1.7.2] - 08 Ekim 2026 (Quest Pursuit Speed Boost, Mount Provisioning & Thematic Bandit Clan Assignment)
+
+### Eklendi & Düzeltildi (Added & Fixed)
+- **Görev Partisi Hız Motoru (`QuestlinerPartySpeedCalculatingModel.cs` & `QuestlinerSubModule.cs`):**
+  - Bannerlord `PartySpeedModel`'den türeyen özel `QuestlinerPartySpeedCalculatingModel` modeli `QuestlinerSubModule.OnGameStart` aşamasında sisteme kaydedildi.
+  - Native motorda lidersiz partilerin (`LeaderHero == null`) parti büyüklük sınırının yalnızca 20 olması sebebiyle 30-75 kişilik görev birliklerine uygulanan yapay aşırı boyut hız cezası (`OverPartySizeEffect`) bağlı partiler (`AttachedParties`) hesaba katılarak görev partileri için sıfırlandı (`Quest party mobilization`).
+  - Görevle ilişkili tüm partilere temiz bir +%20 hareket hızı bonusu (`Quest movement modifier`) tahsis edildi.
+  - Oyuncuyu aktif olarak kovalayan (`EngageParty` / `EngagePlayer`) görev partilerine ek +%15 takip bonusu (`Quest pursuit`) verilerek toplamda +%35 takip çarpanı sağlandı; böylece oyuncuyu haritada gerçekçi ve tehditkâr bir hızla kovalayabilmeleri garantilendi.
+- **Yaya Birliklere At & Bol Yiyecek Desteği (`ActionExecutor.cs` - `SpawnBanditParty`):**
+  - Doğurulan partinin envanterine yaya asker sayısı kadar binek atı (`saddle_horse`) eklenerek Native motorun "+%15 Atlı Piyade (Footmen on horses)" hız bonusundan tam faydalanması ve sürü (herding) cezası almaması sağlandı.
+  - Açlıktan kaynaklanan hız ve moral düşüşünü engellemek için partiye bol miktarda tahıl (`grain`) tahsis edildi ve `RecentEventsMorale = 50f` ayarlanarak yüksek moral (+%5 hız) garantilendi.
+- **Tematik Haydut Klanı / Fraksiyon Eşleştirmesi (`ActionExecutor.cs` - `SpawnBanditParty`):**
+  - `PartyTemplateId` tanımları (`assassins_template`, `mercenary_template`, `caravan_guards_template`, `garrison_guards_template` vb.) klan kimliğiyle birebir örtüşmediğinde partilerin varsayılan olarak "Looters" (Çapulcular) klanına düşmesi engellendi.
+  - Suikastçılar, paralı askerler, muhafızlar ve firariler askeri kanun kaçağı kimlikleri doğrultusunda doğrudan `deserters` (Kaçaklar) klanına bağlandı.
+  - Diğer şablonlar doğma noktasının kültürüne göre otomatik olarak tematik klanlara eşleştirildi: Empire/Vlandia -> `mountain_bandits`, Battania -> `forest_bandits`, Sturgia -> `sea_raiders`, Khuzait -> `steppe_bandits`, Aserai -> `desert_bandits`.
+  - Görev tamamlandığında veya iptal edildiğinde (`DynamicQuest.OnFinalize`) aktif görev partilerinin üzerindeki görev bayrağı (`SetPartyUsedByQuest(false)`) temizlendi.
+
+---
+
 ## [v1.7.0] - 07 Ekim 2026 (Culture-Aware Dynamic Party Archetypes & Custom Inline Troop Rosters)
 
 ### Eklendi & Geliştirildi (Added & Improved)

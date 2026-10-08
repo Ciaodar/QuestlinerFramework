@@ -9,8 +9,8 @@
     <string id="sp_hg_s0_log" text="Şüpheli suikast emrini reddettikten sonra adınıza yayılan dedikoduları araştırmak için gizli bir tahkikat başlattınız. Gözcüleriniz ve sokak muhbirlerinizden kışkırtmaları yapan çapulcular hakkında istihbarat gelmesini bekleyin... (1 Gün)" />
     <string id="sp_hg_s1_log" text="Suikast görevinden şüphelendin ve araştırmaya başladın. {PlayerName} adını kullanarak etrafta dolaşan 3 farklı çapulcu partisi bulup yenmelisin. Gözcüleri sorguladığında gerçek ortaya çıkacak." />
     <string id="sp_hg_s2_log" text="Esir aldığınız çapulcuları sorguluyorsunuz... Elebaşlarının yerini itiraf etmelerini bekleyin. (1 Gün)" />
-    <string id="sp_hg_spawn1" text="Şüpheli Saha Ajanları" />
-    <string id="sp_hg_s3_log" text="Saha ajanlarını sorgulama vakti geldi. Yakındaki müfrezelerine (Saha Koordinatörü) gidip onlarla konuşmalısın." />
+    <string id="sp_hg_spawn1" text="Hain Çapulcular" />
+    <string id="sp_hg_s3_log" text="Esirlerle sorgulama vakti geldi. Yakındaki bir çapulcu partisine (Saha Koordinatörü) gidip onlarla konuşmalısın." />
     <string id="sp_hg_s4_log" text="Esirler sana elebaşının yerini söyledi. Biraz beklersen asıl güvercinler sana gelecek." />
     <string id="sp_hg_s5_log" text="Asıl hainin kim olduğunu öğrendin. Artık tek yapman gereken krallığa bağlılık yemini etmek." />
     
@@ -18,7 +18,7 @@
     <string id="sp_hg_dlg2" text="Bana bildiklerinizi anlatın yoksa hepinizi kılıçtan geçiririm!" />
     <string id="sp_hg_dlg3" text="Biz sadece saha elemanıyız. Zanaatkar bize kimi hedef göstereceğini söylüyor. Ama asıl patron yakında burada olacak. Bırak onu sana getirelim!" />
     <string id="sp_hg_dlg4" text="Pekala sizi bırakıyorum. Zaten başka bir işe de yaramıyorsunuz. Elebaşınızı bekliyorum." />
-    <string id="sp_hg_spawn2" text="Güvercin Saha Koordinatörü" />
+    <string id="sp_hg_spawn2" text="Çapulcu Elebaşı" />
     
     <string id="sp_hg_dlg5" text="Dur! Kılıç çekmeye gelmedik... Askerlerimi serbest bırakmışsın. Ben Saha koordinatörü bir çapulcuyum. Bu ne demek oluyor? Bir şey mi anlatmaya çalışıyorsun?" />
     <string id="sp_hg_dlg6" text="Evet, dostumuz denen adamı öldürmediğimi kanıtlamak için çıkıyorum karşına. İftiraların kimden çıktığını öğrenmem gerek." />
@@ -121,7 +121,6 @@
     <string id="sp_yd_dlg19" text="Samimiyetimizin göstergesi olarak sana bir miktar altın hediye ediyoruz. 70 kişi toplayıp en yakın köydeki köy büyüğünü bul." />
     <string id="sp_yd_dlg20" text="Paranızı istemem. 70 kişilik bölüğü oraya götürmeyi de biraz düşüneceğim." />
     <string id="sp_yd_dlg21" text="Teşekkürler. Bu parayla o bölüğü toplayıp köy ağası ile görüşeceğim." />
-    <string id="sp_yd_dlg22" text="Bu saçmalıkla daha fazla ilgilenmiyorum. Eğlenecek başka birini bulun." />
     <string id="sp_yd_dlg23" text="Pekala, görüşmek üzere yavru güvercin..." />
 
     <!-- Itibar Dersi -->
@@ -141,32 +140,31 @@
     <string id="sp_id_dlg19" text="Samimiyetimizin göstergesi olarak sana bir miktar altın hediye ediyoruz. 70 kişi toplayıp en yakın köydeki köy büyüğünü bul." />
     <string id="sp_id_dlg20" text="Paranızı istemem. 70 kişilik bölüğü oraya götürmeyi de biraz düşüneceğim." />
     <string id="sp_id_dlg21" text="Teşekkürler. Bu parayla o bölüğü toplayıp köy ağası ile görüşeceğim." />
-    <string id="sp_id_dlg22" text="Bu saçmalıkla daha fazla ilgilenmiyorum. Eğlenecek başka birini bulun." />
     <string id="sp_id_dlg23" text="Pekala, görüşmek üzere yavru güvercin..." />
 
     <!-- Kopuk Baglar -->
     <string id="sp_kb_title" text="Kopuk Bağlar" />
-    <string id="sp_kb_s0_log" text="Hain zanaatkar {HainZanaatkar_Link} hakkında haber bekliyorsun. Seni kandırmaya çalışmasının bedelini yakında ödeyeceğini umuyorsun." />
+    <string id="sp_kb_s0_log" text="Hain çapulcu {HainZanaatkar_Link} hakkında haber bekliyorsun. Seni kandırmaya çalışmasının bedelini yakında ödeyeceğini umuyorsun." />
     <string id="sp_kb_s1_log" text="Bir güvercinden acil, kanlı bir mektup aldın. Eski dostun {Dost_Link} seninle acilen görüşmek istiyor. Onu bul ve acil durumun ne olduğunu sor." />
-    <string id="sp_kb_s2_log" text="{Dost_Link} ile konuştun. Zanaatkar {HainZanaatkar_Link}'ın Güvercin şifrelerini çalıp kaçan gerçek bir hain olduğunu açıkladı. Ana firari müfrezesini bulmak için önce diyarda dolaşan 3 sahte çapulcu grubunu sınırları terk etmeden yakalayıp yok etmelisin. (Süre Sınırı: 10 Gün)" />
-    <string id="sp_kb_convoy" text="Hainin Firari Müfrezesi" />
-    <string id="sp_kb_s3_log" text="Yem gruplarını yok ettikten sonra, hainin seçkin firari müfrezesi seni ortadan kaldırmak için ortaya çıktı! Sınırı geçip kaçmadan önce onlarla yüzleş ve şifreleri geri al. (Süre Sınırı: 5 Gün)" />
-    <string id="sp_kb_success_log" text="Müfrezeyi imha ettin ve hain {HainZanaatkar_Link}'ı idam ettin. Şifreler {Dost_Link}'a teslim edildi ve Çapulcu Güvercinler'e olan mutlak sadakatin kesin olarak kanıtlandı. 25.000 dinar ve yüksek itibar ile ödüllendirildin." />
-    <string id="sp_kb_yozlasma_log" text="Zanaatkarın uyarısına kulak verdin ve teklifini kabul ettin. 25.000 dinar ve Gizli Güvercin Hançeri karşılığında {HainZanaatkar_Link}'ın canını bağışlayıp sınırı geçmesine izin verdin. Çok geçmeden can çekişen siyah bir güvercin sana Kara Kütük'ün koordinatlarını getirecek..." />
-    <string id="sp_kb_fail_log" text="Hain {HainZanaatkar_Link} ve firari müfrezesi, sen onları durduramadan sınırı aşıp kaçmayı başardı. Gizli şifreler sonsuza dek kayboldu ve Çapulcu Güvercinler sana olan tüm güvenini yitirdi." />
+    <string id="sp_kb_s2_log" text="{Dost.Name} ile konuştun. Zanaatkar {HainZanaatkar_Link}'ın Güvercin şifrelerini çalıp kaçan gerçek bir hain olduğunu açıkladı. Ana konvoyunu bulmak için önce diyarda dolaşan 3 sahte çapulcu grubunu sınırları terk etmeden yakalayıp yok etmelisin. (Süre Sınırı: 10 Gün)" />
+    <string id="sp_kb_convoy" text="Hainin Konvoyu" />
+    <string id="sp_kb_s3_log" text="Yem gruplarını yok ettikten sonra, hainin çapulcu konvoyu seni ortadan kaldırmak için ortaya çıktı! Sınırı geçip kaçmadan önce onlarla yüzleş ve şifreleri geri al. (Süre Sınırı: 5 Gün)" />
+    <string id="sp_kb_success_log" text="Konvoyu imha ettin ve hain {HainZanaatkar_Link}'ı idam ettin. Kurtarılan şifreler {Dost.Name}'a teslim edildi. Sarsılmaz bağlılığından etkilenen eski dostun seni diyarın gölge teşkilatının derin saflarına kabul etti ve dört mevsimlik hizmet için seni göreve çağıracağına söz verdi." />
+    <string id="sp_kb_yozlasma_log" text="Zanaatkarın rüşvetini kabul ettin ve {HainZanaatkar_Link}'ın yaban ellere karışıp kaybolmasına izin verdin. 25.000 altın ve Gizli Güvercin Hançeri kazandın. Kısa süre sonra can çekişen siyah bir güvercin zanaatkarın son şifreli mesajını ulaştırdı: {Dost.Name} herkesi parmağında oynatıyor; şifrelerde gizlenen Kara Kütük Calradia'yı ateşe verecek. Hakikat avı başladı!" />
+    <string id="sp_kb_fail_log" text="Hain {HainZanaatkar_Link} ve konvoyu, sen onları durduramadan sınırı aşıp kaçmayı başardı. Gizli şifreler sonsuza dek kayboldu ve Çapulcu Güvercinler sana olan tüm güvenini yitirdi." />
     
     <string id="sp_kb_dlg1" text="Kanlı güvercin mesajını aldım. Acil durum nedir?" />
     <string id="sp_kb_dlg2" text="Büyük bir felaket dostum! Zanaatkar {HainZanaatkar_Link}... Sana o sahte suikast emrini veren kişi. Sadece bir rol oynamıyordu. O gerçek bir çift taraflı ajan!" />
     <string id="sp_kb_dlg3" text="Ne yaptı?" />
-    <string id="sp_kb_dlg4" text="Ana şifrelerimizi çalıp şehirden kaçtı. Onları düşmana satmayı planlıyor. Kendisine eşlik etmesi için çapulcu kılığında firarilerden oluşan güçlü bir paralı müfreze kiraladı. Sınırı geçmeden onu durdurmalıyız!" />
+    <string id="sp_kb_dlg4" text="Ana şifrelerimizi çalıp şehirden kaçtı. Onları düşmana satmayı planlıyor. Kendisine eşlik etmesi için kalabalık bir çapulcu konvoyu topladı. Sınırı geçmeden onu durdurmalıyız!" />
     <string id="sp_kb_dlg5" text="Ne yapmam gerektiğini söyle." />
     <string id="sp_kb_dlg6" text="Önce dikkat dağıtmak için saldığı yem çapulcu gruplarını avla. Üçünü yok et. Bu onu saklandığı yerden çıkmaya zorlayacak. Sana güveniyorum, Güvercin." />
     <string id="sp_kb_dlg7" text="Demek beni buldun, {PlayerName}... Ben {HainZanaatkar.Name}. Siz Güvercinler gerçekten amansızsınız." />
     <string id="sp_kb_dlg8" text="Şifreleri ver hain. Ölümün hızlı olacak." />
     <string id="sp_kb_dlg9" text="Dur! {Dost_Link} ve Anavatan için körü körüne savaşıyorsun. Bu şifrelerin ne içerdiğini biliyor musun? Haksız bir savaş başlatmak için sahte bayrak suikast emirleri! Anavatan yozlaşmış dostum. Gitmeme izin ver, sana bir servet ve efsanevi hançerimi vereyim." />
-    <string id="sp_kb_dlg10" text="Bir hainin yalanları benim için bir şey ifade etmez. Anavatan'a olan yeminim mutlaktır! Askerler, hücum! (Haini İnfaz Et)" />
-    <string id="sp_kb_dlg11" text="Eğer {Dost.Name} sahte savaşlar tezgahlıyorsa gerçek ortaya çıkmalı. Altınları ve hançeri bırak, kanıtı nerede bulacağımı söyle. (Zanaatkarı Bağışla)" />
-    <string id="sp_kb_dlg12" text="Akıllıca bir seçim, {PlayerName}. Gökyüzünü kollamaya devam et; sınırı geçtiğimde siyah bir güvercin sana Kara Kütük'ün koordinatlarını getirecek. Elveda." />
+    <string id="sp_kb_dlg10" text="Bir hainin zehirli dili beni kandıramaz. Anavatan'ın adaleti yerini bulacak! Askerler, hücum! (Savaş)" />
+    <string id="sp_kb_dlg11" text="Sahte bayrak savaşları ve kukla ustaları ha? 25.000 altını ve o hançeri ver, sonra sınırın ötesine geçip gözden kaybol. (Rüşveti Kabul Et &amp; Kaçmasına İzin Ver)" />
+    <string id="sp_kb_dlg12" text="Akıllıca bir karar... Güvercinler kör birer ahmak ama senin gören gözlerin var. Altını ve hançeri al. Elveda, {PlayerName}!" />
 
     <!-- Golge Tunegi: Golge Tuneginin Cagri -->
     <string id="sp_gt1_title" text="Gölge Tüneği'nin Çağrısı" />
@@ -257,21 +255,21 @@
     <string id="sp_kb_dlg_dost_leak" text="Ana şifre arşivini elinde tutuyordu; tüm krallıklara yerleştirdiğimiz her bir muhbirin gerçek kimlikleri! Şafaktan önce iki muhafızı katledip kapılardan süzüldü. Bu parşömenleri düşmana teslim ederse yüzlerce adamımız tek tek avlanıp darağacına çekilecek." />
     <string id="sp_kb_dlg_p2_risk" text="Muhbirlerimiz ifşa olursa yüksek lordlar bizi koruyucu değil, fitneci birer komplocu olarak yaftalamaz mı?" />
     <string id="sp_kb_dlg_p2_motive" text="Onlarca yılını Güvercinlere hizmetle geçirdi. Yaşlı bir zanaatkarı böylesine cüretkar bir ihanete ne sürüklemiş olabilir?" />
-    <string id="sp_kb_dlg_dost_army" text="Altın hırsı, korku ve paranoya! Tarikatımızın fazla güçlendiğini ve sahte savaşlar tezgahladığını iddia ediyor. Ama o bir mürai; kaçışını güvenceye almak için çapulcu kılığında 70 azılı firari kiraladı. Şu an sınır geçitlerine doğru ilerliyor." />
-    <string id="sp_kb_dlg_p3_tactics" text="Yük taşıyan yetmiş firari hızlı hareket edebilir. Bütün bir muhafız alayıyla çatışmadan onları nasıl kıstıracağız?" />
+    <string id="sp_kb_dlg_dost_army" text="Altın hırsı, korku ve paranoya! Tarikatımızın fazla güçlendiğini ve sahte savaşlar tezgahladığını iddia ediyor. Ama o bir mürai; kaçışını güvenceye almak için 70 azılı çapulcudan oluşan bir konvoy topladı. Şu an sınır geçitlerine doğru ilerliyor." />
+    <string id="sp_kb_dlg_p3_tactics" text="Yük taşıyan yetmiş çapulcu hızlı hareket edebilir. Geçitlerden sıvışmadan önce onları nasıl kıstıracağız?" />
     <string id="sp_kb_dlg_p3_force" text="İsterse bin kesici tutsun. Kılıcım onun öncülerini saman gibi biçecektir. Nereye vurmam gerekiyor?" />
     <string id="sp_kb_dlg_dost_tactics" text="Tazılarımızın iz sürmesini engellemek için eteklere üç yem çapulcu grubu saldı. O üç yem grubu yakalayıp yok et. Yemleri ezildiğinde ana konvoyu perdesini kaybedecek ve seninle açıkta yüzleşmek zorunda kalacak." />
     <string id="sp_kb_dlg_p4_acc" text="Oldu bil dostum. Ana şifreleri geri getirecek ve bu ihanete son vereceğim. (Avı Kabul Et)" />
     <string id="sp_kb_dlg_p4_prag" text="Peşine düşeceğim. Ancak bugün Anavatan'ın boğazını kimin kurtardığını unutmadığınızdan emin olun. (Avı Kabul Et)" />
     <string id="sp_kb_dlg_p_inq" text="Neden adi bir hırsız gibi kaçıyorsun? Korumaya yemin ettiğin şifreleri neden çaldın?" />
     <string id="sp_kb_dlg_p_harsh" text="Nefesini tüketme lağım faresi. Ana şifreleri teslim et ve diz çök." />
-    <string id="sp_kb_dlg_p_prag" text="Yetmiş firari kiralayıp kaçmak için bir servet döktün. Bu şifrelerde canını kurtarmak için kaçmanı gerektirecek ne var?" />
+    <string id="sp_kb_dlg_p_prag" text="Yetmiş çapulcu toplayıp kaçmak için bir servet döktün. Bu şifrelerde canını kurtarmak için kaçmanı gerektirecek ne var?" />
     <string id="sp_kb_dlg_k_layer1" text="Hırsızlıktan bahsediyorsun ama ellerinde kimin kanının olduğunu bile bilmiyorsun! Anavatan ve asil dostun {Dost.Name} için savaştığını zannediyorsun. Oysa sen onun gözü kör celladından başka bir şey değilsin!" />
     <string id="sp_kb_dlg_p2_accuse" text="{Dost.Name} zehir saçacağını söylemişti. Kendi postunu kurtarmak için savunma arşivlerimizi yabancı tahtlara satıyorsun!" />
     <string id="sp_kb_dlg_p2_curious" text="Kimin kanı? O ana şifrelerde kendi kardeşlerine sırt çevirmene sebep olacak ne keşfettin?" />
     <string id="sp_kb_dlg_k_ledger_reveal" text="Savunma arşivleri mi? Koca bir yalan! Bu şifreler Kara Kütük'ü barındırıyor; {Dost.Name}'ın tezgahladığı her sahte bayrak baskınının gizli kaydı! Sınır köylerini rakip sancaklar altında katletsinler diye firariler kiralıyor, kralları savaşa mecbur ediyor ki Güvercinler fahiş fiyata istihbarat ve koruma satsın!" />
     <string id="sp_kb_dlg_p3_doubt" text="Tezgahlanmış savaşlar... İlk karşılaştığımızda bana {Dost.Name}'ı öldürmem için suikast emri vermenin sebebi bu muydu?" />
-    <string id="sp_kb_dlg_p3_skep" text="{Dost.Name} acımasız olsa bile, senin etrafın da 70 boğaz kesenle çevrili. Neden bir krallık lordu yerine bir paralı asker elebaşına inanayım?" />
+    <string id="sp_kb_dlg_p3_skep" text="{Dost.Name} acımasız olsa bile, senin etrafın da 70 çapulcuyla çevrili. Neden bir krallık lordu yerine kaçak bir çapulcuya inanayım?" />
     <string id="sp_kb_dlg_k_offer" text="Evet! Calradia'yı kıtasal bir kıyımdan kurtarmak için onun canını almak istemiştim ama sen reddettin! Artık tek arzum hayatta kalmak. Sınırı geçmeme izin ver {PlayerName}. 25.000 altınımı ve Gizli Güvercin Hançeri'mi al. {Dost.Name} bunu asla öğrenemez. Zengin ve vicdanın hür olarak buradan ayrılabilirsin!" />
     <string id="sp_kb_dlg_fight_prag" text="Cesedin toprağa düştüğünde hançerin de altınların da zaten benim olacak. Kılıcını çek! (Savaş)" />
 

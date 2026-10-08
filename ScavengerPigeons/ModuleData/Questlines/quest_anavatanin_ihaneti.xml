@@ -5,10 +5,10 @@
   </Prerequisites>
 
   <TargetResolvers>
+    <Resolver Alias="Dost" TargetType="Hero" Filters="SameCultureAsPlayer, Lord, !PlayerClan, !ClanLeader, HasMobileParty, HasKingdom" Selector="Nearest" />
     <Resolver Alias="KoyBuyugu" TargetType="Hero" Filters="SameCultureAsPlayer, RuralNotable, !Target(Dost)" Selector="Nearest" />
-    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
     <Resolver Alias="UzakSehir" TargetType="Settlement" Filters="Town, SameKingdomAs(Dost)" Selector="Furthest" />
-    <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="SameCultureAsPlayer, Artisan" RequiredSettlementAlias="UzakSehir" Selector="Random" />
+    <Resolver Alias="ArtisanTarget" TargetType="Hero" Filters="Artisan" RequiredSettlementAlias="UzakSehir" Selector="Random" />
     <Resolver Alias="Kral" TargetType="Hero" Filters="SameKingdomAs(Dost), KingdomLeader" Selector="First" />
   </TargetResolvers>
 
@@ -20,6 +20,7 @@
       </Conditions>
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="KoyBuyugu" />
+        <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />
         <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
       </OnEnterActions>
     </Stage>

@@ -102,8 +102,8 @@ Modülün Launcher adı **Iron Covenant**, teknik ID'si **DemirAhit**'tir.
 - **Süre Sınırı:** 90 Gün
 - **Hedefler:**
   - `EfsaneviDemirci` (`GlobalHero(DemirAhit_AnaDemirci)`)
-  - `Kalan` (Hero, `IsPrisonerInSettlement`, Random)
-  - `DusmanKale` (Settlement, `SameSettlementAs(Kalan)`)
+  - `Kalan` (Hero, `IsPrisonerInSettlement, HasKingdom, SameKingdomAs(EfsaneviDemirci)`, Random)
+  - `DusmanKale` (Settlement, `SameSettlementAs(Kalan), !SameKingdomAs(EfsaneviDemirci)`, `NearestTo(Kalan)`)
 - **Akış ve Aşamalar:**
   1. **Haber (Stage1_Haber):** Demircinin kardeşi Kalan, kadim su verme tuzlarını taşırken esir düşmüştür.
   2. **Kurtarma (Stage2_Kurtarma):** Oyuncu kaleyi kuşatabilir, fidye ödeyebilir veya zindana sızabilir:

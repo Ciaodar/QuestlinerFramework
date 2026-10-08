@@ -37,7 +37,7 @@ namespace Questliner.Framework.Engine
                 {
                     ItemObject? item = Campaign.Current.ObjectManager.GetObject<ItemObject>(condition.ObjectId);
                     if (item == null) return false;
-                    return MobileParty.MainParty.ItemRoster.GetItemNumber(item) >= condition.Amount;
+                    return GetTotalPlayerItemCount(item) >= condition.Amount;
                 }
                 case "StageTimeout":
                 {
@@ -130,9 +130,12 @@ namespace Questliner.Framework.Engine
                     
                     if (!completed)
                     {
-                        var qm = TaleWorlds.CampaignSystem.Campaign.Current.QuestManager;
-                        var q = qm.Quests.FirstOrDefault(x => x.StringId.Contains(condition.ObjectId));
-                        if (q != null && !q.IsOngoing) completed = true;
+                        var qm = TaleWorlds.CampaignSystem.Campaign.Current?.QuestManager;
+                        if (qm != null)
+                        {
+                            var q = qm.Quests.FirstOrDefault(x => x.StringId.Contains(condition.ObjectId));
+                            if (q != null && !(q is DynamicQuest) && !q.IsOngoing) completed = true;
+                        }
                     }
                     
                     return (condition.Amount > 0) ? completed : !completed;
@@ -174,7 +177,7 @@ namespace Questliner.Framework.Engine
                 {
                     ItemObject? item = Campaign.Current.ObjectManager.GetObject<ItemObject>(condition.ObjectId);
                     if (item == null) return false;
-                    return MobileParty.MainParty.ItemRoster.GetItemNumber(item) >= condition.Amount;
+                    return GetTotalPlayerItemCount(item) >= condition.Amount;
                 }
                 case "SkillCheck":
                 {
@@ -248,7 +251,7 @@ namespace Questliner.Framework.Engine
                 case "HasItem":
                 {
                     ItemObject? item = MBObjectManager.Instance.GetObject<ItemObject>(condition.ObjectId);
-                    return item != null ? MobileParty.MainParty.ItemRoster.GetItemNumber(item) : 0;
+                    return item != null ? GetTotalPlayerItemCount(item) : 0;
                 }
                 case "HasGold":
                     return Hero.MainHero.Gold;
@@ -262,6 +265,48 @@ namespace Questliner.Framework.Engine
                     // If it's a boolean check (TalkedTo, CheckFlag, TargetIsDead), just return 1 if true, 0 if false.
                     return IsConditionMet(condition, quest) ? condition.Amount : 0;
             }
+        }
+
+        public static int GetTotalPlayerItemCount(ItemObject? item)
+        {
+            if (item == null) return 0;
+
+            int total = 0;
+            var roster = MobileParty.MainParty?.ItemRoster;
+            if (roster != null)
+            {
+                for (int i = 0; i < roster.Count; i++)
+                {
+                    var copy = roster.GetElementCopyAtIndex(i);
+                    if (copy.EquipmentElement.Item == item && copy.Amount > 0)
+                    {
+                        total += copy.Amount;
+                    }
+                }
+            }
+
+            if (Hero.MainHero != null && Models.QuestlinerTradeItemPriceFactorModel.IsEquippableItem(item))
+            {
+                Equipment?[] equipments = new Equipment?[]
+                {
+                    Hero.MainHero.BattleEquipment,
+                    Hero.MainHero.CivilianEquipment,
+                    Hero.MainHero.StealthEquipment
+                };
+                foreach (var eq in equipments)
+                {
+                    if (eq == null) continue;
+                    for (EquipmentIndex slot = EquipmentIndex.WeaponItemBeginSlot; slot < EquipmentIndex.NumEquipmentSetSlots; slot++)
+                    {
+                        if (eq[slot].Item == item)
+                        {
+                            total++;
+                        }
+                    }
+                }
+            }
+
+            return total;
         }
     }
 }
