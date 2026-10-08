@@ -2,6 +2,7 @@
 <Questline Id="QLF_GolgelerinFisiltisi" Title="{=shdw_q1_title}Whispers of the Shadows" TimeLimitInDays="45">
   <TargetResolvers>
     <Resolver Alias="HedefSehir" TargetType="Settlement" Filters="Town" Selector="Nearest" />
+    <Resolver Alias="KacisSehri" TargetType="Settlement" Filters="Town" Selector="SecondNearest" />
     <Resolver Alias="GorevVeren" TargetType="Hero" Filters="Merchant" RequiredSettlementAlias="HedefSehir" Selector="Random" />
     <Resolver Alias="KacakciLideri" TargetType="Hero" Filters="GangLeader" RequiredSettlementAlias="HedefSehir" Selector="Random" />
   </TargetResolvers>
@@ -25,22 +26,26 @@
       </OnEnterActions>
     </Stage>
 
-    <Stage Id="Stage2_Takip" NextStageId="Stage3_Kanit" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q1_s2_log}You spoke with the merchant {GorevVeren_Link} and agreed to track down the bandits attacking their caravans. Find the Smuggler Caravan on the map and defeat them.</LogText>
+    <Stage Id="Stage2_Takip" NextStageId="Stage3_Kanit" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="5">
+      <LogText>{=shdw_q1_s2_log}You spoke with the merchant {GorevVeren_Link} and agreed to track down the bandits attacking their caravans. The {HedefKervan_Link} is fleeing toward {KacisSehri_Link}. Intercept and defeat them on the map before they reach the city and escape.</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="HedefKervan" Amount="1" />
       </Conditions>
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="caravan_guards_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
-        <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="caravan_guards_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="HedefSehir" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="GoToSettlement" ObjectId="KacisSehri" SettlementAlias="KacisSehri" />
       </OnEnterActions>
       <OnExitActions>
         <Action Type="GiveItem" ObjectId="sifreli_defter" Amount="1" />
+        <Action Type="DestroyParty" TargetAlias="HedefKervan" />
       </OnExitActions>
+      <OnTimeoutActions>
+        <Action Type="ChangeStage" ObjectId="Stage_Basarisiz" />
+      </OnTimeoutActions>
     </Stage>
 
     <Stage Id="Stage3_Kanit" NextStageId="Stage4_PusuBekleyis" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=shdw_q1_s3_log}You destroyed the caravan and obtained the Encrypted Ledger. Now visit {HedefSehir_Link} and confront Gang Leader {KacakciLideri_Link} at their hideout or via the town menu.</LogText>
+      <LogText>{=shdw_q1_s3_log}You destroyed the caravan and obtained the Encrypted Ledger. Now visit {HedefSehir_Link} and confront Gang Leader {KacakciLideri_Link} at their hideout.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="KacakciLideri" />
@@ -90,6 +95,16 @@
       <LogText>{=shdw_q1_s5b_log}The gleam of gold covered the color of blood. You forced the merchant into submission and became a partner of the shadows. The underworld routes are now under your protection.</LogText>
       <Conditions />
       <OnEnterActions>
+        <Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage_Basarisiz" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=shdw_q1_s2_fail_log}You failed to intercept the {HedefKervan_Link} in time. The smugglers reached {KacisSehri_Link} and vanished into the city with the stolen goods and the encrypted ledger.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DestroyParty" TargetAlias="HedefKervan" />
+        <Action Type="ChangeRelation" TargetAlias="GorevVeren" Amount="-10" />
         <Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />
       </OnEnterActions>
     </Stage>

@@ -8,8 +8,9 @@
     <string id="shdw_q1_title" text="Gölgelerin Fısıltısı" />
     
     <string id="shdw_q1_s1_log" text="Klanının adı buralarda duyulmaya başladı. {HedefSehir_Link} şehrinde bir tüccar olan {GorevVeren_Link} seninle görüşmek istiyor. Kervanları son zamanlarda gizemli bir şekilde ortadan kayboluyormuş." />
-    <string id="shdw_q1_s2_log" text="Tüccar {GorevVeren_Link} ile konuştun ve kervanlarının peşindeki haydutları bulmayı kabul ettin. Kaçakçı Kervanını haritada yakala ve onları yen." />
-    <string id="shdw_q1_s3_log" text="Kervanı yok ettin ve Şifreli Defter'i ele geçirdin. Şimdi {HedefSehir_Link} şehrine giderek mekanından ya da şehir menüsünden Çete Lideri {KacakciLideri_Link} ile yüzleşmelisin." />
+    <string id="shdw_q1_s2_log" text="Tüccar {GorevVeren_Link} ile konuştun ve kervanlarının peşindeki haydutları bulmayı kabul ettin. {HedefKervan_Link} şu anda {KacisSehri_Link} yönüne doğru kaçıyor. Şehre ulaşıp izlerini kaybettirmeden önce haritada onlara yetiş ve onları yen." />
+    <string id="shdw_q1_s2_fail_log" text="{HedefKervan_Link} birliğine zamanında yetişemedin. Kaçakçılar {KacisSehri_Link} şehrine ulaştı ve çalınan mallarla şifreli defteri de yanlarına alarak izlerini kaybettirdi." />
+    <string id="shdw_q1_s3_log" text="Kervanı yok ettin ve Şifreli Defter'i ele geçirdin. Şimdi {HedefSehir_Link} şehrine giderek mekanında Çete Lideri {KacakciLideri_Link} ile yüzleşmelisin." />
     <string id="shdw_q1_s4_pusu_log" text="Çete liderine karşı geldin. Seni tehdit ettiler ve şehrin dışının tehlikeli olabileceği konusunda uyardılar. Yerleşkeden çıkar çıkmaz bir pusuya hazırlıklı ol." />
     <string id="shdw_q1_s5_savas_log" text="Çetenin suikastçıları şehrin dışında sana pusu kurdu! Tüccarın yollarını güvence altına almak için onları yen." />
     <string id="shdw_q1_s4_santaj_log" text="Çete lideri ile anlaştın. Şimdi tüccar {GorevVeren_Link}'e geri dön ve yüklü bir komisyon karşılığında onu çeteye haraç ödemeye zorla." />

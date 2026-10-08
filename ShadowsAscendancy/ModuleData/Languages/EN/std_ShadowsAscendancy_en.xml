@@ -8,8 +8,9 @@
     <string id="shdw_q1_title" text="Whispers of the Shadows" />
     
     <string id="shdw_q1_s1_log" text="Your clan's name has started to be heard around here. A merchant named {GorevVeren_Link} in {HedefSehir_Link} wants to see you. It seems their caravans have been mysteriously disappearing lately." />
-    <string id="shdw_q1_s2_log" text="You spoke with the merchant {GorevVeren_Link} and agreed to track down the bandits attacking their caravans. Find the Smuggler Caravan on the map and defeat them." />
-    <string id="shdw_q1_s3_log" text="You destroyed the caravan and obtained the Encrypted Ledger. Now visit {HedefSehir_Link} and confront Gang Leader {KacakciLideri_Link} at their hideout or via the town menu." />
+    <string id="shdw_q1_s2_log" text="You spoke with the merchant {GorevVeren_Link} and agreed to track down the bandits attacking their caravans. The {HedefKervan_Link} is fleeing toward {KacisSehri_Link}. Intercept and defeat them on the map before they reach the city and escape." />
+    <string id="shdw_q1_s2_fail_log" text="You failed to intercept the {HedefKervan_Link} in time. The smugglers reached {KacisSehri_Link} and vanished into the city with the stolen goods and the encrypted ledger." />
+    <string id="shdw_q1_s3_log" text="You destroyed the caravan and obtained the Encrypted Ledger. Now visit {HedefSehir_Link} and confront Gang Leader {KacakciLideri_Link} at their hideout." />
     <string id="shdw_q1_s4_pusu_log" text="You defied the gang leader. They threatened you and warned that the outside of the city is dangerous. Be prepared for an ambush as soon as you leave the settlement." />
     <string id="shdw_q1_s5_savas_log" text="The gang's assassins have ambushed you outside the city! Defeat them to secure the merchant's routes." />
     <string id="shdw_q1_s4_santaj_log" text="You made a deal with the gang leader. Now go back to the merchant {GorevVeren_Link} and force them to pay tribute to the gang, while you take your own hefty cut." />
