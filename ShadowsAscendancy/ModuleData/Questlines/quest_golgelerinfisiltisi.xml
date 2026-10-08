@@ -108,6 +108,7 @@
       <OnEnterActions>
         <Action Type="DestroyParty" TargetAlias="HedefKervan" />
         <Action Type="ChangeRelation" TargetAlias="GorevVeren" Amount="-10" />
+        <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
         <Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />
       </OnEnterActions>
     </Stage>

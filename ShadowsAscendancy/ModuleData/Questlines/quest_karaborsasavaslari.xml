@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Questline Id="QLF_KaraborsaSavaslari" Title="{=shdw_q2_title}Black Market Wars" TimeLimitInDays="60">
   <TargetResolvers>
-    <!-- YozlasmisLord: Cruel veya Devious trait'e sahip, oyuncunun bölgesindeki en yakın krallık lordu -->
-    <Resolver Alias="YozlasmisLord" TargetType="Hero" Filters="Lord, HasKingdom, Trait(Devious)" Selector="Nearest" />
+    <!-- YozlasmisLord: Cruel veya Devious trait'e sahip, hükümdar/oyuncu klanı olmayan, barış halindeki en yakın krallık lordu -->
+    <Resolver Alias="YozlasmisLord" TargetType="Hero" Filters="Lord, HasKingdom, !KingdomLeader, !PlayerClan, !EnemyFaction, !IsPrisoner, Trait(Devious)" Selector="Nearest" />
     <!-- Hukumdar: YozlasmisLord'un bulunduğu krallığın lideri -->
     <Resolver Alias="Hukumdar" TargetType="Hero" Filters="KingdomLeader, SameKingdomAs(YozlasmisLord)" Selector="First" />
   </TargetResolvers>
@@ -296,7 +296,7 @@
 
     <!-- Tur 3: Lordun Yanıtı (Kibir ve Rüşvet Teklifi) -->
     <DialogNode Type="Npc" Id="Lord_Cevap1" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_1" OutputToken="ql_shdw_lord_2">
-      <Text>{=shdw_q2_dlg6}(Laughs) I am a noble, and you are merely a mercenary for hire. Who will the king believe, me or you? Still, I care little for headaches. What is your price?</Text>
+      <Text>{=shdw_q2_dlg6}(Laughs) I am a noble, and you are merely a mercenary for hire. Who will the ruler believe, me or you? Still, I care little for headaches. What is your price?</Text>
     </DialogNode>
 
     <!-- Tur 4: Oyuncu Soruşturması & Pazarlık -->
@@ -305,7 +305,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Sorgu_Sendika" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="ql_shdw_lord_sendika">
-      <Text>{=shdw_q2_dlg_lord_sendika}How far does your black-market network extend? Does the king know his own vassals trade in contraband and blood?</Text>
+      <Text>{=shdw_q2_dlg_lord_sendika}How far does your black-market network extend? Does the ruler know their own nobility trade in contraband and blood?</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Sorgu_Pazarlik" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_2" OutputToken="ql_shdw_lord_pay1">
@@ -325,7 +325,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Sendika_Cevap" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_sendika" OutputToken="ql_shdw_lord_confront">
-      <Text>{=shdw_q2_dlg_lord_sendika_c}The king knows what keeps his armies marching! Bribes flow from taverns to castles, lining the scabbards of every captain in the realm.</Text>
+      <Text>{=shdw_q2_dlg_lord_sendika_c}The ruler knows what keeps the armies marching! Bribes flow from taverns to castles, lining the scabbards of every captain in the realm.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Pay1_Cevap" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_pay1" OutputToken="ql_shdw_lord_confront">
@@ -398,7 +398,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Sonuc_Politik" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_politik_son" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_lord_politik_c}(His face turns pale with fury) The ruler?! You will never reach the court alive, mercenary! Run to the king if you dare, but you will find Calradia's courts colder than my dungeons!</Text>
+      <Text>{=shdw_q2_dlg_lord_politik_c}(His face turns pale with fury) The ruler?! You will never reach the court alive, mercenary! Run to the ruler if you dare, but you will find Calradia's courts colder than my dungeons!</Text>
       <Consequences>
         <Action Type="ChangeRelation" TargetAlias="YozlasmisLord" Amount="-50" />
         <Action Type="ChangeStage" ObjectId="Stage4_Hukumdar" />
