@@ -105,7 +105,7 @@
 
   <CustomDialogs>
     <!-- 1. DOST ILE BULUSMA: 7 ADIMLI DERIN LORE VE SOHBET AGACI -->
-    <DialogNode Type="Npc" Id="KB_Dost_Giris_Map" TargetAlias="Dost" InputToken="start" OutputToken="ql_kb_dost_a1" Priority="200">
+    <DialogNode Type="Npc" Id="KB_Dost_Giris_Map" TargetAlias="Dost" InputToken="start" OutputToken="ql_kb_dost_map_p1" Priority="200">
       <Text>{=sp_kb_dlg_map_greet}Ah, {PlayerName}! I sent my swiftest pigeon after you. Thank the heavens we crossed paths.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Mesaj" />
@@ -113,6 +113,10 @@
       <Consequences>
         <Action Type="MakeMet" TargetAlias="Dost" />
       </Consequences>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="KB_Dost_Map_Reply" TargetAlias="Dost" InputToken="ql_kb_dost_map_p1" OutputToken="ql_kb_dost_a1">
+      <Text>{=sp_kb_dlg1}I received your bloody pigeon message. What is the emergency?</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="KB_Dost_Giris" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_kb_dost_a1" Priority="100">

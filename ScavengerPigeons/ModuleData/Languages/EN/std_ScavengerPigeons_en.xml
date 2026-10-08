@@ -147,11 +147,11 @@
     <string id="sp_kb_title" text="Severed Ties" />
     <string id="sp_kb_s0_log" text="You are waiting for news about the traitorous looter {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you." />
     <string id="sp_kb_s1_log" text="You received an urgent, blood-stained message from a pigeon. Your friend {Dost_Link} needs to see you immediately. Find him and ask what the emergency is." />
-    <string id="sp_kb_s2_log" text="You spoke to {Dost.Name}. He revealed that the artisan {HainZanaatkar_Link} is a traitor who stole the Pigeon ciphers and fled. To find his main convoy, you must first intercept and defeat 3 of his decoy looter parties roaming the lands before they disperse. (Time Limit: 10 Days)" />
+    <string id="sp_kb_s2_log" text="You spoke to {Dost_Link}. He revealed that the artisan {HainZanaatkar_Link} is a traitor who stole the Pigeon ciphers and fled. To find his main convoy, you must first intercept and defeat 3 of his decoy looter parties roaming the lands before they disperse. (Time Limit: 10 Days)" />
     <string id="sp_kb_convoy" text="Traitor's Convoy" />
     <string id="sp_kb_s3_log" text="After defeating the decoys, the traitor's looter convoy has appeared to eliminate you! Confront them and retrieve the ciphers before they escape across the border. (Time Limit: 5 Days)" />
-    <string id="sp_kb_success_log" text="You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost.Name}. Impressed by your unwavering devotion, your old contact welcomed you into the deeper ranks of the realm's shadow service, promising to call upon you for four seasons of service." />
-    <string id="sp_kb_yozlasma_log" text="You accepted the artisan's bribe and allowed {HainZanaatkar_Link} to vanish into the wilderness. You gained 25,000 gold and the Pigeon's Secret Dagger. Moments later, a dying black pigeon delivered the artisan's final cryptic message: {Dost.Name} is playing everyone; the Black Ledger hidden in the ciphers will burn Calradia. The hunt for the truth has begun!" />
+    <string id="sp_kb_success_log" text="You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost_Link}. Impressed by your unwavering devotion, your old contact welcomed you into the deeper ranks of the realm's shadow service, promising to call upon you for four seasons of service." />
+    <string id="sp_kb_yozlasma_log" text="You accepted the artisan's bribe and allowed {HainZanaatkar_Link} to vanish into the wilderness. You gained 25,000 gold and the Pigeon's Secret Dagger. Moments later, a dying black pigeon delivered the artisan's final cryptic message: {Dost_Link} is playing everyone; the Black Ledger hidden in the ciphers will burn Calradia. The hunt for the truth has begun!" />
     <string id="sp_kb_fail_log" text="The traitor {HainZanaatkar_Link} and his convoy managed to slip across the border before you could intercept them. The secret ciphers are lost forever, and the Scavenger Pigeons have lost their trust in you." />
     
     <string id="sp_kb_dlg1" text="I received your bloody pigeon message. What is the emergency?" />
@@ -249,6 +249,7 @@
     <string id="sp_id_ertele" text="I cannot deal with this right now. We will speak later." />
 
     <!-- Kopuk Baglar (Expanded Branching & Dialogues) -->
+    <string id="sp_kb_dlg_map_greet" text="Ah, {PlayerName}! I sent my swiftest pigeon after you. Thank the heavens we crossed paths." />
     <string id="sp_kb_ertele" text="I cannot deal with this right now. We will speak later." />
     <string id="sp_kb_dlg_tone_inq" text="A double agent? How could someone in the inner circle breach our security like that?" />
     <string id="sp_kb_dlg_tone_skep" text="First you told me he was testing me, now you claim he is a traitor. How do I know who to trust?" />

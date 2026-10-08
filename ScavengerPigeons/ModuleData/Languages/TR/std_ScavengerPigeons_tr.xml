@@ -146,11 +146,11 @@
     <string id="sp_kb_title" text="Kopuk Bağlar" />
     <string id="sp_kb_s0_log" text="Hain çapulcu {HainZanaatkar_Link} hakkında haber bekliyorsun. Seni kandırmaya çalışmasının bedelini yakında ödeyeceğini umuyorsun." />
     <string id="sp_kb_s1_log" text="Bir güvercinden acil, kanlı bir mektup aldın. Eski dostun {Dost_Link} seninle acilen görüşmek istiyor. Onu bul ve acil durumun ne olduğunu sor." />
-    <string id="sp_kb_s2_log" text="{Dost.Name} ile konuştun. Zanaatkar {HainZanaatkar_Link}'ın Güvercin şifrelerini çalıp kaçan gerçek bir hain olduğunu açıkladı. Ana konvoyunu bulmak için önce diyarda dolaşan 3 sahte çapulcu grubunu sınırları terk etmeden yakalayıp yok etmelisin. (Süre Sınırı: 10 Gün)" />
+    <string id="sp_kb_s2_log" text="{Dost_Link} ile konuştun. Zanaatkar {HainZanaatkar_Link}'ın Güvercin şifrelerini çalıp kaçan gerçek bir hain olduğunu açıkladı. Ana konvoyunu bulmak için önce diyarda dolaşan 3 sahte çapulcu grubunu sınırları terk etmeden yakalayıp yok etmelisin. (Süre Sınırı: 10 Gün)" />
     <string id="sp_kb_convoy" text="Hainin Konvoyu" />
     <string id="sp_kb_s3_log" text="Yem gruplarını yok ettikten sonra, hainin çapulcu konvoyu seni ortadan kaldırmak için ortaya çıktı! Sınırı geçip kaçmadan önce onlarla yüzleş ve şifreleri geri al. (Süre Sınırı: 5 Gün)" />
-    <string id="sp_kb_success_log" text="Konvoyu imha ettin ve hain {HainZanaatkar_Link}'ı idam ettin. Kurtarılan şifreler {Dost.Name}'a teslim edildi. Sarsılmaz bağlılığından etkilenen eski dostun seni diyarın gölge teşkilatının derin saflarına kabul etti ve dört mevsimlik hizmet için seni göreve çağıracağına söz verdi." />
-    <string id="sp_kb_yozlasma_log" text="Zanaatkarın rüşvetini kabul ettin ve {HainZanaatkar_Link}'ın yaban ellere karışıp kaybolmasına izin verdin. 25.000 altın ve Gizli Güvercin Hançeri kazandın. Kısa süre sonra can çekişen siyah bir güvercin zanaatkarın son şifreli mesajını ulaştırdı: {Dost.Name} herkesi parmağında oynatıyor; şifrelerde gizlenen Kara Kütük Calradia'yı ateşe verecek. Hakikat avı başladı!" />
+    <string id="sp_kb_success_log" text="Konvoyu imha ettin ve hain {HainZanaatkar_Link}'ı idam ettin. Kurtarılan şifreler {Dost_Link}'a teslim edildi. Sarsılmaz bağlılığından etkilenen eski dostun seni diyarın gölge teşkilatının derin saflarına kabul etti ve dört mevsimlik hizmet için seni göreve çağıracağına söz verdi." />
+    <string id="sp_kb_yozlasma_log" text="Zanaatkarın rüşvetini kabul ettin ve {HainZanaatkar_Link}'ın yaban ellere karışıp kaybolmasına izin verdin. 25.000 altın ve Gizli Güvercin Hançeri kazandın. Kısa süre sonra can çekişen siyah bir güvercin zanaatkarın son şifreli mesajını ulaştırdı: {Dost_Link} herkesi parmağında oynatıyor; şifrelerde gizlenen Kara Kütük Calradia'yı ateşe verecek. Hakikat avı başladı!" />
     <string id="sp_kb_fail_log" text="Hain {HainZanaatkar_Link} ve konvoyu, sen onları durduramadan sınırı aşıp kaçmayı başardı. Gizli şifreler sonsuza dek kayboldu ve Çapulcu Güvercinler sana olan tüm güvenini yitirdi." />
     
     <string id="sp_kb_dlg1" text="Kanlı güvercin mesajını aldım. Acil durum nedir?" />
@@ -248,6 +248,7 @@
     <string id="sp_id_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
 
     <!-- Kopuk Baglar (Genisletilmis Dallanma ve Diyaloglar) -->
+    <string id="sp_kb_dlg_map_greet" text="Ah, {PlayerName}! Arkandan en hızlı güvercinimi saldım. Şükürler olsun ki yollarımız kesişti." />
     <string id="sp_kb_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
     <string id="sp_kb_dlg_tone_inq" text="Çift taraflı bir ajan mı? İç çemberden biri güvenliğimizi nasıl bu denli delebilir?" />
     <string id="sp_kb_dlg_tone_skep" text="Önce beni sınadığını söyledin, şimdi ise bir hain olduğunu iddia ediyorsun. Kime güveneceğimi nereden bileceğim?" />

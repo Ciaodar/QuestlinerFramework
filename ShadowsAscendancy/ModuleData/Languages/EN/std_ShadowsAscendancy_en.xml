@@ -42,17 +42,17 @@
     <string id="shdw_q1_dlg_kervan2" text="I am here for the stolen goods and the merchant's ledger. Draw your steel!" />
     <string id="shdw_q1_dlg_kervan_sorgu" text="Whose orders are you carrying out? Whose seal is stamped on those contraband crates?" />
     <string id="shdw_q1_dlg_kervan_tehdit" text="If you lie to me, this sand will be your grave. Whose orders are you carrying out?" />
-    <string id="shdw_q1_dlg_kervan_sorgu_c" text="(Laughs) A mercenary dog sent by that coward merchant! That ledger belongs to the masters of the back alleys now. If you want it, bleed for it!" />
-    <string id="shdw_q1_dlg_kervan_tehdit_c" text="(Laughs) Big words for someone outnumbered! You will rot in the dirt before we reveal our masters! Cut them down!" />
+    <string id="shdw_q1_dlg_kervan_sorgu_c" text="A mercenary dog sent by that coward merchant! That ledger belongs to the masters of the back alleys now. If you want it, bleed for it!" />
+    <string id="shdw_q1_dlg_kervan_tehdit_c" text="Big words for someone outnumbered! You will rot in the dirt before we reveal our masters! Cut them down!" />
     <string id="shdw_q1_dlg_kervan_sorgu2" text="The back-alley syndicate? So you admit you're running smuggled contraband for the city gang leader?" />
     <string id="shdw_q1_dlg_kervan_sorgu2_c" text="We take orders from {KacakciLideri_Link}! You won't leave this valley alive to tell anyone! Kill them!" />
 
-    <string id="shdw_q1_cete_turn1" text="(Pushes his goblet aside and studies you cold-eyed) Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat." />
+    <string id="shdw_q1_cete_turn1" text="Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat." />
     <string id="shdw_q1_dlg_cete_intro" text="Who do you think you are, barging into my territory? Speak quickly before my men gut you." />
     <string id="shdw_q1_dlg_cete_threat" text="If you lie to me, this den will be your tomb. I butchered your caravan dogs and took this encrypted ledger. Who is behind you?" />
     <string id="shdw_q1_dlg4" text="I found the dogs plundering the caravans and seized this encrypted ledger. You're no common bandit, who is behind this?" />
     <string id="shdw_q1_dlg_cete_cunning" text="I routed your caravan and hold your encrypted ledger. I want to know who pulls the strings in this city before I decide whose side I am on." />
-    <string id="shdw_q1_dlg5" text="(Laughs) You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market." />
+    <string id="shdw_q1_dlg5" text="You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market." />
     <string id="shdw_q1_dlg_cete_lore" text="How do the town guards and nobility overlook this smuggling? How deep does this syndicate run?" />
     <string id="shdw_q1_dlg_cete_pay" text="What is my share in this dark business? I do not dirty my hands without substantial coin." />
     <string id="shdw_q1_dlg_cete_lore_c" text="Nobles feast on untaxed wine while their castellans pocket our silver. The law in Calradia is merely a whip cracked across the backs of the weak. Those with gold make the rules, and the rest obey." />
@@ -63,7 +63,7 @@
     <string id="shdw_q1_dlg_cete_phil" text="They say those who seek mercy in the shadows become food for jackals... But what if I refuse to bow to either you or the merchant?" />
     <string id="shdw_q1_dlg_cete_sinir" text="You talk of sharing profits, but extortion and blade-work always spill blood. What happens if the merchant calls the town guard?" />
     <string id="shdw_q1_dlg_cete_guvence" text="Five thousand denars is tempting, but what guarantees do I have that your assassins won't slip a dagger between my ribs once the coin is collected?" />
-    <string id="shdw_q1_dlg_cete_phil_c" text="(Resting his hand on his pommel) Then the unwritten laws of these alleys shall crush you beneath our boots, stranger. You either ally with gold or bleed under cold steel. Choose now!" />
+    <string id="shdw_q1_dlg_cete_phil_c" text="Then the unwritten laws of these alleys shall crush you beneath our boots, stranger. You either ally with gold or bleed under cold steel. Choose now!" />
     <string id="shdw_q1_dlg_cete_sinir_c" text="The guards? I already told you, the guards eat from our hand. Squeeze him hard enough and he won't dare whisper a word to the watch. Choose now!" />
     <string id="shdw_q1_dlg_cete_guvence_c" text="My word is the only law in these alleys! A dead partner brings no gold, but a loyal one keeps the routes flowing. Make your decision, stranger!" />
     <string id="shdw_q1_dlg7" text="You can't escape justice. I will see you hang." />

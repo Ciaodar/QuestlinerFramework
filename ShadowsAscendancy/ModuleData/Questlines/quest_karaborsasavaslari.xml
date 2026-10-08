@@ -350,7 +350,7 @@
 
     <!-- Tur 7: Lordun Ültimatomu -->
     <DialogNode Type="Npc" Id="Lord_Ders_Cevap" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_ders" OutputToken="ql_shdw_lord_karar">
-      <Text>{=shdw_q2_dlg_lord_ders}(Slams his goblet on the table, eyes narrowing) In Calradia, justice is whatever the man with the largest army says it is! A mercenary with a scrap of parchment does not dictate terms to a lord. Either take the twenty thousand denars and leave, or face the wrath of my entire garrison. What is your choice?!</Text>
+      <Text>{=shdw_q2_dlg_lord_ders}In Calradia, justice is whatever the man with the largest army says it is! A mercenary with a scrap of parchment does not dictate terms to a lord. Either take the twenty thousand denars and leave, or face the wrath of my entire garrison. What is your choice?!</Text>
     </DialogNode>
 
     <!-- Tur 8: Nihai Kararlar (Şantaj / Savaş / Politika / Erteleme) -->
@@ -378,7 +378,7 @@
 
     <!-- Tur 9: Lordun Nihai Tepkisi & Sonuçlar -->
     <DialogNode Type="Npc" Id="Lord_Sonuc_Santaj" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_santaj_son" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_lord_santaj_c}(Grins arrogantly and tosses a heavy iron-bound chest at your feet) Smart choice. Gold never lies. Take your silver and never let me see your face in my domain again.</Text>
+      <Text>{=shdw_q2_dlg_lord_santaj_c}Smart choice. Gold never lies. Take your silver and never let me see your face in my domain again.</Text>
       <Consequences>
         <Action Type="AddGold" Amount="20000" />
         <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
@@ -389,7 +389,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Sonuc_Savas" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_savas_son" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_lord_savas_c}(Draws his gilded sword, roaring to his guards) Insolent dog! You dare threaten me?! Guards, slay this wretch!</Text>
+      <Text>{=shdw_q2_dlg_lord_savas_c}Insolent dog! You dare threaten me?! Guards, slay this wretch!</Text>
       <Consequences>
         <Action Type="DeclareWar" TargetAlias="YozlasmisLord" />
         <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
@@ -398,7 +398,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Sonuc_Politik" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_politik_son" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_lord_politik_c}(His face turns pale with fury) The ruler?! You will never reach the court alive, mercenary! Run to the ruler if you dare, but you will find Calradia's courts colder than my dungeons!</Text>
+      <Text>{=shdw_q2_dlg_lord_politik_c}The ruler?! You will never reach the court alive, mercenary! Run to the ruler if you dare, but you will find Calradia's courts colder than my dungeons!</Text>
       <Consequences>
         <Action Type="ChangeRelation" TargetAlias="YozlasmisLord" Amount="-50" />
         <Action Type="ChangeStage" ObjectId="Stage4_Hukumdar" />
@@ -457,7 +457,7 @@
 
     <!-- Tur 3: Hükümdar Parşömeni İnceler ve Sorgular -->
     <DialogNode Type="Npc" Id="Huk_Inceleme" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_1" OutputToken="ql_shdw_huk_delil">
-      <Text>{=shdw_q2_dlg_huk_inceleme}(Takes the parchment, inspecting the wax seal with intense scrutiny) Treason against the crown? {YozlasmisLord_Link} has served our house for generations. Yet this crimson seal bears his signet... Tell me, how did this document come into your possession? Can you prove this is not a forged fabrication?</Text>
+      <Text>{=shdw_q2_dlg_huk_inceleme}Treason against the crown? {YozlasmisLord_Link} has served our house for generations. Yet this crimson seal bears his signet... Tell me, how did this document come into your possession? Can you prove this is not a forged fabrication?</Text>
     </DialogNode>
 
     <!-- Tur 4: Oyuncunun Delil ve Tanıklığı -->
