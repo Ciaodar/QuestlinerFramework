@@ -142,16 +142,16 @@
     <string id="shdw_q2_dlg_lord_savas_c" text="(Draws his gilded sword, roaring to his guards) Insolent dog! You dare threaten me?! Guards, slay this wretch!" />
     <string id="shdw_q2_dlg_lord_politik_c" text="(His face turns pale with fury) The ruler?! You will never reach the court alive, mercenary! Run to the king if you dare, but you will find Calradia's courts colder than my dungeons!" />
 
-    <string id="shdw_q2_dlg_huk_intro" text="Welcome to our court. What urgent matter brings you before the throne?" />
-    <string id="shdw_q2_dlg10" text="My liege, one of your lords, {YozlasmisLord_Link}, plotted behind your back and hired assassins to murder me. Here is the sealed proof of his treason!" />
-    <string id="shdw_q2_dlg_huk_diplomasi" text="I bring grave news of betrayal threatening the realm's stability, my liege. This royal decree proves {YozlasmisLord_Link} commands cutthroats from the shadows." />
+    <string id="shdw_q2_dlg_huk_intro" text="Welcome to our court. What urgent matter brings you before us?" />
+    <string id="shdw_q2_dlg10" text="Your Majesty, one of your lords, {YozlasmisLord_Link}, plotted behind your back and hired assassins to murder me. Here is the sealed proof of his treason!" />
+    <string id="shdw_q2_dlg_huk_diplomasi" text="I bring grave news of betrayal threatening the realm's stability, Your Majesty. This royal decree proves {YozlasmisLord_Link} commands cutthroats from the shadows." />
     <string id="shdw_q2_dlg_huk_justice" text="Certain lords believe noble blood places them above the realm's laws. I bring proof of high treason, and I expect Calradian justice to be unyielding." />
     <string id="shdw_q2_dlg_huk_inceleme" text="(Takes the parchment, inspecting the wax seal with intense scrutiny) Treason against the crown? {YozlasmisLord_Link} has served our house for generations. Yet this crimson seal bears his signet... Tell me, how did this document come into your possession? Can you prove this is not a forged fabrication?" />
     <string id="shdw_q2_dlg_huk_kanit_pusu" text="I was ambushed by his hired assassins on the high road. Their commander carried this sealed order inside his armor before I defeated them." />
     <string id="shdw_q2_dlg_huk_kanit_sendika" text="This decree was dispatched to recover an encrypted ledger tying the lord directly to the black-market extortion syndicate." />
     <string id="shdw_q2_dlg_huk_hukum" text="The evidence is damning. Running illegal extortion syndicates and deploying cutthroats against fellow subjects strikes at the very legitimacy of our crown. Such corruption cannot be tolerated, regardless of bloodline." />
     <string id="shdw_q2_dlg_huk_talep_adalet" text="Let all Calradia see that no traitor, no matter how highborn, escapes your royal justice." />
-    <string id="shdw_q2_dlg_huk_talep_odul" text="I have risked life and clan to bring this truth to the throne, my liege. I ask only for the honor and standing my loyalty deserves." />
+    <string id="shdw_q2_dlg_huk_talep_odul" text="I have risked life and clan to bring this truth before your court, Your Majesty. I ask only for the honor and standing my service deserves." />
     <string id="shdw_q2_dlg11" text="Accusing a noble is a grave matter, yet the seal is undeniably his. Such treachery shall not go unpunished. You have the realm's gratitude, and you shall be rewarded accordingly." />
     <string id="shdw_q2_dlg_assassin_intro" text="There they are! The bounty on your head is large enough to buy an estate. Prepare to die!" />
     <string id="shdw_q2_dlg_assassin_fight" text="You'll have to take my head from my cold corpse, hired scum. Draw your steel!" />
@@ -169,7 +169,7 @@
     <string id="shdw_q1_dlg_cete_entry" text="I am looking for the master of the city's alley operations. We need to talk." />
     <string id="shdw_q1_dlg_santaj_entry" text="We need to discuss your debts and your business with the syndicate." />
     <string id="shdw_q2_dlg_lord_player_entry" text="We have unfinished business regarding your hired cutthroats, my lord." />
-    <string id="shdw_q2_dlg_huk_player_entry" text="My liege, I bring urgent evidence concerning high treason within your court." />
+    <string id="shdw_q2_dlg_huk_player_entry" text="Your Majesty, I bring urgent evidence concerning high treason within your court." />
 
   </strings>
 </base>

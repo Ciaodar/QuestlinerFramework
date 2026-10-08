@@ -70,6 +70,7 @@
         <Action Type="SetPartyAi" TargetAlias="CetePartisi" StringValue="EngageParty" ObjectId="Player" />
       </OnEnterActions>
       <OnExitActions>
+        <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
         <Action Type="AddGold" Amount="5000" />
         <Action Type="ChangeRelation" TargetAlias="GorevVeren" Amount="15" />
         <Action Type="ChangeRelation" TargetAlias="KacakciLideri" Amount="-30" />
@@ -87,6 +88,7 @@
       <LogText>{=shdw_q1_s5a_log}You ignored the whispers of the shadows and brought justice. The caravan routes are safer now, but the underworld has marked your name.</LogText>
       <Conditions />
       <OnEnterActions>
+        <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
         <Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />
       </OnEnterActions>
     </Stage>
@@ -95,6 +97,7 @@
       <LogText>{=shdw_q1_s5b_log}The gleam of gold covered the color of blood. You forced the merchant into submission and became a partner of the shadows. The underworld routes are now under your protection.</LogText>
       <Conditions />
       <OnEnterActions>
+        <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
         <Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />
       </OnEnterActions>
     </Stage>

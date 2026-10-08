@@ -142,17 +142,17 @@
     <string id="shdw_q2_dlg_lord_savas_c" text="(Yaldızlı kılıcını çeker, muhafızlarına kükrer) Küstah köpek! Kendi çatımın altında beni tehdit etmeye nasıl cüret edersin?! Muhafızlar, parçalayın bu sefili!" />
     <string id="shdw_q2_dlg_lord_politik_c" text="(Öfkeden yüzü solar) Hükümdar mı?! Saraya asla canlı ulaşamayacaksın paralı asker! Cüretin varsa krala koş, ama Calradia divanlarının zindanlarımdan daha soğuk olduğunu göreceksin!" />
 
-    <string id="shdw_q2_dlg_huk_intro" text="Huzurumuza hoş geldin. Tahtımızın önüne hangi mühim meseleyi getirdin?" />
-    <string id="shdw_q2_dlg10" text="Yüce hükümdarım, asilzadelerinizden {YozlasmisLord_Link} arkamdan iş çevirip beni öldürtmek için suikastçılar tuttu. İhanetinin kanıtı bu mühürlü emirdir!" />
-    <string id="shdw_q2_dlg_huk_diplomasi" text="Krallığınızın huzurunu tehdit eden büyük bir ihanet haberi getirdim yüce hükümdarım. Bu mühürlü ferman, {YozlasmisLord_Link}'un gölgelerden kiralık katiller yönettiğinin kanıtıdır." />
+    <string id="shdw_q2_dlg_huk_intro" text="Huzurumuza hoş geldin. Divanımıza hangi mühim meseleyi getirdin?" />
+    <string id="shdw_q2_dlg10" text="Majesteleri, asilzadelerinizden {YozlasmisLord_Link} arkamdan iş çevirip beni öldürtmek için suikastçılar tuttu. İhanetinin kanıtı bu mühürlü emirdir!" />
+    <string id="shdw_q2_dlg_huk_diplomasi" text="Krallığınızın huzurunu tehdit eden büyük bir ihanet haberi getirdim Majesteleri. Bu mühürlü ferman, {YozlasmisLord_Link}'un gölgelerden kiralık katiller yönettiğinin kanıtıdır." />
     <string id="shdw_q2_dlg_huk_justice" text="Bazı lordlar soylu kanlarının onları kanunların üstüne koyduğunu sanıyor. Size açık bir ihanetin kanıtını getirdim ve adaletin tavizsiz işlemesini bekliyorum." />
     <string id="shdw_q2_dlg_huk_inceleme" text="(Parşömeni alır, balmumu mührü dikkatle inceler) Hanedanımıza karşı ihanet mi? {YozlasmisLord_Link} nesillerdir hanemize hizmet eder. Fakat bu kırmızı mühür açıkça onun mührü... Söyle bana, bu belge eline nasıl geçti? Bunun sahte bir tuzak olmadığını kanıtlayabilir misin?" />
     <string id="shdw_q2_dlg_huk_kanit_pusu" text="Ana yolda kiralık katillerinin pususuna uğradım. Onları mağlup etmeden önce komutanları bu mühürlü emri zırhının altında taşıyordu." />
     <string id="shdw_q2_dlg_huk_kanit_sendika" text="Bu ferman, lordu doğrudan karaborsa haraç şebekesine bağlayan şifreli bir defteri geri almak için verilmişti." />
     <string id="shdw_q2_dlg_huk_hukum" text="Kanıtlar su götürmez. Yasa dışı haraç şebekeleri yönetmek ve krallığın tebaasına karşı kiralık katiller salmak hükümdarlığımızın meşruiyetini zedeler. Soyu ne olursa olsun böylesi bir yozlaşmaya göz yumulamaz." />
     <string id="shdw_q2_dlg_huk_talep_adalet" text="Soyu ne kadar yüce olursa olsun hiçbir hainin adaletinizden kaçamayacağını tüm Calradia görsün." />
-    <string id="shdw_q2_dlg_huk_talep_odul" text="Bu hakikati tahtın önüne getirmek için canımı ve klanımı tehlikeye attım yüce hükümdarım. Yalnızca sadakatimin hak ettiği onur ve itibarı talep ediyorum." />
-    <string id="shdw_q2_dlg11" text="Bir asilzadeyi suçlamak büyük bir cürettir, ancak mühür açıkça onun. Bu küstahlığı cezasız kalmayacak. Krallığa olan sadakatin için teşekkürler, hak ettiğin değeri göreceksin." />
+    <string id="shdw_q2_dlg_huk_talep_odul" text="Bu hakikati divanınıza getirmek için canımı ve klanımı tehlikeye attım Majesteleri. Yalnızca sunduğum hizmetin hak ettiği onur ve itibarı talep ediyorum." />
+    <string id="shdw_q2_dlg11" text="Bir asilzadeyi suçlamak büyük bir cürettir, ancak mühür açıkça onun. Bu küstahlığı cezasız kalmayacak. Krallığımıza sunduğun bu hizmet için teşekkürler, hak ettiğin değeri göreceksin." />
     <string id="shdw_q2_dlg_assassin_intro" text="İşte oradalar! Başına konan ödül bir malikane satın almaya yeter. Ölmeye hazırlan!" />
     <string id="shdw_q2_dlg_assassin_fight" text="Kellemi ancak cesedimden alabilirsin, kiralık köpek. Çek kılıcını!" />
     <string id="shdw_q2_dlg_assassin_sorgu" text="Beni avlamanız için size kim para ödedi? Bir asilzade mi, yoksa sokak çeteleri mi?" />
@@ -169,7 +169,7 @@
     <string id="shdw_q1_dlg_cete_entry" text="Şehrin arka sokaklarını yöneten kişiyle görüşmek istiyorum. Konuşmamız gerek." />
     <string id="shdw_q1_dlg_santaj_entry" text="Sendikayla olan borçlarını ve karanlık işlerini konuşmamız gerek." />
     <string id="shdw_q2_dlg_lord_player_entry" text="Tuttuğun kiralık katiller hakkında yarım kalmış bir hesabımız var, lordum." />
-    <string id="shdw_q2_dlg_huk_player_entry" text="Yüce hükümdarım, sarayınızdaki açık bir vatana ihanet hakkında mühim kanıtlar getirdim." />
+    <string id="shdw_q2_dlg_huk_player_entry" text="Majesteleri, sarayınızdaki açık bir vatana ihanet hakkında mühim kanıtlar getirdim." />
 
   </strings>
 </base>

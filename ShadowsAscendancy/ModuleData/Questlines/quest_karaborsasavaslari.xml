@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Questline Id="QLF_KaraborsaSavaslari" Title="{=shdw_q2_title}Black Market Wars" TimeLimitInDays="60">
   <TargetResolvers>
-    <!-- YozlasmisLord: Cruel veya Devious trait'e sahip bir krallık lordu -->
-    <Resolver Alias="YozlasmisLord" TargetType="Hero" Filters="Lord, HasKingdom, Trait(Devious)" Selector="Random" />
+    <!-- YozlasmisLord: Cruel veya Devious trait'e sahip, oyuncunun bölgesindeki en yakın krallık lordu -->
+    <Resolver Alias="YozlasmisLord" TargetType="Hero" Filters="Lord, HasKingdom, Trait(Devious)" Selector="Nearest" />
     <!-- Hukumdar: YozlasmisLord'un bulunduğu krallığın lideri -->
     <Resolver Alias="Hukumdar" TargetType="Hero" Filters="KingdomLeader, SameKingdomAs(YozlasmisLord)" Selector="First" />
   </TargetResolvers>
@@ -41,7 +41,6 @@
         <Action Type="SetPartyAi" TargetAlias="KatilKomutan" StringValue="Hold" />
       </OnEnterActions>
       <OnExitActions>
-        <Action Type="GiveItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="DestroyParty" TargetAlias="KatilKomutan" />
         <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
       </OnExitActions>
@@ -73,6 +72,7 @@
       <LogText>{=shdw_q2_s5a_log}You took a hefty hush money payment from the corrupt lord and covered up the incident. It might have been a dishonorable move, but your purse is quite full.</LogText>
       <Conditions />
       <OnEnterActions>
+        <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="SetGlobalFlag" ObjectId="KaraborsaSavaslari_Bitti" Amount="1" />
       </OnEnterActions>
     </Stage>
@@ -81,6 +81,7 @@
       <LogText>{=shdw_q2_s5b_log}Even at the cost of declaring war on a kingdom, you delivered your own justice with your sword. All of Calradia should fear your wrath!</LogText>
       <Conditions />
       <OnEnterActions>
+        <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="SetGlobalFlag" ObjectId="KaraborsaSavaslari_Bitti" Amount="1" />
       </OnEnterActions>
     </Stage>
@@ -89,6 +90,7 @@
       <LogText>{=shdw_q2_s5c_log}By presenting the documents to the kingdom leader, you ensured the corrupt lord's exile. You gained favor with the ruler and achieved a great political victory in the kingdom.</LogText>
       <Conditions />
       <OnEnterActions>
+        <Action Type="TakeItem" ObjectId="lordun_muhurlu_emri" Amount="1" />
         <Action Type="SetGlobalFlag" ObjectId="KaraborsaSavaslari_Bitti" Amount="1" />
       </OnEnterActions>
     </Stage>
@@ -153,12 +155,6 @@
       <Text>{=shdw_q2_dlg_kom_motiv}Hired cutthroats do not risk royal patrols without a heavy purse. What grudge drove this contract?</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kom_Giris_Ertele" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_sorgu" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
 
     <!-- Tur 3: NPC İtirafları (Dinamik Bayrak Kontrolleri) -->
     <DialogNode Type="Npc" Id="Kom_Cevap_Kanun" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_1" OutputToken="ql_shdw_kom_2">
@@ -201,12 +197,6 @@
       <Text>{=shdw_q2_dlg_kom_savunma}Where does this lord hide, and how many men garrison his hall? Answer truly if you value your skin.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kom_Secim_Ertele" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_2" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
 
     <!-- Tur 5: Komutanın Ayrıntıları Açıklaması -->
     <DialogNode Type="Npc" Id="Kom_Lore_Cevap" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_lore" OutputToken="ql_shdw_kom_confront">
@@ -226,12 +216,6 @@
       <Text>{=shdw_q2_dlg_kom_cunning}This wax seal is worth a king's ransom in blackmail or political leverage. Hand it over, and maybe you'll live to see tomorrow.</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kom_Confront_Ertele" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_confront" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
 
     <!-- Tur 7: Komutan Parşömeni Titreyerek Verir -->
     <DialogNode Type="Npc" Id="Kom_Teslim_Cevap" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_teslim" OutputToken="ql_shdw_kom_karar">
@@ -260,12 +244,6 @@
       </Consequences>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="Kom_Karar_Ertele" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_karar" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_ertele}I cannot deal with this right now. We will speak later.</Text>
-      <Consequences>
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
 
     <!-- ========================================== -->
     <!-- 2. LORD İLE YÜZLEŞME (YozlasmisLord - 8 Adımlı Asilzade Çatışması) -->
@@ -433,14 +411,14 @@
     <!-- ========================================== -->
     <!-- Tur 1 (Player / hero_main_options): Divan/Saray Menüsü veya Ziyaret Girişi -->
     <DialogNode Type="Player" Id="Hukumdar_Giris_Player" TargetAlias="Hukumdar" InputToken="hero_main_options" OutputToken="ql_shdw_huk_entry_npc" Priority="200">
-      <Text>{=shdw_q2_dlg_huk_player_entry}My liege, I bring urgent evidence concerning high treason within your court.</Text>
+      <Text>{=shdw_q2_dlg_huk_player_entry}Your Majesty, I bring urgent evidence concerning high treason within your court.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage4_Hukumdar" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Hukumdar_Giris_Npc_Reply" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_entry_npc" OutputToken="ql_shdw_huk_kanit" Priority="200">
-      <Text>{=shdw_q2_dlg_huk_intro}Welcome to our court. What urgent matter brings you before the throne?</Text>
+      <Text>{=shdw_q2_dlg_huk_intro}Welcome to our court. What urgent matter brings you before us?</Text>
       <Consequences>
         <Action Type="MakeMet" TargetAlias="Hukumdar" />
       </Consequences>
@@ -448,7 +426,7 @@
 
     <!-- Tur 1: Hükümdarın Açılışı (start token doğrudan giriş) -->
     <DialogNode Type="Npc" Id="Hukumdar_Giris" TargetAlias="Hukumdar" InputToken="start" OutputToken="ql_shdw_huk_kanit" Priority="200">
-      <Text>{=shdw_q2_dlg_huk_intro}Welcome to our court. What urgent matter brings you before the throne?</Text>
+      <Text>{=shdw_q2_dlg_huk_intro}Welcome to our court. What urgent matter brings you before us?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage4_Hukumdar" />
       </Conditions>
@@ -459,11 +437,11 @@
 
     <!-- Tur 2: Oyuncunun Suçlaması -->
     <DialogNode Type="Player" Id="Hukumdar_Kanit" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_kanit" OutputToken="ql_shdw_huk_1">
-      <Text>{=shdw_q2_dlg10}My liege, one of your lords, {YozlasmisLord_Link}, plotted behind your back and hired assassins to murder me. Here is the sealed proof of his treason!</Text>
+      <Text>{=shdw_q2_dlg10}Your Majesty, one of your lords, {YozlasmisLord_Link}, plotted behind your back and hired assassins to murder me. Here is the sealed proof of his treason!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Hukumdar_Diplomasi" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_kanit" OutputToken="ql_shdw_huk_1">
-      <Text>{=shdw_q2_dlg_huk_diplomasi}I bring grave news of betrayal threatening the realm's stability, my liege. This royal decree proves {YozlasmisLord_Link} commands cutthroats from the shadows.</Text>
+      <Text>{=shdw_q2_dlg_huk_diplomasi}I bring grave news of betrayal threatening the realm's stability, Your Majesty. This royal decree proves {YozlasmisLord_Link} commands cutthroats from the shadows.</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Hukumdar_Adalet" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_kanit" OutputToken="ql_shdw_huk_1">
@@ -509,7 +487,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Huk_Talep_Odul" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_talep" OutputToken="ql_shdw_huk_final">
-      <Text>{=shdw_q2_dlg_huk_talep_odul}I have risked life and clan to bring this truth to the throne, my liege. I ask only for the honor and standing my loyalty deserves.</Text>
+      <Text>{=shdw_q2_dlg_huk_talep_odul}I have risked life and clan to bring this truth before your court, Your Majesty. I ask only for the honor and standing my service deserves.</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Huk_Talep_Ertele" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_talep" OutputToken="close_window">
