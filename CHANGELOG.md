@@ -6,16 +6,19 @@ Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sis
 
 ### Eklendi & Düzeltildi (Added & Fixed)
 - **`GlobalHeroes` Kalıcılığı & Aşama Atlama Koruması (`DynamicQuest.cs`):**
-  - `ForceSuccess()`, `ForceCompleteCurrentStage()` veya görev tamamlanma anında (`OnCompleteWithSuccess`), görev şablonundaki (`Model.Stages`, `CustomDialogs`, `GameMenuOptions`) tüm `<Action Type="SaveHeroToGlobal" TargetAlias="..." StringValue="..." />` tanımları taranarak eksik kalan `GlobalHeroes` kayıtları otomatik olarak `GlobalStateManager.Instance.SetGlobalHero` ile hafızaya aktarılır. Böylece `QLF_AnavataninIhaneti` gibi görevler konsoldan veya aşama atlayarak bitirilse dahi ardışık görevler (`QLF_KopukBaglar`) ihtiyaç duydukları `GlobalHero` hedeflerini sorunsuz bulur.
-- **Dinamik Harita Takibi (`AddTrackedObject`) İyileştirmesi (`DynamicQuest.cs` - `TransitionToStage`):**
-  - Aşama geçişlerinde günlük metninde (`LogText`) `{Alias_Link}`, `{Alias.Link}` veya `{Alias}` geçen tüm NPC ve yerleşkeler büyük/küçük harf duyarsız olarak taranıp harita takip sistemine (`AddTrackedObject`) eklenir. NPC bir yerleşkedeyse (`CurrentSettlement`), dünya haritasında mavi görev işaretinin görünmesi için yerleşkesi de otomatik olarak takibe alınır.
+  - `ForceSuccess()`, `ForceCompleteCurrentStage()` veya görev tamamlanma anında (`OnCompleteWithSuccess`), görev şablonundaki (`Model.Stages`, `CustomDialogs`, `GameMenuOptions`) tüm `<Action Type="SaveHeroToGlobal" TargetAlias="..." StringValue="..." />` tanımları taranarak eksik kalan `GlobalHeroes` kayıtları otomatik olarak `GlobalStateManager.Instance.SetGlobalHero` ile hafızaya aktarılır. `TargetHeroes` içerisinde çözümlenmiş hedefler canonical referans olarak `GlobalHeroes`'a güncellenir. Böylece `QLF_AnavataninIhaneti` konsoldan veya aşama atlayarak bitirilse dahi ardışık görevler (`QLF_KopukBaglar`) ihtiyaç duydukları `GlobalHero` hedeflerini sorunsuz bulur.
+- **Dinamik Harita Takibi (`AddTrackedObject`) & Gezgin / Birlik Desteği (`DynamicQuest.cs` - `TransitionToStage` & `CheckStageProgression`):**
+  - Aşama geçişlerinde günlük metninde (`LogText`) `{Alias_Link}`, `{Alias.Link}` veya `{Alias}` geçen tüm hedefler takibe alınır. Hedef kahraman bir yerleşkedeyse (`CurrentSettlement` veya zindandaysa `PartyBelongedToAsPrisoner.Settlement`) yerleşkesi, sefer haritasında bir ordu/birlik yönetiyorsa (`PartyBelongedTo`) partisi de mavi ünlemle takibe eklenir.
+  - Periyodik aşama kontrolünde (`RefreshActiveStageTracking`) kahramanın yerleşke değiştirmesi veya birliğe katılması durumunda harita takibi anlık olarak güncellenir.
 - **Başarı vs Zaman Aşımı / Başarısızlık Ayrımı (`DynamicQuest.cs` & `QuestlinerCampaignBehavior.cs`):**
   - Daha önce zaman aşımına uğrayan (`OnTimedOut`) veya başarısız olan (`OnFailed`, `ForceFail`, `IsFailNode`) görevler hatalı şekilde `_completedQuestIds` listesine eklenerek kalıcı olarak kilitleniyordu.
   - Yalnızca başarıyla tamamlanan (`OnCompleteWithSuccess` / `QuestCompleteDetails.Success`) görevlerin `_completedQuestIds` listesine işlenmesi sağlandı. Zaman aşımına uğrayan görevler (ör. `QLF_YaDogruysa`, `QLF_ItibarDersi`) tekrar alınabilir hale getirildi.
-  - Geliştirici ve test kolaylığı için `qlf.reset_completed [QuestId]` konsol komutu eklendi.
-- **Yerleşke Çözümleyici (`TargetResolverService.cs` - `ResolveSettlement` & `IsSettlementMatch`):**
-  - `SameSettlementAs(alias)` filtresi eklendi; verilen hedefin (`TargetHero` veya `TargetSettlement`) bulunduğu yerleşkeyi seçer.
-  - Tüm yerleşke filtreleri için dinamik ünlem (`!`) olumsuzlama desteği eklendi (ör. `!SameKingdomAs(alias)` ile hedefin krallığı dışındaki yerleşkeleri filtreleme).
+  - `qlf.reset_completed [QuestId]` konsol komutu eklendi.
+  - `qlf.start_quest` komutuna eksik olan `MobileParty` hedef çözümü eklendi.
+- **Yerleşke Çözümleyici Geliştirmeleri (`TargetResolverService.cs` - `ResolveSettlement` & `IsSettlementMatch`):**
+  - `SameSettlementAs(alias)` filtresi eklendi; verilen hedefin (`TargetHero` - tutsak/zindan dahil, `TargetSettlement` veya `TargetParty`) bulunduğu yerleşkeyi seçer.
+  - `SameCultureAs(alias)` ve `SameKingdomAs(alias)` filtreleri eklendi; tüm yerleşke filtreleri için dinamik ünlem (`!`) olumsuzlama desteği eklendi (ör. `!SameKingdomAs(alias)` ile hedefin krallığı dışındaki yerleşkeleri filtreleme).
+  - Tüm hedef çözümleyicilerde ve küresel durumlarda büyük/küçük harf toleransı sağlandı.
 
 ---
 

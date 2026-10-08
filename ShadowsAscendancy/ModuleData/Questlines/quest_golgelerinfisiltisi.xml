@@ -267,11 +267,11 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kervan_Cevap_2" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_2" OutputToken="ql_shdw_kervan_sub">
-      <Text>{=shdw_q1_dlg_kervan_sorgu_c}(Laughs) A mercenary dog sent by that coward merchant! That ledger belongs to the masters of the back alleys now. If you want it, bleed for it!</Text>
+      <Text>{=shdw_q1_dlg_kervan_sorgu_c}A mercenary dog sent by that coward merchant! That ledger belongs to the masters of the back alleys now. If you want it, bleed for it!</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kervan_Tehdit_Cevap" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_tehdit" OutputToken="ql_shdw_kervan_sub">
-      <Text>{=shdw_q1_dlg_kervan_tehdit_c}(Laughs) Big words for someone outnumbered! You will rot in the dirt before we reveal our masters! Cut them down!</Text>
+      <Text>{=shdw_q1_dlg_kervan_tehdit_c}Big words for someone outnumbered! You will rot in the dirt before we reveal our masters! Cut them down!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kervan_Sorgu_Detay" TargetAlias="HedefKervan" InputToken="ql_shdw_kervan_sub" OutputToken="ql_shdw_kervan_fight">
@@ -298,7 +298,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Cete_Giris_Npc_Reply" TargetAlias="KacakciLideri" InputToken="ql_shdw_c_intro_p" OutputToken="ql_shdw_c1" Priority="200">
-      <Text>{=shdw_q1_cete_turn1}(Pushes his goblet aside and studies you cold-eyed) Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat.</Text>
+      <Text>{=shdw_q1_cete_turn1}Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat.</Text>
       <Consequences>
         <Action Type="MakeMet" TargetAlias="KacakciLideri" />
       </Consequences>
@@ -306,7 +306,7 @@
 
     <!-- Tur 1: NPC Açılış (start token doğrudan giriş) -->
     <DialogNode Type="Npc" Id="Cete_Giris" TargetAlias="KacakciLideri" InputToken="start" OutputToken="ql_shdw_c1" Priority="200">
-      <Text>{=shdw_q1_cete_turn1}(Pushes his goblet aside and studies you cold-eyed) Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat.</Text>
+      <Text>{=shdw_q1_cete_turn1}Did you think you could stroll into my den unchecked, stranger? You may have bypassed my lookouts, but whether you leave this cellar breathing remains to be seen. Speak, before my steel tastes your throat.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Kanit" />
       </Conditions>
@@ -334,15 +334,15 @@
 
     <!-- Tur 3: NPC Gerçeği İtiraf Eder (Defteri ALMAZ, konuşma devam eder!) -->
     <DialogNode Type="Npc" Id="Cete_Aciklama_Threat" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2_threat" OutputToken="ql_shdw_c3">
-      <Text>{=shdw_q1_dlg5}(Laughs) You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market.</Text>
+      <Text>{=shdw_q1_dlg5}You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Cete_Aciklama_Calm" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2_calm" OutputToken="ql_shdw_c3">
-      <Text>{=shdw_q1_dlg5}(Laughs) You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market.</Text>
+      <Text>{=shdw_q1_dlg5}You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Cete_Aciklama_Cunning" TargetAlias="KacakciLideri" InputToken="ql_shdw_c2_cunning" OutputToken="ql_shdw_c3">
-      <Text>{=shdw_q1_dlg5}(Laughs) You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market.</Text>
+      <Text>{=shdw_q1_dlg5}You're just a fool who only knows how to swing a sword. That ledger is mine, and the innocent man you think is a merchant is actually a greedy bastard who stopped paying us tribute to monopolize the market.</Text>
     </DialogNode>
 
     <!-- Tur 4: Oyuncu Şehrin Rüşvet Çarkını & Kazancını Sorgular -->
@@ -404,7 +404,7 @@
 
     <!-- Tur 8: Çete Lideri Soğukkanlı Dersini Verir -> ql_shdw_c8_nihai_karar -->
     <DialogNode Type="Npc" Id="Cete_Ders_Felsefe" TargetAlias="KacakciLideri" InputToken="ql_shdw_c7_felsefe" OutputToken="ql_shdw_c8_nihai_karar">
-      <Text>{=shdw_q1_dlg_cete_phil_c}(Resting his hand on his pommel) Then the unwritten laws of these alleys shall crush you beneath our boots, stranger. You either ally with gold or bleed under cold steel. Choose now!</Text>
+      <Text>{=shdw_q1_dlg_cete_phil_c}Then the unwritten laws of these alleys shall crush you beneath our boots, stranger. You either ally with gold or bleed under cold steel. Choose now!</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Cete_Ders_Sinir" TargetAlias="KacakciLideri" InputToken="ql_shdw_c7_sinir" OutputToken="ql_shdw_c8_nihai_karar">

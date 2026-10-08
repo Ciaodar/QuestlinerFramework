@@ -120,20 +120,22 @@ namespace Questliner.Framework.Engine
                 }
                 case "IsQuestActive":
                 {
-                    bool active = TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.IsOngoing && q.Model?.Id == condition.ObjectId);
+                    bool active = TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>()
+                        .Any(q => q.IsOngoing && string.Equals(q.Model?.Id, condition.ObjectId, System.StringComparison.OrdinalIgnoreCase));
                     return (condition.Amount > 0) ? active : !active;
                 }
-                                case "IsQuestCompleted":
+                case "IsQuestCompleted":
                 {
                     bool completed = Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance != null && 
-                                     Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance.CompletedQuestIds.Contains(condition.ObjectId);
+                                     Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance.CompletedQuestIds
+                                        .Any(id => string.Equals(id, condition.ObjectId, System.StringComparison.OrdinalIgnoreCase));
                     
                     if (!completed)
                     {
                         var qm = TaleWorlds.CampaignSystem.Campaign.Current?.QuestManager;
                         if (qm != null)
                         {
-                            var q = qm.Quests.FirstOrDefault(x => x.StringId.Contains(condition.ObjectId));
+                            var q = qm.Quests.FirstOrDefault(x => x.StringId.IndexOf(condition.ObjectId, System.StringComparison.OrdinalIgnoreCase) >= 0);
                             if (q != null && !(q is DynamicQuest) && !q.IsOngoing) completed = true;
                         }
                     }

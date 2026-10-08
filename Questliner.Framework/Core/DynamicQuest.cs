@@ -500,25 +500,34 @@ namespace Questliner.Framework.Core
                     && !string.IsNullOrEmpty(action.TargetAlias)
                     && !string.IsNullOrEmpty(action.StringValue))
                 {
-                    string globalKey = action.StringValue;
-                    if (GlobalStateManager.Instance.GetGlobalHero(globalKey) == null)
+                    string globalKey = action.StringValue.Trim();
+                    string targetAlias = action.TargetAlias.Trim();
+
+                    Hero? targetHero = GetTargetHero(targetAlias);
+
+                    if (targetHero != null)
                     {
-                        Hero? hero = GetTargetHero(action.TargetAlias)
-                                  ?? GlobalStateManager.Instance.GetGlobalHero(action.TargetAlias);
-                        if (hero == null && (action.TargetAlias.Equals("Speaker", System.StringComparison.OrdinalIgnoreCase) || action.TargetAlias.Equals("ConversationHero", System.StringComparison.OrdinalIgnoreCase)))
+                        GlobalStateManager.Instance.SetGlobalHero(globalKey, targetHero);
+                        BindHeroToMBTextManager(globalKey, targetHero);
+                        TaleWorlds.Library.Debug.Print($"[Questliner] EnsureGlobalHeroesPersisted: persisted '{globalKey}' -> {targetHero.Name} ({targetHero.StringId}) from TargetHeroes['{targetAlias}']");
+                    }
+                    else if (GlobalStateManager.Instance.GetGlobalHero(globalKey) == null)
+                    {
+                        Hero? hero = GlobalStateManager.Instance.GetGlobalHero(targetAlias);
+                        if (hero == null && (targetAlias.Equals("Speaker", System.StringComparison.OrdinalIgnoreCase) || targetAlias.Equals("ConversationHero", System.StringComparison.OrdinalIgnoreCase)))
                         {
                             hero = Hero.OneToOneConversationHero;
                         }
                         if (hero == null)
                         {
-                            hero = Campaign.Current?.AliveHeroes.FirstOrDefault(h => h.StringId == action.TargetAlias);
+                            hero = Campaign.Current?.AliveHeroes.FirstOrDefault(h => h.StringId == targetAlias);
                         }
 
                         if (hero != null)
                         {
                             GlobalStateManager.Instance.SetGlobalHero(globalKey, hero);
                             BindHeroToMBTextManager(globalKey, hero);
-                            TaleWorlds.Library.Debug.Print($"[Questliner] EnsureGlobalHeroesPersisted: saved '{globalKey}' -> {hero.Name} ({hero.StringId})");
+                            TaleWorlds.Library.Debug.Print($"[Questliner] EnsureGlobalHeroesPersisted: fallback saved '{globalKey}' -> {hero.Name} ({hero.StringId})");
                         }
                     }
                 }
@@ -572,6 +581,9 @@ namespace Questliner.Framework.Core
             
             var currentStageModel = Model.Stages.FirstOrDefault(s => s.Id == CurrentStageId);
             if (currentStageModel == null) return;
+
+            // Dynamically refresh tracking markers if targets have changed settlements or formed parties
+            RefreshActiveStageTracking();
 
             // Timeout check
             if ((currentStageModel.TimeoutInDays > 0 && StageStartTime.ElapsedDaysUntilNow >= currentStageModel.TimeoutInDays) ||
@@ -703,14 +715,7 @@ namespace Questliner.Framework.Core
 
                         if (isMentioned)
                         {
-                            if (!IsTracked(kvp.Value))
-                            {
-                                AddTrackedObject(kvp.Value);
-                            }
-                            if (kvp.Value.CurrentSettlement != null && !IsTracked(kvp.Value.CurrentSettlement))
-                            {
-                                AddTrackedObject(kvp.Value.CurrentSettlement);
-                            }
+                            TrackHeroLocation(kvp.Value);
                         }
                     }
 
@@ -724,14 +729,7 @@ namespace Questliner.Framework.Core
 
                             if (isMentioned)
                             {
-                                if (!IsTracked(kvp.Value))
-                                {
-                                    AddTrackedObject(kvp.Value);
-                                }
-                                if (kvp.Value.CurrentSettlement != null && !IsTracked(kvp.Value.CurrentSettlement))
-                                {
-                                    AddTrackedObject(kvp.Value.CurrentSettlement);
-                                }
+                                TrackHeroLocation(kvp.Value);
                             }
                         }
                     }
@@ -765,9 +763,7 @@ namespace Questliner.Framework.Core
                             var targetHero = GetTargetHero(cond.TargetAlias);
                             if (targetHero != null)
                             {
-                                if (!IsTracked(targetHero)) AddTrackedObject(targetHero);
-                                if (targetHero.CurrentSettlement != null && !IsTracked(targetHero.CurrentSettlement))
-                                    AddTrackedObject(targetHero.CurrentSettlement);
+                                TrackHeroLocation(targetHero);
                             }
 
                             var targetSettlement = GetTargetSettlement(cond.TargetAlias);
@@ -787,9 +783,7 @@ namespace Questliner.Framework.Core
                             {
                                 if (act.ActionType == "MakeMet" || act.ActionType == "TalkTo" || act.ActionType == "ChangeRelation")
                                 {
-                                    if (!IsTracked(targetHero)) AddTrackedObject(targetHero);
-                                    if (targetHero.CurrentSettlement != null && !IsTracked(targetHero.CurrentSettlement))
-                                        AddTrackedObject(targetHero.CurrentSettlement);
+                                    TrackHeroLocation(targetHero);
                                 }
                             }
                         }
@@ -826,9 +820,61 @@ namespace Questliner.Framework.Core
             }
         }
 
-        public Hero? GetTargetHero(string alias) => TargetHeroes.TryGetValue(alias, out var hero) ? hero : null;
-        public Settlement? GetTargetSettlement(string alias) => TargetSettlements.TryGetValue(alias, out var st) ? st : null;
-        public TaleWorlds.CampaignSystem.Party.MobileParty? GetTargetParty(string alias) => TargetParties.TryGetValue(alias, out var p) ? p : null;
+        public void TrackHeroLocation(Hero? hero)
+        {
+            if (hero == null) return;
+            if (!IsTracked(hero)) AddTrackedObject(hero);
+            var sett = Questliner.Framework.Engine.TargetResolverService.GetHeroSettlement(hero);
+            if (sett != null && !IsTracked(sett)) AddTrackedObject(sett);
+            if (hero.PartyBelongedTo != null && hero.PartyBelongedTo.IsActive && !IsTracked(hero.PartyBelongedTo))
+            {
+                AddTrackedObject(hero.PartyBelongedTo);
+            }
+        }
+
+        public void RefreshActiveStageTracking()
+        {
+            foreach (var kvp in TargetHeroes)
+            {
+                if (kvp.Value != null && IsTracked(kvp.Value))
+                {
+                    TrackHeroLocation(kvp.Value);
+                }
+            }
+
+            if (GlobalStateManager.Instance.GlobalHeroes != null)
+            {
+                foreach (var kvp in GlobalStateManager.Instance.GlobalHeroes)
+                {
+                    if (kvp.Value != null && IsTracked(kvp.Value))
+                    {
+                        TrackHeroLocation(kvp.Value);
+                    }
+                }
+            }
+        }
+
+        public Hero? GetTargetHero(string alias)
+        {
+            if (string.IsNullOrEmpty(alias)) return null;
+            if (TargetHeroes.TryGetValue(alias, out var hero)) return hero;
+            return System.Linq.Enumerable.FirstOrDefault(TargetHeroes, k => string.Equals(k.Key, alias, StringComparison.OrdinalIgnoreCase)).Value;
+        }
+
+        public Settlement? GetTargetSettlement(string alias)
+        {
+            if (string.IsNullOrEmpty(alias)) return null;
+            if (TargetSettlements.TryGetValue(alias, out var st)) return st;
+            return System.Linq.Enumerable.FirstOrDefault(TargetSettlements, k => string.Equals(k.Key, alias, StringComparison.OrdinalIgnoreCase)).Value;
+        }
+
+        public TaleWorlds.CampaignSystem.Party.MobileParty? GetTargetParty(string alias)
+        {
+            if (string.IsNullOrEmpty(alias)) return null;
+            if (TargetParties.TryGetValue(alias, out var p)) return p;
+            return System.Linq.Enumerable.FirstOrDefault(TargetParties, k => string.Equals(k.Key, alias, StringComparison.OrdinalIgnoreCase)).Value;
+        }
+
         public bool GetFlag(string key) => TrackedFlags.TryGetValue(key, out var val) && val;
         public void SetFlag(string key, bool value) => TrackedFlags[key] = value;
 

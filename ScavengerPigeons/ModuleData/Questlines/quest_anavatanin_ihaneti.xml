@@ -14,7 +14,7 @@
 
   <Stages>
     <Stage Id="Stage1_KoyBuyugu" NextStageId="" LogType="Progress" TargetAmount="70" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_ai_s1_log}The mysterious barber's words haunt your mind. An old friend from your motherland, {Dost.Name}, has asked the secret society 'Scavenger Pigeons' for help to fight against terrible slanders that will ruin your reputation. However, before the Pigeons accept you, you must prove your strength. Use the gold you were given to gather a company of 70 men and meet with the village elder {KoyBuyugu_Link}.</LogText>
+      <LogText>{=sp_ai_s1_log}The mysterious barber's words haunt your mind. An old friend from your motherland, {Dost_Link}, has asked the secret society 'Scavenger Pigeons' for help to fight against terrible slanders that will ruin your reputation. However, before the Pigeons accept you, you must prove your strength. Use the gold you were given to gather a company of 70 men and meet with the village elder {KoyBuyugu_Link}.</LogText>
       <Conditions>
         <Condition Type="HasTroopCount" Amount="70" />
       </Conditions>
@@ -101,7 +101,7 @@
     </Stage>
 
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_ai_s_success_log}You learned that all of this was a game set up to test your loyalty. It turns out you have just met your friend {Dost.Name}. He gave you 50,000 denars as compensation for the troubles he caused and wished you success in your new service. The rumors of treason have ended.</LogText>
+      <LogText>{=sp_ai_s_success_log}You learned that all of this was a game set up to test your loyalty. It turns out you have just met your friend {Dost_Link}. He gave you 50,000 denars as compensation for the troubles he caused and wished you success in your new service. The rumors of treason have ended.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />

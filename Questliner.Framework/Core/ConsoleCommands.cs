@@ -22,6 +22,11 @@ namespace Questliner.Framework.Core
                     var s = Questliner.Framework.Engine.TargetResolverService.ResolveSettlement(res, dq);
                     if (s != null) dq.TargetSettlements[res.Alias] = s;
                 }
+                else if (res.TargetType == "MobileParty")
+                {
+                    var p = Questliner.Framework.Engine.TargetResolverService.ResolveMobileParty(res, dq);
+                    if (p != null) dq.TargetParties[res.Alias] = p;
+                }
                 else
                 {
                     var h = Questliner.Framework.Engine.TargetResolverService.ResolveHero(res, dq);

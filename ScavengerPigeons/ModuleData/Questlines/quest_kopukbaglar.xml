@@ -11,7 +11,7 @@
   </Triggers>
 
   <TargetResolvers>
-    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost) || (Lord, HasMobileParty, HasKingdom)" Selector="Nearest" />
     <Resolver Alias="HainZanaatkar" TargetType="Hero" Filters="GlobalHero(SP_HainZanaatkar)" />
     <Resolver Alias="looters" TargetType="MobileParty" Filters="BanditParty, Faction(looters)" Selector="Random" IsOptional="true" />
   </TargetResolvers>
@@ -20,16 +20,20 @@
     <Stage Id="Stage0_Bekleme" NextStageId="Stage1_Mesaj" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
       <LogText>{=sp_kb_s0_log}You are waiting for news about the traitorous looter {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you.</LogText>
       <Conditions />
+      <OnEnterActions>
+        <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />
+      </OnEnterActions>
       <OnTimeoutActions>
         <Action Type="ChangeStage" ObjectId="Stage1_Mesaj" />
       </OnTimeoutActions>
     </Stage>
 
-    <Stage Id="Stage1_Mesaj" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="14">
+    <Stage Id="Stage1_Mesaj" NextStageId="Stage2_Av" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="14">
       <LogText>{=sp_kb_s1_log}You received an urgent, blood-stained message from a pigeon. Your friend {Dost_Link} needs to see you immediately. Find him and ask what the emergency is.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="Dost" />
+        <Action Type="SaveHeroToGlobal" TargetAlias="Dost" StringValue="SP_Dost" />
       </OnEnterActions>
       <OnTimeoutActions>
         <Action Type="ChangeStage" ObjectId="StageFail_Kacti" />
@@ -37,7 +41,7 @@
     </Stage>
 
     <Stage Id="Stage2_Av" NextStageId="Stage3_Yuzlesme" LogType="Progress" TargetAmount="3" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="10">
-      <LogText>{=sp_kb_s2_log}You spoke to {Dost.Name}. He revealed that the artisan {HainZanaatkar_Link} is a traitor who stole the Pigeon ciphers and fled. To find his main convoy, you must first intercept and defeat 3 of his decoy looter parties roaming the lands before they disperse. (Time Limit: 10 Days)</LogText>
+      <LogText>{=sp_kb_s2_log}You spoke to {Dost_Link}. He revealed that the artisan {HainZanaatkar_Link} is a traitor who stole the Pigeon ciphers and fled. To find his main convoy, you must first intercept and defeat 3 of his decoy looter parties roaming the lands before they disperse. (Time Limit: 10 Days)</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="looters" Amount="3" />
       </Conditions>
@@ -65,7 +69,7 @@
 
     <!-- ROTA B: Haini Öldürürsen (Sadakat & 4 Mevsim) -->
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_kb_success_log}You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost.Name}. Impressed by your unwavering devotion, your old contact welcomed you into the deeper ranks of the realm's shadow service, promising to call upon you for four seasons of service.</LogText>
+      <LogText>{=sp_kb_success_log}You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost_Link}. Impressed by your unwavering devotion, your old contact welcomed you into the deeper ranks of the realm's shadow service, promising to call upon you for four seasons of service.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="KillHero" TargetAlias="HainZanaatkar" />
@@ -79,7 +83,7 @@
 
     <!-- ROTA A: Haini Öldürmezsen (Rüşvet Al / Kaçmasına İzin Ver) -->
     <Stage Id="StageYozlasma" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_kb_yozlasma_log}You accepted the artisan's bribe and allowed {HainZanaatkar_Link} to vanish into the wilderness. You gained 25,000 gold and the Pigeon's Secret Dagger. Moments later, a dying black pigeon delivered the artisan's final cryptic message: {Dost.Name} is playing everyone; the Black Ledger hidden in the ciphers will burn Calradia. The hunt for the truth has begun!</LogText>
+      <LogText>{=sp_kb_yozlasma_log}You accepted the artisan's bribe and allowed {HainZanaatkar_Link} to vanish into the wilderness. You gained 25,000 gold and the Pigeon's Secret Dagger. Moments later, a dying black pigeon delivered the artisan's final cryptic message: {Dost_Link} is playing everyone; the Black Ledger hidden in the ciphers will burn Calradia. The hunt for the truth has begun!</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeFugitive" TargetAlias="HainZanaatkar" />

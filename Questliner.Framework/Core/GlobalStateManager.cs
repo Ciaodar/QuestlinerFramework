@@ -28,7 +28,8 @@ namespace Questliner.Framework.Core
         public bool GetFlag(string key)
         {
             if (string.IsNullOrEmpty(key)) return false;
-            return GlobalFlags.TryGetValue(key, out bool val) && val;
+            if (GlobalFlags.TryGetValue(key, out bool val)) return val;
+            return System.Linq.Enumerable.FirstOrDefault(GlobalFlags, k => string.Equals(k.Key, key, System.StringComparison.OrdinalIgnoreCase)).Value;
         }
 
         public void SetGlobalHero(string key, Hero hero)
@@ -40,7 +41,8 @@ namespace Questliner.Framework.Core
         public Hero? GetGlobalHero(string key)
         {
             if (string.IsNullOrEmpty(key)) return null;
-            return GlobalHeroes.TryGetValue(key, out Hero? h) ? h : null;
+            if (GlobalHeroes.TryGetValue(key, out Hero? h)) return h;
+            return System.Linq.Enumerable.FirstOrDefault(GlobalHeroes, k => string.Equals(k.Key, key, System.StringComparison.OrdinalIgnoreCase)).Value;
         }
 
         // Called on Game Start/Load to clear/initialize

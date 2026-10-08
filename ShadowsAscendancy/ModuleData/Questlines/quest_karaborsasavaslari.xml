@@ -120,7 +120,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Katiller_Cevap_Sorgu" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_sorgu_c" OutputToken="ql_shdw_katil_fight">
-      <Text>{=shdw_q2_dlg_assassin_sorgu_c}(Laughs) Dead men don't need names! Cut them down, let no one take our prize!</Text>
+      <Text>{=shdw_q2_dlg_assassin_sorgu_c}Dead men don't need names! Cut them down, let no one take our prize!</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Katiller_Cevap_Tehdit" TargetAlias="KiralikKatiller" InputToken="ql_shdw_katil_tehdit_c" OutputToken="ql_shdw_katil_fight">
@@ -219,7 +219,7 @@
 
     <!-- Tur 7: Komutan Parşömeni Titreyerek Verir -->
     <DialogNode Type="Npc" Id="Kom_Teslim_Cevap" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_teslim" OutputToken="ql_shdw_kom_karar">
-      <Text>{=shdw_q2_dlg_kom_teslim}(Trembling, handing over the parchment) Here, take it! It has his personal coat of arms. The red seal is unbroken! Just let me vanish before his scouts find me!</Text>
+      <Text>{=shdw_q2_dlg_kom_teslim}Here, take it! It has his personal coat of arms. The red seal is unbroken! Just let me vanish before his scouts find me!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kom_Sonuc_Direct" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_karar" OutputToken="close_window">
@@ -257,7 +257,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Giris_Npc_Reply" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_entry_npc" OutputToken="ql_shdw_lord_yuzlesme" Priority="200">
-      <Text>{=shdw_q2_lord_turn1}(Takes a sip from his silver goblet and scoffs with aristocratic arrogance) You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate.</Text>
+      <Text>{=shdw_q2_lord_turn1}You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate.</Text>
       <Consequences>
         <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
       </Consequences>
@@ -265,7 +265,7 @@
 
     <!-- Tur 1: Lordun Kibirli Girişi (start token doğrudan giriş) -->
     <DialogNode Type="Npc" Id="Lord_Giris" TargetAlias="YozlasmisLord" InputToken="start" OutputToken="ql_shdw_lord_yuzlesme" Priority="200">
-      <Text>{=shdw_q2_lord_turn1}(Takes a sip from his silver goblet and scoffs with aristocratic arrogance) You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate.</Text>
+      <Text>{=shdw_q2_lord_turn1}You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Intikam" />
       </Conditions>
@@ -296,7 +296,7 @@
 
     <!-- Tur 3: Lordun Yanıtı (Kibir ve Rüşvet Teklifi) -->
     <DialogNode Type="Npc" Id="Lord_Cevap1" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_1" OutputToken="ql_shdw_lord_2">
-      <Text>{=shdw_q2_dlg6}(Laughs) I am a noble, and you are merely a mercenary for hire. Who will the ruler believe, me or you? Still, I care little for headaches. What is your price?</Text>
+      <Text>{=shdw_q2_dlg6}I am a noble, and you are merely a mercenary for hire. Who will the ruler believe, me or you? Still, I care little for headaches. What is your price?</Text>
     </DialogNode>
 
     <!-- Tur 4: Oyuncu Soruşturması & Pazarlık -->

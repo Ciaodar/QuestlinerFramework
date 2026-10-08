@@ -19,7 +19,7 @@ namespace Questliner.Framework.Behaviors
         public void MarkQuestAsCompleted(string questId)
         {
             if (string.IsNullOrEmpty(questId)) return;
-            if (!_completedQuestIds.Contains(questId))
+            if (!_completedQuestIds.Any(id => string.Equals(id, questId, System.StringComparison.OrdinalIgnoreCase)))
             {
                 _completedQuestIds.Add(questId);
             }
@@ -28,7 +28,7 @@ namespace Questliner.Framework.Behaviors
         public void RemoveCompletedQuest(string questId)
         {
             if (string.IsNullOrEmpty(questId)) return;
-            _completedQuestIds.Remove(questId);
+            _completedQuestIds.RemoveAll(id => string.Equals(id, questId, System.StringComparison.OrdinalIgnoreCase));
         }
 
         public override void RegisterEvents()
