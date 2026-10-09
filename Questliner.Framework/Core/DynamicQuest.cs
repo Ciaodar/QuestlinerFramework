@@ -390,6 +390,68 @@ namespace Questliner.Framework.Core
             }
         }
 
+        public TextObject FormatText(string rawText)
+        {
+            if (string.IsNullOrEmpty(rawText)) return new TextObject(string.Empty);
+            TextObject parsedText = new TextObject(rawText);
+
+            if (GlobalStateManager.Instance.GlobalHeroes != null)
+            {
+                foreach (var kvp in GlobalStateManager.Instance.GlobalHeroes)
+                {
+                    if (kvp.Value != null)
+                    {
+                        BindHeroToTextObject(parsedText, kvp.Key, kvp.Value);
+                    }
+                }
+            }
+
+            foreach (var kvp in TargetHeroes)
+            {
+                if (kvp.Value != null)
+                {
+                    BindHeroToTextObject(parsedText, kvp.Key, kvp.Value);
+                }
+            }
+
+            foreach (var kvp in TargetSettlements)
+            {
+                if (kvp.Value != null)
+                {
+                    BindSettlementToTextObject(parsedText, kvp.Key, kvp.Value);
+                }
+            }
+
+            foreach (var kvp in TargetParties)
+            {
+                if (kvp.Value != null)
+                {
+                    BindPartyToTextObject(parsedText, kvp.Key, kvp.Value);
+                }
+            }
+
+            foreach (var kvp in TrackedCounters)
+            {
+                parsedText.SetTextVariable(kvp.Key, kvp.Value);
+            }
+
+            foreach (var kvp in TrackedStrings)
+            {
+                if (!string.IsNullOrEmpty(kvp.Value))
+                    parsedText.SetTextVariable(kvp.Key, new TextObject(kvp.Value));
+            }
+
+            if (Hero.MainHero != null)
+            {
+                BindHeroToTextObject(parsedText, "Player", Hero.MainHero);
+                BindHeroToTextObject(parsedText, "PLAYER", Hero.MainHero);
+                parsedText.SetTextVariable("PlayerName", Hero.MainHero.Name);
+                parsedText.SetTextVariable("PLAYER_NAME", Hero.MainHero.Name);
+            }
+
+            return parsedText;
+        }
+
         [SaveableField(5)]
         private string _modelId;
 
@@ -655,56 +717,7 @@ namespace Questliner.Framework.Core
                 // Track relevant targets and parse log string
                 if (!string.IsNullOrEmpty(nextStageModel.LogText))
                 {
-                    TextObject parsedLogText = new TextObject(nextStageModel.LogText);
-
-                    if (GlobalStateManager.Instance.GlobalHeroes != null)
-                    {
-                        foreach (var kvp in GlobalStateManager.Instance.GlobalHeroes)
-                        {
-                            if (kvp.Value != null)
-                            {
-                                BindHeroToTextObject(parsedLogText, kvp.Key, kvp.Value);
-                            }
-                        }
-                    }
-
-                    foreach (var kvp in TargetHeroes)
-                    {
-                        if (kvp.Value != null)
-                        {
-                            BindHeroToTextObject(parsedLogText, kvp.Key, kvp.Value);
-                        }
-                    }
-                    foreach (var kvp in TargetSettlements)
-                    {
-                        if (kvp.Value != null)
-                        {
-                            BindSettlementToTextObject(parsedLogText, kvp.Key, kvp.Value);
-                        }
-                    }
-                    foreach (var kvp in TargetParties)
-                    {
-                        if (kvp.Value != null)
-                        {
-                            BindPartyToTextObject(parsedLogText, kvp.Key, kvp.Value);
-                        }
-                    }
-                    foreach (var kvp in TrackedCounters)
-                    {
-                        parsedLogText.SetTextVariable(kvp.Key, kvp.Value);
-                    }
-                    foreach (var kvp in TrackedStrings)
-                    {
-                        if (!string.IsNullOrEmpty(kvp.Value))
-                            parsedLogText.SetTextVariable(kvp.Key, new TextObject(kvp.Value));
-                    }
-                    if (Hero.MainHero != null)
-                    {
-                        BindHeroToTextObject(parsedLogText, "Player", Hero.MainHero);
-                        BindHeroToTextObject(parsedLogText, "PLAYER", Hero.MainHero);
-                        parsedLogText.SetTextVariable("PlayerName", Hero.MainHero.Name);
-                        parsedLogText.SetTextVariable("PLAYER_NAME", Hero.MainHero.Name);
-                    }
+                    TextObject parsedLogText = FormatText(nextStageModel.LogText);
 
                     // Track objects mentioned in the log text dynamically
                     foreach (var kvp in TargetHeroes)

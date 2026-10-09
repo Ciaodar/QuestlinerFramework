@@ -72,7 +72,8 @@ Aksiyonlar, diyalogların sonunda (`Consequences`), aşamalar tamamlandığında
 | **MakePeace** | Oyuncunun fraksiyonu ile hedefin fraksiyonu arasında barış ilan eder. | `<Action Type="MakePeace" TargetAlias="EnemyLord" />` |
 | **SetPrisoner** | Belirtilen hedefi direkt oyuncunun esiri yapar. | `<Action Type="SetPrisoner" TargetAlias="QuestTarget" />` |
 | **DamageHero** | Hedefin canını azaltır (suikast senaryoları için). | `<Action Type="DamageHero" TargetAlias="Victim" Amount="50" />` |
-| **KillHero** | Belirtilen hedefi oyun dünyasında öldürür (Cinayet/Murder). Bannerlord, ölen Notable'ların yerine otomatik yenisini üretir. | `<Action Type="KillHero" TargetAlias="HainZanaatkar" />` |
+| **KillHero** | Belirtilen hedefi oyun dünyasında öldürür. Varsayılan olarak Cinayet (Murder); `StringValue="Execution"` veya `ObjectId="Execution"` verildiğinde ise İdam (Execution) statüsüyle kalıcı olarak ortadan kaldırılır ve ansiklopedi ölüm kaydına idam işlenir. | `<Action Type="KillHero" TargetAlias="HainZanaatkar" StringValue="Execution" />` |
+| **ShowInquiry** | Ekrana dinamik TaleWorlds Inquiry modal penceresi fırlatır. Tek butonlu (bildirim/şok) veya iki butonlu (seçim) yapılabilir. Oyun akışını duraklatabilir ve buton tıklamalarında aşama geçişi tetikleyebilir. Metinlerde `{Alias_Name}` vb. değişkenler ve `{=ID}` yerelleştirmeleri çözümlenir. | `<Action Type="ShowInquiry" Title="{=da_idam_t}İdam Hükmü" Text="{=da_idam_d}Zindanlardan kara haber ulaştı..." AffirmativeText="{=da_idam_btn}OLAMAZ!" PauseGame="true" />` |
 | **MakeFugitive** | Belirtilen hedefi oyun haritasından siler ve ansiklopedide "Kayıp/Sürgün" (Lost) statüsüne geçirir. Öldürmekten daha yumuşak bir yok etme yöntemidir. | `<Action Type="MakeFugitive" TargetAlias="KacanTuccar" />` |
 | **SetFlag** | Sadece bu göreve özel bir Boolean (True/False) değişken ayarlar. | `<Action Type="SetFlag" ObjectId="FoundClue" Amount="1" />` |
 | **SetGlobalFlag** | Kampanya boyunca kalıcı kalacak (Save/Load destekli) bir GlobalFlag ayarlar. | `<Action Type="SetGlobalFlag" ObjectId="DemirAhit_Basarili" Amount="1" />` |
@@ -119,6 +120,16 @@ XML içerisinden partideki asker tiplerini ve sayılarını birebir belirlemek i
 - `StringValue="Hold"`: Olduğu yerde beklemesini sağlar.
 - `StringValue="IgnoreAi"`: Partiyi diğer harita partilerine karşı görünmez/dokunulmaz kılar ve olduğu yerde sabit bekletir (`SetMoveModeHold`).
 - `StringValue="PatrolAroundSettlement"` / `StringValue="GoToSettlement"`: `ObjectId` veya `SettlementAlias` ile belirtilen yerleşke etrafında devriye gezmesini veya oraya yürümesini sağlar.
+
+### 3.2. Dinamik Inquiry Modal Penceresi (`Action Type="ShowInquiry"`)
+Oyuncuya kritik hikaye gelişmelerini, idam haberlerini veya yol ayrımlarını dramatize edilmiş bir TaleWorlds açılır penceresi (Inquiry) ile sunmak için kullanılır.
+- `Title`: Modal pencerenin başlığı (Örn: `{=da_idam_t}Execution Notice`). Boş bırakılırsa `ObjectId` alanına bakar.
+- `Text`: Modal pencerenin gövde metni. `{TargetAlias_Name}`, `{Settlement_Name}`, `{PlayerName}` gibi tüm görev tokenları ve `{=ID}` yerelleştirmeleri çözümlenir. Boş bırakılırsa `StringValue` alanına bakar.
+- `AffirmativeText` (veya `ButtonText`): Onay butonunun üzerindeki metin (Örn: `{=da_idam_btn}OLAMAZ!`). Belirtilmezse varsayılan "Tamam" metnini kullanır.
+- `NegativeText`: (Opsiyonel) İptal / İkinci butonun metni. Tanımlandığında veya `IsNegativeOptionShown="true"` yapıldığında modal 2 butonlu karar penceresine dönüşür.
+- `AffirmativeStageId`: (Opsiyonel) Oyuncu ilk/onay butonuna bastığında otomatik geçilecek aşamanın ID'si.
+- `NegativeStageId`: (Opsiyonel) Oyuncu ikinci/ret butonuna bastığında otomatik geçilecek aşamanın ID'si.
+- `PauseGame`: Varsayılan `true`. Pencere açıkken dünya haritasının arka planda akmasını duraklatır.
 
 ---
 

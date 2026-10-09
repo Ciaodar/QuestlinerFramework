@@ -9,6 +9,8 @@ using TaleWorlds.CampaignSystem.Party;
 using Helpers;
 using TaleWorlds.Core;
 using TaleWorlds.ObjectSystem;
+using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace Questliner.Framework.Engine
 {
@@ -869,8 +871,16 @@ namespace Questliner.Framework.Engine
                     Hero? target = quest?.GetTargetHero(action.TargetAlias);
                     if (target != null && target.IsAlive)
                     {
-                        // ApplyByMurder natively handles removing them from towns, resolving their workshops, etc.
-                        TaleWorlds.CampaignSystem.Actions.KillCharacterAction.ApplyByMurder(target, null, true);
+                        if (action.StringValue.Equals("Execution", StringComparison.OrdinalIgnoreCase) ||
+                            action.ObjectId.Equals("Execution", StringComparison.OrdinalIgnoreCase))
+                        {
+                            TaleWorlds.CampaignSystem.Actions.KillCharacterAction.ApplyByExecution(target, null, true, true);
+                        }
+                        else
+                        {
+                            // ApplyByMurder natively handles removing them from towns, resolving their workshops, etc.
+                            TaleWorlds.CampaignSystem.Actions.KillCharacterAction.ApplyByMurder(target, null, true);
+                        }
                     }
                     break;
                 }
@@ -882,6 +892,52 @@ namespace Questliner.Framework.Engine
                         // Safely removes the hero from the active map (Lost/Fugitive status)
                         TaleWorlds.CampaignSystem.Actions.DisableHeroAction.Apply(target);
                     }
+                    break;
+                }
+                case "ShowInquiry":
+                {
+                    string rawTitle = !string.IsNullOrEmpty(action.Title) ? action.Title : action.ObjectId;
+                    string rawText = !string.IsNullOrEmpty(action.Text) ? action.Text : action.StringValue;
+                    string rawAffirmative = !string.IsNullOrEmpty(action.AffirmativeText)
+                        ? action.AffirmativeText
+                        : (!string.IsNullOrEmpty(action.ButtonText) ? action.ButtonText : "{=yS1OVOgk}OK");
+                    string rawNegative = action.NegativeText;
+
+                    string titleText = quest != null ? quest.FormatText(rawTitle).ToString() : new TextObject(rawTitle).ToString();
+                    string bodyText = quest != null ? quest.FormatText(rawText).ToString() : new TextObject(rawText).ToString();
+                    string affText = quest != null ? quest.FormatText(rawAffirmative).ToString() : new TextObject(rawAffirmative).ToString();
+                    string negText = !string.IsNullOrEmpty(rawNegative)
+                        ? (quest != null ? quest.FormatText(rawNegative).ToString() : new TextObject(rawNegative).ToString())
+                        : string.Empty;
+
+                    bool isNegativeShown = action.IsNegativeOptionShown || !string.IsNullOrWhiteSpace(negText);
+
+                    var inquiryData = new InquiryData(
+                        titleText: titleText,
+                        text: bodyText,
+                        isAffirmativeOptionShown: true,
+                        isNegativeOptionShown: isNegativeShown,
+                        affirmativeText: affText,
+                        negativeText: negText,
+                        affirmativeAction: () =>
+                        {
+                            if (quest != null && !string.IsNullOrEmpty(action.AffirmativeStageId))
+                            {
+                                quest.TransitionToStage(action.AffirmativeStageId);
+                            }
+                        },
+                        negativeAction: () =>
+                        {
+                            if (quest != null && !string.IsNullOrEmpty(action.NegativeStageId))
+                            {
+                                quest.TransitionToStage(action.NegativeStageId);
+                            }
+                        },
+                        soundEventPath: !string.IsNullOrEmpty(action.SoundEventPath) ? action.SoundEventPath : "",
+                        expireTime: action.ExpireTime
+                    );
+
+                    InformationManager.ShowInquiry(inquiryData, pauseGameActiveState: action.PauseGame, prioritize: true);
                     break;
                 }
                 default:

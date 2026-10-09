@@ -83,23 +83,17 @@
     <!-- Quest 3: Master's Burden (QLF_DemirAhit_Usta) -->
     <string id="demirahit3_title" text="Master's Burden" />
     <string id="da_log_3_1" text="A messenger from {EfsaneviDemirci_Link} rides into your encampment, breathless and distraught. Catastrophe has struck the brotherhood of the anvil. Ride swiftly to the master's side." />
-    <string id="da_log_3_2" text="The smith's brother and fellow master craftsman, {Kalan_Link}, rots in the foul dungeon of {DusmanKale_Link}. Without his ancient metallurgical secrets, the final folding of the steel is impossible. Infiltrate the dungeons, raise a siege, or ransom him before his spirit breaks." />
-    <string id="da_log_3_2B" text="Horns blare along the battlements of {DusmanKale_Link}! Your escape attempt was discovered and garrison guards flood the corridors. You must fight your way out to deliver Kalan to safety!" />
-    <string id="da_log_3_3" text="Against all odds, you broke the chains of {Kalan_Link}! The twin masters of the anvil are reunited at last, ready to kindle the ritual fires for the ancestral masterpiece." />
+    <string id="da_log_3_2" text="The smith's brother and fellow master craftsman, {Kalan_Link}, rots in the foul dungeon of {DusmanKale_Link}. The captors have condemned him to death and will execute him in 5 days! Infiltrate the castle, raise a siege, or ransom him before the executioner strikes." />
+    <string id="da_log_3_fail" text="You failed to rescue {Kalan_Link} from the dungeons of {DusmanKale_Link} before the executioner struck. The sacred covenant fire is extinguished forever." />
+    <string id="da_log_3_3" text="Against all odds, {Kalan_Link} breathes the air of freedom! The twin masters of the anvil are reunited at last, ready to kindle the ritual fires for the ancestral masterpiece." />
+    <string id="da_inquiry_idam_title" text="Gallows of Fate" />
+    <string id="da_inquiry_idam_text" text="Dark tidings reach your camp from the blood-soaked dungeons of {DusmanKale_Name}... The executioner's cold steel has severed {Kalan_Name}'s life. With the master craftsman dead, the secrets of the ritual forge are lost forever." />
+    <string id="da_inquiry_idam_btn" text="NOOO!" />
     <string id="da_haber_p_giris" text="Your messenger rode his horse near to death, master. What grief has fallen upon you?" />
-    <string id="da_haber_dlg_1" text="My brother, {Kalan_Link}... While traveling the passes with quenching fluxes, he was captured and thrown into the dungeon pit at {DusmanKale_Link}. His hands alone possess the secret temper to bind the blade's edge. Without him, our labor turns to dust. I beg of you, bring him back to the forge!" />
-    <string id="da_haber_p1" text="No cage shall keep a craftsman of our covenant. I will breach {DusmanKale_Link} and return your brother unharmed." />
+    <string id="da_haber_dlg_1" text="My brother, {Kalan_Link}... While traveling the mountain passes with rare quenching fluxes, he was ambushed and cast into the dungeon of {DusmanKale_Link}. Worse still, their bloodthirsty lord condemned him as a spy and declared he will hang from the ramparts in five days! His hands alone possess the secret temper to bind the blade's edge. Without him, our covenant labor turns to dust. I beg of you, rescue him before the executioner strikes!" />
     <string id="da_usta_ertele" text="I cannot deal with this right now. We will speak later." />
-    <string id="da_kalan_p_giris" text="Quiet, smith. Keep your voice low. I come under oath from your brother to cut your chains." />
-    <string id="da_kalan_dlg_1" text="My brother sent you? Praise the ancestral heavens! But the portcullis is barred and watchmen patrol the courtyard every bell. How can we break through the garrison?" />
-    <string id="da_kalan_p1" text="Follow in my footsteps and step only when the torches shift. I have mapped every guard rotation. [Roguery]" />
-    <string id="da_kalan_dlg_2" text="Like ghosts through the stone... Lead on, friend, before the relief watch arrives!" />
-    <string id="da_kalan_p2" text="There is no slipping past them quietly. Ready your fists or seize a torch; we carve our way to the gate!" />
-    <string id="da_kalan_dlg_3" text="Alarms in the keep! The garrison has spotted us! Stand fast!" />
-    <string id="da_muhafiz" text="Garrison Guards" />
-    <string id="da_muhafizlar_dlg_intro" text="Dungeon breach! The prisoner is escaping! Cut down the intruders!" />
-    <string id="da_muhafizlar_p_savas" text="Master Kalan walks free today! Stand aside or be cut down!" />
-    <string id="da_usta_kalan_ertele" text="I cannot deal with this right now. We will speak later." />
+    <string id="da_u3_bekle_p" text="Do you have any further word regarding {Kalan_Link}, master?" />
+    <string id="da_u3_bekle_npc" text="Every moment counts! The five-day deadline at {DusmanKale_Link} draws near with every setting sun. Break {Kalan_Link} out before the executioner claims him!" />
 
     <!-- Quest 4: Forging the Legacy (QLF_DemirAhit_Miras) -->
     <string id="demirahit4_title" text="Forging the Legacy" />
@@ -161,16 +155,12 @@
 
     <!-- Quest 3: Multi-Step Dialogues -->
     <string id="da_u3_p_sorgu_zanaat" text="Why is Master Kalan's craft so indispensable? What is the secret of these quenching salts, master?" />
-    <string id="da_u3_p_sorgu_askeri" text="How formidable are the ramparts and dungeons of {DusmanKale_Link}? Does his rescue call for open warfare or silent shadows?" />
-    <string id="da_u3_npc_lore_zanaat" text="We are twin masters of the anvil; I shape the steel and rule the flames, while Kalan listens to the metal's song at the moment of quenching. With celestial fluxes he tempers the blade so it remains keen as a razor yet supple as a willow branch. Without him, this sword is stillborn!" />
-    <string id="da_u3_npc_lore_askeri" text="{DusmanKale_Link} is a black monolith perched atop sheer crags. Its garrison is numerous, and torches illuminate the battlements like noon. Yet in the dungeon corridors lie drainage sluices and blind spots during the watch relief. A master of shadows or a fearless rescuer can slip inside." />
-    <string id="da_u3_p_yemin_sovalye" text="No craftsman of our covenant shall rot in an enemy pit. I swear upon my clan's honor to bring your brother Kalan back to this hearth unharmed." />
-    <string id="da_u3_p_yemin_savasci" text="The walls of {DusmanKale_Link} cannot bar my fury. If need be, I shall leave not one stone upon another to bring Kalan home!" />
-    <string id="da_u3_npc_ugurla" text="May the ancestral gods shroud your footsteps in mist, warrior. Show Kalan the seal of the forge; he will know you. Go, and wrench my brother from that subterranean darkness!" />
-    <string id="da_u3_k_p_kanit_ahit" text="Your brother bade me say: 'The sacred fire turns to ash never, and true steel bends never.' He awaits you at the anvil." />
-    <string id="da_u3_k_p_kanit_savas" text="Look into my eyes, master; I am no phantom. I have come to tear these dungeon walls down upon their heads. Ready yourself!" />
-    <string id="da_u3_k_npc_lore_guven" text="The covenant watchword... You are truly my brother's sworn companion! The gods be praised! The dungeon key rests on the head jailer's belt, and two torchbearers pace the courtyard." />
-    <string id="da_u3_k_npc_lore_cesaret" text="Your fierce resolve speaks through your voice, warrior! I have loosened my manacles, yet days of starvation weigh upon me. Sentries bar our path; every step must be measured." />
+    <string id="da_u3_p_sorgu_askeri" text="How formidable are the defenses of {DusmanKale_Link}? Does wrenching him from the dungeon in five days require stealth, siege, or open assault?" />
+    <string id="da_u3_npc_lore_zanaat" text="We are twin masters of the anvil; I shape the steel and rule the flames, while Kalan listens to the metal's song at the moment of quenching. With celestial fluxes he tempers the blade so it remains keen as a razor yet supple as a willow branch. If the headsman severs his neck in five days, this sword is stillborn!" />
+    <string id="da_u3_npc_lore_askeri" text="{DusmanKale_Link} is a grim stronghold perched atop sheer crags. The dungeon guards are heavily armed and the gallows are already prepared in the courtyard. You must infiltrate the castle, break him out, or ransom him before the five-day deadline expires!" />
+    <string id="da_u3_p_yemin_sovalye" text="No brother of our anvil shall die upon an enemy gallows. I swear upon my clan's honor to rescue {Kalan_Link} from {DusmanKale_Link} before five days elapse." />
+    <string id="da_u3_p_yemin_savasci" text="The executioner at {DusmanKale_Link} will find only his own grave! I ride at once, and within five days {Kalan_Link} shall walk free!" />
+    <string id="da_u3_npc_ugurla" text="May the ancestral spirits grant swiftness to your horses, warrior! The sand is slipping through the hourglass. In five days the headsman will strike. Ride to {DusmanKale_Link} and bring my brother home alive!" />
 
     <!-- Quest 4: Multi-Step Dialogues -->
     <string id="da_m4_p_sorgu_rituel" text="What is this 'Heart's Fire' ritual? Why does ordinary coal not suffice for this steel, master?" />
@@ -226,16 +216,12 @@
     <string id="da_k2_m_npc_finans" text="My signature upon parchment is binding across all guilds! Once gold touches my palms, I will burn that arson contract before your very eyes." />
 
     <!-- Quest 3 Expanded 7-8 Turn Dialogues -->
-    <string id="da_u3_p_sorgu_fidye" text="Did the captors not demand a ransom, master? Can coin not unlock the dungeon gate without spilling blood?" />
-    <string id="da_u3_npc_lore_fidye" text="They demand no ransom because they know not whom they hold! The castellan took him for a vagrant hedge-smith. If they discover his metallurgical secrets, they will bind him in chains to forge blades for enemy banners forever. Ransom is impossible; he must be extracted!" />
-    <string id="da_u3_p_sorgu_parola" text="When I reach the dungeon depths, how shall Master Kalan know I come as his savior and not an executioner? What must I say?" />
-    <string id="da_u3_p_sorgu_kusatma" text="If the castle guards sound the horn, I will drown their battlements in fire. What of Master Kalan's physical state?" />
-    <string id="da_u3_npc_lore_parola" text="Whisper our ancient guild vow into his ear: 'The sacred fire turns to ash never, and true steel bends never.' When he hears those words, he will know the breath of the twin hearths." />
-    <string id="da_u3_npc_lore_kusatma" text="He is weakened by days of moldy bread and well water, but his will is iron. When he hears the watchword, he will find the strength to run." />
-    <string id="da_u3_k_p_sorgu_sizma" text="Where are the patrol blind spots between the guardroom and the outer passage? [Roguery]" />
-    <string id="da_u3_k_p_sorgu_kavga" text="Can you swing a guard's spear if we draw steel and carve our way to the gate, master?" />
-    <string id="da_u3_k_npc_detay_sizma" text="The eastern archway has no torches for thirty paces. When the head jailer reaches for his wine jug, a shadow can lift the latch and slip through." />
-    <string id="da_u3_k_npc_detay_kavga" text="My arms are cramped, but I can hurl a torch and crack skulls! Yet if the alarm horn sounds, the entire garrison will pour into the corridors." />
+    <string id="da_u3_p_sorgu_fidye" text="Did the captors not demand a ransom, master? Can gold not stay the executioner's hand before five days run out?" />
+    <string id="da_u3_npc_lore_fidye" text="They scorn all talk of ransom! The castellan seeks to hang him publicly to terrorize the countryside. In five days {Kalan_Link} will mount the scaffold unless you intervene. He must be freed from that pit by any means necessary!" />
+    <string id="da_u3_p_sorgu_parola" text="When I reach the dungeons of {DusmanKale_Link}, how shall Master Kalan know I come to save him? What must I say?" />
+    <string id="da_u3_p_sorgu_kusatma" text="Five days leave no time to hesitate. If we must raise a siege or storm the gates, will {Kalan_Link} endure until our arrival?" />
+    <string id="da_u3_npc_lore_parola" text="Whisper our ancient guild vow into his ear: 'The sacred fire turns to ash never, and true steel bends never.' When he hears those words, he will know the covenant has answered his plight." />
+    <string id="da_u3_npc_lore_kusatma" text="He is weakened by damp stone and starvation, yet his will is hammered iron. But the five-day deadline is absolute; once the executioner's bell tolls, all is lost!" />
 
     <!-- Quest 4 Expanded 7-8 Turn Dialogues -->
     <string id="da_m4_p_sorgu_soy" text="Generations of our bloodline have waited for this dawn, master. Whatever the furnace demands, our house shall provide." />

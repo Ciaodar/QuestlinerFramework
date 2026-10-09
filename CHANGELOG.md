@@ -2,6 +2,24 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.7.4] - 10 Ekim 2026 (Dynamic ShowInquiry Action, Execution Obituary Support & FormatText Engine)
+
+### Eklendi & Geliştirildi (Added & Improved)
+- **Dinamik Inquiry Penceresi (`Action Type="ShowInquiry"` & `ActionModel`):**
+  - TaleWorlds `InformationManager.ShowInquiry` ve `InquiryData` API'si generic motor yapısına kazandırıldı.
+  - `Title`, `Text`, `AffirmativeText`, `NegativeText`, `ButtonText`, `IsNegativeOptionShown`, `AffirmativeStageId`, `NegativeStageId`, `SoundEventPath`, `ExpireTime`, `PauseGame` XML parametreleri eklendi.
+  - Görev tokenları (`{Kalan_Name}`, `{DusmanKale_Name}`, `{PlayerName}` vb.) ve yerelleştirme anahtarları (`{=ID}`) `DynamicQuest.FormatText` üzerinden dinamik olarak çözümlenir.
+  - Tek butonlu dramatik bildirimler (ör. idam duyurusu ve "OLAMAZ!" butonu) veya iki butonlu dallanan kararlar (onay/ret ile aşama geçişi tetikleme) XML üzerinden tam kontrol edilebilir hale getirildi.
+- **İdam Desteği (`KillHero` ile Execution / Death Mark):**
+  - `Action Type="KillHero"` aksiyonu `StringValue="Execution"` veya `ObjectId="Execution"` parametresini destekleyecek şekilde genişletildi.
+  - TaleWorlds `KillCharacterAction.ApplyByExecution(target, null, true, true)` çağrılarak kurbanın ansiklopedi ölüm kaydına idam ("was executed...") işlenmesi ve tutsaklık bağının güvenle sonlandırılması sağlandı.
+- **Evrensel Metin Çözümleme Motoru (`DynamicQuest.FormatText`):**
+  - Günlük metinleri, diyaloglar ve modal pencereler için hedef kahraman, yerleşke, parti, sayaç ve oyuncu değişkenlerini tek merkezden çözümleyen `FormatText` metodu çekirdek motora eklendi; kod tekrarları giderildi.
+- **Esnek Tutsaklık Koşul Desteği (`ConditionEvaluator.cs`):**
+  - `Condition Type="IsPrisoner"` ve `TargetIsPrisoner` eşanlamlı hale getirildi; dinamik ünlem (`!IsPrisoner`, `!TargetIsPrisoner`) ile esir olmama/kurtarılma tespiti eksiksiz desteklendi.
+
+---
+
 ## [v1.7.3] - 08 Ekim 2026 (Global Heroes Persistence on ForceSuccess, Timeout/Fail vs Completion Distinction & Enhanced Settlement Resolver)
 
 ### Eklendi & Düzeltildi (Added & Fixed)

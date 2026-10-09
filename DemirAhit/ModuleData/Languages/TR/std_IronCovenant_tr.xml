@@ -83,23 +83,17 @@
     <!-- Görev 3: Ustanın Yükü (QLF_DemirAhit_Usta) -->
     <string id="demirahit3_title" text="Ustanın Yükü" />
     <string id="da_log_3_1" text="{EfsaneviDemirci_Link} ulağı soluk soluğa karargahına vardı. Örs kardeşliğinin başına büyük bir felaket geldi. Vakit kaybetmeden ustanın yanına sür." />
-    <string id="da_log_3_2" text="Demircinin kardeşi ve usta zanaatkar {Kalan_Link}, {DusmanKale_Link} zindanının rutubetli taşlarında esir tutuluyor. Onun kadim su verme sırları olmadan çeliğin katlanması imkansız. Kaleye sız, kuşat veya fidyeyle onu kurtar." />
-    <string id="da_log_3_2B" text="{DusmanKale_Link} surlarında alarmlar çalıyor! Kaçış girişimin fark edildi ve garnizon muhafızları koridorları doldurdu. Kalan'ı kurtarmak için savaşarak çıkmalısın!" />
-    <string id="da_log_3_3" text="Tüm engellere rağmen {Kalan_Link} için vurulan zincirleri kırdın! Örsün ikiz ustaları nihayet bir araya geldi; ata yadigarı şaheser için ritüel ateşleri yakılmaya hazır." />
+    <string id="da_log_3_2" text="Demircinin kardeşi ve usta zanaatkar {Kalan_Link}, {DusmanKale_Link} zindanında esir tutuluyor. Tutsak alanlar onu idama mahkum etti ve 5 gün içinde asacaklar! Cellat baltasını indirmeden kaleye sız, kuşat veya fidyeyle onu kurtar." />
+    <string id="da_log_3_fail" text="{DusmanKale_Link} zindanlarındaki {Kalan_Link} celladın baltası inmeden önce kurtarılamadı. Kutsal ahit ateşi sonsuza dek söndü." />
+    <string id="da_log_3_3" text="Tüm engellere rağmen {Kalan_Link} nihayet özgürlüğün nefesini alıyor! Örsün ikiz ustaları bir araya geldi; ata yadigarı şaheser için ritüel ateşleri yakılmaya hazır." />
+    <string id="da_inquiry_idam_title" text="Kaderin Darağacı" />
+    <string id="da_inquiry_idam_text" text="{DusmanKale_Name} zindanlarından kampınıza kan donduran bir haber ulaştı... Celladın soğuk baltası {Kalan_Name}'ın boynuna indi. Usta zanaatkar katledildi; ata yadigarı ocağın gizemleri sonsuza dek küle gömüldü." />
+    <string id="da_inquiry_idam_btn" text="OLAMAZ!" />
     <string id="da_haber_p_giris" text="Ulağın atını çatlatırcasına sürdü usta, nedir seni bu kadar kederlendiren?" />
-    <string id="da_haber_dlg_1" text="Kardeşim, {Kalan_Link}... Dağ geçitlerinden su verme tuzları getirirken esir alınıp {DusmanKale_Link} zindanının dibine atılmış. Kılıcın ağzına o kırılmaz su verme sırrını yalnızca onun elleri bilir. O olmadan bütün emeğimiz çöpe döner. Yalvarırım onu ocağımıza geri getir!" />
-    <string id="da_haber_p1" text="Ahit kardeşliğimizin hiçbir ustası zindanda çürüyemez. {DusmanKale_Link} zindanına sızıp kardeşini burnu bile kanamadan geri getireceğim." />
+    <string id="da_haber_dlg_1" text="Kardeşim, {Kalan_Link}... Dağ geçitlerinden nadir su verme tuzları getirirken pusuya düşürülüp {DusmanKale_Link} zindanına atılmış. Daha da kötüsü, o acımasız kale beyi onu casus ilan edip beş gün içinde surlarda asılmasına hükmetmiş! Kılıcın ağzına o kırılmaz su verme sırrını yalnızca onun elleri bilir. O olmadan bütün ahit emeğimiz küle döner. Yalvarırım cellat baltasını indirmeden onu kurtar!" />
     <string id="da_usta_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
-    <string id="da_kalan_p_giris" text="Sessiz ol usta, sesini alçalt. Ağabeyinin yeminiyle zincirlerini kırmaya geldim." />
-    <string id="da_kalan_dlg_1" text="Ağabeyim mi yolladı seni? Şükürler olsun ata tanrılarına! Lakin demir parmaklıklar kapalı ve muhafızlar her çanda avluda devriye geziyor. Buradan nasıl sağ çıkacağız?" />
-    <string id="da_kalan_p1" text="Adımlarımı takip et ve yalnızca meşaleler döndüğünde ilerle. Bütün devriye nöbetlerini ezberledim. [Serserilik]" />
-    <string id="da_kalan_dlg_2" text="Taşların arasından süzülen bir hayalet gibi... Yolu göster yoldaşım, yeni nöbetçiler gelmeden çıkalım!" />
-    <string id="da_kalan_p2" text="Buradan sessizce sıyrılamayız. Kılıcını çek ya da bir meşale kap; kapıya kadar kanla yolumuzu açacağız!" />
-    <string id="da_kalan_dlg_3" text="Kalede alarmlar çalıyor! Muhafızlar bizi fark etti! Dayan!" />
-    <string id="da_muhafiz" text="Garnizon Muhafızları" />
-    <string id="da_muhafizlar_dlg_intro" text="Zindan basıldı! Mahkum kaçıyor! İsyancıları biçin!" />
-    <string id="da_muhafizlar_p_savas" text="Usta Kalan bugün özgürlüğüne kavuşacak! Yolumuzdan çekilin ya da ölün!" />
-    <string id="da_usta_kalan_ertele" text="Şu an bununla ilgilenemeyeceğim, daha sonra görüşürüz." />
+    <string id="da_u3_bekle_p" text="{Kalan_Link} hakkında yeni bir haber var mı usta?" />
+    <string id="da_u3_bekle_npc" text="Her an çok kıymetli! {DusmanKale_Link} kalesindeki beş günlük mühlet batan her güneşle azalıyor. Cellat onu almadan {Kalan_Link} kardeşimi kurtar!" />
 
     <!-- Görev 4: Mirasın Dövülüşü (QLF_DemirAhit_Miras) -->
     <string id="demirahit4_title" text="Mirasın Dövülüşü" />
@@ -160,17 +154,13 @@
     <string id="da_k2_m_npc_pazarlik" text="İşte aklı başında biri! Kundakçılara verdiğim kapora ve beklenen silah kârım için tam 2.000 altın isterim. Altını verirsen meşaleler söner; vermezsen kılıçlar konuşur!" />
 
     <!-- Görev 3: Çok Adımlı Diyaloglar -->
-    <string id="da_u3_p_sorgu_zanaat" text="Kalan ustanın zanaatı neden bu kadar vazgeçilmez? Bu su verme tuzlarının sırrı nedir usta?" />
-    <string id="da_u3_p_sorgu_askeri" text="{DusmanKale_Link} kalesinin surları ve zindanı ne kadar muhkem? Onu oradan çıkarmak için açık savaş mı gerek, gölge mi?" />
-    <string id="da_u3_npc_lore_zanaat" text="Biz ikiz ustayız; ben çeliği döver, ateşi yönetirim; Kalan ise su verme anında metalin şarkısını dinler. Göğün tuzuyla suyun ısısını öyle bir dengeler ki, kılıç hem jilet gibi keskin hem de bir ağaç dalı gibi esnek olur. O olmadan bu kılıç bir ölü doğar!" />
-    <string id="da_u3_npc_lore_askeri" text="{DusmanKale_Link} sarp kayalıklar üzerine kurulu kara bir taştır. Garnizonu kalabalıktır, meşaleler surları gündüz gibi aydınlatır. Lakin zindan koridorlarında kanalizasyon menfezleri ve nöbet değişim açıkları vardır. Usta bir hırsız veya cesur bir kurtarıcı içeri sızabilir." />
-    <string id="da_u3_p_yemin_sovalye" text="Ahit kardeşliğimizin hiçbir ustası düşman zindanında çürüyemez. Kardeşin Kalan'ı o zindandan sağ salim çıkarıp bu ocağa getireceğime şerefim üzerine and içerim." />
-    <string id="da_u3_p_yemin_savasci" text="{DusmanKale_Link} surları bana engel olamaz. Gerekirse taş üstünde taş bırakmam, Kalan ustayı kurtarırım!" />
-    <string id="da_u3_npc_ugurla" text="Ata tanrıları adımlarını gölgelerle örtsün yiğit. Kalan'a ocağın mührünü göster, seni tanıyacaktır. Git ve kardeşimi o karanlık dehlizden kurtar!" />
-    <string id="da_u3_k_p_kanit_ahit" text="Ağabeyin 'Kutsal ateş küllenmez, çelik asla bükülmez' dedi ve beni yolladı. Ocağın başında seni bekliyor." />
-    <string id="da_u3_k_p_kanit_savas" text="Gözlerime bak usta; ben bir hayal değilim. Bu zindanın duvarlarını başlarına yıkmaya geldim, toparlan!" />
-    <string id="da_u3_k_npc_lore_guven" text="Ahit parolası... Gerçekten ağabeyimin yoldaşısın! Şükürler olsun! Zindan kapısının anahtarı başgardiyanda, avluda ise iki nöbetçi meşaleyle bekliyor." />
-    <string id="da_u3_k_npc_lore_cesaret" text="Kudretin sesinden belli savaşçı! Zincirlerimi gevşettim ama günlerdir aç susuzum. Çıkış yolunda nöbetçiler bekliyor, adımlarımızı dikkatli atmalıyız." />
+    <string id="da_u3_p_sorgu_zanaat" text="Usta Kalan'ın zanaatı neden bu kadar vazgeçilmez? Bu su verme tuzlarının sırrı nedir usta?" />
+    <string id="da_u3_p_sorgu_askeri" text="{DusmanKale_Link} kalesinin savunması ne kadar güçlü? Onu beş gün içinde zindandan çekip almak gizlilik mi, kuşatma mı, yoksa açık bir taarruz mu gerektirir?" />
+    <string id="da_u3_npc_lore_zanaat" text="Biz örsün ikiz ustalarıyız; ben çeliğe şekil verip alevlere hükmederim, Kalan ise su verme anında metalin şarkısını dinler. Göksel tuzlarla bıçağa öyle bir su verir ki kılıç hem ustura gibi keskin hem söğüt dalı gibi esnek kalır. Beş gün içinde celladın baltası boynuna inerse bu kılıç ölü doğar!" />
+    <string id="da_u3_npc_lore_askeri" text="{DusmanKale_Link} sarp kayalıklar üzerine kurulu uğursuz bir kaledir. Zindan muhafızları tepeden tırnağa silahlı ve avluda darağacı şimdiden kuruldu bile. Beş günlük süre dolmadan kaleye sızmalı, onu kaçırmalı ya da fidye ödemelisin!" />
+    <string id="da_u3_p_yemin_sovalye" text="Örsümüzün hiçbir kardeşi düşman darağacında can vermeyecek. Beş gün dolmadan {Kalan_Link} ustanın {DusmanKale_Link} zindanından kurtarılacağına klanımın şerefi üzerine ant içerim." />
+    <string id="da_u3_p_yemin_savasci" text="{DusmanKale_Link} kalesindeki cellat yalnızca kendi mezarını bulacak! Derhal yola çıkıyorum ve beş gün dolmadan {Kalan_Link} özgür kalacak!" />
+    <string id="da_u3_npc_ugurla" text="Ata ruhları atlarına sürat versin savaşçı! Kum saati hızla akıyor. Beş gün içinde cellat baltasını indirecek. {DusmanKale_Link} kalesine sür ve kardeşimi sağ salim buraya getir!" />
 
     <!-- Görev 4: Çok Adımlı Diyaloglar -->
     <string id="da_m4_p_sorgu_rituel" text="Nedir bu 'Kalbin Ateşi' ritüeli? Sıradan bir ocak koru neden bu çeliğe yetmez usta?" />
@@ -226,16 +216,12 @@
     <string id="da_k2_m_npc_finans" text="Benim parşömene attığım imza tüm loncalarda geçerlidir! Altın avucuma değdiği an o kundakçıların sözleşmesini gözlerinin önünde yakarım." />
 
     <!-- Görev 3 Genişletilmiş 7-8 Adımlı Sohbetler -->
-    <string id="da_u3_p_sorgu_fidye" text="Tutsak alanlar bir fidye talep etmedi mi usta? Kan dökmeden, altınla zindan kapısını açamaz mıyız?" />
-    <string id="da_u3_npc_lore_fidye" text="Fidye istemiyorlar çünkü kimi tuttuklarını bilmiyorlar! Kale dizdarı onu dağda gezen sıradan bir nalbant sandı. Eğer onun metalurji sırlarını öğrenirlerse, zincire vurup ömrü boyunca düşman sancaklarına kılıç dövdürürler. Fidye imkansızdır; oradan sökülüp alınmalı!" />
-    <string id="da_u3_p_sorgu_parola" text="Zindanın dehlizlerine ulaştığımda Kalan usta beni cellatlardan nasıl ayırt edecek? Ona ne söylemeliyim?" />
-    <string id="da_u3_p_sorgu_kusatma" text="Kale muhafızları boru çalarsa surlarını ateşe veririm. Kalan ustanın sağlık durumu nasıldır?" />
-    <string id="da_u3_npc_lore_parola" text="Kulağına loncamızın kadim andını fısılda: 'Kutsal ateş küllenmez, çelik asla bükülmez.' Bu sözleri işittiğinde ikiz ocakların nefesini tanıyacaktır." />
-    <string id="da_u3_npc_lore_kusatma" text="Günlerdir küflü ekmek ve kuyu suyuyla beslendiği için bitkindir ama iradesi çeliktir. Parolayı duyduğunda kaçacak dermanı bulacaktır." />
-    <string id="da_u3_k_p_sorgu_sizma" text="Muhafız odası ile dış dehliz arasındaki nöbet kör noktaları nerede? [Roguery]" />
-    <string id="da_u3_k_p_sorgu_kavga" text="Kılıç çekip kapıya doğru yarsak bir muhafız mızrağı savurabilir misin usta?" />
-    <string id="da_u3_k_npc_detay_sizma" text="Doğu kemerinde otuz adım boyunca meşale yoktur. Başgardiyan şarap testisine uzandığı an mandalı kaldırıp gölgeye süzülebilirsin." />
-    <string id="da_u3_k_npc_detay_kavga" text="Kollarıma kramplar girdi ama bir meşale fırlatıp kafa göz yarabilirim! Lakin alarm borusu çalarsa bütün garnizon koridorlara dökülür." />
+    <string id="da_u3_p_sorgu_fidye" text="Tutsak alanlar bir fidye talep etmedi mi usta? Beş gün dolmadan altınla celladın eli durdurulamaz mı?" />
+    <string id="da_u3_npc_lore_fidye" text="Fidye lafını bile dinlemiyorlar! Kale beyi ahaliye gözdağı vermek için onu herkesin gözü önünde asmak istiyor. Sen araya girmezsen beş gün içinde {Kalan_Link} darağacına çıkacak. Ne pahasına olursa olsun o çukurdan çekilip alınmalı!" />
+    <string id="da_u3_p_sorgu_parola" text="{DusmanKale_Link} zindanlarına ulaştığımda Kalan usta onu kurtarmaya geldiğimi nasıl anlayacak? Ona ne söylemeliyim?" />
+    <string id="da_u3_p_sorgu_kusatma" text="Beş gün tereddüt etmeye vakit bırakmıyor. Kuşatma kurmamız ya da kapıları kırmamız gerekirse, {Kalan_Link} biz varana kadar dayanabilir mi?" />
+    <string id="da_u3_npc_lore_parola" text="Kulağına loncamızın kadim andını fısılda: 'Kutsal ateş küllenmez, çelik asla bükülmez.' Bu sözleri işittiğinde ahit kardeşliğinin imdadına yetiştiğini anlayacaktır." />
+    <string id="da_u3_npc_lore_kusatma" text="Rutubetli taşlar ve açlık onu yıprattı lakin iradesi dövme demirdir. Ancak beş günlük süre kesindir; celladın çanı çaldığı an her şey biter!" />
 
     <!-- Görev 4 Genişletilmiş 7-8 Adımlı Sohbetler -->
     <string id="da_m4_p_sorgu_soy" text="Soyumuzun nesilleri bu şafağı bekledi usta. Ocak ne fedakarlık isterse hanemiz onu karşılayacaktır." />

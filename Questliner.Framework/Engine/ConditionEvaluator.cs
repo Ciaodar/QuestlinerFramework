@@ -83,6 +83,7 @@ namespace Questliner.Framework.Engine
                     string result = quest.GetString($"BattleResult_{condition.TargetAlias}");
                     return result.Equals(condition.StringValue, System.StringComparison.OrdinalIgnoreCase);
                 }
+                case "IsPrisoner":
                 case "TargetIsPrisoner":
                 {
                     Hero? target = quest?.GetTargetHero(condition.TargetAlias);

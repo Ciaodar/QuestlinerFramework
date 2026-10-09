@@ -177,6 +177,40 @@ namespace Questliner.Shared.Models
 
         [XmlAttribute("SpawnRadius")]
         public float SpawnRadius { get; set; } = 2f;
+
+        // Dynamic Inquiry Parameters
+        [XmlAttribute("Title")]
+        public string Title { get; set; } = string.Empty;
+
+        [XmlAttribute("Text")]
+        public string Text { get; set; } = string.Empty;
+
+        [XmlAttribute("AffirmativeText")]
+        public string AffirmativeText { get; set; } = string.Empty;
+
+        [XmlAttribute("NegativeText")]
+        public string NegativeText { get; set; } = string.Empty;
+
+        [XmlAttribute("ButtonText")]
+        public string ButtonText { get; set; } = string.Empty;
+
+        [XmlAttribute("IsNegativeOptionShown")]
+        public bool IsNegativeOptionShown { get; set; } = false;
+
+        [XmlAttribute("AffirmativeStageId")]
+        public string AffirmativeStageId { get; set; } = string.Empty;
+
+        [XmlAttribute("NegativeStageId")]
+        public string NegativeStageId { get; set; } = string.Empty;
+
+        [XmlAttribute("SoundEventPath")]
+        public string SoundEventPath { get; set; } = string.Empty;
+
+        [XmlAttribute("ExpireTime")]
+        public float ExpireTime { get; set; } = 0f;
+
+        [XmlAttribute("PauseGame")]
+        public bool PauseGame { get; set; } = true;
     }
 
     public class ConditionModel

@@ -30,31 +30,30 @@
       <OnTimeoutActions />
     </Stage>
 
-    <Stage Id="Stage2_Kurtarma" NextStageId="Stage3_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
-      <LogText>{=da_log_3_2}The smith's brother and fellow master craftsman, {Kalan_Link}, rots in the foul dungeon of {DusmanKale_Link}. Without his ancient metallurgical secrets, the final folding of the steel is impossible. Infiltrate the dungeons, raise a siege, or ransom him before his spirit breaks.</LogText>
+    <Stage Id="Stage2_Kurtarma" NextStageId="Stage3_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="5">
+      <LogText>{=da_log_3_2}The smith's brother and fellow master craftsman, {Kalan_Link}, rots in the foul dungeon of {DusmanKale_Link}. The captors have condemned him to death and will execute him in 5 days! Infiltrate the castle, raise a siege, or ransom him before the executioner strikes.</LogText>
       <Conditions>
-        <Condition Type="!TargetIsPrisoner" TargetAlias="Kalan" />
+        <Condition Type="!IsPrisoner" TargetAlias="Kalan" />
       </Conditions>
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions>
+        <Action Type="KillHero" TargetAlias="Kalan" StringValue="Execution" />
+        <Action Type="ShowInquiry" Title="{=da_inquiry_idam_title}Gallows of Fate" Text="{=da_inquiry_idam_text}Dark tidings reach your camp from the blood-soaked dungeons of {DusmanKale_Name}... The executioner's cold steel has severed {Kalan_Name}'s life. With the master craftsman dead, the secrets of the ritual forge are lost forever." AffirmativeText="{=da_inquiry_idam_btn}NOOO!" PauseGame="true" />
+        <Action Type="ChangeStage" ObjectId="Stage_Idam_Fail" />
+      </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage_Idam_Fail" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=da_log_3_fail}You failed to rescue {Kalan_Link} from the dungeons of {DusmanKale_Link} before the executioner struck. The sacred covenant fire is extinguished forever.</LogText>
+      <Conditions />
       <OnEnterActions />
       <OnExitActions />
       <OnTimeoutActions />
     </Stage>
 
-    <Stage Id="Stage2B_Savunma" NextStageId="Stage3_Zafer" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
-      <LogText>{=da_log_3_2B}Horns blare along the battlements of {DusmanKale_Link}! Your escape attempt was discovered and garrison guards flood the corridors. You must fight your way out to deliver Kalan to safety!</LogText>
-      <Conditions>
-        <Condition Type="BattleResolvedAs" TargetAlias="GarnizonMuhafizlari" StringValue="Victory" />
-      </Conditions>
-      <OnEnterActions />
-      <OnExitActions />
-      <OnTimeoutActions>
-        <Action Type="DestroyParty" TargetAlias="GarnizonMuhafizlari" />
-        <Action Type="ChangeStage" ObjectId="Stage2_Kurtarma" />
-      </OnTimeoutActions>
-    </Stage>
-
     <Stage Id="Stage3_Zafer" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=da_log_3_3}Against all odds, you broke the chains of {Kalan_Link}! The twin masters of the anvil are reunited at last, ready to kindle the ritual fires for the ancestral masterpiece.</LogText>
+      <LogText>{=da_log_3_3}Against all odds, {Kalan_Link} breathes the air of freedom! The twin masters of the anvil are reunited at last, ready to kindle the ritual fires for the ancestral masterpiece.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="20" />
@@ -67,7 +66,7 @@
   </Stages>
 
   <CustomDialogs>
-    <!-- Master Smith at the Forge (Stage 1: Brother's Capture & Intelligence) -->
+    <!-- Master Smith at the Forge (Stage 1: Impending Execution & Strategy) -->
     <!-- Turn 1: Player arrives at forge -->
     <DialogNode Type="Player" Id="Usta_Haber_Giris_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="ql_da_u3_t1" Priority="200">
       <Text>{=da_haber_p_giris}Your messenger rode his horse near to death, master. What grief has fallen upon you?</Text>
@@ -76,25 +75,25 @@
       </Conditions>
     </DialogNode>
 
-    <!-- Turn 2: NPC explains brother's capture -->
+    <!-- Turn 2: NPC explains brother's capture and 5-day execution deadline -->
     <DialogNode Type="Npc" Id="Usta_Haber_Giris" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t1" OutputToken="ql_da_u3_t2" Priority="200">
-      <Text>{=da_haber_dlg_1}My brother, {Kalan_Link}... While traveling the passes with quenching fluxes, he was captured and thrown into the dungeon pit at {DusmanKale_Link}. His hands alone possess the secret temper to bind the blade's edge. Without him, our labor turns to dust. I beg of you, bring him back to the forge!</Text>
+      <Text>{=da_haber_dlg_1}My brother, {Kalan_Link}... While traveling the mountain passes with rare quenching fluxes, he was ambushed and cast into the dungeon of {DusmanKale_Link}. Worse still, their bloodthirsty lord condemned him as a spy and declared he will hang from the ramparts in five days! His hands alone possess the secret temper to bind the blade's edge. Without him, our covenant labor turns to dust. I beg of you, rescue him before the executioner strikes!</Text>
       <Conditions />
     </DialogNode>
 
-    <!-- Turn 3: Player Tone Choices (Metallurgy / Fortress Recon / Ransom Feasibility / Defer) -->
+    <!-- Turn 3: Player Inquiry Choices (Metallurgy / Fortress Recon / Ransom Feasibility / Defer) -->
     <DialogNode Type="Player" Id="Usta_P_Sorgu_Zanaat" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t2" OutputToken="ql_da_u3_t3_zanaat">
       <Text>{=da_u3_p_sorgu_zanaat}Why is Master Kalan's craft so indispensable? What is the secret of these quenching salts, master?</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Player" Id="Usta_P_Sorgu_Askeri" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t2" OutputToken="ql_da_u3_t3_askeri">
-      <Text>{=da_u3_p_sorgu_askeri}How formidable are the ramparts and dungeons of {DusmanKale_Link}? Does his rescue call for open warfare or silent shadows?</Text>
+      <Text>{=da_u3_p_sorgu_askeri}How formidable are the defenses of {DusmanKale_Link}? Does wrenching him from the dungeon in five days require stealth, siege, or open assault?</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Player" Id="Usta_P_Sorgu_Fidye" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t2" OutputToken="ql_da_u3_t3_fidye">
-      <Text>{=da_u3_p_sorgu_fidye}Did the captors not demand a ransom, master? Can coin not unlock the dungeon gate without spilling blood?</Text>
+      <Text>{=da_u3_p_sorgu_fidye}Did the captors not demand a ransom, master? Can gold not stay the executioner's hand before five days run out?</Text>
       <Conditions />
     </DialogNode>
 
@@ -104,28 +103,28 @@
 
     <!-- Turn 4: NPC Lore (Twin Masters & Metallurgy / Castle Layout / Ransom Futility) -->
     <DialogNode Type="Npc" Id="Usta_Lore_Zanaat" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t3_zanaat" OutputToken="ql_da_u3_t4">
-      <Text>{=da_u3_npc_lore_zanaat}We are twin masters of the anvil; I shape the steel and rule the flames, while Kalan listens to the metal's song at the moment of quenching. With celestial fluxes he tempers the blade so it remains keen as a razor yet supple as a willow branch. Without him, this sword is stillborn!</Text>
+      <Text>{=da_u3_npc_lore_zanaat}We are twin masters of the anvil; I shape the steel and rule the flames, while Kalan listens to the metal's song at the moment of quenching. With celestial fluxes he tempers the blade so it remains keen as a razor yet supple as a willow branch. If the headsman severs his neck in five days, this sword is stillborn!</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Usta_Lore_Askeri" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t3_askeri" OutputToken="ql_da_u3_t4">
-      <Text>{=da_u3_npc_lore_askeri}{DusmanKale_Link} is a black monolith perched atop sheer crags. Its garrison is numerous, and torches illuminate the battlements like noon. Yet in the dungeon corridors lie drainage sluices and blind spots during the watch relief. A master of shadows or a fearless rescuer can slip inside.</Text>
+      <Text>{=da_u3_npc_lore_askeri}{DusmanKale_Link} is a grim stronghold perched atop sheer crags. The dungeon guards are heavily armed and the gallows are already prepared in the courtyard. You must infiltrate the castle, break him out, or ransom him before the five-day deadline expires!</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Usta_Lore_Fidye" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t3_fidye" OutputToken="ql_da_u3_t4">
-      <Text>{=da_u3_npc_lore_fidye}They demand no ransom because they know not whom they hold! The castellan took him for a vagrant hedge-smith. If they discover his metallurgical secrets, they will bind him in chains to forge blades for enemy banners forever. Ransom is impossible; he must be extracted!</Text>
+      <Text>{=da_u3_npc_lore_fidye}They scorn all talk of ransom! The castellan seeks to hang him publicly to terrorize the countryside. In five days {Kalan_Link} will mount the scaffold unless you intervene. He must be freed from that pit by any means necessary!</Text>
       <Conditions />
     </DialogNode>
 
-    <!-- Turn 5: Player Follow-up (Watchword Authentication vs Siege Threat) -->
+    <!-- Turn 5: Player Follow-up (Urgency / Impending Execution) -->
     <DialogNode Type="Player" Id="Usta_P_Sorgu_Parola" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t4" OutputToken="ql_da_u3_t5_parola">
-      <Text>{=da_u3_p_sorgu_parola}When I reach the dungeon depths, how shall Master Kalan know I come as his savior and not an executioner? What must I say?</Text>
+      <Text>{=da_u3_p_sorgu_parola}When I reach the dungeons of {DusmanKale_Link}, how shall Master Kalan know I come to save him? What must I say?</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Player" Id="Usta_P_Sorgu_Kusatma" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t4" OutputToken="ql_da_u3_t5_kusatma">
-      <Text>{=da_u3_p_sorgu_kusatma}If the castle guards sound the horn, I will drown their battlements in fire. What of Master Kalan's physical state?</Text>
+      <Text>{=da_u3_p_sorgu_kusatma}Five days leave no time to hesitate. If we must raise a siege or storm the gates, will {Kalan_Link} endure until our arrival?</Text>
       <Conditions />
     </DialogNode>
 
@@ -135,23 +134,23 @@
 
     <!-- Turn 6: NPC Secret Watchword & Warning -->
     <DialogNode Type="Npc" Id="Usta_Lore_Parola" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t5_parola" OutputToken="ql_da_u3_t6">
-      <Text>{=da_u3_npc_lore_parola}Whisper our ancient guild vow into his ear: 'The sacred fire turns to ash never, and true steel bends never.' When he hears those words, he will know the breath of the twin hearths.</Text>
+      <Text>{=da_u3_npc_lore_parola}Whisper our ancient guild vow into his ear: 'The sacred fire turns to ash never, and true steel bends never.' When he hears those words, he will know the covenant has answered his plight.</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Usta_Lore_Kusatma" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t5_kusatma" OutputToken="ql_da_u3_t6">
-      <Text>{=da_u3_npc_lore_kusatma}He is weakened by days of moldy bread and well water, but his will is iron. When he hears the watchword, he will find the strength to run.</Text>
+      <Text>{=da_u3_npc_lore_kusatma}He is weakened by damp stone and starvation, yet his will is hammered iron. But the five-day deadline is absolute; once the executioner's bell tolls, all is lost!</Text>
       <Conditions />
     </DialogNode>
 
     <!-- Turn 7: Player Oath of Rescue (Chivalric Oath vs Audacious Warrior vs Defer) -->
     <DialogNode Type="Player" Id="Usta_P_Yemin_Sovalye" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t6" OutputToken="ql_da_u3_t7_kabul">
-      <Text>{=da_u3_p_yemin_sovalye}No craftsman of our covenant shall rot in an enemy pit. I swear upon my clan's honor to bring your brother Kalan back to this hearth unharmed.</Text>
+      <Text>{=da_u3_p_yemin_sovalye}No brother of our anvil shall die upon an enemy gallows. I swear upon my clan's honor to rescue {Kalan_Link} from {DusmanKale_Link} before five days elapse.</Text>
       <Conditions />
     </DialogNode>
 
     <DialogNode Type="Player" Id="Usta_P_Yemin_Savasci" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t6" OutputToken="ql_da_u3_t7_kabul">
-      <Text>{=da_u3_p_yemin_savasci}The walls of {DusmanKale_Link} cannot bar my fury. If need be, I shall leave not one stone upon another to bring Kalan home!</Text>
+      <Text>{=da_u3_p_yemin_savasci}The executioner at {DusmanKale_Link} will find only his own grave! I ride at once, and within five days {Kalan_Link} shall walk free!</Text>
       <Conditions />
     </DialogNode>
 
@@ -161,127 +160,23 @@
 
     <!-- Turn 8: NPC Send-off & Transition to Rescue -->
     <DialogNode Type="Npc" Id="Usta_Npc_Ugurla" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_t7_kabul" OutputToken="close_window">
-      <Text>{=da_u3_npc_ugurla}May the ancestral gods shroud your footsteps in mist, warrior. Show Kalan the seal of the forge; he will know you. Go, and wrench my brother from that subterranean darkness!</Text>
+      <Text>{=da_u3_npc_ugurla}May the ancestral spirits grant swiftness to your horses, warrior! The sand is slipping through the hourglass. In five days the headsman will strike. Ride to {DusmanKale_Link} and bring my brother home alive!</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="Stage2_Kurtarma" />
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
 
-    <!-- Sneaking Dialog with Kalan in Dungeon -->
-    <!-- Turn 1: Player whispers to Kalan -->
-    <DialogNode Type="Player" Id="Kalan_Sizma_Giris_P" TargetAlias="Kalan" InputToken="hero_main_options" OutputToken="ql_da_kalan_t1" Priority="200">
-      <Text>{=da_kalan_p_giris}Quiet, smith. Keep your voice low. I come under oath from your brother to cut your chains.</Text>
+    <!-- Stage 2 Active Reminder with EfsaneviDemirci -->
+    <DialogNode Type="Player" Id="Usta_Bekleme_P" TargetAlias="EfsaneviDemirci" InputToken="hero_main_options" OutputToken="ql_da_u3_bekle_t1" Priority="200">
+      <Text>{=da_u3_bekle_p}Do you have any further word regarding {Kalan_Link}, master?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Kurtarma" />
-        <Condition Type="TargetIsPrisoner" TargetAlias="Kalan" />
       </Conditions>
     </DialogNode>
 
-    <!-- Turn 2: Kalan questions whether this is a dream -->
-    <DialogNode Type="Npc" Id="Kalan_Sizma_Giris" TargetAlias="Kalan" InputToken="ql_da_kalan_t1" OutputToken="ql_da_kalan_t2" Priority="200">
-      <Text>{=da_kalan_dlg_1}My brother sent you? Praise the ancestral heavens! But the portcullis is barred and watchmen patrol the courtyard every bell. How can we break through the garrison?</Text>
-      <Conditions />
-    </DialogNode>
-
-    <!-- Turn 3: Player gives watchword or bold reassurance -->
-    <DialogNode Type="Player" Id="Kalan_P_Kanit_Ahit" TargetAlias="Kalan" InputToken="ql_da_kalan_t2" OutputToken="ql_da_kalan_t3_ahit">
-      <Text>{=da_u3_k_p_kanit_ahit}Your brother bade me say: 'The sacred fire turns to ash never, and true steel bends never.' He awaits you at the anvil.</Text>
-      <Conditions />
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Kalan_P_Kanit_Savas" TargetAlias="Kalan" InputToken="ql_da_kalan_t2" OutputToken="ql_da_kalan_t3_savas">
-      <Text>{=da_u3_k_p_kanit_savas}Look into my eyes, master; I am no phantom. I have come to tear these dungeon walls down upon their heads. Ready yourself!</Text>
-      <Conditions />
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Kalan_Sizma_Ertele" TargetAlias="Kalan" InputToken="ql_da_kalan_t2" OutputToken="close_window">
-      <Text>{=da_usta_kalan_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
-
-    <!-- Turn 4: Kalan's Faith Restored & Intel -->
-    <DialogNode Type="Npc" Id="Kalan_Lore_Guven" TargetAlias="Kalan" InputToken="ql_da_kalan_t3_ahit" OutputToken="ql_da_kalan_t4">
-      <Text>{=da_u3_k_npc_lore_guven}The covenant watchword... You are truly my brother's sworn companion! The gods be praised! The dungeon key rests on the head jailer's belt, and two torchbearers pace the courtyard.</Text>
-      <Conditions />
-    </DialogNode>
-
-    <DialogNode Type="Npc" Id="Kalan_Lore_Cesaret" TargetAlias="Kalan" InputToken="ql_da_kalan_t3_savas" OutputToken="ql_da_kalan_t4">
-      <Text>{=da_u3_k_npc_lore_cesaret}Your fierce resolve speaks through your voice, warrior! I have loosened my manacles, yet days of starvation weigh upon me. Sentries bar our path; every step must be measured.</Text>
-      <Conditions />
-    </DialogNode>
-
-    <!-- Turn 5: Player Escape Reconnaissance (Stealth vs Assault vs Defer) -->
-    <DialogNode Type="Player" Id="Kalan_P_Sorgu_Sizma" TargetAlias="Kalan" InputToken="ql_da_kalan_t4" OutputToken="ql_da_kalan_t5_sizma">
-      <Text>{=da_u3_k_p_sorgu_sizma}Where are the patrol blind spots between the guardroom and the outer passage? [Roguery]</Text>
-      <Conditions />
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Kalan_P_Sorgu_Kavga" TargetAlias="Kalan" InputToken="ql_da_kalan_t4" OutputToken="ql_da_kalan_t5_kavga">
-      <Text>{=da_u3_k_p_sorgu_kavga}Can you swing a guard's spear if we draw steel and carve our way to the gate, master?</Text>
-      <Conditions />
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Kalan_Sizma_Ertele_2" TargetAlias="Kalan" InputToken="ql_da_kalan_t4" OutputToken="close_window">
-      <Text>{=da_usta_kalan_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
-
-    <!-- Turn 6: Kalan's Tactical Breakdown -->
-    <DialogNode Type="Npc" Id="Kalan_Detay_Sizma" TargetAlias="Kalan" InputToken="ql_da_kalan_t5_sizma" OutputToken="ql_da_kalan_t6">
-      <Text>{=da_u3_k_npc_detay_sizma}The eastern archway has no torches for thirty paces. When the head jailer reaches for his wine jug, a shadow can lift the latch and slip through.</Text>
-      <Conditions />
-    </DialogNode>
-
-    <DialogNode Type="Npc" Id="Kalan_Detay_Kavga" TargetAlias="Kalan" InputToken="ql_da_kalan_t5_kavga" OutputToken="ql_da_kalan_t6">
-      <Text>{=da_u3_k_npc_detay_kavga}My arms are cramped, but I can hurl a torch and crack skulls! Yet if the alarm horn sounds, the entire garrison will pour into the corridors.</Text>
-      <Conditions />
-    </DialogNode>
-
-    <!-- Turn 7: Escape Execution Choice (Stealth vs Assault vs Defer) -->
-    <DialogNode Type="Player" Id="Kalan_Sizma_Basarili" TargetAlias="Kalan" InputToken="ql_da_kalan_t6" OutputToken="ql_da_kalan_kacis" ShowWhenDisabled="true" DisabledHint="{=da_hint_roguery_80}Requires Roguery 80">
-      <Text>{=da_kalan_p1}Follow in my footsteps and step only when the torches shift. I have mapped every guard rotation. [Roguery]</Text>
-      <Conditions>
-        <Condition Type="SkillCheck" ObjectId="Roguery" Amount="80" />
-      </Conditions>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Kalan_Sizma_Basarisiz" TargetAlias="Kalan" InputToken="ql_da_kalan_t6" OutputToken="ql_da_kalan_yakalanma">
-      <Text>{=da_kalan_p2}There is no slipping past them quietly. Ready your fists or seize a torch; we carve our way to the gate!</Text>
-      <Conditions />
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Kalan_Sizma_Ertele_3" TargetAlias="Kalan" InputToken="ql_da_kalan_t6" OutputToken="close_window">
-      <Text>{=da_usta_kalan_ertele}I cannot deal with this right now. We will speak later.</Text>
-    </DialogNode>
-
-    <!-- Turn 8: Escape Outcomes -->
-    <DialogNode Type="Npc" Id="Kalan_Sizma_Basarili_Cevap" TargetAlias="Kalan" InputToken="ql_da_kalan_kacis" OutputToken="close_window">
-      <Text>{=da_kalan_dlg_2}Like ghosts through the stone... Lead on, friend, before the relief watch arrives!</Text>
-      <Consequences>
-        <Action Type="ChangeStage" ObjectId="Stage3_Zafer" />
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
-
-    <DialogNode Type="Npc" Id="Kalan_Sizma_Basarisiz_Cevap" TargetAlias="Kalan" InputToken="ql_da_kalan_yakalanma" OutputToken="close_window">
-      <Text>{=da_kalan_dlg_3}Alarms in the keep! The garrison has spotted us! Stand fast!</Text>
-      <Consequences>
-        <Action Type="SpawnBanditParty" TargetAlias="GarnizonMuhafizlari" Amount="75" PartyTemplateId="garrison_guards_template" ObjectId="DusmanKale" SpawnDistance="1" SpawnRadius="2" StringValue="{=da_muhafiz}Garrison Guards" />
-        <Action Type="SetPartyAi" TargetAlias="GarnizonMuhafizlari" StringValue="EngageParty" ObjectId="Player" />
-        <Action Type="ChangeStage" ObjectId="Stage2B_Savunma" />
-        <Action Type="LeaveEncounter" />
-      </Consequences>
-    </DialogNode>
-
-    <!-- Garrison Guards Hostile Encounter (Stage 2B: Alarm / Defense) -->
-    <DialogNode Type="Npc" Id="Muhafizlar_Giris" TargetAlias="GarnizonMuhafizlari" InputToken="start" OutputToken="ql_da_muhafizlar_secim" Priority="200">
-      <Text>{=da_muhafizlar_dlg_intro}Dungeon breach! The prisoner is escaping! Cut down the intruders!</Text>
-      <Conditions>
-        <Condition Type="IsStageActive" ObjectId="Stage2B_Savunma" />
-      </Conditions>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="Muhafizlar_Savas" TargetAlias="GarnizonMuhafizlari" InputToken="ql_da_muhafizlar_secim" OutputToken="close_window">
-      <Text>{=da_muhafizlar_p_savas}Master Kalan walks free today! Stand aside or be cut down!</Text>
+    <DialogNode Type="Npc" Id="Usta_Bekleme_Npc" TargetAlias="EfsaneviDemirci" InputToken="ql_da_u3_bekle_t1" OutputToken="close_window">
+      <Text>{=da_u3_bekle_npc}Every moment counts! The five-day deadline at {DusmanKale_Link} draws near with every setting sun. Break {Kalan_Link} out before the executioner claims him!</Text>
       <Conditions />
     </DialogNode>
   </CustomDialogs>
