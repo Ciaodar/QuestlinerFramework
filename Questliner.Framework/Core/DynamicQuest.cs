@@ -470,6 +470,12 @@ namespace Questliner.Framework.Core
             CurrentStageId = model.Stages.Count > 0 ? model.Stages[0].Id : string.Empty;
             SetDialogs();
             InitializeQuestOnCreation();
+
+            // Problem 10 Fix: Never track MainHero! TaleWorlds automatically tracks questGiver if passed into base()
+            if (Campaign.Current?.QuestManager != null && Hero.MainHero != null && IsTracked(Hero.MainHero))
+            {
+                Campaign.Current.QuestManager.RemoveTrackedObjectForQuest(Hero.MainHero, this);
+            }
         }
 
         public void ForceFail() 
@@ -491,6 +497,15 @@ namespace Questliner.Framework.Core
             var currentStageModel = Model.Stages.FirstOrDefault(s => s.Id == CurrentStageId);
             if (currentStageModel != null)
             {
+                // Execute timeout actions if the stage had an active timeout (Problem 4 fix)
+                if (currentStageModel.TimeoutInDays > 0 || currentStageModel.TimeoutInHours > 0)
+                {
+                    foreach (var action in currentStageModel.OnTimeoutActions)
+                    {
+                        Questliner.Framework.Engine.ActionExecutor.Execute(action, this);
+                    }
+                }
+
                 foreach (var action in currentStageModel.OnExitActions)
                 {
                     Questliner.Framework.Engine.ActionExecutor.Execute(action, this);
@@ -667,6 +682,28 @@ namespace Questliner.Framework.Core
                 _currentDiscreteLog.UpdateCurrentProgress(current);
             }
 
+            // Failure condition check (Problem 5 & 7 fix)
+            if (currentStageModel.FailConditions != null && currentStageModel.FailConditions.Count > 0)
+            {
+                bool isAnyOp = !string.Equals(currentStageModel.FailConditionsOperator, "All", StringComparison.OrdinalIgnoreCase);
+                bool failMet = isAnyOp 
+                    ? currentStageModel.FailConditions.Any(c => Questliner.Framework.Engine.ConditionEvaluator.IsConditionMet(c, this))
+                    : currentStageModel.FailConditions.All(c => Questliner.Framework.Engine.ConditionEvaluator.IsConditionMet(c, this));
+
+                if (failMet)
+                {
+                    if (!string.IsNullOrEmpty(currentStageModel.FailStageId))
+                    {
+                        TransitionToStage(currentStageModel.FailStageId);
+                    }
+                    else
+                    {
+                        CompleteQuestWithFail();
+                    }
+                    return;
+                }
+            }
+
             bool allMet = currentStageModel.Conditions.Count > 0 && currentStageModel.Conditions.All(c => Questliner.Framework.Engine.ConditionEvaluator.IsConditionMet(c, this));
 
             if (allMet)
@@ -717,6 +754,12 @@ namespace Questliner.Framework.Core
                 // Track relevant targets and parse log string
                 if (!string.IsNullOrEmpty(nextStageModel.LogText))
                 {
+                    // Problem 6 Fix: Clear previously tracked objects of this quest so old stage exclamation marks don't linger forever
+                    if (Campaign.Current?.QuestManager != null)
+                    {
+                        Campaign.Current.QuestManager.RemoveAllTrackedObjectsForQuest(this);
+                    }
+
                     TextObject parsedLogText = FormatText(nextStageModel.LogText);
 
                     // Track objects mentioned in the log text dynamically
@@ -820,6 +863,12 @@ namespace Questliner.Framework.Core
 
 
 
+                // Problem 10 Fix: Never track MainHero!
+                if (Campaign.Current?.QuestManager != null && Hero.MainHero != null && IsTracked(Hero.MainHero))
+                {
+                    Campaign.Current.QuestManager.RemoveTrackedObjectForQuest(Hero.MainHero, this);
+                }
+
                 if (nextStageModel.IsSuccessNode)
                 {
                     EnsureGlobalHeroesPersisted();
@@ -835,7 +884,7 @@ namespace Questliner.Framework.Core
 
         public void TrackHeroLocation(Hero? hero)
         {
-            if (hero == null) return;
+            if (hero == null || hero == Hero.MainHero) return;
             if (!IsTracked(hero)) AddTrackedObject(hero);
             var sett = Questliner.Framework.Engine.TargetResolverService.GetHeroSettlement(hero);
             if (sett != null && !IsTracked(sett)) AddTrackedObject(sett);

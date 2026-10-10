@@ -196,10 +196,13 @@ namespace Questliner.Framework.Behaviors
             // Find ongoing dynamic quest matching QuestId (may be null if quest hasn't started yet)
             var quest = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(q => q.Model?.Id == questModel.Id && q.IsOngoing);
 
-            // If this quest has already been completed, do not re-evaluate its dialogs
+            // If this quest has already been completed, do not re-evaluate its dialogs unless we are still within this quest's ongoing dialog flow
             if (quest == null && _completedQuestIds.Contains(questModel.Id))
             {
-                return false;
+                if (string.IsNullOrEmpty(_currentConversationQuestId) || _currentConversationQuestId != questModel.Id)
+                {
+                    return false;
+                }
             }
 
             // Internal token scoping: prevents cross-quest leakage
@@ -683,7 +686,27 @@ namespace Questliner.Framework.Behaviors
 
         private void OnSettlementEntered(MobileParty party, Settlement settlement, Hero hero)
         {
-            if (party != MobileParty.MainParty) return;
+            if (party != MobileParty.MainParty)
+            {
+                if (party != null)
+                {
+                    // A quest mobile party entered a settlement (Problem 5 fix)
+                    foreach (var quest in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
+                    {
+                        if (quest.TargetParties.ContainsValue(party))
+                        {
+                            var partyAlias = quest.TargetParties.FirstOrDefault(x => x.Value == party).Key;
+                            if (!string.IsNullOrEmpty(partyAlias))
+                            {
+                                quest.SetFlag($"PartyEntered_{partyAlias}", true);
+                                quest.SetStringVariable($"PartySettlement_{partyAlias}", settlement?.StringId ?? string.Empty);
+                            }
+                            quest.CheckStageProgression();
+                        }
+                    }
+                }
+                return;
+            }
             SanitizeQuestItemsInInventory();
             
             // 1. Process Ongoing Quests

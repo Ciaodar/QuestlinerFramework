@@ -13,7 +13,6 @@
   <TargetResolvers>
     <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost) || (Lord, HasMobileParty, HasKingdom)" Selector="Nearest" />
     <Resolver Alias="HainZanaatkar" TargetType="Hero" Filters="GlobalHero(SP_HainZanaatkar)" />
-    <Resolver Alias="looters" TargetType="MobileParty" Filters="BanditParty, Faction(looters)" Selector="Random" IsOptional="true" />
   </TargetResolvers>
 
   <Stages>

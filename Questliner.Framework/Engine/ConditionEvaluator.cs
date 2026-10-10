@@ -77,11 +77,47 @@ namespace Questliner.Framework.Engine
                     Hero? target = quest?.GetTargetHero(condition.TargetAlias);
                     return target != null && target.IsAlive;
                 }
+                case "PartyInSettlement":
+                case "TargetPartyEscaped":
+                {
+                    if (quest == null) return false;
+                    var party = quest.GetTargetParty(condition.TargetAlias);
+                    bool enteredFlag = quest.GetFlag($"PartyEntered_{condition.TargetAlias}");
+                    string partySettId = quest.GetString($"PartySettlement_{condition.TargetAlias}");
+
+                    if (!string.IsNullOrEmpty(condition.ObjectId))
+                    {
+                        var targetSett = quest.GetTargetSettlement(condition.ObjectId);
+                        string targetSettId = targetSett?.StringId ?? condition.ObjectId;
+                        
+                        if (enteredFlag && !string.IsNullOrEmpty(partySettId) && partySettId.Equals(targetSettId, System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            return true;
+                        }
+                        if (party != null && party.CurrentSettlement != null)
+                        {
+                            return party.CurrentSettlement.StringId.Equals(targetSettId, System.StringComparison.OrdinalIgnoreCase);
+                        }
+                        return false;
+                    }
+
+                    if (enteredFlag) return true;
+                    if (party != null && party.CurrentSettlement != null) return true;
+                    if (party != null && !party.IsActive && !party.IsDisbanding) return true;
+                    return false;
+                }
                 case "BattleResolvedAs":
                 {
                     if (quest == null) return false;
                     string result = quest.GetString($"BattleResult_{condition.TargetAlias}");
                     return result.Equals(condition.StringValue, System.StringComparison.OrdinalIgnoreCase);
+                }
+                case "BattleLost":
+                case "DefeatedBy":
+                {
+                    if (quest == null) return false;
+                    string result = quest.GetString($"BattleResult_{condition.TargetAlias}");
+                    return result.Equals("Defeat", System.StringComparison.OrdinalIgnoreCase);
                 }
                 case "IsPrisoner":
                 case "TargetIsPrisoner":

@@ -555,8 +555,8 @@ namespace Questliner.Framework.Engine
                         DynamicQuest.BindPartyToMBTextManager(action.TargetAlias, party);
                     }
 
-                    // 9. Protection and AI
-                    party.IgnoreByOtherPartiesTill(CampaignTime.HoursFromNow(24));
+                    // 9. Protection and AI (Problem 9 fix: ignore other AI lords permanently so they don't attack quest targets)
+                    party.IgnoreByOtherPartiesTill(CampaignTime.Never);
                     party.Ai.SetDoNotMakeNewDecisions(true);
 
                     string aiBehavior = action.StringValue ?? "";

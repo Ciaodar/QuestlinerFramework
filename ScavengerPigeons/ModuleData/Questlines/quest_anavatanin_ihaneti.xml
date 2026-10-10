@@ -61,6 +61,7 @@
       <Conditions />
       <OnEnterActions>
         <Action Type="SaveHeroToGlobal" TargetAlias="ArtisanTarget" StringValue="SP_HainZanaatkar" />
+        <Action Type="StartQuest" ObjectId="QLF_HainGuvercin" />
       </OnEnterActions>
     </Stage>
 

@@ -26,11 +26,15 @@
       </OnEnterActions>
     </Stage>
 
-    <Stage Id="Stage2_Takip" NextStageId="Stage3_Kanit" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="5">
+    <Stage Id="Stage2_Takip" NextStageId="Stage3_Kanit" FailStageId="Stage_Basarisiz" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="5">
       <LogText>{=shdw_q1_s2_log}You spoke with the merchant {GorevVeren_Link} and agreed to track down the bandits attacking their caravans. The {HedefKervan_Link} is fleeing toward {KacisSehri_Link}. Intercept and defeat them on the map before they reach the city and escape.</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="HedefKervan" Amount="1" />
       </Conditions>
+      <FailConditions>
+        <Condition Type="TargetPartyEscaped" TargetAlias="HedefKervan" ObjectId="KacisSehri" />
+        <Condition Type="BattleResolvedAs" TargetAlias="HedefKervan" StringValue="Defeat" />
+      </FailConditions>
       <OnEnterActions>
         <Action Type="SpawnBanditParty" TargetAlias="HedefKervan" Amount="25" PartyTemplateId="caravan_guards_template" StringValue="{=shdw_q1_kervan}Smuggler Caravan" ObjectId="HedefSehir" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="HedefKervan" StringValue="GoToSettlement" ObjectId="KacisSehri" SettlementAlias="KacisSehri" />
@@ -60,11 +64,14 @@
       </Conditions>
     </Stage>
 
-    <Stage Id="Stage5_PusuSavas" NextStageId="StageSuccess_Kanun" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+    <Stage Id="Stage5_PusuSavas" NextStageId="StageSuccess_Kanun" FailStageId="Stage_Pusu_Defeat" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=shdw_q1_s5_savas_log}The gang's assassins have ambushed you outside the city! Defeat them to secure the merchant's routes.</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="CetePartisi" Amount="1" />
       </Conditions>
+      <FailConditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="CetePartisi" StringValue="Defeat" />
+      </FailConditions>
       <OnEnterActions>
         <Action Type="SpawnBanditParty" TargetAlias="CetePartisi" Amount="45" PartyTemplateId="mercenary_template" StringValue="{=shdw_q1_cetepartisi}Gang Members" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="CetePartisi" StringValue="EngageParty" ObjectId="Player" />
@@ -97,6 +104,17 @@
       <LogText>{=shdw_q1_s5b_log}The gleam of gold covered the color of blood. You forced the merchant into submission and became a partner of the shadows. The underworld routes are now under your protection.</LogText>
       <Conditions />
       <OnEnterActions>
+        <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
+        <Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage_Pusu_Defeat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=shdw_q1_s5_fail_log}The gang's cutthroats overpowered you in the ambush. Leaving you wounded in the dirt, the syndicate tightened its grip over the smuggling routes.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DestroyParty" TargetAlias="CetePartisi" />
+        <Action Type="ChangeRelation" TargetAlias="GorevVeren" Amount="-15" />
         <Action Type="TakeItem" ObjectId="sifreli_defter" Amount="1" />
         <Action Type="SetGlobalFlag" ObjectId="GolgelerinFisiltisi_Bitti" Amount="1" />
       </OnEnterActions>

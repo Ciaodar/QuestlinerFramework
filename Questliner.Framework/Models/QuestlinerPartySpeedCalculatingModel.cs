@@ -59,17 +59,22 @@ namespace Questliner.Framework.Models
 
             if (mobileParty != null && IsQuestParty(mobileParty))
             {
-                // Clean pursuit / movement bonus (+20%) so pursuing bandits and fleeing targets can move dynamically
-                finalSpeed.AddFactor(0.20f, _questPartySpeedModifierText);
-
-                // If this quest party is actively pursuing / engaging the player, give an additional pursuit boost (+15%)
-                // so it can dynamically chase down the player as requested ("beni yeterince hızlı kovalayamıyorlar")
+                // Normalize quest party speed to 4.3f (or 4.5f when chasing player) as requested (Problem 8 fix)
+                // This prevents extreme speed explosions (e.g. 16.0 from looting player horses after victory)
+                float targetSpeed = 4.3f;
                 bool isEngagingPlayer = (mobileParty.DefaultBehavior == AiBehavior.EngageParty || mobileParty.ShortTermBehavior == AiBehavior.EngageParty) &&
                                         (mobileParty.TargetParty == MobileParty.MainParty || mobileParty.ShortTermTargetParty == MobileParty.MainParty ||
                                          mobileParty.Ai?.AiBehaviorPartyBase?.MobileParty == MobileParty.MainParty);
                 if (isEngagingPlayer)
                 {
-                    finalSpeed.AddFactor(0.15f, _questPursuitBonusText);
+                    targetSpeed = 4.5f;
+                }
+
+                float currentVal = finalSpeed.ResultNumber;
+                if (currentVal > 0.01f)
+                {
+                    float factor = (targetSpeed / currentVal) - 1f;
+                    finalSpeed.AddFactor(factor, _questPartySpeedModifierText);
                 }
             }
 

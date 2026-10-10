@@ -5,7 +5,7 @@
     <Resolver Alias="EfsaneviDemirci" TargetType="Hero" Filters="Artisan" RequiredSettlementAlias="DemirciSehri" Selector="Nearest" />
     <Resolver Alias="HammadeKaynagi" TargetType="Settlement" Filters="Village" Selector="Nearest" />
     <Resolver Alias="KoyMuhtari" TargetType="Hero" Filters="RuralNotable" RequiredSettlementAlias="HammadeKaynagi" Selector="Nearest" />
-    <Resolver Alias="RakipTuccar" TargetType="Hero" Filters="Merchant" Selector="Random" />
+    <Resolver Alias="RakipTuccar" TargetType="Hero" Filters="Merchant" RequiredSettlementAlias="DemirciSehri" Selector="Random" />
   </TargetResolvers>
 
   <Prerequisites>

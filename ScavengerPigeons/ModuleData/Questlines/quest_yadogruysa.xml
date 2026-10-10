@@ -136,16 +136,12 @@
 
     <DialogNode Type="Player" Id="Berber_B4a_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="ql_berber_itibar_a5">
       <Text>{=sp_yd_dlg20}I don't want your money. I'll also have to think a bit about taking a company of 70 men there.</Text>
-      <Consequences>
-        <Action Type="ChangeStage" ObjectId="StageSuccess" />
-      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Berber_B4b_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_b4" OutputToken="ql_berber_itibar_a5">
       <Text>{=sp_yd_dlg21}Thank you. I will gather that company with this money and meet with the village elder.</Text>
       <Consequences>
         <Action Type="AddGold" Amount="1000" />
-        <Action Type="ChangeStage" ObjectId="StageSuccess" />
       </Consequences>
     </DialogNode>
 
@@ -155,6 +151,9 @@
 
     <DialogNode Type="Npc" Id="Berber_A5_Itibar" SpeakerStringId="barber" RequiredSettlementAlias="GizemliSehir" InputToken="ql_berber_itibar_a5" OutputToken="close_window">
       <Text>{=sp_yd_dlg23}Alright, see you later, baby pigeon...</Text>
+      <Consequences>
+        <Action Type="ChangeStage" ObjectId="StageSuccess" />
+      </Consequences>
     </DialogNode>
   </CustomDialogs>
 </Questline>

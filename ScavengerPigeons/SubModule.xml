@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name value="Scavenger Pigeons" />
+  <Name value="Questliner - Scavenger Pigeons" />
   <Id value="ScavengerPigeons" />
-  <Version value="v1.0.0.42" />
+  <Version value="v1.0.0.43" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
   <DependedModules>

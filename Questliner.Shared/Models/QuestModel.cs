@@ -125,6 +125,12 @@ namespace Questliner.Shared.Models
         [XmlAttribute("NextStageId")]
         public string NextStageId { get; set; } = string.Empty;
 
+        [XmlAttribute("FailStageId")]
+        public string FailStageId { get; set; } = string.Empty;
+
+        [XmlAttribute("FailConditionsOperator")]
+        public string FailConditionsOperator { get; set; } = "Any"; // Any (default) or All
+
         [XmlAttribute("TimeoutInDays")]
         public int TimeoutInDays { get; set; } = 0; // 0 means no timeout
         
@@ -138,6 +144,10 @@ namespace Questliner.Shared.Models
         [XmlArray("Conditions")]
         [XmlArrayItem("Condition")]
         public List<ConditionModel> Conditions { get; set; } = new List<ConditionModel>();
+
+        [XmlArray("FailConditions")]
+        [XmlArrayItem("Condition")]
+        public List<ConditionModel> FailConditions { get; set; } = new List<ConditionModel>();
 
         [XmlArray("OnExitActions")]
         [XmlArrayItem("Action")]
