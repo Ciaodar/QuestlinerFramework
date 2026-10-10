@@ -2,7 +2,7 @@
 <Questline Id="QLF_KaraborsaSavaslari" Title="{=shdw_q2_title}Black Market Wars" TimeLimitInDays="60">
   <TargetResolvers>
     <!-- YozlasmisLord: Cruel veya Devious trait'e sahip, hükümdar/oyuncu klanı olmayan, barış halindeki en yakın krallık lordu -->
-    <Resolver Alias="YozlasmisLord" TargetType="Hero" Filters="Lord, HasKingdom, !KingdomLeader, !PlayerClan, !EnemyFaction, !IsPrisoner, Trait(Devious)" Selector="Nearest" />
+    <Resolver Alias="YozlasmisLord" TargetType="Hero" Filters="Lord, !IsChild, HasMobileParty, HasKingdom, !KingdomLeader, !ClanLeader, !PlayerClan, !EnemyFaction, !IsPrisoner, Trait(Devious)" Selector="Nearest" />
     <!-- Hukumdar: YozlasmisLord'un bulunduğu krallığın lideri -->
     <Resolver Alias="Hukumdar" TargetType="Hero" Filters="KingdomLeader, SameKingdomAs(YozlasmisLord)" Selector="First" />
   </TargetResolvers>
@@ -19,11 +19,14 @@
   </Triggers>
 
   <Stages>
-    <Stage Id="Stage1_Suikast" NextStageId="Stage2_Sorgu" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+    <Stage Id="Stage1_Suikast" NextStageId="Stage2_Sorgu" FailStageId="Stage1_Assassins_Defeat" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=shdw_q2_s1_log}Your clan is now known throughout the realm, having reached Clan Tier 3. However, your past isn't letting you go. A large bounty has been placed on your head, and hired assassins are after you. Defeat them and survive!</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="KiralikKatiller" Amount="1" />
       </Conditions>
+      <FailConditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="KiralikKatiller" StringValue="Defeat" />
+      </FailConditions>
       <OnEnterActions>
         <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="50" PartyTemplateId="assassins_template" StringValue="{=shdw_q2_katiller}Hired Assassins" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="KiralikKatiller" StringValue="EngageParty" ObjectId="Player" />
@@ -33,11 +36,22 @@
       </OnExitActions>
     </Stage>
 
+    <Stage Id="Stage1_Assassins_Defeat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=shdw_q2_s1_fail_log}The hired assassins overwhelmed your forces. Stripped of gold and left bleeding in the mud, your pursuit of the black market conspirators ended in disaster.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="ShowInquiry" Title="{=shdw_q2_inq_defeat_title}Ambush Catastrophe" Text="{=shdw_q2_inq_defeat_text}The assassins overwhelmed your forces. After plundering your coin and leaving you for dead, they melted away into the hills. The conspiracy continues in the dark." AffirmativeText="{=shdw_q2_inq_defeat_ok}Understood" PauseGame="true" />
+        <Action Type="LoseGoldPercentage" Amount="10" />
+        <Action Type="DestroyParty" TargetAlias="KiralikKatiller" />
+        <Action Type="SetGlobalFlag" ObjectId="KaraborsaSavaslari_Bitti" Amount="1" />
+      </OnEnterActions>
+    </Stage>
+
     <Stage Id="Stage2_Sorgu" NextStageId="Stage3_Intikam" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=shdw_q2_s2_log}You defeated the hired assassins and survived. Find {KatilKomutan_Link} waiting on the map and interrogate him.</LogText>
       <Conditions />
       <OnEnterActions>
-        <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="1" PartyTemplateId="deserters_template" StringValue="{=shdw_q2_komutan}Wounded Commander" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SpawnBanditParty" TargetAlias="KatilKomutan" Amount="25" PartyTemplateId="custom:karakhergit_elder:25" StringValue="{=shdw_q2_komutan}Wounded Commander" ObjectId="Player" SpawnDistance="2" SpawnRadius="3" />
         <Action Type="SetPartyAi" TargetAlias="KatilKomutan" StringValue="Hold" />
       </OnEnterActions>
       <OnExitActions>
@@ -190,11 +204,11 @@
 
     <!-- Tur 4: Oyuncu Derinlemesine Soruşturma (Ferman & Savunmalar) -->
     <DialogNode Type="Player" Id="Kom_Sorgu_Lore" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_2" OutputToken="ql_shdw_kom_lore">
-      <Text>{=shdw_q2_dlg_kom_lore}What exactly does this decree order you to do? Who else among the court nobility is tied to this blood contract?</Text>
+      <Text>{=shdw_q2_dlg_kom_lore}What exactly does this decree order you to do? Who else among the nobility is tied to this blood contract?</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Kom_Sorgu_Savunma" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_2" OutputToken="ql_shdw_kom_savunma">
-      <Text>{=shdw_q2_dlg_kom_savunma}Where does this lord hide, and how many men garrison his hall? Answer truly if you value your skin.</Text>
+      <Text>{=shdw_q2_dlg_kom_savunma}Where does this lord travel, and how many men guard him? Answer truly if you value your skin.</Text>
     </DialogNode>
 
 
@@ -204,7 +218,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Kom_Savunma_Cevap" TargetAlias="KatilKomutan" InputToken="ql_shdw_kom_savunma" OutputToken="ql_shdw_kom_confront">
-      <Text>{=shdw_q2_dlg_kom_savunma_c}His castle is heavily garrisoned, but during daytime audiences he sits upon his dais guarded only by personal retainers. Take the sealed order as proof!</Text>
+      <Text>{=shdw_q2_dlg_kom_savunma_c}He rides with personal retainers and thinks his noble blood shields him from retribution. Take the sealed order as proof!</Text>
     </DialogNode>
 
     <!-- Tur 6: Oyuncu Ahlaki/Kurnaz Karşılık -->
@@ -257,7 +271,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Giris_Npc_Reply" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_entry_npc" OutputToken="ql_shdw_lord_yuzlesme" Priority="200">
-      <Text>{=shdw_q2_lord_turn1}You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate.</Text>
+      <Text>{=shdw_q2_lord_turn1}You... So you are still breathing? What insolence brings you before me, mercenary? My guards should have cut you down where you stand.</Text>
       <Consequences>
         <Action Type="MakeMet" TargetAlias="YozlasmisLord" />
       </Consequences>
@@ -265,7 +279,7 @@
 
     <!-- Tur 1: Lordun Kibirli Girişi (start token doğrudan giriş) -->
     <DialogNode Type="Npc" Id="Lord_Giris" TargetAlias="YozlasmisLord" InputToken="start" OutputToken="ql_shdw_lord_yuzlesme" Priority="200">
-      <Text>{=shdw_q2_lord_turn1}You... So you are still breathing? What insolence brings you before my dais, mercenary? My guards should have flayed you at the gate.</Text>
+      <Text>{=shdw_q2_lord_turn1}You... So you are still breathing? What insolence brings you before me, mercenary? My guards should have cut you down where you stand.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_Intikam" />
       </Conditions>
@@ -276,7 +290,7 @@
 
     <!-- Tur 2: Oyuncu Karşılığı (Tehditkar, Yüzleşme, Alaycı) -->
     <DialogNode Type="Player" Id="Lord_Tehdit" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_yuzlesme" OutputToken="ql_shdw_lord_1">
-      <Text>{=shdw_q2_dlg_lord_tehdit}If you lie to me, this castle will be your tomb! I slaughtered the assassins you sent, and I hold your sealed treason in my grasp!</Text>
+      <Text>{=shdw_q2_dlg_lord_tehdit}If you lie to me, this will be your tomb! I slaughtered the assassins you sent, and I hold your sealed treason in my grasp!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Lord_Yuzlesme" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_yuzlesme" OutputToken="ql_shdw_lord_1">
@@ -321,11 +335,11 @@
 
     <!-- Tur 5: Lord Calradia Entrikalarını Açıklar & Fiyatı Belirler -->
     <DialogNode Type="Npc" Id="Lord_Lore1_Cevap" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_lore1" OutputToken="ql_shdw_lord_confront">
-      <Text>{=shdw_q2_dlg_lord_lore_c}Wars are not won on peasant tithes alone, mercenary! Keeping vassals loyal and armies garrisoned demands rivers of gold. The black market fuels the thrones of Calradia whether fools admit it or not. You stumbled into gears far larger than your petty clan.</Text>
+      <Text>{=shdw_q2_dlg_lord_lore_c}Wars are not won on peasant tithes alone, mercenary! Keeping vassals loyal and armies garrisoned demands rivers of gold. The black market fuels the rulers of Calradia whether fools admit it or not. You stumbled into gears far larger than your petty clan.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Sendika_Cevap" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_sendika" OutputToken="ql_shdw_lord_confront">
-      <Text>{=shdw_q2_dlg_lord_sendika_c}The ruler knows what keeps the armies marching! Bribes flow from taverns to castles, lining the scabbards of every captain in the realm.</Text>
+      <Text>{=shdw_q2_dlg_lord_sendika_c}The ruler knows what keeps the armies marching! Bribes flow from back alleys to high lords, lining the scabbards of every captain in the realm.</Text>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Pay1_Cevap" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_pay1" OutputToken="ql_shdw_lord_confront">
@@ -350,7 +364,7 @@
 
     <!-- Tur 7: Lordun Ültimatomu -->
     <DialogNode Type="Npc" Id="Lord_Ders_Cevap" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_ders" OutputToken="ql_shdw_lord_karar">
-      <Text>{=shdw_q2_dlg_lord_ders}In Calradia, justice is whatever the man with the largest army says it is! A mercenary with a scrap of parchment does not dictate terms to a lord. Either take the twenty thousand denars and leave, or face the wrath of my entire garrison. What is your choice?!</Text>
+      <Text>{=shdw_q2_dlg_lord_ders}In Calradia, justice is whatever the man with the largest army says it is! A mercenary with a scrap of parchment does not dictate terms to a lord. Either take the twenty thousand denars and leave, or face the wrath of my swords. What is your choice?!</Text>
     </DialogNode>
 
     <!-- Tur 8: Nihai Kararlar (Şantaj / Savaş / Politika / Erteleme) -->
@@ -398,7 +412,7 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Lord_Sonuc_Politik" TargetAlias="YozlasmisLord" InputToken="ql_shdw_lord_politik_son" OutputToken="close_window">
-      <Text>{=shdw_q2_dlg_lord_politik_c}The ruler?! You will never reach the court alive, mercenary! Run to the ruler if you dare, but you will find Calradia's courts colder than my dungeons!</Text>
+      <Text>{=shdw_q2_dlg_lord_politik_c}The ruler?! You will never reach {Hukumdar_Link} alive, mercenary! Run to the ruler if you dare, but you will find Calradia's halls colder than a grave!</Text>
       <Consequences>
         <Action Type="ChangeRelation" TargetAlias="YozlasmisLord" Amount="-50" />
         <Action Type="ChangeStage" ObjectId="Stage4_Hukumdar" />
@@ -407,18 +421,18 @@
     </DialogNode>
 
     <!-- ========================================== -->
-    <!-- 3. HÜKÜMDAR İLE GÖRÜŞME (Hukumdar - Saray Yargılaması - Çok Adımlı Divan) -->
+    <!-- 3. HÜKÜMDAR İLE GÖRÜŞME (Hukumdar - Yüzleşme ve Kanıt Sunumu) -->
     <!-- ========================================== -->
-    <!-- Tur 1 (Player / hero_main_options): Divan/Saray Menüsü veya Ziyaret Girişi -->
+    <!-- Tur 1 (Player / hero_main_options): Giriş Diyaloğu -->
     <DialogNode Type="Player" Id="Hukumdar_Giris_Player" TargetAlias="Hukumdar" InputToken="hero_main_options" OutputToken="ql_shdw_huk_entry_npc" Priority="200">
-      <Text>{=shdw_q2_dlg_huk_player_entry}Your Majesty, I bring urgent evidence concerning high treason within your court.</Text>
+      <Text>{=shdw_q2_dlg_huk_player_entry}Your Majesty, I bring urgent evidence concerning high treason within your realm.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage4_Hukumdar" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Hukumdar_Giris_Npc_Reply" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_entry_npc" OutputToken="ql_shdw_huk_kanit" Priority="200">
-      <Text>{=shdw_q2_dlg_huk_intro}Welcome to our court. What urgent matter brings you before us?</Text>
+      <Text>{=shdw_q2_dlg_huk_intro}Greetings. What urgent matter brings you before us?</Text>
       <Consequences>
         <Action Type="MakeMet" TargetAlias="Hukumdar" />
       </Consequences>
@@ -426,7 +440,7 @@
 
     <!-- Tur 1: Hükümdarın Açılışı (start token doğrudan giriş) -->
     <DialogNode Type="Npc" Id="Hukumdar_Giris" TargetAlias="Hukumdar" InputToken="start" OutputToken="ql_shdw_huk_kanit" Priority="200">
-      <Text>{=shdw_q2_dlg_huk_intro}Welcome to our court. What urgent matter brings you before us?</Text>
+      <Text>{=shdw_q2_dlg_huk_intro}Greetings. What urgent matter brings you before us?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage4_Hukumdar" />
       </Conditions>
@@ -487,7 +501,7 @@
     </DialogNode>
 
     <DialogNode Type="Player" Id="Huk_Talep_Odul" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_talep" OutputToken="ql_shdw_huk_final">
-      <Text>{=shdw_q2_dlg_huk_talep_odul}I have risked life and clan to bring this truth before your court, Your Majesty. I ask only for the honor and standing my service deserves.</Text>
+      <Text>{=shdw_q2_dlg_huk_talep_odul}I have risked life and clan to bring this truth before you, Your Majesty. I ask only for the honor and standing my service deserves.</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Huk_Talep_Ertele" TargetAlias="Hukumdar" InputToken="ql_shdw_huk_talep" OutputToken="close_window">
