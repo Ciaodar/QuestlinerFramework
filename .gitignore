@@ -35,3 +35,10 @@ __pycache__/
 ## OS generated files
 .DS_Store
 Thumbs.db
+
+## KOD 5682 Runtime Telemetry State
+.agents/quota_live_status.json
+.agents/quota_alert_state.json
+.agents/quota_watchdog.pid
+.agents/prompts/KOD_5682_LAST_TRIGGERED.md
+

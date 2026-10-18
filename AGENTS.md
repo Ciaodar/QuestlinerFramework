@@ -88,6 +88,26 @@ The project operates under a strict five-role command, execution, and auditing s
 
 ---
 
+## 2B. Protokol "Kod 5682 (KOTA)" — Model Kotası İzleme, Güvenli Duraklatma ve Otonom Devam Sistemi
+
+To prevent mid-task quota exhaustion from leaving half-written C#/XML files or broken subagent contexts, the workspace runs a dual-layer **KOD 5682 (KOTA)** protection system:
+
+1. **10-Second Live Quota Watchdog (`.agents/scripts/QuotaWatchdog.ps1`):**
+   - Polls Antigravity's local `language_server` `GetUserStatus` RPC endpoint every 10 seconds.
+   - Monitors both the **Müdür's active model** (`Gemini 4 Argon (High)` / `last_selected_agent_model`) and the **Subagent model** (`Gemini 3.8 Flash (Medium)`).
+   - Writes real-time telemetry to `.agents/quota_live_status.json`.
+   - When `remainingFraction < 0.10` (**< 10%**), renders `.agents/prompts/KOD_5682_KOTA_PROMPT.md` with exact `resetTime` and `WAIT_SECONDS` (`secondsUntilReset + 60s buffer`) and dispatches it directly to the **Müdür** via `agentapi.bat send-message`.
+2. **Synchronous `PreInvocation` Hook Guard (`.agents/hooks.json` & `.agents/scripts/PreInvocationQuotaGuard.ps1`):**
+   - Runs before every model invocation in `< 20ms`.
+   - Self-heals and auto-starts `QuotaWatchdog.ps1` in the background if not already running.
+   - Synchronously injects the **KOD 5682 (KOTA)** emergency prompt via `hookSpecificOutput.additionalContext` if any monitored model is below 10%.
+3. **Mandatory Müdür Actions Upon Receiving KOD 5682 (KOTA):**
+   - **Subagent Safe Interrupt:** Send `[ACİL DURUM: KOD 5682 (KOTA)]` via `send_message` to all running subagents so they atomically finish their current file write and immediately idle (never `kill`, preserving subagent memory).
+   - **Checkpoint:** Write exact progress and resume instructions to `.agents/quota_checkpoint.md`.
+   - **Auto-Resume Timer:** Call `schedule` with `DurationSeconds = WAIT_SECONDS`, `TimerCondition = "never"`, and the `[KOD 5682 OTONOM DEVAM SİNYALİ]` prompt so production automatically resumes the moment the quota resets.
+
+---
+
 ## 3. 🛡️ Honesty, Factuality & Proactive Research
 
 - **Proactive Research First (Don't Lazily Say "I Don't Know"):** Before claiming ignorance on any technical question, Bannerlord API behavior, or system capability, **actively investigate** using all available tools (`view_file`, `BannerlordCodeBase` source search, repository grep, `search_web`, `read_url_content`).

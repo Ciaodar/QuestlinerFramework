@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PreInvocation": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"c:\\Users\\meteh\\RiderProjects\\QuestlinerFramework\\.agents\\scripts\\PreInvocationQuotaGuard.ps1\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
