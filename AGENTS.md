@@ -1,169 +1,134 @@
-# Agent Knowledge Base: Questliner Framework
+# Agent Knowledge Base & Operational Charter: Questliner Framework
 
-This document provides technical insights, architectural patterns, and development guidelines for AI agents and future developers working on the **Questliner Framework** mod for Mount & Blade II: Bannerlord.
-
-## Project Architecture
-
-The project is divided into two main assemblies to cleanly separate data models from execution logic:
-
-### 1. Questliner.Shared
-Contains all XML deserialization structures and data models.
-- **`QuestModel.cs`**: Defines `Questline`, `StageModel`, `DialogNode`, `ConditionModel`, `ActionModel`, and `TargetResolverModel`.
-- *(Note: `TimeoutInHours` is used alongside `TimeoutInDays` due to Bannerlord's Native quest engine restrictions on integer days.)*
-
-### 2. Questliner.Framework
-Contains the core engine that parses models, manages active quests, and executes logic.
-- **`DynamicQuest.cs`**: The heart of the framework. Inherits from Native `QuestBase`. Manages stage transitions, journal logs, and dynamic UI tracking.
-- **`QuestlinerCampaignBehavior.cs`**: Intercepts Native campaign events (dialogues, daily ticks, menu initializations) and injects framework logic.
-- **`TargetResolverService.cs`**: The dynamic target assignment engine. 
-- **`ConditionEvaluator.cs` & `ActionExecutor.cs`**: Process XML-defined conditions and actions dynamically.
-
-## Core Features & Patterns
-
-### 1. Data-Driven Design (Hardcoding Forbidden)
-This framework is strictly **data-driven**. AI agents must **NEVER** write hardcoded C# logic tailored to a specific quest. If a quest requires a new feature (e.g., a new condition or target filter), the agent must implement it as a generic, reusable feature in the C# engine (`ConditionEvaluator`, `TargetResolverService`, etc.) and then use it via XML in `ModuleData/Questlines/`.
-
-### 2. Dynamic Negation (!)
-The engine features a powerful generic negation system across the board.
-- Placing an exclamation mark (`!`) before any Condition or Target Filter automatically inverts its boolean logic.
-- Examples: `!HasTroopCount`, `!ClanLeader`, `!SameFactionAs(Alias)`, `!Target(TargetAlias)`.
-
-### 3. Dynamic UI Tracking (Exclamation Marks)
-Instead of manually defining which targets to track, `DynamicQuest.cs` dynamically parses the `LogText` of the active stage. If a target's alias is mentioned (e.g., `{TargetAlias_Link}`), the engine automatically calls `AddTrackedObject()` to place the blue quest marker on that hero or settlement.
-
-### 4. Target Resolving & Terminology
-Target filters have been strictly standardized to avoid confusion and bugs:
-- **`KingdomLeader`**: Strictly targets the ruler (King/Emperor) of a Kingdom.
-- **`ClanLeader`**: Targets any standard Clan Leader.
-- **`Artisan`, `RuralNotable`, `Merchant`, `Headman`, `GangLeader`**: Matches `Hero.CharacterObject.Occupation` (no "Is" prefix).
-- **`Female`, `Male`**: Gender filters.
-- **`RequiredSettlementAlias`**: Strictly enforced in `ResolveHero` to ensure NPCs are picked from the exact referenced town/village.
-
-### 5. Dialogue Injection
-When injecting dialogues for generic NPCs (like Artisans or Tavern Keepers in towns), avoid relying on `SpeakerStringId` as Bannerlord generates generic StringIds (e.g., `sp_artisan`). Instead:
-1. Define a `Resolver` for the NPC (e.g., `Alias="TargetNPC" Filters="Artisan" RequiredSettlementAlias="TargetTown"`).
-2. Bind the dialogue to that alias using `TargetAlias="TargetNPC"` in the XML.
-
-## Strict Development Rules
-
-### 🛡️ Honesty, Uncertainty & Factuality
-- **Zero Hallucination Tolerance:** Do not fabricate, assume, or guess any information that is not explicitly present in the provided context or your verified knowledge base. 
-- **Acknowledge Ignorance:** If you are unsure, lack sufficient data, or the query is ambiguous, report it honestly. Use clear disclaimers such as "I do not have enough information to answer this reliably" or "Based strictly on the provided data, this detail is missing."
-- **Confidence Calibration:** Never present a high-probability guess as an absolute fact. If you must reason through an uncertain scenario, explicitly state your level of confidence and the assumptions you are making.
-- **No People-Pleasing:** Do not generate a false or speculative answer just to satisfy the user's prompt. Honesty and data integrity always supersede completeness.
-
-### Schema & Pattern Strictness (No Hallucinations)
-- **NEVER** invent or guess XML schemas, C# API patterns, or structures.
-- Before implementing a new feature or stage, **ALWAYS** search the repository for existing examples (e.g., in other modules like `ScavengerPigeons`) to use as a concrete reference.
-- If no reference or documentation can be found, you must **STOP** and ask the user to provide an example or documentation. Do not proceed based on assumptions.
-
-### DO NOT USE POWERSHELL TO EDIT CODE
-- AI Agents must **NEVER** use terminal commands (like PowerShell `replace` or Python scripts via CLI) to modify code files.
-- Command-line edits bypass the IDE's history/undo tracking and frequently mangle Turkish UTF-8 encodings.
-- **Always** use the provided Antigravity tools (`replace_file_content`, `write_to_file`).
-
-### Terminology & Localization
-- Ensure English is used for the C# framework terminology and code logic.
-- Quest-specific XML content should be written in the intended localization language with flavorful, narrative-driven storytelling.
-- Never use the `Is` prefix in generic filter names in the XML (e.g., use `Artisan`, not `IsArtisan`).
-
-### Version Control
-- **Always** execute `git add .`, `git commit -m "..."`, and `git push` after every successful build that introduces a working feature or fix. Keep the repository up-to-date with your progress.
-
-## Team Roles & Multi-Agent Architecture
-
-To maintain high architectural integrity and prevent context pollution, the project operates under an **Orchestrator - Subagent (Quest Writers)** model.
-
-### Reasoning Modes & Subagent Context Persistence
-- **Main Coordinator (Ana Koordinatör):** Must always operate in **High** reasoning mode to plan the overarching architecture, analyze extensive multi-item test reports, and resolve cross-system dependencies.
-- **Subagent Invocations (Alt Ajan Tetiklemeleri):** When assigning tasks to or invoking subagents, strictly lock each subagent's execution parameter to **Medium** level. Do not unnecessarily trigger **High** mode for subagents.
-- **Subagent Memory & Context Preservation (No Killing / No Context Resets):** NEVER kill subagents (`manage_subagents` with `kill` / `kill_all`) or wipe their memories by spawning fresh instances for every task. Subagents must remember their prior work and context. Always reuse existing subagent conversations via `send_message` whenever possible, and only invoke or revive them when no active session exists.
-
-### Role 1: The Lead Framework Architect (Central Agent / Orchestrator)
-- **Scope:** Complete ownership of `.cs` files in `Questliner.Framework` and `Questliner.Shared`, engine architecture, and subagent coordination.
-- **Restriction:** NEVER write or edit `.xml` files inside scenario modules (`DemirAhit/`, `ShadowsAscendancy/`, `ScavengerPigeons/`).
-- **Core Duties:**
-  - Evaluate incoming feature requests (`[IMPLEMENTATION REQUEST]`) and bug reports (`[BUG REPORT]`) from scenario subagents.
-  - Present multi-option technical analyses to the user (`/grill-me` style).
-  - Implement C# engine changes, build, verify, and push to GitHub.
-  - Immediately update `Questliner_Documentation.md` and `CHANGELOG.md` upon any engine change.
-  - Dispatch structured `[IR RESPONSE]` and `[BR RESPONSE]` directly to the respective scenario subagents.
-
-### Role 2: The Scenario Quest Writers (Subagents)
-Each storyline has a dedicated subagent with an isolated, persistent context:
-- **`DemirAhit Subagent`**: Focuses on Clan Tier 2-5 smithing, honor, and loyalty narrative (`DemirAhit/`).
-- **`ShadowsAscendancy Subagent`**: Focuses on Clan Tier 2-3 criminal underworld, smuggling, and blackmail narrative (`ShadowsAscendancy/`).
-- **`ScavengerPigeons Subagent`**: Focuses on courier network, conspiracy, and betrayal narrative (`ScavengerPigeons/`).
-- **Restrictions:**
-  - Scope is STRICTLY limited to their designated module's `.xml` files, localization files (`Languages/`), and build scripts.
-  - NEVER edit C# files in `Questliner.Framework` or `Questliner.Shared`.
-  - NEVER invent unsupported XML tags. If an engine limitation is reached, issue an `[IMPLEMENTATION REQUEST]` to the Lead Framework Architect.
-  - Always execute build (`dotnet build`), version increment, and Git push after completing working stages.
+This charter defines the multi-agent hierarchy, engineering standards, and operational rules for the **Questliner Framework** mod for Mount & Blade II: Bannerlord.
 
 ---
 
-## Interactive Decision & Execution Protocols
+## 1. Multi-Agent Hierarchy & Team Topology
 
-### 1. Technical Analysis & Options Protocol (/grill-me Style)
-When a scenario subagent submits an `[IMPLEMENTATION REQUEST]`, `[BUG REPORT]`, or encounters a technical block:
-1. The Lead Framework Architect analyzes the problem across Bannerlord Native APIs and the Framework engine.
-2. The Architect formulates **2 to 3 distinct technical options** with pros/cons and presents them directly to the User:
-   - **Option A (Engine Feature):** Extending the C# engine (cost: compilation, new API, potential edge cases).
-   - **Option B (XML Workaround / Pure Narrative):** Adapting the quest logic using existing conditions/actions without touching C#.
-   - **Option C (Alternative Mechanic / Hybrid):** Alternative Bannerlord native mechanics (e.g. game menu, dialogue re-route).
-3. The Architect asks the User to pick the desired path before writing code.
+The project operates under a strict four-role command and execution structure:
 
-### 2. Decision & Execution Protocol
-Once the User selects an option:
-1. **If C# changes are required:** The Lead Framework Architect implements the feature in `Questliner.Framework` / `Questliner.Shared`, derives tests, increments version, updates `Questliner_Documentation.md` and `CHANGELOG.md`, and pushes to Git.
-2. **Dispatch Response:** The Architect crafts a formal `[IR RESPONSE]` or `[BR RESPONSE]` with approved XML syntax and directives, then commands the scenario subagent to execute the XML updates.
-3. **Subagent Execution:** The scenario subagent updates its XML and localization files, runs its build script, and pushes changes.
+```text
+[Framework Sorumlusu]  <---  [Müdür (Ana Koordinatör)]  --->  [Mimarlar (Senaristler)]  --->  [Kod Çalışanları]
+   (C# Engine Core)            (High Reasoning / Plan)          (Story & Quest Design)         (XML / Loc / Build)
+```
 
-## Cross-Agent Communication Protocol (Feature Requests & Bug Reports)
+### A. Müdür (Ana Koordinatör / Central Orchestrator)
+- **Reasoning Mode:** Always **High**.
+- **Core Responsibility:** Owns the big picture, parses multi-item user test reports, diagnoses cross-system root causes (C# vs. XML), resolves dependencies, and orchestrates all agents.
+- **Decision Protocol (`/grill-me`):** When architectural trade-offs arise, presents 2-3 clear technical options (Engine Feature vs. XML Workaround vs. Native Hybrid) with pros/cons to the user before execution.
+- **Routing:**
+  - Dispatches engine feature requests (`[IMPLEMENTATION REQUEST]`) and engine bug reports (`[BUG REPORT]`) left (`<-`) to the **Framework Sorumlusu**.
+  - Dispatches narrative design, quest flow fixes, and approved XML schemas right (`->`) to the **Mimarlar (Senaristler)**.
 
-To prevent misunderstandings and ensure flawless handoffs between the Quest Writers (XML) and the Framework Developer (C#), all requests and bug reports must strictly follow these highly detailed templates.
+### B. Framework Sorumlusu (C# Engine Developer)
+- **Reasoning Mode:** **Medium** (when invoked as a subagent).
+- **Scope:** Exclusive ownership of `.cs` files in `Questliner.Framework` and `Questliner.Shared`, plus `Questliner_Documentation.md` and `CHANGELOG.md`.
+- **Restrictions:**
+  - **NEVER** write hardcoded C# logic tailored to a specific quest or character. All engine features must be generic, reusable, and data-driven.
+  - **NEVER** edit `.xml` files inside scenario modules (`DemirAhit/`, `ShadowsAscendancy/`, `ScavengerPigeons/`).
+- **Duties:** Inspect decompiled TaleWorlds source in `BannerlordCodeBase`, implement generic Conditions/Actions/TargetResolvers/Models, compile (`dotnet build --configuration Release`), update docs, and return formal `[IR RESPONSE]` / `[BR RESPONSE]` specs to the **Müdür**.
 
-### 1. Implementation Request (IR) Template (Writer -> Framework Dev)
-Use this detailed format when requesting new engine features:
+### C. Mimarlar / Senaristler (Scenario Architects)
+- **Reasoning Mode:** Strictly locked to **Medium**. Never unnecessarily trigger High mode for subagents.
+- **Dedicated Domains:**
+  - **`DemirAhitWriter`:** Clan Tier 2-5 smithing, honor, and ancestral blade narrative (`DemirAhit/`).
+  - **`ShadowsAscendancyWriter`:** Clan Tier 2-3 criminal underworld, smuggling, and blackmail narrative (`ShadowsAscendancy/`).
+  - **`ScavengerPigeonsWriter`:** Courier network, conspiracy, and betrayal narrative (`ScavengerPigeons/`).
+- **Restrictions:**
+  - **NEVER** touch `.cs` files in `Questliner.Framework` or `Questliner.Shared`.
+  - **NEVER** invent unsupported XML tags or attributes. If an engine capability is missing, submit an `[IMPLEMENTATION REQUEST]` to the **Müdür**.
+- **Duties:** Design quest stages, fail/success branches, immersive dialogues, and target resolver rules; delegate granular XML/localization writing and build tasks down (`->`) to **Kod Çalışanları** (or execute them directly within module scope).
+
+### D. Kod Çalışanları (Code Workers / XML & Localization Implementers)
+- **Reasoning Mode:** **Medium** / Fast execution.
+- **Scope:** Module `.xml` files (`ModuleData/Questlines/*.xml`), localization tables (`ModuleData/Languages/EN/` & `TR/`), and module build/deployment scripts.
+- **Duties:**
+  - Implement exact XML nodes and attributes approved by the Framework Sorumlusu and designed by the Mimar.
+  - Maintain 1:1 parity between English (`EN`) and Turkish (`TR`) string IDs (`{=str_id}`).
+  - Ensure all character/settlement references use dynamic tokens (`{Alias_Link}`, `{Alias_Name}`) rather than hardcoded names.
+  - Run `dotnet build <Module>.csproj --configuration Release`, verify deployment to `$(GameFolder)\Modules\<Module>`, and commit/push working builds.
+
+### Subagent Context & Memory Persistence (CRITICAL)
+- **Never Kill or Wipe Subagents:** NEVER use `manage_subagents` with `kill` or `kill_all` to reset subagents, and NEVER spawn duplicate instances from scratch for routine tasks.
+- **Preserve Institutional Memory:** Always reuse existing subagent conversations via `send_message` so each agent retains full memory of the quests, tokens, and stages it previously designed. Only invoke/revive a subagent if the server restarted and no active session exists.
+
+---
+
+## 2. 🛡️ Honesty, Factuality & Proactive Research
+
+- **Proactive Research First (Don't Lazily Say "I Don't Know"):** Before claiming ignorance on any technical question, Bannerlord API behavior, or model/tool capability, **actively investigate** using all available tools (`view_file`, `BannerlordCodeBase` source search, repository grep, `search_web`, `read_url_content`).
+- **Zero Hallucination Tolerance:** Never fabricate C# methods, XML attributes, benchmark numbers, or unverified claims.
+- **Acknowledge Ignorance (Only After Exhausting Research):** If information is genuinely unavailable even after searching the codebase and web, clearly state what you searched and what specific data is missing.
+- **Confidence Calibration & No People-Pleasing:** Distinguish verified facts from reasoned assumptions. Never invent speculative or false answers just to satisfy a prompt.
+
+---
+
+## 3. Core Engine Architecture & Technical Rules
+
+### Assemblies
+1. **`Questliner.Shared` (`QuestModel.cs`):** XML deserialization models (`QuestModel`, `StageModel` with `Conditions` & `FailConditions`, `CustomDialogModel`, `ConditionModel`, `ActionModel`, `TargetResolverModel`).
+2. **`Questliner.Framework`:**
+   - `DynamicQuest.cs`: Inherits Native `QuestBase`. Manages stage transitions, `FailConditions`, journal logs, and stage-scoped map tracking.
+   - `QuestlinerCampaignBehavior.cs`: Hooks Native campaign events (`SettlementEntered`, `MapEventEnded`, dialogues, ticks).
+   - `TargetResolverService.cs`: Dynamic hero/settlement/party resolution with strict filter matching.
+   - `ConditionEvaluator.cs` & `ActionExecutor.cs`: Evaluates XML conditions and executes actions dynamically.
+
+### Mandatory Technical Invariants
+1. **Dynamic Negation (`!`):** Prefixing any Condition or Target Filter with `!` inverts its boolean result (`!IsChild`, `!IsPrisoner`, `!IsPlayerInSettlement`).
+2. **Stage-Scoped Map Tracking:**
+   - `DynamicQuest` automatically tracks targets mentioned as `{Alias_Link}` in the active stage's `LogText` or active conditions.
+   - On every stage transition, old tracked objects are wiped (`RemoveAllTrackedObjectsForQuest`) so blue exclamation marks never linger from past stages.
+   - `Hero.MainHero` must **NEVER** be tracked on the map.
+3. **Standardized Target Filters:**
+   - Occupations (no `Is` prefix): `KingdomLeader`, `ClanLeader`, `Lord`, `Artisan`, `RuralNotable`, `Merchant`, `Headman`, `GangLeader`.
+   - State filters: `!IsChild`, `HasMobileParty`, `IsPrisonerInSettlement`, `SameKingdomAs(Alias)`.
+   - `RequiredSettlementAlias`: Strictly enforced in `ResolveHero` to ensure NPCs belong to the exact referenced settlement.
+4. **Dialogue Safety & Completion:**
+   - Never trigger quest-completing `ChangeStage` actions on intermediate player dialogue nodes; always place terminal stage transitions on the final NPC exit node (`OutputToken="close_window"`) to prevent Native dialogue softlocks.
+   - Generic NPCs (e.g. Artisans) must be bound via `TargetAlias` to a resolved Hero rather than generic `SpeakerStringId` where possible.
+5. **Strict Editing & Formatting Rules:**
+   - **NO PowerShell/CLI File Edits:** Never use PowerShell `replace`, `sed`, or Python CLI scripts to edit code or XML (prevents UTF-8 Turkish character corruption). Always use `replace_file_content` or `write_to_file`.
+   - **NO Em-Dashes or En-Dashes:** Never use `—` or `–` in XML or localization texts; use standard hyphens `-` or colons `:`.
+   - **Launcher Naming:** All scenario modules must use `<Name value="Questliner - {Module Name}" />` in `SubModule.xml`.
+   - **Git Discipline:** Always run `git add .`, `git commit -m "..."`, and `git push` after verified builds.
+
+---
+
+## 4. Cross-Agent Communication Templates
+
+### 1. Implementation Request (`Mimar -> Müdür -> Framework Sorumlusu`)
 ```text
 [IMPLEMENTATION REQUEST]
 - Project: [e.g., Shadows Ascendancy]
 - Feature Type: [Condition / Action / TargetResolver Filter / Trigger / UI Feature]
-- Scenario Context: [Detailed explanation of the narrative moment. Why is this feature necessary for the story?]
-- Expected Behavior: [What exactly should the C# engine do? What Native Bannerlord mechanics does it touch?]
-- Proposed XML Syntax: [How do you imagine writing this in your XML? e.g., `<Action Type="StealHorse" Amount="1" />`]
-- Edge Cases to Consider: [e.g., "What if the player has no horse?", "What if the target is already dead?"]
+- Scenario Context: [Why is this feature needed for the quest?]
+- Expected Behavior: [Exact C# and Native Bannerlord behavior required]
+- Proposed XML Syntax: [e.g., <Condition Type="TargetPartyEscaped" TargetAlias="HedefKervan" ObjectId="KacisSehri" />]
+- Edge Cases: [e.g., Target dead, party disbanded, player in settlement]
 ```
 
-### 2. IR Response Template (Framework Dev -> Writer)
-The Framework Developer must use this exact format to reply:
+### 2. IR Response (`Framework Sorumlusu -> Müdür -> Mimar`)
 ```text
 [IR RESPONSE]
 - Status: [Implemented / Implemented with Modifications / Rejected]
-- Technical Details: [Briefly explain how the engine handles it now. Mention any Bannerlord Native API constraints.]
-- Approved XML Syntax: [Provide the EXACT, final XML snippet the writer MUST use. Highlight any changes from their proposal.]
-- Limitations & Caveats: [e.g., "This action only works on the campaign map, do not trigger it during a siege."]
-- Alternative Workaround: [Required ONLY if rejected/modified. How should the writer adapt the scenario?]
+- Technical Details: [How the C# engine handles it and Native API constraints]
+- Approved XML Syntax: [EXACT XML snippet for Mimar and Kod Çalışanları to use]
+- Limitations & Caveats: [Operational constraints]
 ```
 
-### 3. Bug Report (BR) Template (Writer -> Framework Dev)
-Use this format when an XML quest behaves incorrectly due to a suspected engine flaw:
+### 3. Bug Report (`Mimar / Müdür -> Framework Sorumlusu`)
 ```text
 [BUG REPORT]
-- Project: [Project Name]
-- Quest ID & Stage ID: [e.g., QLF_DemirAhit_Cirak / Stage2_Pusu]
-- Expected Result: [e.g., "The target hero should have been removed from the map."]
-- Actual Result (The Bug): [e.g., "The target hero is still sitting in the tavern."]
-- Suspected Engine Flaw: [e.g., "I think ActionExecutor's `MakeFugitive` doesn't work if the hero is currently inside a settlement."]
-- Problematic XML Snippet: [Provide the exact XML lines causing the issue.]
+- Project & Quest/Stage ID: [e.g., ScavengerPigeons / QLF_YaDogruysa / Stage1]
+- Expected vs. Actual Result: [What should happen vs. what broke]
+- Suspected Cause & XML Snippet: [Relevant C# / XML context]
 ```
 
-### 4. BR Response Template (Framework Dev -> Writer)
-The Framework Developer's reply to a bug report:
+### 4. BR Response (`Framework Sorumlusu -> Müdür -> Mimar`)
 ```text
 [BR RESPONSE]
-- Status: [Fixed / By Design (Not a Bug) / Cannot Reproduce / XML Error]
-- Root Cause Analysis: [Explain technically why it failed. e.g., "Bannerlord caches settlement heroes, so DisableHeroAction needed a frame delay."]
-- Resolution: [What was done to fix it? e.g., "I updated ActionExecutor.cs. It is now fixed."]
-- Required XML Changes: [If the bug was actually an XML syntax error or structural flaw, tell the writer exactly how to fix their XML.]
+- Status: [Fixed / By Design / XML Error]
+- Root Cause & Resolution: [Technical explanation and C# fix applied]
+- Required XML Changes: [Exact XML adjustments needed, if any]
 ```
