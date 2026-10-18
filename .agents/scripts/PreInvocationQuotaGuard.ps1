@@ -39,22 +39,34 @@ if (-not $isDaemonRunning -and (Test-Path $WatchdogScript)) {
 if (Test-Path $LiveStatusPath) {
     try {
         $status = Get-Content $LiveStatusPath -Raw -Encoding UTF8 | ConvertFrom-Json
-        foreach ($m in $status.monitoredModels) {
-            if ([double]$m.remainingFraction -lt [double]$status.thresholdFraction) {
-                $promptText = "ACIL DURUM: KOD 5682 (KOTA) - $($m.label) kotasi %$($m.remainingPercent) seviyesine dustu! Derhal KOD 5682 Guvenli Duraklatma Protokolunu uygula."
-                if (Test-Path $LastTriggeredPromptPath) {
-                    $promptText = Get-Content $LastTriggeredPromptPath -Raw -Encoding UTF8
-                }
-                $out = @{
-                    userMessage        = "🚨 [KOD 5682 (KOTA)] $($m.label) kotasi %$($m.remainingPercent) (< %10)! Guvenli duraklatma protokolu enjekte edildi."
-                    hookSpecificOutput = @{
-                        hookEventName     = "PreInvocation"
-                        additionalContext = $promptText
-                    }
-                }
-                [Console]::Out.Write(($out | ConvertTo-Json -Depth 5 -Compress))
-                exit 0
+        if ($status.operationalMode -eq "PAUSE_ALL") {
+            $promptText = "ACIL DURUM: KOD 5682 (KOTA) - Gemini 3.8 Flash kotasi %10'un altina dustu! Derhal KOD 5682 Guvenli Duraklatma Protokolunu uygula."
+            if (Test-Path $LastTriggeredPromptPath) {
+                $promptText = Get-Content $LastTriggeredPromptPath -Raw -Encoding UTF8
             }
+            $out = @{
+                userMessage        = "🚨 [KOD 5682 (KOTA)] Gemini 3.8 Flash kotasi <%10! Guvenli duraklatma protokolu enjekte edildi."
+                hookSpecificOutput = @{
+                    hookEventName     = "PreInvocation"
+                    additionalContext = $promptText
+                }
+            }
+            [Console]::Out.Write(($out | ConvertTo-Json -Depth 5 -Compress))
+            exit 0
+        }
+        elseif ($status.operationalMode -eq "FALLBACK_FLASH") {
+            $promptText = "KOD 5682-VARDIYA: Gemini 4 Argon kotasi <%10 oldugu icin Mudur modeli otomatik olarak Gemini 3.8 Flash (High) modeline gecirildi. Uretime kesintisiz devam et."
+            if (Test-Path $LastTriggeredPromptPath) {
+                $promptText = Get-Content $LastTriggeredPromptPath -Raw -Encoding UTF8
+            }
+            $out = @{
+                hookSpecificOutput = @{
+                    hookEventName     = "PreInvocation"
+                    additionalContext = $promptText
+                }
+            }
+            [Console]::Out.Write(($out | ConvertTo-Json -Depth 5 -Compress))
+            exit 0
         }
     } catch {}
 }

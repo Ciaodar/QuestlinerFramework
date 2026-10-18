@@ -88,20 +88,27 @@ The project operates under a strict five-role command, execution, and auditing s
 
 ---
 
-## 2B. Protokol "Kod 5682 (KOTA)" — Model Kotası İzleme, Güvenli Duraklatma ve Otonom Devam Sistemi
+## 2B. Protokol "Kod 5682 (KOTA)" — 3 Kademeli Model Kotası İzleme, Otomatik Flash Vardiyası ve Güvenli Duraklatma
 
-To prevent mid-task quota exhaustion from leaving half-written C#/XML files or broken subagent contexts, the workspace runs a dual-layer **KOD 5682 (KOTA)** protection system:
+To prevent mid-task quota exhaustion from leaving half-written C#/XML files or broken subagent contexts, the workspace runs a 3-tier **KOD 5682 (KOTA)** protection and model failover system:
 
-1. **10-Second Live Quota Watchdog (`.agents/scripts/QuotaWatchdog.ps1`):**
-   - Polls Antigravity's local `language_server` `GetUserStatus` RPC endpoint every 10 seconds.
-   - Monitors both the **Müdür's active model** (`Gemini 4 Argon (High)` / `last_selected_agent_model`) and the **Subagent model** (`Gemini 3.8 Flash (Medium)`).
-   - Writes real-time telemetry to `.agents/quota_live_status.json`.
-   - When `remainingFraction < 0.10` (**< 10%**), renders `.agents/prompts/KOD_5682_KOTA_PROMPT.md` with exact `resetTime` and `WAIT_SECONDS` (`secondsUntilReset + 60s buffer`) and dispatches it directly to the **Müdür** via `agentapi.bat send-message`.
+1. **10-Second Live Quota & Failover Watchdog (`.agents/scripts/QuotaWatchdog.ps1`):**
+   - Polls Antigravity's local `language_server` `GetUserStatus` RPC endpoint every 10 seconds and writes live telemetry to `.agents/quota_live_status.json`.
+   - Operates across **3 Autonomous Tiers**:
+     - **Tier 1 (`NORMAL_ARGON` — `Argon >= 10%` & `Flash >= 10%`):**
+       - **Müdür** runs on `Gemini 4 Argon (High)` (`MODEL_PLACEHOLDER_M417`); **Subagents** run on `Gemini 3.8 Flash (Medium)` (`MODEL_PLACEHOLDER_M319`).
+       - If previously in `FALLBACK_FLASH` mode and Argon quota resets (`>= 10%`), automatically restores the **Müdür** back to `Gemini 4 Argon (High)` via `LanguageServerService/JetboxWriteState`.
+     - **Tier 2 (`FALLBACK_FLASH` — `Argon < 10%`, `Flash >= 10%`):**
+       - When Argon drops below 10% while `3.8 Flash` still has quota, production **does not stop**.
+       - `QuotaWatchdog.ps1` immediately calls `LanguageServerService/JetboxWriteState` (`lastSelectedAgentModel: "MODEL_PLACEHOLDER_M318"`) to switch the **Müdür** to **`Gemini 3.8 Flash (High)`** (`MODEL_PLACEHOLDER_M318`) and dispatches `.agents/prompts/KOD_5682_FALLBACK_FLASH_PROMPT.md`.
+     - **Tier 3 (`PAUSE_ALL` — `Flash < 10%`):**
+       - When `Gemini 3.8 Flash` drops below 10%, neither subagents nor the fallback model can safely continue.
+       - Renders `.agents/prompts/KOD_5682_KOTA_PROMPT.md` with exact `resetTime` and `WAIT_SECONDS` (`secondsUntilReset + 60s buffer`) and dispatches it to the **Müdür** via `agentapi.bat send-message`.
 2. **Synchronous `PreInvocation` Hook Guard (`.agents/hooks.json` & `.agents/scripts/PreInvocationQuotaGuard.ps1`):**
    - Runs before every model invocation in `< 20ms`.
    - Self-heals and auto-starts `QuotaWatchdog.ps1` in the background if not already running.
-   - Synchronously injects the **KOD 5682 (KOTA)** emergency prompt via `hookSpecificOutput.additionalContext` if any monitored model is below 10%.
-3. **Mandatory Müdür Actions Upon Receiving KOD 5682 (KOTA):**
+   - Synchronously injects the active **KOD 5682** state (`FALLBACK_FLASH` or `PAUSE_ALL`) via `hookSpecificOutput.additionalContext`.
+3. **Mandatory Müdür Actions Upon Receiving `PAUSE_ALL` (`KOD 5682`):**
    - **Subagent Safe Interrupt:** Send `[ACİL DURUM: KOD 5682 (KOTA)]` via `send_message` to all running subagents so they atomically finish their current file write and immediately idle (never `kill`, preserving subagent memory).
    - **Checkpoint:** Write exact progress and resume instructions to `.agents/quota_checkpoint.md`.
    - **Auto-Resume Timer:** Call `schedule` with `DurationSeconds = WAIT_SECONDS`, `TimerCondition = "never"`, and the `[KOD 5682 OTONOM DEVAM SİNYALİ]` prompt so production automatically resumes the moment the quota resets.
