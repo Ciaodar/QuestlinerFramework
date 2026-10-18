@@ -46,6 +46,12 @@ When injecting dialogues for generic NPCs (like Artisans or Tavern Keepers in to
 
 ## Strict Development Rules
 
+### 🛡️ Honesty, Uncertainty & Factuality
+- **Zero Hallucination Tolerance:** Do not fabricate, assume, or guess any information that is not explicitly present in the provided context or your verified knowledge base. 
+- **Acknowledge Ignorance:** If you are unsure, lack sufficient data, or the query is ambiguous, report it honestly. Use clear disclaimers such as "I do not have enough information to answer this reliably" or "Based strictly on the provided data, this detail is missing."
+- **Confidence Calibration:** Never present a high-probability guess as an absolute fact. If you must reason through an uncertain scenario, explicitly state your level of confidence and the assumptions you are making.
+- **No People-Pleasing:** Do not generate a false or speculative answer just to satisfy the user's prompt. Honesty and data integrity always supersede completeness.
+
 ### Schema & Pattern Strictness (No Hallucinations)
 - **NEVER** invent or guess XML schemas, C# API patterns, or structures.
 - Before implementing a new feature or stage, **ALWAYS** search the repository for existing examples (e.g., in other modules like `ScavengerPigeons`) to use as a concrete reference.
@@ -68,6 +74,11 @@ When injecting dialogues for generic NPCs (like Artisans or Tavern Keepers in to
 
 To maintain high architectural integrity and prevent context pollution, the project operates under an **Orchestrator - Subagent (Quest Writers)** model.
 
+### Reasoning Modes & Subagent Context Persistence
+- **Main Coordinator (Ana Koordinatör):** Must always operate in **High** reasoning mode to plan the overarching architecture, analyze extensive multi-item test reports, and resolve cross-system dependencies.
+- **Subagent Invocations (Alt Ajan Tetiklemeleri):** When assigning tasks to or invoking subagents, strictly lock each subagent's execution parameter to **Medium** level. Do not unnecessarily trigger **High** mode for subagents.
+- **Subagent Memory & Context Preservation (No Killing / No Context Resets):** NEVER kill subagents (`manage_subagents` with `kill` / `kill_all`) or wipe their memories by spawning fresh instances for every task. Subagents must remember their prior work and context. Always reuse existing subagent conversations via `send_message` whenever possible, and only invoke or revive them when no active session exists.
+
 ### Role 1: The Lead Framework Architect (Central Agent / Orchestrator)
 - **Scope:** Complete ownership of `.cs` files in `Questliner.Framework` and `Questliner.Shared`, engine architecture, and subagent coordination.
 - **Restriction:** NEVER write or edit `.xml` files inside scenario modules (`DemirAhit/`, `ShadowsAscendancy/`, `ScavengerPigeons/`).
@@ -79,7 +90,7 @@ To maintain high architectural integrity and prevent context pollution, the proj
   - Dispatch structured `[IR RESPONSE]` and `[BR RESPONSE]` directly to the respective scenario subagents.
 
 ### Role 2: The Scenario Quest Writers (Subagents)
-Each storyline has a dedicated subagent with an isolated context:
+Each storyline has a dedicated subagent with an isolated, persistent context:
 - **`DemirAhit Subagent`**: Focuses on Clan Tier 2-5 smithing, honor, and loyalty narrative (`DemirAhit/`).
 - **`ShadowsAscendancy Subagent`**: Focuses on Clan Tier 2-3 criminal underworld, smuggling, and blackmail narrative (`ShadowsAscendancy/`).
 - **`ScavengerPigeons Subagent`**: Focuses on courier network, conspiracy, and betrayal narrative (`ScavengerPigeons/`).
