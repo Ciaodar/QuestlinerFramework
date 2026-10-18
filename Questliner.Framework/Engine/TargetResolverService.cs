@@ -17,6 +17,35 @@ namespace Questliner.Framework.Engine
         {
             if (model.TargetType != "Hero") return null;
 
+            if (!string.IsNullOrEmpty(model.Filters) && model.Filters.Contains("||"))
+            {
+                var branches = model.Filters.Split(new[] { "||" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var branch in branches)
+                {
+                    var cleanBranch = branch.Trim();
+                    if (cleanBranch.StartsWith("(") && cleanBranch.EndsWith(")"))
+                    {
+                        cleanBranch = cleanBranch.Substring(1, cleanBranch.Length - 2).Trim();
+                    }
+                    var branchModel = new TargetResolverModel
+                    {
+                        Alias = model.Alias,
+                        TargetType = model.TargetType,
+                        Filters = cleanBranch,
+                        RequiredSettlementAlias = model.RequiredSettlementAlias,
+                        Selector = model.Selector,
+                        SpecificId = model.SpecificId,
+                        IsOptional = model.IsOptional
+                    };
+                    var resolved = ResolveHero(branchModel, quest, questGiver);
+                    if (resolved != null)
+                    {
+                        return resolved;
+                    }
+                }
+                return null;
+            }
+
             if (!string.IsNullOrEmpty(model.SpecificId))
             {
                 if (model.SpecificId.StartsWith("GlobalHero(") && model.SpecificId.EndsWith(")"))
@@ -27,7 +56,7 @@ namespace Questliner.Framework.Engine
                     if (gh != null && gh.IsAlive) return gh;
                     return null;
                 }
-                return Hero.AllAliveHeroes.FirstOrDefault(h => h.StringId == model.SpecificId);
+                return Hero.AllAliveHeroes.FirstOrDefault(h => h.StringId == model.SpecificId && h.IsAlive);
             }
 
             // Check if Filters explicitly requires an existing GlobalHero
@@ -48,10 +77,8 @@ namespace Questliner.Framework.Engine
                 }
             }
 
-            IEnumerable<Hero> candidates = Hero.AllAliveHeroes;
-            
-            // DYNAMIC QUESTS MUST ALWAYS EXCLUDE THE MAIN HERO FROM RANDOM ASSIGNMENTS
-            candidates = candidates.Where(h => h != Hero.MainHero);
+            bool allowChildren = !string.IsNullOrEmpty(model.Filters) && model.Filters.Split(',').Any(f => f.Trim().Equals("IsChild", StringComparison.OrdinalIgnoreCase));
+            IEnumerable<Hero> candidates = Hero.AllAliveHeroes.Where(h => h.IsAlive && !h.IsDisabled && !h.IsNotSpawned && h != Hero.MainHero && (allowChildren || !h.IsChild));
 
             if (!string.IsNullOrEmpty(model.RequiredSettlementAlias))
             {
@@ -467,9 +494,31 @@ namespace Questliner.Framework.Engine
             {
                 int closeIdx = filter.LastIndexOf(')');
                 string alias = (closeIdx > 14) ? filter.Substring(14, closeIdx - 14).Trim() : filter.Substring(14).Trim();
-                if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
+                IFaction? faction = null;
+                if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero) && aliasHero != null)
                 {
-                    var faction = GetEffectiveFaction(aliasHero);
+                    faction = GetEffectiveFaction(aliasHero);
+                }
+                else if (alias.Equals("Player", StringComparison.OrdinalIgnoreCase) || alias.Equals("MainHero", StringComparison.OrdinalIgnoreCase))
+                {
+                    faction = Clan.PlayerClan?.MapFaction ?? Hero.MainHero?.MapFaction;
+                }
+                else if ((alias.Equals("Giver", StringComparison.OrdinalIgnoreCase) || alias.Equals("QuestGiver", StringComparison.OrdinalIgnoreCase)) && effectiveGiver != null)
+                {
+                    faction = GetEffectiveFaction(effectiveGiver);
+                }
+                else if (quest != null && quest.TargetSettlements.TryGetValue(alias, out var aliasSettlement) && aliasSettlement != null)
+                {
+                    faction = aliasSettlement.MapFaction;
+                }
+                else
+                {
+                    var gh = GlobalStateManager.Instance.GetGlobalHero(alias) ?? Hero.AllAliveHeroes.FirstOrDefault(h => h.StringId == alias);
+                    if (gh != null) faction = GetEffectiveFaction(gh);
+                }
+
+                if (faction != null)
+                {
                     return isNegated ? source.Where(h => GetEffectiveFaction(h) != faction) : source.Where(h => GetEffectiveFaction(h) == faction);
                 }
                 return source;
@@ -479,9 +528,31 @@ namespace Questliner.Framework.Engine
             {
                 int closeIdx = filter.LastIndexOf(')');
                 string alias = (closeIdx > 14) ? filter.Substring(14, closeIdx - 14).Trim() : filter.Substring(14).Trim();
-                if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
+                Kingdom? kingdom = null;
+                if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero) && aliasHero != null)
                 {
-                    var kingdom = GetEffectiveKingdom(aliasHero);
+                    kingdom = GetEffectiveKingdom(aliasHero);
+                }
+                else if (alias.Equals("Player", StringComparison.OrdinalIgnoreCase) || alias.Equals("MainHero", StringComparison.OrdinalIgnoreCase))
+                {
+                    kingdom = Clan.PlayerClan?.Kingdom;
+                }
+                else if ((alias.Equals("Giver", StringComparison.OrdinalIgnoreCase) || alias.Equals("QuestGiver", StringComparison.OrdinalIgnoreCase)) && effectiveGiver != null)
+                {
+                    kingdom = GetEffectiveKingdom(effectiveGiver);
+                }
+                else if (quest != null && quest.TargetSettlements.TryGetValue(alias, out var aliasSettlement) && aliasSettlement != null)
+                {
+                    kingdom = aliasSettlement.OwnerClan?.Kingdom ?? (aliasSettlement.MapFaction as Kingdom);
+                }
+                else
+                {
+                    var gh = GlobalStateManager.Instance.GetGlobalHero(alias) ?? Hero.AllAliveHeroes.FirstOrDefault(h => h.StringId == alias);
+                    if (gh != null) kingdom = GetEffectiveKingdom(gh);
+                }
+
+                if (kingdom != null)
+                {
                     return isNegated ? source.Where(h => GetEffectiveKingdom(h) != kingdom) : source.Where(h => GetEffectiveKingdom(h) == kingdom);
                 }
                 return source;
@@ -491,9 +562,31 @@ namespace Questliner.Framework.Engine
             {
                 int closeIdx = filter.LastIndexOf(')');
                 string alias = (closeIdx > 11) ? filter.Substring(11, closeIdx - 11).Trim() : filter.Substring(11).Trim();
-                if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero))
+                Clan? clan = null;
+                if (quest != null && quest.TargetHeroes.TryGetValue(alias, out var aliasHero) && aliasHero != null)
                 {
-                    var clan = aliasHero.Clan;
+                    clan = aliasHero.Clan;
+                }
+                else if (alias.Equals("Player", StringComparison.OrdinalIgnoreCase) || alias.Equals("MainHero", StringComparison.OrdinalIgnoreCase))
+                {
+                    clan = Clan.PlayerClan;
+                }
+                else if ((alias.Equals("Giver", StringComparison.OrdinalIgnoreCase) || alias.Equals("QuestGiver", StringComparison.OrdinalIgnoreCase)) && effectiveGiver != null)
+                {
+                    clan = effectiveGiver.Clan;
+                }
+                else if (quest != null && quest.TargetSettlements.TryGetValue(alias, out var aliasSettlement) && aliasSettlement != null)
+                {
+                    clan = aliasSettlement.OwnerClan;
+                }
+                else
+                {
+                    var gh = GlobalStateManager.Instance.GetGlobalHero(alias) ?? Hero.AllAliveHeroes.FirstOrDefault(h => h.StringId == alias);
+                    if (gh != null) clan = gh.Clan;
+                }
+
+                if (clan != null)
+                {
                     return isNegated ? source.Where(h => h.Clan != clan) : source.Where(h => h.Clan == clan);
                 }
                 return source;
@@ -552,7 +645,7 @@ namespace Questliner.Framework.Engine
                 int closeIdx = filter.LastIndexOf(')');
                 string key = (closeIdx > 11) ? filter.Substring(11, closeIdx - 11).Trim() : filter.Substring(11).Trim();
                 var globalHero = Questliner.Framework.Core.GlobalStateManager.Instance.GetGlobalHero(key);
-                if (globalHero == null)
+                if (globalHero == null || !globalHero.IsAlive)
                 {
                     return isNegated ? source : Enumerable.Empty<Hero>();
                 }
@@ -604,6 +697,7 @@ namespace Questliner.Framework.Engine
                 "Wanderer" => h => h.IsWanderer,
                 "Female" => h => h.IsFemale,
                 "Male" => h => !h.IsFemale,
+                "IsChild" => h => h.IsChild,
                 "IsPrisoner" => h => h.IsPrisoner,
                 "IsPrisonerInSettlement" => h => h.IsPrisoner && h.PartyBelongedToAsPrisoner != null && h.PartyBelongedToAsPrisoner.IsSettlement,
                 _ => null
@@ -628,10 +722,38 @@ namespace Questliner.Framework.Engine
                     int closeIdx = model.SpecificId.LastIndexOf(')');
                     var gKey = (closeIdx > 11) ? model.SpecificId.Substring(11, closeIdx - 11).Trim() : model.SpecificId.Substring(11).Trim();
                     var gh = GlobalStateManager.Instance.GetGlobalHero(gKey);
-                    return gh == hero;
+                    return gh == hero && gh.IsAlive;
                 }
                 if (hero.StringId != model.SpecificId) return false;
             }
+
+            if (!string.IsNullOrEmpty(model.Filters) && model.Filters.Contains("||"))
+            {
+                var branches = model.Filters.Split(new[] { "||" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var branch in branches)
+                {
+                    var cleanBranch = branch.Trim();
+                    if (cleanBranch.StartsWith("(") && cleanBranch.EndsWith(")"))
+                    {
+                        cleanBranch = cleanBranch.Substring(1, cleanBranch.Length - 2).Trim();
+                    }
+                    var branchModel = new TargetResolverModel
+                    {
+                        Alias = model.Alias,
+                        TargetType = model.TargetType,
+                        Filters = cleanBranch,
+                        RequiredSettlementAlias = model.RequiredSettlementAlias,
+                        Selector = model.Selector,
+                        SpecificId = model.SpecificId,
+                        IsOptional = model.IsOptional
+                    };
+                    if (IsHeroMatch(branchModel, hero, quest, questGiver)) return true;
+                }
+                return false;
+            }
+
+            bool allowChildren = !string.IsNullOrEmpty(model.Filters) && model.Filters.Split(',').Any(f => f.Trim().Equals("IsChild", StringComparison.OrdinalIgnoreCase));
+            if (hero.IsChild && !allowChildren) return false;
 
             // To check if a single hero matches the triggers, pass them through the filter pipeline!
             if (!string.IsNullOrEmpty(model.Filters))
@@ -643,7 +765,7 @@ namespace Questliner.Framework.Engine
                     int closeIdx = globalFilter.LastIndexOf(')');
                     var gKey = (closeIdx > 11) ? globalFilter.Substring(11, closeIdx - 11).Trim() : globalFilter.Substring(11).Trim();
                     var gh = GlobalStateManager.Instance.GetGlobalHero(gKey);
-                    if (gh == null || gh != hero)
+                    if (gh == null || !gh.IsAlive || gh != hero)
                     {
                         return false;
                     }

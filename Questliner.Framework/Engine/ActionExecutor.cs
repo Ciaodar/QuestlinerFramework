@@ -16,6 +16,8 @@ namespace Questliner.Framework.Engine
 {
     public static class ActionExecutor
     {
+        public static readonly HashSet<Hero> HeroesBeingKilledByQuest = new HashSet<Hero>();
+
         /// <summary>
         /// Executes a specific ActionModel parsed from the Questliner XML.
         /// </summary>
@@ -810,21 +812,12 @@ namespace Questliner.Framework.Engine
                 }
                 case "StartQuest":
                 {
-                    var model = Questliner.Framework.Services.QuestModuleScanner.LoadedQuests.FirstOrDefault(q => q.Id == action.ObjectId);
-                    if (model != null)
-                    {
-                        if (Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance != null &&
-                            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance.CompletedQuestIds.Contains(model.Id))
-                        {
-                            TaleWorlds.Library.Debug.Print($"[Questliner] Quest '{model.Id}' is already marked as completed. Skipping StartQuest.");
-                            break;
-                        }
-
-                        if (!TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.OfType<Questliner.Framework.Core.DynamicQuest>().Any(q => q.Model?.Id == model.Id))
-                        {
-                            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.TryAutoStartQuest(model);
-                        }
-                    }
+                    ExecuteStartQuest(action, quest);
+                    break;
+                }
+                case "RestartQuest":
+                {
+                    ExecuteRestartQuest(action, quest);
                     break;
                 }
 
@@ -868,20 +861,7 @@ namespace Questliner.Framework.Engine
                 }
                 case "KillHero":
                 {
-                    Hero? target = quest?.GetTargetHero(action.TargetAlias);
-                    if (target != null && target.IsAlive)
-                    {
-                        if (action.StringValue.Equals("Execution", StringComparison.OrdinalIgnoreCase) ||
-                            action.ObjectId.Equals("Execution", StringComparison.OrdinalIgnoreCase))
-                        {
-                            TaleWorlds.CampaignSystem.Actions.KillCharacterAction.ApplyByExecution(target, null, true, true);
-                        }
-                        else
-                        {
-                            // ApplyByMurder natively handles removing them from towns, resolving their workshops, etc.
-                            TaleWorlds.CampaignSystem.Actions.KillCharacterAction.ApplyByMurder(target, null, true);
-                        }
-                    }
+                    ExecuteKillHero(action, quest);
                     break;
                 }
                 case "MakeFugitive":
@@ -945,6 +925,88 @@ namespace Questliner.Framework.Engine
                     TaleWorlds.Library.Debug.Print($"[Questliner] Unknown Action Type executed: {action.ActionType}");
                     break;
                 }
+            }
+        }
+
+        private static void ExecuteKillHero(ActionModel action, DynamicQuest? quest)
+        {
+            Hero? target = null;
+            if (action.TargetAlias.Equals("Player", StringComparison.OrdinalIgnoreCase) || action.TargetAlias.Equals("MainHero", StringComparison.OrdinalIgnoreCase))
+            {
+                target = Hero.MainHero;
+            }
+            else
+            {
+                target = quest?.GetTargetHero(action.TargetAlias);
+            }
+
+            if (target == null || !target.IsAlive) return;
+
+            HeroesBeingKilledByQuest.Add(target);
+            try
+            {
+                if (target == Hero.MainHero)
+                {
+                    if (Hero.MainHero.IsPrisoner)
+                    {
+                        TaleWorlds.CampaignSystem.Actions.EndCaptivityAction.ApplyByReleasedAfterBattle(Hero.MainHero);
+                    }
+                    var killer = Hero.FindFirst(h => h.IsAlive && h != Hero.MainHero && h.IsLord) ?? target;
+                    TaleWorlds.CampaignSystem.Actions.KillCharacterAction.ApplyByExecution(Hero.MainHero, killer, true, true);
+                }
+                else
+                {
+                    if (action.StringValue.Equals("Execution", StringComparison.OrdinalIgnoreCase) ||
+                        action.ObjectId.Equals("Execution", StringComparison.OrdinalIgnoreCase))
+                    {
+                        TaleWorlds.CampaignSystem.Actions.KillCharacterAction.ApplyByExecution(target, null, true, true);
+                    }
+                    else
+                    {
+                        // ApplyByMurder natively handles removing them from towns, resolving their workshops, etc.
+                        TaleWorlds.CampaignSystem.Actions.KillCharacterAction.ApplyByMurder(target, null, true);
+                    }
+                }
+            }
+            finally
+            {
+                HeroesBeingKilledByQuest.Remove(target);
+            }
+        }
+
+        private static void ExecuteStartQuest(ActionModel action, DynamicQuest? quest)
+        {
+            if (string.IsNullOrEmpty(action.ObjectId)) return;
+
+            bool isForceRestart = action.StringValue != null && action.StringValue.Equals("ForceRestart", StringComparison.OrdinalIgnoreCase);
+            if (isForceRestart)
+            {
+                GlobalStateManager.Instance.CompletedQuests.RemoveWhere(id => string.Equals(id, action.ObjectId, StringComparison.OrdinalIgnoreCase));
+                Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.RemoveCompletedQuest(action.ObjectId);
+            }
+
+            Campaign.Current.GetCampaignBehavior<Questliner.Framework.Behaviors.QuestlinerCampaignBehavior>()?.StartQuestById(action.ObjectId, null, forceRestart: isForceRestart);
+        }
+
+        private static void ExecuteRestartQuest(ActionModel action, DynamicQuest? quest)
+        {
+            string questId = !string.IsNullOrEmpty(action.ObjectId) ? action.ObjectId : (quest?.Model?.Id ?? string.Empty);
+            if (string.IsNullOrEmpty(questId)) return;
+
+            GlobalStateManager.Instance.CompletedQuests.RemoveWhere(id => string.Equals(id, questId, StringComparison.OrdinalIgnoreCase));
+            Questliner.Framework.Behaviors.QuestlinerCampaignBehavior.Instance?.RemoveCompletedQuest(questId);
+
+            if (quest != null && quest.Model != null && (string.IsNullOrEmpty(action.ObjectId) || string.Equals(action.ObjectId, quest.Model.Id, StringComparison.OrdinalIgnoreCase)))
+            {
+                var firstStage = quest.Model.Stages.FirstOrDefault();
+                if (firstStage != null)
+                {
+                    quest.TransitionToStage(firstStage.Id);
+                }
+            }
+            else
+            {
+                Campaign.Current.GetCampaignBehavior<Questliner.Framework.Behaviors.QuestlinerCampaignBehavior>()?.StartQuestById(questId, null, forceRestart: true);
             }
         }
 

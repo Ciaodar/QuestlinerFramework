@@ -13,10 +13,14 @@ namespace Questliner.Framework.Core
         // Persistent Heroes to pass between different quests
         public Dictionary<string, Hero> GlobalHeroes { get; internal set; }
 
+        // Persistent completed quest ids
+        public HashSet<string> CompletedQuests { get; internal set; }
+
         private GlobalStateManager()
         {
             GlobalFlags = new Dictionary<string, bool>();
             GlobalHeroes = new Dictionary<string, Hero>();
+            CompletedQuests = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
         }
 
         public void SetFlag(string key, bool value)
@@ -50,6 +54,7 @@ namespace Questliner.Framework.Core
         {
             GlobalFlags.Clear();
             GlobalHeroes.Clear();
+            CompletedQuests.Clear();
         }
 
     }

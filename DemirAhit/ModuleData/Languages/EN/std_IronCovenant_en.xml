@@ -62,6 +62,10 @@
     <string id="da_log_2_2B" text="Rather than wait for flames to rise, you decided to sever the snake's head. Track down {RakipTuccar_Link} and put an end to this conspiracy." />
     <string id="da_log_2_2B_savas" text="{RakipTuccar_Link} refused to back down and unleashed his hired bodyguards upon you. Cut them down to assert your clan's will." />
     <string id="da_log_2_3" text="The forge stands triumphant! In recognition of your steadfast protection and martial cunning, {EfsaneviDemirci_Link} confers upon you the Journeyman's Seal." />
+    <string id="da_log_2_fail" text="Your forces were overwhelmed in battle! With no one left to stand between the merchant's cutthroats and the workshop, the ancient bellows were put to the torch." />
+    <string id="da_inq_kalfa_fail_title" text="The Forge in Ashes" />
+    <string id="da_inq_kalfa_fail_text" text="The merchant's hired blades overpowered your warriors. Before dawn, columns of black smoke rose over the district as the ancient forge was burned to the ground." />
+    <string id="da_inq_kalfa_fail_btn" text="A bitter defeat" />
     <string id="da_kalfa_p_giris" text="I heard alarming rumors, master. What troubles your forge?" />
     <string id="da_kalfa_dlg_1" text="A shadow hangs over the anvil, my friend. {RakipTuccar_Link} has gathered deserters and cutthroats to burn my workshop to the ground. If the hearth turns cold, the great blade shall never be finished. How shall we meet this malice?" />
     <string id="da_kalfa_p1" text="I shall post guards and keep watch over your workshop. No arsonist shall breathe within our perimeter." />

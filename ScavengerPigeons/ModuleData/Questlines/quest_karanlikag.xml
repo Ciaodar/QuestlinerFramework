@@ -22,21 +22,50 @@
 
   <Stages>
     <Stage Id="Stage1_MuhbirBulusma" NextStageId="Stage2_PusuSavasi" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_ka_s1_log}A dying black pigeon collapsed onto your campfire, its claws clutching a scorched parchment written in the fugitive artisan's trembling hand: '{Dost.Name} is not serving the Motherland; he is turning it into an abattoir. The Black Ledger detailing every manufactured war and staged assassination is hidden in {GizliSehir_Link}. Find the broker {KaraMuhbir_Link} before the silencers bury the truth.' Ride to {GizliSehir_Link} and locate {KaraMuhbir_Link}!</LogText>
+      <LogText>{=sp_ka_s1_log}A dying black pigeon collapsed onto your campfire, its claws clutching a scorched parchment written in the fugitive artisan's trembling hand: '{Dost_Name} is not serving the Motherland; he is turning it into an abattoir. The Black Ledger detailing every manufactured war and staged assassination is hidden in {GizliSehir_Link}. Find the broker {KaraMuhbir_Link} before the silencers bury the truth.' Ride to {GizliSehir_Link} and locate {KaraMuhbir_Link}!</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="KaraMuhbir" />
       </OnEnterActions>
     </Stage>
 
-    <Stage Id="Stage2_PusuSavasi" NextStageId="Stage3_KasaAcilis" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+    <Stage Id="Stage2_PusuSavasi" NextStageId="Stage3_KasaAcilis" FailStageId="Stage2_Assassins_Defeat" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_ka_s2_log}Just as {KaraMuhbir_Link} confessed, the death squad {GolgeSuikastcilar_Link} ambushed the district to silence anyone seeking the Black Ledger! Slay the assassins to survive and secure the coordinates to the cipher vault.</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="GolgeSuikastcilar" StringValue="Victory" />
       </Conditions>
+      <FailConditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="GolgeSuikastcilar" StringValue="Defeat" />
+      </FailConditions>
       <OnExitActions>
         <Action Type="MakeMet" TargetAlias="KasaKorumasi" />
       </OnExitActions>
+    </Stage>
+
+    <Stage Id="Stage2_Assassins_Defeat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_ka_inq_defeat_text}The Shadow Silencers have overwhelmed your forces and pinned you to the blood-soaked stones, a poisoned dagger pressed against your throat. Their captain sneers down at you: 'The secret council wants no witnesses... Unless your own gold can pay for our departure, your journey ends here.'</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="ShowInquiry" Title="{=sp_ka_inq_defeat_title}At the Silencers' Mercy" Text="{=sp_ka_inq_defeat_text}The Shadow Silencers have overwhelmed your forces and pinned you to the blood-soaked stones, a poisoned dagger pressed against your throat. Their captain sneers down at you: 'The secret council wants no witnesses... Unless your own gold can pay for our departure, your journey ends here.'" AffirmativeText="{=sp_ka_inq_bribe_btn}Offer 10% of Your Gold" NegativeText="{=sp_ka_inq_die_btn}Refuse (Accept Execution)" IsNegativeOptionShown="true" AffirmativeStageId="Stage2_Assassins_BribeFail" NegativeStageId="Stage2_Assassins_Executed" PauseGame="true" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage2_Assassins_BribeFail" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=sp_ka_s2_fail_bribe_log}The Shadow Silencers overpowered your forces. You were forced to part with a tenth of your gold to purchase your survival. Left bleeding in the alleys, your hunt for the Black Ledger ended in defeat.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="LoseGoldPercentage" Amount="10" />
+        <Action Type="DestroyParty" TargetAlias="GolgeSuikastcilar" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage2_Assassins_Executed" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=sp_ka_s2_fail_exec_log}Defiant to the end, you refused to bow or bribe your ambushers. The Shadow Silencers carried out their grim decree, executing you in the dark alleyways.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DestroyParty" TargetAlias="GolgeSuikastcilar" />
+        <Action Type="KillHero" TargetAlias="Player" StringValue="Execution" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="Stage3_KasaAcilis" NextStageId="StageSuccess" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
@@ -48,7 +77,7 @@
     </Stage>
 
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_ka_s_success_log}The Black Ledger is now in your hands! Its blackened pages expose {Dost.Name} and the Scavenger Pigeons as the architects behind endless border conflicts across Calradia. Armed with the realm's deadliest blackmail, you gained 60,000 denars, 60 renown, and cemented your feared standing in the shadows.</LogText>
+      <LogText>{=sp_ka_s_success_log}The Black Ledger is now in your hands, guided by the dying black pigeon of the spared artisan from Severed Ties! Its blackened pages expose {Dost_Name} and the Scavenger Pigeons as the architects behind endless border conflicts across Calradia. Armed with the realm's deadliest blackmail, you gained 60,000 denars, 60 renown, and cemented your feared standing in the shadows.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="GiveItem" ObjectId="black_ledger" Amount="1" />
@@ -57,6 +86,7 @@
         <Action Type="ChangeRenown" Amount="60" />
         <Action Type="ChangeCrimeRating" Amount="30" />
         <Action Type="SetGlobalFlag" ObjectId="SP_KaraKutuk_EleGecirildi" Amount="1" />
+        <Action Type="StartQuest" ObjectId="QLF_GolgeTunegi_Cagri" />
       </OnEnterActions>
     </Stage>
   </Stages>
@@ -89,7 +119,7 @@
       <Text>{=sp_ka_dlg_p1_inq}A dying black pigeon reached me from the frontier. The fugitive artisan told me you hold the key to the Black Ledger.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="KA_M_P1_Skep" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step1_choices" OutputToken="ql_ka_muhbir_a2">
-      <Text>{=sp_ka_dlg_p1_skep}You look terrified. Are you an honest broker of secrets, or another bait laid out by {Dost.Name}?</Text>
+      <Text>{=sp_ka_dlg_p1_skep}You look terrified. Are you an honest broker of secrets, or another bait laid out by {Dost_Name}?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="KA_M_P1_Prag" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step1_choices" OutputToken="ql_ka_muhbir_a2">
       <Text>{=sp_ka_dlg_p1_prag}I didn't come to exchange pleasantries. Point me to the cipher archive, or I leave you to his hounds.</Text>
@@ -100,7 +130,7 @@
 
     <!-- Tur 2: Muhbir Ilk Bilgiyi Verir -->
     <DialogNode Type="Npc" Id="KA_Muhbir_A2" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_a2" OutputToken="ql_ka_muhbir_step2_choices">
-      <Text>{=sp_ka_dlg_m_pigeon_reveal}So the artisan's bird reached someone after all... That brave fool tried to stop the war machine. What do you want from an old bookkeeper like me? Knowing what is inside that ledger is a death warrant across the whole continent!</Text>
+      <Text>{=sp_ka_dlg_m_pigeon_reveal}So the spared artisan's black pigeon from Severed Ties reached you after all... That fugitive risked everything to expose the war machine. What do you want from an old bookkeeper like me? Knowing what is inside that ledger is a death warrant across the whole continent!</Text>
     </DialogNode>
 
     <!-- Tur 3: Oyuncu Detaylari ve Tehlikeleri Sorgular -->
@@ -108,7 +138,7 @@
       <Text>{=sp_ka_dlg_p2_why}Why a death warrant? What could be written on parchment that frightens every lord in Calradia?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="KA_M_P2_DostComplicity" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step2_choices" OutputToken="ql_ka_muhbir_a3">
-      <Text>{=sp_ka_dlg_p2_dost}How deeply is {Dost.Name} involved? Is he merely a rogue operative, or does the entire Scavenger Pigeon leadership answer to him?</Text>
+      <Text>{=sp_ka_dlg_p2_dost}How deeply is {Dost_Name} involved? Is he merely a rogue operative, or does the entire Scavenger Pigeon leadership answer to him?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="KA_M_P2_Ertele" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step2_choices" OutputToken="close_window">
       <Text>{=sp_ka_ertele}I cannot deal with this right now. We will speak later.</Text>
@@ -116,7 +146,7 @@
 
     <!-- Tur 4: Muhbir Kara Kutuk'un Korkunc Hakikatini Acar -->
     <DialogNode Type="Npc" Id="KA_Muhbir_A3" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_a3" OutputToken="ql_ka_muhbir_step3_choices">
-      <Text>{=sp_ka_dlg_m_ledger_lore}It is the ledger of manufactured wars! Over forty lords from three rival kingdoms paid {Dost.Name} to assassinate legitimate heirs, poison wells, and stage border raids. {Dost.Name} orchestrates the slaughter, and the Pigeons sell both sides the intelligence to fight! The ledger is his ultimate insurance against kings.</Text>
+      <Text>{=sp_ka_dlg_m_ledger_lore}It is the ledger of manufactured wars! Over forty lords from three rival kingdoms paid {Dost_Name} to assassinate legitimate heirs, poison wells, and stage border raids. {Dost_Name} orchestrates the slaughter, and the Pigeons sell both sides the intelligence to fight! The ledger is his ultimate insurance against kings.</Text>
     </DialogNode>
 
     <!-- Tur 5: Oyuncu Pusu Tehlikesini Sezer -->
@@ -124,7 +154,7 @@
       <Text>{=sp_ka_dlg_p3_power}Whoever controls this ledger holds the collar of every corrupt ruler in Calradia. Where is the vault?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="KA_M_P3_Doubt" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step3_choices" OutputToken="ql_ka_muhbir_a4">
-      <Text>{=sp_ka_dlg_p3_doubt}If {Dost.Name} keeps such a dangerous record here, his personal guard cannot be far behind.</Text>
+      <Text>{=sp_ka_dlg_p3_doubt}If {Dost_Name} keeps such a dangerous record here, his personal guard cannot be far behind.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="KA_M_P3_Ertele" TargetAlias="KaraMuhbir" InputToken="ql_ka_muhbir_step3_choices" OutputToken="close_window">
       <Text>{=sp_ka_ertele}I cannot deal with this right now. We will speak later.</Text>
@@ -210,12 +240,12 @@
 
     <!-- Tur 2: Koruyucunun Aciklamasi -->
     <DialogNode Type="Npc" Id="KA_Kasa_A2" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_a2" OutputToken="ql_ka_kasa_final_choices">
-      <Text>{=sp_ka_dlg_k_reveal}Every wax seal on these sheets bears the personal crest of {Dost.Name} and the secret council. It proves that every skirmish, every raided caravan, and every slandered noble in the realm was orchestrated to siphon wealth into the Scavenger Pigeons' coffers. Whoever holds this holds the leash of Calradia's rulers.</Text>
+      <Text>{=sp_ka_dlg_k_reveal}Every wax seal on these sheets bears the personal crest of {Dost_Name} and the secret council, exactly as the spared artisan warned. It proves that every skirmish, every raided caravan, and every slandered noble in the realm was orchestrated to siphon wealth into the Scavenger Pigeons' coffers. Whoever holds this holds the leash of Calradia's rulers.</Text>
     </DialogNode>
 
     <!-- Tur 3: Karar ve Gorevin Sonu -->
     <DialogNode Type="Player" Id="KA_K_P2_Ruler" TargetAlias="KasaKorumasi" InputToken="ql_ka_kasa_final_choices" OutputToken="close_window">
-      <Text>{=sp_ka_dlg_fin_ruler}With this ledger, {Dost.Name}'s puppet empire is finished. From now on, the shadows answer to me. (Claim the Black Ledger)</Text>
+      <Text>{=sp_ka_dlg_fin_ruler}With this ledger, {Dost_Name}'s puppet empire is finished. From now on, the shadows answer to me. (Claim the Black Ledger)</Text>
       <Consequences>
         <Action Type="ChangeStage" ObjectId="StageSuccess" />
         <Action Type="LeaveEncounter" />

@@ -20,7 +20,7 @@
 
   <Stages>
     <Stage Id="Stage1_Muhbir1" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_gt2_s1_log}The Shadow Roost demands all compromised channels severed. Track down the merchant informant {Muhbir1_Link} who funded {Dost.Name}'s black market network and silence him forever.</LogText>
+      <LogText>{=sp_gt2_s1_log}The Shadow Roost demands all compromised channels severed. Track down the merchant informant {Muhbir1_Link} who funded {Dost_Name}'s black market network and silence him forever.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="Muhbir1" />
@@ -35,14 +35,26 @@
       </OnEnterActions>
     </Stage>
 
-    <Stage Id="Stage2_CeteSavasi" NextStageId="Stage3_DostYuzlesme" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+    <Stage Id="Stage2_CeteSavasi" NextStageId="Stage3_DostYuzlesme" FailStageId="StageFail_CeteDefeat" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_gt2_s2_fight_log}{Muhbir2_Link}'s 30 mercenary enforcers ({CeteMuhafizlari_Link}) have ambushed you in the back streets! Cut through them to complete the underworld purge.</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="CeteMuhafizlari" Amount="1" />
       </Conditions>
+      <FailConditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="CeteMuhafizlari" StringValue="Defeat" />
+      </FailConditions>
       <OnExitActions>
         <Action Type="MakeMet" TargetAlias="Dost" />
       </OnExitActions>
+    </Stage>
+
+    <Stage Id="StageFail_CeteDefeat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=sp_gt2_fail_cete_log}The underworld thugs overwhelmed your forces in the back alleys. The purge of the conspirators fell apart in chaos.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DestroyParty" TargetAlias="CeteMuhafizlari" />
+        <Action Type="ShowInquiry" Title="{=sp_gt2_inq_defeat_title}Purge Ambush Defeat" Text="{=sp_gt2_fail_cete_log}The underworld thugs overwhelmed your forces in the back alleys. The purge of the conspirators fell apart in chaos." AffirmativeText="{=sp_btn_bitter}A bitter defeat" />
+      </OnEnterActions>
     </Stage>
 
     <Stage Id="Stage3_DostYuzlesme" NextStageId="StageSuccess" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
@@ -56,7 +68,7 @@
     </Stage>
 
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_gt2_s_success_log}You broke {Dost.Name}'s army and executed him on the field of honor. The false patriot is dead. The Shadow Roost sends you 50,000 denars and 50 renown, inviting you to the final council.</LogText>
+      <LogText>{=sp_gt2_s_success_log}You broke {Dost_Name}'s army and executed him on the field of honor. The false patriot is dead. The Shadow Roost sends you 50,000 denars and 50 renown, inviting you to the final council.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="KillHero" TargetAlias="Dost" />
@@ -159,26 +171,26 @@
 
     <!-- DOST ILE YUZLESME: 8 ADIMLI HESAPLASMA VE IKONIK DIALOG -->
     <DialogNode Type="Player" Id="GT2_Dost_Player" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_gt2_dost_a1" Priority="200">
-      <Text>{=sp_gt2_dlg6_p}We meet again, {Dost.Name}. It seems our paths end here.</Text>
+      <Text>{=sp_gt2_dlg6_p}We meet again, {Dost_Name}. It seems our paths end here.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_DostYuzlesme" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="GT2_Dost_Npc" TargetAlias="Dost" InputToken="start" OutputToken="ql_gt2_dost_step1_choices" Priority="200">
-      <Text>{=sp_gt2_dlg6_intro}{PLAYER.NAME}... You stand before me with an army at your back. Did you think I wouldn't see the shadow of the Roost looming behind you?</Text>
+      <Text>{=sp_gt2_dlg6_intro}{PlayerName}... You stand before me with an army at your back. Did you think I wouldn't see the shadow of the Roost looming behind you?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_DostYuzlesme" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="GT2_Dost_A1" TargetAlias="Dost" InputToken="ql_gt2_dost_a1" OutputToken="ql_gt2_dost_step1_choices">
-      <Text>{=sp_gt2_dlg6_intro}{PLAYER.NAME}... You stand before me with an army at your back. Did you think I wouldn't see the shadow of the Roost looming behind you?</Text>
+      <Text>{=sp_gt2_dlg6_intro}{PlayerName}... You stand before me with an army at your back. Did you think I wouldn't see the shadow of the Roost looming behind you?</Text>
     </DialogNode>
 
     <!-- Tur 1: Oyuncu Tepkisi -->
     <DialogNode Type="Player" Id="GT2_D_P1_Inq" TargetAlias="Dost" InputToken="ql_gt2_dost_step1_choices" OutputToken="ql_gt2_dost_a2">
-      <Text>{=sp_gt2_dlg_p1_inq}We were allies once, {Dost.Name}. I served you through four seasons. How long have you been playing both sides?</Text>
+      <Text>{=sp_gt2_dlg_p1_inq}We were allies once, {Dost_Name}. I served you through four seasons. How long have you been playing both sides?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P1_Direct" TargetAlias="Dost" InputToken="ql_gt2_dost_step1_choices" OutputToken="ql_gt2_dost_a2">
       <Text>{=sp_gt2_dlg_p1_direct}I know about the Black Ledger and the manufactured wars. Your web of lies has unraveled.</Text>
@@ -213,10 +225,10 @@
 
     <!-- Tur 5: Oyuncunun Felsefi Karsi Cikisi -->
     <DialogNode Type="Player" Id="GT2_D_P3_Heroic" TargetAlias="Dost" InputToken="ql_gt2_dost_step3_choices" OutputToken="ql_gt2_dost_a4">
-      <Text>{=sp_gt2_dlg_p3_heroic}Balance? You call slaughtering innocents balance?! You are not a protector, {Dost.Name}, you are a cancer on the Motherland.</Text>
+      <Text>{=sp_gt2_dlg_p3_heroic}Balance? You call slaughtering innocents balance?! You are not a protector, {Dost_Name}, you are a cancer on the Motherland.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P3_Dark" TargetAlias="Dost" InputToken="ql_gt2_dost_step3_choices" OutputToken="ql_gt2_dost_a4">
-      <Text>{=sp_gt2_dlg7}You are weak, {Dost.Name}. Your courts, your kings, and your lies only protect the weak. Pigeons do not soar in the skies, they feast above tombs.</Text>
+      <Text>{=sp_gt2_dlg7}You are weak, {Dost_Name}. Your courts, your kings, and your lies only protect the weak. Pigeons do not soar in the skies, they feast above tombs.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P3_Ertele" TargetAlias="Dost" InputToken="ql_gt2_dost_step3_choices" OutputToken="close_window">
       <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>

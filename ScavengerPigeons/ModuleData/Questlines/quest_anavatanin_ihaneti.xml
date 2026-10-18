@@ -292,9 +292,6 @@
 
     <DialogNode Type="Player" Id="Dost_B2a" TargetAlias="Dost" InputToken="ql_dost_b2" OutputToken="ql_dost_a3">
       <Text>{=sp_ai_dlg33}You're right, what was I thinking. I'll go talk to the village elder for you.</Text>
-      <Consequences>
-        <Action Type="ChangeStage" ObjectId="Stage3_SuikastRed" />
-      </Consequences>
     </DialogNode>
 
     <DialogNode Type="Player" Id="Dost_B2b" TargetAlias="Dost" InputToken="ql_dost_b2" OutputToken="close_window">
@@ -307,6 +304,7 @@
     <DialogNode Type="Npc" Id="Dost_A3" TargetAlias="Dost" InputToken="ql_dost_a3" OutputToken="close_window">
       <Text>{=sp_ai_dlg34}That was a terrifying encounter, my friend. Take care of yourself. We will meet again.</Text>
       <Consequences>
+        <Action Type="ChangeStage" ObjectId="Stage3_SuikastRed" />
         <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
@@ -384,14 +382,14 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Dost_Final_Bridge_Npc" TargetAlias="Dost" InputToken="ql_dost_final_bridge" OutputToken="ql_dost_final_b1">
-      <Text>{=sp_ai_dlg47}{PLAYER.NAME}! You have finally pledged your allegiance to {Kral_Link}. I wanted to see you as well. There was never any slander against you. I played this game to convince you to enter the service of the motherland. There was no traitor. In fact, we were never friends in the past either.</Text>
+      <Text>{=sp_ai_dlg47}{PlayerName}! You have finally pledged your allegiance to {Kral_Link}. I wanted to see you as well. There was never any slander against you. I played this game to convince you to enter the service of the motherland. There was no traitor. In fact, we were never friends in the past either.</Text>
       <Consequences>
         <Action Type="MakeMet" TargetAlias="Dost" />
       </Consequences>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="Dost_Final_Giris" TargetAlias="Dost" InputToken="start" OutputToken="ql_dost_final_b1" Priority="150">
-      <Text>{=sp_ai_dlg47}{PLAYER.NAME}! You have finally pledged your allegiance to {Kral_Link}. I wanted to see you as well. There was never any slander against you. I played this game to convince you to enter the service of the motherland. There was no traitor. In fact, we were never friends in the past either.</Text>
+      <Text>{=sp_ai_dlg47}{PlayerName}! You have finally pledged your allegiance to {Kral_Link}. I wanted to see you as well. There was never any slander against you. I played this game to convince you to enter the service of the motherland. There was no traitor. In fact, we were never friends in the past either.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage5_KralligaKatil" />
       </Conditions>

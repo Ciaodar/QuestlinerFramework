@@ -23,12 +23,14 @@ namespace Questliner.Framework.Behaviors
             {
                 _completedQuestIds.Add(questId);
             }
+            GlobalStateManager.Instance.CompletedQuests.Add(questId);
         }
 
         public void RemoveCompletedQuest(string questId)
         {
             if (string.IsNullOrEmpty(questId)) return;
             _completedQuestIds.RemoveAll(id => string.Equals(id, questId, System.StringComparison.OrdinalIgnoreCase));
+            GlobalStateManager.Instance.CompletedQuests.RemoveWhere(id => string.Equals(id, questId, System.StringComparison.OrdinalIgnoreCase));
         }
 
         public override void RegisterEvents()
@@ -37,12 +39,18 @@ namespace Questliner.Framework.Behaviors
             CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener(this, OnSessionLaunched);
             CampaignEvents.ConversationEnded.AddNonSerializedListener(this, OnConversationEnded);
             CampaignEvents.HourlyTickEvent.AddNonSerializedListener(this, OnHourlyTick);
+            CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, OnDailyTick);
             CampaignEvents.OnClanChangedKingdomEvent.AddNonSerializedListener(this, OnClanChangedKingdom);
             CampaignEvents.SettlementEntered.AddNonSerializedListener(this, OnSettlementEntered);
             CampaignEvents.HeroKilledEvent.AddNonSerializedListener(this, OnHeroKilled);
             CampaignEvents.HeroPrisonerTaken.AddNonSerializedListener(this, OnHeroPrisonerTaken);
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, OnMapEventEnded);
             CampaignEvents.OnQuestCompletedEvent.AddNonSerializedListener(this, OnQuestCompleted);
+        }
+
+        private void OnDailyTick()
+        {
+            CheckAutoStartQuests();
         }
 
         private void OnQuestCompleted(QuestBase quest, QuestBase.QuestCompleteDetails details)
@@ -517,6 +525,13 @@ namespace Questliner.Framework.Behaviors
             {
                 _completedQuestIds = new List<string>();
             }
+            else
+            {
+                foreach (var id in _completedQuestIds)
+                {
+                    GlobalStateManager.Instance.CompletedQuests.Add(id);
+                }
+            }
 
             // Sync global flags
             var globalFlags = GlobalStateManager.Instance.GlobalFlags;
@@ -808,15 +823,38 @@ namespace Questliner.Framework.Behaviors
 
         private void OnHeroKilled(Hero victim, Hero killer, TaleWorlds.CampaignSystem.Actions.KillCharacterAction.KillCharacterActionDetail detail, bool showNotification)
         {
+            if (victim == null) return;
+
             foreach (var quest in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
             {
-                var targetAlias = quest.TargetHeroes.FirstOrDefault(x => x.Value == victim).Key;
-                if (!string.IsNullOrEmpty(targetAlias))
+                var targetAliases = quest.TargetHeroes.Where(x => x.Value == victim).Select(x => x.Key).ToList();
+                foreach (var alias in targetAliases)
                 {
-                    quest.SetFlag($"Killed_{targetAlias}", true);
+                    quest.SetFlag($"Killed_{alias}", true);
                 }
             }
+
             EvaluateAllQuests();
+
+            // Check for unexpected hero death softlock prevention
+            foreach (var dq in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
+            {
+                if (dq.TargetHeroes.ContainsValue(victim) && !Engine.ActionExecutor.HeroesBeingKilledByQuest.Contains(victim))
+                {
+                    var victimAliases = dq.TargetHeroes.Where(kvp => kvp.Value == victim).Select(kvp => kvp.Key).ToList();
+                    bool stageExpectsDeath = dq.Model != null && dq.Model.Stages != null && dq.Model.Stages.Any(stage =>
+                        stage.Conditions != null && stage.Conditions.Any(c =>
+                            c.ConditionType.Equals("TargetIsDead", StringComparison.OrdinalIgnoreCase) &&
+                            victimAliases.Any(a => string.Equals(a, c.TargetAlias, StringComparison.OrdinalIgnoreCase))));
+
+                    if (!stageExpectsDeath)
+                    {
+                        var cancelLog = new TaleWorlds.Localization.TextObject("{=qlf_target_died_cancel}{HERO_LINK} has died unexpectedly, rendering this task impossible to continue.");
+                        cancelLog.SetTextVariable("HERO_LINK", victim.EncyclopediaLinkWithName);
+                        dq.CompleteQuestWithCancel(cancelLog);
+                    }
+                }
+            }
         }
 
         private void OnHeroPrisonerTaken(PartyBase captor, Hero prisoner)
@@ -919,7 +957,11 @@ namespace Questliner.Framework.Behaviors
             SanitizeQuestItemsInInventory();
             EvaluateAllQuests();
 
-            // Check for AutoStart quests
+            CheckAutoStartQuests();
+        }
+
+        public void CheckAutoStartQuests()
+        {
             foreach (var questModel in Questliner.Framework.Services.QuestModuleScanner.LoadedQuests)
             {
                 if (_completedQuestIds.Contains(questModel.Id))
@@ -935,7 +977,40 @@ namespace Questliner.Framework.Behaviors
             }
         }
 
-        public void TryAutoStartQuest(QuestModel questModel)
+        public bool StartQuestById(string questId, Hero? questGiver = null, bool forceRestart = false)
+        {
+            if (string.IsNullOrEmpty(questId)) return false;
+
+            if (forceRestart)
+            {
+                RemoveCompletedQuest(questId);
+                GlobalStateManager.Instance.CompletedQuests.RemoveWhere(id => string.Equals(id, questId, StringComparison.OrdinalIgnoreCase));
+
+                var existing = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>()
+                    .FirstOrDefault(q => string.Equals(q.Model?.Id, questId, StringComparison.OrdinalIgnoreCase));
+                if (existing != null && existing.IsOngoing)
+                {
+                    existing.CompleteQuestWithCancel();
+                }
+            }
+            else if (_completedQuestIds.Contains(questId))
+            {
+                return false;
+            }
+
+            var questModel = Services.QuestModuleScanner.LoadedQuests.FirstOrDefault(q => string.Equals(q.Id, questId, StringComparison.OrdinalIgnoreCase));
+            if (questModel == null) return false;
+
+            if (Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Any(q => q.IsOngoing && string.Equals(q.Model?.Id, questId, StringComparison.OrdinalIgnoreCase)))
+            {
+                return false;
+            }
+
+            TryAutoStartQuest(questModel, questGiver);
+            return true;
+        }
+
+        public void TryAutoStartQuest(QuestModel questModel, Hero? overrideGiver = null)
         {
             if (questModel == null || string.IsNullOrEmpty(questModel.Id)) return;
             if (_completedQuestIds.Contains(questModel.Id)) return;
@@ -957,27 +1032,28 @@ namespace Questliner.Framework.Behaviors
                 }
             }
 
+            var giver = overrideGiver ?? Hero.MainHero;
             var duration = TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(questModel.TimeLimitInDays > 0 ? questModel.TimeLimitInDays : 9999);
-            var tempQuest = new DynamicQuest(questModel, Hero.MainHero, duration); // AutoStart quests default to MainHero as giver if no other giver is specified, but TargetResolvers should assign proper heroes.
+            var tempQuest = new DynamicQuest(questModel, giver, duration); // AutoStart quests default to MainHero as giver if no other giver is specified, but TargetResolvers should assign proper heroes.
             
             bool canResolveAll = true;
             foreach (var res in questModel.TargetResolvers)
             {
                 if (res.TargetType == "Settlement")
                 {
-                    var s = Engine.TargetResolverService.ResolveSettlement(res, tempQuest, Hero.MainHero);
+                    var s = Engine.TargetResolverService.ResolveSettlement(res, tempQuest, giver);
                     if (s == null && !res.IsOptional) { canResolveAll = false; break; }
                     if (s != null) tempQuest.TargetSettlements[res.Alias] = s;
                 }
                 else if (res.TargetType == "MobileParty")
                 {
-                    var p = Engine.TargetResolverService.ResolveMobileParty(res, tempQuest, Hero.MainHero);
+                    var p = Engine.TargetResolverService.ResolveMobileParty(res, tempQuest, giver);
                     if (p == null && !res.IsOptional) { canResolveAll = false; break; }
                     if (p != null) tempQuest.TargetParties[res.Alias] = p;
                 }
                 else
                 {
-                    var h = Engine.TargetResolverService.ResolveHero(res, tempQuest, Hero.MainHero);
+                    var h = Engine.TargetResolverService.ResolveHero(res, tempQuest, giver);
                     if (h == null && !res.IsOptional) { canResolveAll = false; break; }
                     if (h != null) tempQuest.TargetHeroes[res.Alias] = h;
                 }

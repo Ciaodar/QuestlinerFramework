@@ -40,17 +40,18 @@
       </OnTimeoutActions>
     </Stage>
 
-    <Stage Id="Stage2A_Savas" NextStageId="Stage3_Basari" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+    <Stage Id="Stage2A_Savas" NextStageId="Stage3_Basari" FailStageId="Stage_Kalfa_Fail" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
       <LogText>{=da_log_2_2A_savas}Torches pierce the night! The rival saboteurs have assaulted the workshop perimeter. Crush them before the bellows are put to the torch!</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="Sabotajcilar" StringValue="Victory" />
       </Conditions>
+      <FailConditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="Sabotajcilar" StringValue="Defeat" />
+      </FailConditions>
       <OnEnterActions />
       <OnExitActions />
       <OnTimeoutActions>
-        <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="-10" />
-        <Action Type="DestroyParty" TargetAlias="Sabotajcilar" />
-        <Action Type="FailQuest" />
+        <Action Type="ChangeStage" ObjectId="Stage_Kalfa_Fail" />
       </OnTimeoutActions>
     </Stage>
 
@@ -62,17 +63,32 @@
       <OnTimeoutActions />
     </Stage>
 
-    <Stage Id="Stage2B_Savas" NextStageId="Stage3_Basari" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+    <Stage Id="Stage2B_Savas" NextStageId="Stage3_Basari" FailStageId="Stage_Kalfa_Fail" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
       <LogText>{=da_log_2_2B_savas}{RakipTuccar_Link} refused to back down and unleashed his hired bodyguards upon you. Cut them down to assert your clan's will.</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="Korumalar" StringValue="Victory" />
       </Conditions>
+      <FailConditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="Korumalar" StringValue="Defeat" />
+      </FailConditions>
       <OnEnterActions />
       <OnExitActions />
       <OnTimeoutActions>
-        <Action Type="DestroyParty" TargetAlias="Korumalar" />
-        <Action Type="FailQuest" />
+        <Action Type="ChangeStage" ObjectId="Stage_Kalfa_Fail" />
       </OnTimeoutActions>
+    </Stage>
+
+    <Stage Id="Stage_Kalfa_Fail" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=da_log_2_fail}Your forces were overwhelmed in battle! With no one left to stand between the merchant's cutthroats and the workshop, the ancient bellows were put to the torch.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DestroyParty" TargetAlias="Sabotajcilar" />
+        <Action Type="DestroyParty" TargetAlias="Korumalar" />
+        <Action Type="ChangeRelation" TargetAlias="EfsaneviDemirci" Amount="-10" />
+        <Action Type="ShowInquiry" Title="{=da_inq_kalfa_fail_title}The Forge in Ashes" Text="{=da_inq_kalfa_fail_text}The merchant's hired blades overpowered your warriors. Before dawn, columns of black smoke rose over the district as the ancient forge was burned to the ground." AffirmativeText="{=da_inq_kalfa_fail_btn}A bitter defeat" PauseGame="true" />
+      </OnEnterActions>
+      <OnExitActions />
+      <OnTimeoutActions />
     </Stage>
 
     <Stage Id="Stage3_Basari" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">

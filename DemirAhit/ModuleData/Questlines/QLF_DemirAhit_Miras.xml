@@ -40,7 +40,9 @@
     <Stage Id="Stage3_Sonuc" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="0">
       <LogText>{=da_log_4_3}The anvils have fallen silent. Steam rises from the tempering trough. The Covenant Sword shines with celestial brilliance! Speak with {EfsaneviDemirci_Link} to determine who shall bear this legendary weapon.</LogText>
       <Conditions />
-      <OnEnterActions />
+      <OnEnterActions>
+        <Action Type="TakeItem" ObjectId="GeciciAhitKilici" Amount="1" />
+      </OnEnterActions>
       <OnExitActions />
       <OnTimeoutActions />
     </Stage>
@@ -210,6 +212,7 @@
       <Text>{=da_miras_dlg_3}The flames leap blue and white! Hear the twin hammers ring as incandescent sparks cascade across the anvil... It is finished! Behold the Covenant Blade! Speak to me once more, warrior, for a fateful choice remains.</Text>
       <Consequences>
         <Action Type="TakeGold" Amount="50000" />
+        <Action Type="TakeItem" ObjectId="GeciciAhitKilici" Amount="1" />
         <Action Type="GiveItem" ObjectId="KalbinAtesi" Amount="1" />
         <Action Type="TakeItem" ObjectId="KalbinAtesi" Amount="1" />
         <Action Type="ChangeStage" ObjectId="Stage3_Sonuc" />

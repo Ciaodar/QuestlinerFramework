@@ -32,6 +32,7 @@ namespace Questliner.Framework.Core
         [SaveableField(1)]
         private string _currentStageId = string.Empty;
         public string CurrentStageId { get => _currentStageId; private set => _currentStageId = value; }
+        public StageModel? CurrentStage => Model?.Stages.FirstOrDefault(s => s.Id == CurrentStageId);
 
         [SaveableField(2)]
         private Dictionary<string, Hero> _targetHeroes = new Dictionary<string, Hero>();
@@ -462,8 +463,12 @@ namespace Questliner.Framework.Core
         private CampaignTime _stageStartTime;
         public CampaignTime StageStartTime => _stageStartTime;
 
+        [SaveableField(10)]
+        private CampaignTime _stageDeadline = CampaignTime.Never;
+        public CampaignTime StageDeadline => _stageDeadline;
+
         public DynamicQuest(QuestModel model, Hero? questGiver, CampaignTime duration) 
-            : base(model.Id, questGiver, duration, 0)
+            : base(model.Id, questGiver, CampaignTime.DaysFromNow(9999f), 0)
         {
             Model = model;
             _modelId = model.Id;
@@ -740,6 +745,18 @@ namespace Questliner.Framework.Core
             var nextStageModel = Model.Stages.FirstOrDefault(s => s.Id == nextStageId);
             if (nextStageModel != null)
             {
+                float totalHours = nextStageModel.TimeoutInDays * 24f + nextStageModel.TimeoutInHours;
+                if (totalHours > 0)
+                {
+                    _stageDeadline = CampaignTime.HoursFromNow(totalHours);
+                    ChangeQuestDueTime(CampaignTime.HoursFromNow(totalHours + 1f));
+                }
+                else
+                {
+                    _stageDeadline = CampaignTime.Never;
+                    ChangeQuestDueTime(CampaignTime.DaysFromNow(9999f));
+                }
+
                 if (nextStageModel.IsSuccessNode)
                 {
                     EnsureGlobalHeroesPersisted();
@@ -954,7 +971,7 @@ namespace Questliner.Framework.Core
             get
             {
                 EnsureModelLoaded();
-                return Model == null || !Model.Stages.Any(s => s.TimeoutInDays > 0 || s.TimeoutInHours > 0);
+                return CurrentStage == null || (CurrentStage.TimeoutInDays <= 0 && CurrentStage.TimeoutInHours <= 0);
             }
         }
 
@@ -993,9 +1010,26 @@ namespace Questliner.Framework.Core
             {
                 foreach (var kvp in _targetParties)
                 {
-                    if (kvp.Value != null && kvp.Value.IsActive)
+                    if (kvp.Value != null)
                     {
                         kvp.Value.SetPartyUsedByQuest(false);
+
+                        if (kvp.Value.IsActive && (kvp.Value.StringId.StartsWith("ql_bandit_") || kvp.Value.StringId.StartsWith("ql_custom_party_")))
+                        {
+                            try
+                            {
+                                kvp.Value.IgnoreByOtherPartiesTill(CampaignTime.Now);
+                                kvp.Value.Ai.SetDoNotMakeNewDecisions(false);
+                                if (kvp.Value.MapEvent == null)
+                                {
+                                    TaleWorlds.CampaignSystem.Actions.DestroyPartyAction.Apply(null, kvp.Value);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                TaleWorlds.Library.Debug.Print($"[Questliner] Error destroying quest party {kvp.Value.StringId}: {ex.Message}");
+                            }
+                        }
                     }
                 }
             }

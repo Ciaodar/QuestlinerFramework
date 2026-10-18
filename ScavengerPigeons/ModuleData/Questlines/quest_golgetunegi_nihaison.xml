@@ -29,11 +29,23 @@
       </OnEnterActions>
     </Stage>
 
-    <Stage Id="Stage2_KirikKukla_Savas" NextStageId="StageSuccess_KirikKukla" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+    <Stage Id="Stage2_KirikKukla_Savas" NextStageId="StageSuccess_KirikKukla" FailStageId="StageFail_FanatikDefeat" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_gt3_s2_kirikkukla_log}You set the roost ablaze! {KorUsta_Link}'s 40 fanatic guards {FanatikMuhafizlar_Link} surround you in fury. Annihilate them and break the chains of the cult!</LogText>
       <Conditions>
         <Condition Type="DefeatedParties" TargetAlias="FanatikMuhafizlar" Amount="1" />
       </Conditions>
+      <FailConditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="FanatikMuhafizlar" StringValue="Defeat" />
+      </FailConditions>
+    </Stage>
+
+    <Stage Id="StageFail_FanatikDefeat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=sp_gt3_fail_fanatik_log}The Blind Master's fanatic guards overwhelmed your forces. The fire was extinguished, and your defiance was crushed in blood.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DestroyParty" TargetAlias="FanatikMuhafizlar" />
+        <Action Type="ShowInquiry" Title="{=sp_gt3_inq_defeat_title}Fanatic Guard Defeat" Text="{=sp_gt3_fail_fanatik_log}The Blind Master's fanatic guards overwhelmed your forces. The fire was extinguished, and your defiance was crushed in blood." AffirmativeText="{=sp_btn_bitter}A bitter defeat" />
+      </OnEnterActions>
     </Stage>
 
     <!-- Son 1: Golge Bas Efendi -->
@@ -78,7 +90,7 @@
     <!-- DOST ILE YUZLESME: GOLGE TUNEGI GIRISI -->
     <!-- Turn 1: Entry via hero_main_options -->
     <DialogNode Type="Player" Id="GT3_Dost_Player_Entry" TargetAlias="Dost" InputToken="hero_main_options" OutputToken="ql_gt3_dost_a1" Priority="250">
-      <Text>{=sp_gt3_dost_p_entry}So you have finally come out of the shadows, {Dost.Name}.</Text>
+      <Text>{=sp_gt3_dost_p_entry}So you have finally come out of the shadows, {Dost_Name}.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
         <Condition Type="GlobalFlag" ObjectId="SP_Zanaatkar_Kacti" Amount="1" />
@@ -91,7 +103,7 @@
 
     <!-- Turn 2 (Player choices) -->
     <DialogNode Type="Player" Id="GT3_Dost_P1_Defiant" TargetAlias="Dost" InputToken="ql_gt3_dost_step1_choices" OutputToken="ql_gt3_dost_a2">
-      <Text>{=sp_gt3_dost_p1_defiant}Your surveillance ends here, {Dost.Name}. The Motherland was never your puppet stage!</Text>
+      <Text>{=sp_gt3_dost_p1_defiant}Your surveillance ends here, {Dost_Name}. The Motherland was never your puppet stage!</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_Dost_P1_Cunning" TargetAlias="Dost" InputToken="ql_gt3_dost_step1_choices" OutputToken="ql_gt3_dost_a2">
       <Text>{=sp_gt3_dost_p1_cunning}You speak of betrayal, yet you manufactured wars for profit and called it patriotism.</Text>
@@ -126,13 +138,13 @@
 
     <!-- Turn 6 (Player choices) -->
     <DialogNode Type="Player" Id="GT3_Dost_P3_Fight" TargetAlias="Dost" InputToken="ql_gt3_dost_step3_choices" OutputToken="close_window">
-      <Text>{=sp_gt3_dost_p3_fight}Then trim it, {Dost.Name}. Or die trying!</Text>
+      <Text>{=sp_gt3_dost_p3_fight}Then trim it, {Dost_Name}. Or die trying!</Text>
       <Consequences>
         <Action Type="KillHero" TargetAlias="Dost" />
       </Consequences>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_Dost_P3_Negotiate" TargetAlias="Dost" InputToken="ql_gt3_dost_step3_choices" OutputToken="ql_gt3_dost_a4">
-      <Text>{=sp_gt3_dost_p3_negotiate}{Dost.Name}. Stand down. You are outnumbered and your network is exposed. This ends without more bloodshed.</Text>
+      <Text>{=sp_gt3_dost_p3_negotiate}{Dost_Name}. Stand down. You are outnumbered and your network is exposed. This ends without more bloodshed.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_Dost_P3_Ertele" TargetAlias="Dost" InputToken="ql_gt3_dost_step3_choices" OutputToken="close_window">
       <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>
@@ -145,7 +157,7 @@
 
     <!-- Turn 8 -->
     <DialogNode Type="Player" Id="GT3_Dost_Final_Kill" TargetAlias="Dost" InputToken="ql_gt3_dost_final_choices" OutputToken="close_window">
-      <Text>{=sp_gt3_dost_p4_final}It is over, {Dost.Name}. The roost falls with you.</Text>
+      <Text>{=sp_gt3_dost_p4_final}It is over, {Dost_Name}. The roost falls with you.</Text>
       <Consequences>
         <Action Type="KillHero" TargetAlias="Dost" />
       </Consequences>
@@ -163,14 +175,14 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="GT3_Usta_Npc" TargetAlias="KorUsta" InputToken="start" OutputToken="ql_gt3_usta_step1_choices" Priority="200">
-      <Text>{=sp_gt3_dlg1}Step forward, little pigeon... I cannot see your eyes, but I hear the rhythm of your stride. The blood of {Dost.Name}, the scent of burning ledgers, and the cold steel of ambition clinging to your mantle.</Text>
+      <Text>{=sp_gt3_dlg1}Step forward, little pigeon... I cannot see your eyes, but I hear the rhythm of your stride. The blood of {Dost_Name}, the scent of burning ledgers, and the cold steel of ambition clinging to your mantle.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_UstaBulusma" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="GT3_Usta_A1" TargetAlias="KorUsta" InputToken="ql_gt3_usta_a1" OutputToken="ql_gt3_usta_step1_choices">
-      <Text>{=sp_gt3_dlg1}Step forward, little pigeon... I cannot see your eyes, but I hear the rhythm of your stride. The blood of {Dost.Name}, the scent of burning ledgers, and the cold steel of ambition clinging to your mantle.</Text>
+      <Text>{=sp_gt3_dlg1}Step forward, little pigeon... I cannot see your eyes, but I hear the rhythm of your stride. The blood of {Dost_Name}, the scent of burning ledgers, and the cold steel of ambition clinging to your mantle.</Text>
     </DialogNode>
 
     <!-- Tur 1: Oyuncu Tepkisi -->
@@ -181,7 +193,7 @@
       <Text>{=sp_gt3_dlg_p1_angry}Breathe that scent deeply, old man. It is the butcher's bill for your decades of conspiracy and deceit.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_U_P1_Prag" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step1_choices" OutputToken="ql_gt3_usta_a2">
-      <Text>{=sp_gt3_dlg_p1_prag}I didn't scale this fortress for poetic metaphors. {Dost.Name} is dead, and the master ciphers are mine. What is your will?</Text>
+      <Text>{=sp_gt3_dlg_p1_prag}I didn't scale this fortress for poetic metaphors. {Dost_Name} is dead, and the master ciphers are mine. What is your will?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT3_U_P1_Ertele" TargetAlias="KorUsta" InputToken="ql_gt3_usta_step1_choices" OutputToken="close_window">
       <Text>{=sp_gt3_ertele}I cannot deal with this right now. We will speak later.</Text>

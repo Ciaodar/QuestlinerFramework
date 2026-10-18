@@ -34,7 +34,9 @@
     <Stage Id="Stage1_Toplama" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="3">
       <LogText>{=da_log_1}Ride to the village of {HammadeKaynagi_Link} and speak with {KoyMuhtari_Link} to procure 5 Star Iron ore. Beware: rumors suggest cutthroats hired by {RakipTuccar_Link} are already circling the quarry.</LogText>
       <Conditions />
-      <OnEnterActions />
+      <OnEnterActions>
+        <Action Type="DestroyParty" TargetAlias="KiralikKatiller" />
+      </OnEnterActions>
       <OnExitActions />
       <OnTimeoutActions>
         <Action Type="SpawnBanditParty" TargetAlias="KiralikKatiller" Amount="30" PartyTemplateId="assassins_template" SpawnDistance="3" SpawnRadius="5" StringValue="{=da_katiller}Hired Assassins" />
@@ -43,11 +45,14 @@
       </OnTimeoutActions>
     </Stage>
 
-    <Stage Id="Stage2_Pusu" NextStageId="Stage3_Teslim" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+    <Stage Id="Stage2_Pusu" NextStageId="Stage3_Teslim" FailStageId="Stage1_Toplama" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
       <LogText>{=da_log_2}The rival merchant's hired mercenaries are nearby carrying the stolen Star Iron! Defeat them in battle to reclaim the ore.</LogText>
       <Conditions>
         <Condition Type="BattleResolvedAs" TargetAlias="KiralikKatiller" StringValue="Victory" />
       </Conditions>
+      <FailConditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="KiralikKatiller" StringValue="Defeat" />
+      </FailConditions>
       <OnEnterActions />
       <OnExitActions>
         <Action Type="GiveItem" ObjectId="YildizDemiri" Amount="5" />
@@ -76,10 +81,7 @@
       <Conditions />
       <OnEnterActions />
       <OnExitActions />
-      <OnTimeoutActions>
-        <Action Type="SetGlobalFlag" ObjectId="DemirAhit1_Basarisiz" Amount="1" />
-        <Action Type="FailQuest" />
-      </OnTimeoutActions>
+      <OnTimeoutActions />
     </Stage>
 
     <Stage Id="Stage3_Basari_Normal" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">

@@ -72,7 +72,7 @@ Aksiyonlar, diyalogların sonunda (`Consequences`), aşamalar tamamlandığında
 | **MakePeace** | Oyuncunun fraksiyonu ile hedefin fraksiyonu arasında barış ilan eder. | `<Action Type="MakePeace" TargetAlias="EnemyLord" />` |
 | **SetPrisoner** | Belirtilen hedefi direkt oyuncunun esiri yapar. | `<Action Type="SetPrisoner" TargetAlias="QuestTarget" />` |
 | **DamageHero** | Hedefin canını azaltır (suikast senaryoları için). | `<Action Type="DamageHero" TargetAlias="Victim" Amount="50" />` |
-| **KillHero** | Belirtilen hedefi oyun dünyasında öldürür. Varsayılan olarak Cinayet (Murder); `StringValue="Execution"` veya `ObjectId="Execution"` verildiğinde ise İdam (Execution) statüsüyle kalıcı olarak ortadan kaldırılır ve ansiklopedi ölüm kaydına idam işlenir. | `<Action Type="KillHero" TargetAlias="HainZanaatkar" StringValue="Execution" />` |
+| **KillHero** | Belirtilen hedefi oyun dünyasında öldürür. Varsayılan olarak Cinayet (Murder); `StringValue="Execution"` veya `ObjectId="Execution"` verildiğinde ise İdam (Execution) statüsüyle kalıcı olarak ortadan kaldırılır ve ansiklopedi ölüm kaydına idam işlenir. `TargetAlias="Player"` verildiğinde oyuncuyu infaz eder (esir durumundaysa otomatik serbest bırakılır ve bir lord tarafından idam uygulanır). | `<Action Type="KillHero" TargetAlias="HainZanaatkar" StringValue="Execution" />` |
 | **ShowInquiry** | Ekrana dinamik TaleWorlds Inquiry modal penceresi fırlatır. Tek butonlu (bildirim/şok) veya iki butonlu (seçim) yapılabilir. Oyun akışını duraklatabilir ve buton tıklamalarında aşama geçişi tetikleyebilir. Metinlerde `{Alias_Name}` vb. değişkenler ve `{=ID}` yerelleştirmeleri çözümlenir. | `<Action Type="ShowInquiry" Title="{=da_idam_t}İdam Hükmü" Text="{=da_idam_d}Zindanlardan kara haber ulaştı..." AffirmativeText="{=da_idam_btn}OLAMAZ!" PauseGame="true" />` |
 | **MakeFugitive** | Belirtilen hedefi oyun haritasından siler ve ansiklopedide "Kayıp/Sürgün" (Lost) statüsüne geçirir. Öldürmekten daha yumuşak bir yok etme yöntemidir. | `<Action Type="MakeFugitive" TargetAlias="KacanTuccar" />` |
 | **SetFlag** | Sadece bu göreve özel bir Boolean (True/False) değişken ayarlar. | `<Action Type="SetFlag" ObjectId="FoundClue" Amount="1" />` |
@@ -84,7 +84,8 @@ Aksiyonlar, diyalogların sonunda (`Consequences`), aşamalar tamamlandığında
 | **SetPartyAi** | Hedef partinin yapay zekasına emir verir (Saldır, Bekle, Koruma yap vb). | `<Action Type="SetPartyAi" TargetAlias="PusuPartisi" StringValue="EngageParty" ObjectId="Player" />` |
 | **DestroyParty** | Belirtilen TargetAlias partisini (MobileParty) haritadan kalıcı olarak siler. Zaten silinmişse güvenli bir şekilde pas geçer. | `<Action Type="DestroyParty" TargetAlias="PusuPartisi" />` |
 | **DestroyEncounteredParty** | O an oyuncunun savaş/diyalog menüsünde muhatap olduğu partiyi (EncounteredMobileParty) yok eder. Genellikle görev çapulcuları ile diyalog bittikten sonra onları barışçıl veya hikaye gereği haritadan silmek için kullanılır. | `<Action Type="DestroyEncounteredParty" />` |
-| **StartQuest** | Belirtilen XML görevini otomatik olarak başlatır. (`ObjectId`: Görev ID'si) | `<Action Type="StartQuest" ObjectId="QLF_DemirAhit_Kalfa" />` |
+| **StartQuest** | Belirtilen XML görevini başlatır. (`ObjectId`: Görev ID'si). `StringValue="ForceRestart"` verilirse tamamlanmış olsa dahi görev geçmişten silinerek zorla yeniden başlatılır. | `<Action Type="StartQuest" ObjectId="QLF_DemirAhit_Kalfa" />` |
+| **RestartQuest** | Belirtilen görevi (veya boş bırakılırsa mevcut görevi) sıfırlayarak baştan başlatır. Tamamlanma geçmişini temizler. | `<Action Type="RestartQuest" ObjectId="QLF_DemirAhit_Cirak" />` |
 | **MakeMet** | Oyuncunun hedefle daha önce tanışmış (HasMet = true) sayılmasını sağlar. Native oyunun "Tanışma" diyaloglarının araya girmesini engellemek için ForceConversation'dan hemen önce kullanılır. | `<Action Type="MakeMet" TargetAlias="Tüccar" />` |
 | **ForceConversation** | Oyun ekranını keserek doğrudan hedefle bir diyalog penceresi açar. Genellikle "OnSettlementEnter" tetikleyicisiyle oyuncuyu aniden karşılamak için kullanılır. Öncesinde MakeMet kullanmanız önerilir. | `<Action Type="ForceConversation" TargetAlias="Tüccar" />` |
 | **LeaveEncounter** | Karşılaşma/diyalog arayüzünü güvenle sonlandırıp oyuncuyu doğrudan dünya haritasına döndürür. | `<Action Type="LeaveEncounter" />` |
@@ -140,7 +141,7 @@ Başına `!` konursa tam tersini seçer (Örn: `!IsFemale` -> Sadece Erkekleri s
 Özel filtre: `Trait(X)` (Örn: `Trait(Cruel)` -> Mercy puanı eksi olan birini seçer).
 
 **Desteklenen Filtreler:**
-- **Kimlik ve Durum:** `ClanLeader`, `KingdomLeader`, `Artisan`, `RuralNotable`, `Merchant`, `Headman`, `GangLeader`, `IsLord`, `IsHero`, `IsWanderer`, `IsNotable`, `IsPrisoner` (Herhangi bir esir), `IsPrisonerInSettlement` (Sadece şehir/kale zindanındaki esirler).
+- **Kimlik ve Durum:** `ClanLeader`, `KingdomLeader`, `Artisan`, `RuralNotable`, `Merchant`, `Headman`, `GangLeader`, `IsLord`, `IsHero`, `IsWanderer`, `IsNotable`, `IsPrisoner` (Herhangi bir esir), `IsPrisonerInSettlement` (Sadece şehir/kale zindanındaki esirler), `IsChild` (Çocuk karakterler. *Not: Filtrede açıkça `IsChild` yazılmadığı sürece tüm çocuk kahramanlar motor tarafından varsayılan olarak otomatik elenir*).
 - **Cinsiyet:** `IsFemale`, `IsMale`.
 - **Yerleşke Tipleri ve Filtreleri (`TargetType="Settlement"`):** `Town`, `Village`, `Castle`, `Hideout`, `SameCultureAsPlayer`, `SameSettlementAs(Alias)`, `SameKingdomAs(Alias)`, `SameFactionAs(Alias)`. Tüm yerleşke filtreleri `!` olumsuzlama desteğine sahiptir (Örn: `!SameKingdomAs(HedefLord)`, `!Town`).
 - **Mesafe, Seçiciler (Selectors) ve Rastgelelik:** 
@@ -152,11 +153,12 @@ Başına `!` konursa tam tersini seçer (Örn: `!IsFemale` -> Sadece Erkekleri s
   - `Selector="Furthest"`: En uzak adayı seçer.
   - `Selector="HighestRelation"`: İlişkisi en yüksek olanı seçer.
 - **Siyasi ve Sosyal Bağlar:** `PlayerFaction`, `RandomFaction`, `RandomKingdom`, `SameCultureAs(Alias)`.
-  - `SameKingdomAs(Alias)`: Hedef ile tamamen aynı krallıkta olan kişileri bulur.
-  - `SameClanAs(Alias)`: Hedef ile tamamen aynı ailede/klanda olan kişileri bulur.
-  - `SameFactionAs(Alias)`: Bannerlord motorunda "Faction" (taraf) duruma göre değişir. Hedef bağımsız bir krallık kurmamışsa onun Klanını taraf sayar, krallığa bağlıysa Krallığını taraf sayar. Bu yüzden karışıklığı önlemek için mümkün mertebe `SameKingdomAs` veya `SameClanAs` kullanılması önerilir.
+  - `SameKingdomAs(Alias)`: Hedef ile tamamen aynı krallıkta olan kişileri bulur. `Alias` olarak `Player`, `Giver`, bir Settlement veya GlobalHero da verilebilir.
+  - `SameClanAs(Alias)`: Hedef ile tamamen aynı ailede/klanda olan kişileri bulur. `Player`, `Giver`, Settlement veya GlobalHero desteklenir.
+  - `SameFactionAs(Alias)`: Bannerlord motorunda "Faction" (taraf) duruma göre değişir. Hedef bağımsız bir krallık kurmamışsa onun Klanını taraf sayar, krallığa bağlıysa Krallığını taraf sayar. `Player`, `Giver`, Settlement veya GlobalHero desteklenir.
 - **Lokasyon:** `SameSettlementAs(Alias)`, `RequiredSettlementAlias` (Alias'ın belirtilen mekanda olma zorunluluğu).
 - **Özel Hedefleme:** `Target(Alias)` (Aynı görev içindeki spesifik bir alias'ı seçmek için), `GlobalHero(Key)` (Başka bir görevde kalıcı hafızaya kaydedilmiş karakteri geri çağırmak için).
+- **Alternatif Filtre Zincirleri (`||`):** `Filters="GlobalHero(SP_Dost) || (Lord, HasMobileParty, HasKingdom)"` şeklinde tanımlandığında, sol taraftaki hedef (ör. ölmüş veya henüz kaydedilmemiş bir GlobalHero) bulunamazsa motor otomatik olarak sağ taraftaki alternatif filtreye düşer.
 - **Karakter Özellikleri (Traits):** `Trait(Cruel)` (Mercy<0), `Trait(Devious)` (Honor<0), `Trait(Calculating)`, `Trait(Impulsive)`, `Trait(Mercy)`, `Trait(Honor)`, `Trait(Generosity)`, `Trait(Closefisted)`, `Trait(Valor)`, `Trait(Cautious)`.
 
 *(Not: Aynı hedefin birden fazla göreve atanmasını engellemek için sistem "Uniqueness" kontrolü yapar. Eğer bir NPC zaten bir görevde kullanılıyorsa, mümkün mertebe onu listeye almaz.)*

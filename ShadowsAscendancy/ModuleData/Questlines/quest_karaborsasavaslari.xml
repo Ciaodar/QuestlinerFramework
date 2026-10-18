@@ -36,14 +36,31 @@
       </OnExitActions>
     </Stage>
 
-    <Stage Id="Stage1_Assassins_Defeat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
-      <LogText>{=shdw_q2_s1_fail_log}The hired assassins overwhelmed your forces. Stripped of gold and left bleeding in the mud, your pursuit of the black market conspirators ended in disaster.</LogText>
+    <Stage Id="Stage1_Assassins_Defeat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=shdw_q2_inq_defeat_text}The hired assassins have overwhelmed your forces and pinned you to the blood-soaked mud, a cold blade pressed against your throat. Their commander sneers down at you: 'The lord paid well for your head, mercenary... Unless your own purse can buy our silence right now, your life ends here.'</LogText>
       <Conditions />
       <OnEnterActions>
-        <Action Type="ShowInquiry" Title="{=shdw_q2_inq_defeat_title}Ambush Catastrophe" Text="{=shdw_q2_inq_defeat_text}The assassins overwhelmed your forces. After plundering your coin and leaving you for dead, they melted away into the hills. The conspiracy continues in the dark." AffirmativeText="{=shdw_q2_inq_defeat_ok}Understood" PauseGame="true" />
+        <Action Type="ShowInquiry" Title="{=shdw_q2_inq_defeat_title}At the Assassins' Mercy" Text="{=shdw_q2_inq_defeat_text}The hired assassins have overwhelmed your forces and pinned you to the blood-soaked mud, a cold blade pressed against your throat. Their commander sneers down at you: 'The lord paid well for your head, mercenary... Unless your own purse can buy our silence right now, your life ends here.'" AffirmativeText="{=shdw_q2_inq_bribe_btn}Offer 10% of Your Gold" NegativeText="{=shdw_q2_inq_die_btn}Spit in His Face (Accept Execution)" IsNegativeOptionShown="true" AffirmativeStageId="Stage1_Assassins_BribeFail" NegativeStageId="Stage1_Assassins_Executed" PauseGame="true" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage1_Assassins_BribeFail" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=shdw_q2_s1_fail_log}The hired assassins overwhelmed your forces. You were forced to hand over a tenth of your treasury to buy your life. Left bleeding in the mud, your pursuit of the black market conspirators ended in humiliation.</LogText>
+      <Conditions />
+      <OnEnterActions>
         <Action Type="LoseGoldPercentage" Amount="10" />
         <Action Type="DestroyParty" TargetAlias="KiralikKatiller" />
         <Action Type="SetGlobalFlag" ObjectId="KaraborsaSavaslari_Bitti" Amount="1" />
+      </OnEnterActions>
+    </Stage>
+
+    <Stage Id="Stage1_Assassins_Executed" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=shdw_q2_s1_exec_log}Defiant to the last breath, you refused to beg for mercy. The hired assassins carried out their blood contract on the spot, claiming your head for their shadowy master.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DestroyParty" TargetAlias="KiralikKatiller" />
+        <Action Type="SetGlobalFlag" ObjectId="KaraborsaSavaslari_Bitti" Amount="1" />
+        <Action Type="KillHero" TargetAlias="Player" StringValue="Execution" />
       </OnEnterActions>
     </Stage>
 

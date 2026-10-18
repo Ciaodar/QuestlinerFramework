@@ -62,6 +62,10 @@
     <string id="da_log_2_2B" text="Alevlerin yükselmesini beklemek yerine yılanın başını kaynağında ezmeye karar verdin. {RakipTuccar_Link} denen harisi bul ve bu kalleşliğe son ver." />
     <string id="da_log_2_2B_savas" text="{RakipTuccar_Link} geri adım atmayı reddetti ve kiralık muhafızlarını üzerine saldı. Klanının kudretini göstermek için onları savaşta yere ser." />
     <string id="da_log_2_3" text="Ocak dimdik ayakta kaldı! Gösterdiğin sarsılmaz sadakat ve savaş ustalığının nişanesi olarak {EfsaneviDemirci_Link} sana Kalfa Mührü'nü takdim etti." />
+    <string id="da_log_2_fail" text="Kuvvetlerin muharebede hezimete uğradı! Tüccarın kiralık katilleri ile atölye arasında duracak kimse kalmadığından, kadim körükler ateşe verildi." />
+    <string id="da_inq_kalfa_fail_title" text="Küllere Dönen Ocak" />
+    <string id="da_inq_kalfa_fail_text" text="Tüccarın kiralık kılıçları savaşçılarını alt etti. Şafak sökmeden önce, kadim atölye küle dönerken mahallenin üzerinden kara dumanlar yükseldi." />
+    <string id="da_inq_kalfa_fail_btn" text="Acı bir yenilgi" />
     <string id="da_kalfa_p_giris" text="Kötü dedikodular duydum usta, ocağına ne musallat oldu?" />
     <string id="da_kalfa_dlg_1" text="Örsün üzerine kara bir gölge düştü yoldaşım. {RakipTuccar_Link}, atölyemi yerle bir etmek için asker kaçakları ve kundakçılar toplamış. Ateş sönerse kılıç asla tamamlanamaz. Bu şerri nasıl defedeceğiz?" />
     <string id="da_kalfa_p1" text="Köyde kalıp nöbet tutacağım, tek bir kundakçı dahi ocağın yakınına nefes alamayacak." />

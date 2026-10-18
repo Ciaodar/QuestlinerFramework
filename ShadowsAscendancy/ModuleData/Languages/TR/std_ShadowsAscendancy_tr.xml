@@ -94,10 +94,12 @@
     <string id="shdw_q2_title" text="Karaborsa Savaşları" />
 
     <string id="shdw_q2_s1_log" text="Klanın artık tüm diyarda tanınıyor, üçüncü seviyeye ulaştı. Ancak geçmişin seni bırakmıyor. Başına büyük bir ödül konmuş ve kiralık katiller peşinde. Onları yenerek hayatta kal!" />
-    <string id="shdw_q2_s1_fail_log" text="Kiralık katiller birliğini darmadağın etti. Altınların yağmalandı ve çamurda yaralı halde bırakıldın; karaborsa komplocularını kovalama girişimin felaketle sonuçlandı." />
-    <string id="shdw_q2_inq_defeat_title" text="Pusu Felaketi" />
-    <string id="shdw_q2_inq_defeat_text" text="Katiller birliğini mağlup etti. Keseni yağmalayıp seni ölüme terk ettikten sonra tepelerde izlerini kaybettirdiler. Komplo karanlıkta sürmeye devam ediyor." />
-    <string id="shdw_q2_inq_defeat_ok" text="Anlaşıldı" />
+    <string id="shdw_q2_inq_defeat_title" text="Kiralık Katillerin İnsafında" />
+    <string id="shdw_q2_inq_defeat_text" text="Kiralık katiller kuvvetlerine üstün geldi ve boğazına soğuk bir çelik dayayarak seni kanlı çamurun içine bastırdı. Komutanları tepeden sana sırıtarak bakıyor: 'Lord o kellen için iyi para ödedi, paralı asker... Kendi kesen sessizliğimizi hemen şu an satın alamazsa, hayatın burada biter.'" />
+    <string id="shdw_q2_inq_bribe_btn" text="Altınlarının %10'unu Teklif Et" />
+    <string id="shdw_q2_inq_die_btn" text="Yüzüne Tükür (İnfazı Kabul Et)" />
+    <string id="shdw_q2_s1_fail_log" text="Kiralık katiller kuvvetlerine üstün geldi. Canını kurtarmak için servetinin onda birini teslim etmek zorunda kaldın. Çamurda kanlar içinde terk edilirken, karaborsa komplocularını kovalama girişimin aşağılanmayla son buldu." />
+    <string id="shdw_q2_s1_exec_log" text="Son nefesine kadar boyun eğmeyerek merhamet dilenmeyi reddettin. Kiralık katiller kanlı sözleşmelerini oracıkta yerine getirip kelleni gölgelerdeki efendilerine götürdü." />
     <string id="shdw_q2_s2_log" text="Kiralık katilleri yendin ve hayatta kaldın. Haritada bekleyen {KatilKomutan_Link}'ı bul ve onu sorgula." />
     <string id="shdw_q2_s3_log" text="Suikast girişiminin arkasında {YozlasmisLord_Link} olduğunu öğrendin ve kanıt olan Lordun Mühürlü Emri'ni ele geçirdin. Şimdi onunla yüzleşme zamanı." />
     <string id="shdw_q2_s4_log" text="Lordun rüşvet teklifini reddettin. Şimdi {Hukumdar_Link} ile konuşup ihaneti kanıtlaman gerekiyor." />

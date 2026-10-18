@@ -2,6 +2,32 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.8.0] - 18 Ekim 2026 (Engine Overhaul: IsChild Filters, Advanced Aliases, Death Immunity, Softlock Protection, Party Cleanup, Stage Timers & Daily AutoStart)
+
+### Eklendi & Geliştirildi (Added & Improved)
+- **Çocuk Filtresi & Yetişkin Varsayılanı (`TargetResolverService.cs`):**
+  - `IsChild` filtresi `ApplyFilter` ve `IsHeroMatch` sistemine entegre edildi.
+  - Hedef kahraman çözümlerinde (`ResolveHero`), filtre dizesinde açıkça `IsChild` istenmediği sürece (`!IsChild` olmayan saf `IsChild`) çocuklar varsayılan olarak havuzdan elenir (`allowChildren || !h.IsChild`). Ayrıca `!h.IsDisabled && !h.IsNotSpawned` kontrolleri eklenerek geçersiz/doğmamış kahramanların atanması engellendi.
+  - `||` ayracıyla tanımlanan alternatif filtre zincirleri (`GlobalHero(Key) || (Lord, HasMobileParty)`) tam destekli hale getirildi. Global hero ölmüşse veya bulunamadıysa otomatik olarak alternatif kola düşülür.
+- **Genişletilmiş Alias Desteği (`SameFactionAs`, `SameKingdomAs`, `SameClanAs`):**
+  - `ApplyFilter` içindeki fraksiyon, krallık ve klan karşılaştırmaları sadece görev içi kahramanlarla sınırlı kalmayıp `Player` (`Hero.MainHero` / `Clan.PlayerClan`), `Giver` (`QuestGiver`), yerleşke alias'ları (`aliasSettlement.MapFaction`, vb.) ve `GlobalStateManager` kayıtlarını da çözecek şekilde genişletildi.
+- **Oyuncu İdamı & Görev İçi İdam Güvencesi (`ActionExecutor.cs`):**
+  - `<Action Type="KillHero" TargetAlias="Player" />` desteği eklendi. Oyuncu esir durumundaysa öncelikle `EndCaptivityAction.ApplyByReleasedAfterBattle` ile esaretten kurtarılır, geçerli bir cellat lord bulunarak `KillCharacterAction.ApplyByExecution` ile zorlamalı idam uygulanır.
+  - `HeroesBeingKilledByQuest` koruma seti ile görev tarafından bilinçli öldürülen kahramanlar işaretlenerek beklenmedik ölüm tespitinden muaf tutuldu.
+- **Hibrit Kahraman Ölüm Koruması & Beklenmedik Ölüm Güvencesi (`QuestlinerHeroDeathProbabilityCalculationModel.cs` & `QuestlinerCampaignBehavior.cs`):**
+  - `QuestlinerHeroDeathProbabilityCalculationModel` modeli sisteme eklendi: Aktif görevlerdeki veya `GlobalHeroes` listesindeki kahramanların savaş/hastalık dışı doğal ölüm ihtimali sıfıra indirildi.
+  - Haritada harici veya konsol kaynaklı beklenmedik bir kahraman ölümü gerçekleştiğinde (`OnHeroKilled`), görevde o kahraman için `TargetIsDead` koşulu yoksa görev kilitlenmek (softlock) yerine günlük kaydı (`qlf_target_died_cancel`) düşülerek temiz biçimde iptal edilir (`CompleteQuestWithCancel`).
+- **Yetim Görev Partisi Temizliği (`DynamicQuest.OnFinalize`):**
+  - Görev sonlandığında (`OnFinalize`), `ql_bandit_` veya `ql_custom_party_` ile doğurulmuş geçici harita partilerinin donup kalmaması için karar alma ve görmezden gelinme bayrakları sıfırlanıp savaşta değillerse `DestroyPartyAction.Apply` ile haritadan kaldırılması sağlandı.
+- **Görev Süresi Arayüz Senkronizasyonu (`DynamicQuest.cs`):**
+  - Açık uçlu görev aşamalarında yapay 45/90 günlük geri sayım sayaçları arayüzden gizlendi (`IsRemainingTimeHidden`).
+  - Sadece mevcut aşamasında `TimeoutInDays > 0 || TimeoutInHours > 0` olan aşamalarda arayüz geri sayımı aktif olur ve aşama süresi `ChangeQuestDueTime` ile 1 saatlik tolerans tamponuyla senkronize edilir.
+- **Günlük Tick Otomatik Başlatma & Döngüsel Yeniden Başlatma Desteği (`QuestlinerCampaignBehavior.cs` & `ActionExecutor.cs`):**
+  - `DailyTickEvent` dinleyicisi eklenerek `CheckAutoStartQuests()` çağrıldı; dinamik dünya koşullarına (ör. tutsak lordun kurtulması) bağlı görevlerin gün dönümünde otomatik başlaması sağlandı.
+  - `ExecuteStartQuest` aksiyonuna `ForceRestart` desteği ve `ExecuteRestartQuest` aksiyonu kazandırıldı; tamamlanan görev listesi (`GlobalStateManager.Instance.CompletedQuests` ve `_completedQuestIds`) otomatik sıfırlanarak temiz döngüsel görev zincirleri desteklendi.
+
+---
+
 ## [v1.7.4] - 10 Ekim 2026 (Dynamic ShowInquiry Action, Execution Obituary Support & FormatText Engine)
 
 ### Eklendi & Geliştirildi (Added & Improved)
