@@ -5,12 +5,14 @@ param(
     [string]$PrimaryMainModel = "MODEL_PLACEHOLDER_M417",   # Gemini 4 Argon (High)
     [string]$FallbackMainModel = "MODEL_PLACEHOLDER_M318",  # Gemini 3.8 Flash (High) for Mudur Fallback
     [string]$SubagentModel = "MODEL_PLACEHOLDER_M319",      # Gemini 3.8 Flash (Medium) for Subagents
+    [int]$MaxTicks = 0,
     [switch]$CheckOnce,
     [switch]$SimulateArgonExhausted,
     [switch]$SimulateLowQuota
 )
 
 $ErrorActionPreference = "Stop"
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 $WorkspaceRoot = "c:\Users\meteh\RiderProjects\QuestlinerFramework"
 $AgentsDir = Join-Path $WorkspaceRoot ".agents"
@@ -21,11 +23,29 @@ $LastTriggeredPromptPath = Join-Path $PromptsDir "KOD_5682_LAST_TRIGGERED.md"
 $LiveStatusPath = Join-Path $AgentsDir "quota_live_status.json"
 $AlertStatePath = Join-Path $AgentsDir "quota_alert_state.json"
 $WatchdogPidPath = Join-Path $AgentsDir "quota_watchdog.pid"
+$WatchdogLogPath = Join-Path $AgentsDir "quota_watchdog.log"
 $StatePbtxtPath = "C:\Users\meteh\.gemini\antigravity\antigravity_state.pbtxt"
 $AgentApiBat = "C:\Users\meteh\.gemini\antigravity\bin\agentapi.bat"
 
 if (-not (Test-Path $PromptsDir)) {
     New-Item -ItemType Directory -Path $PromptsDir -Force | Out-Null
+}
+
+function Get-QuotaBar {
+    param([double]$Fraction, [int]$Width = 16)
+    $clamped = [Math]::Max(0.0, [Math]::Min(1.0, $Fraction))
+    $filled = [int][Math]::Round($clamped * $Width)
+    $empty = $Width - $filled
+    return "[" + ("#" * $filled) + ("-" * $empty) + "]"
+}
+
+function Format-DurationShort {
+    param([int]$TotalSeconds)
+    $ts = [TimeSpan]::FromSeconds([Math]::Max(0, $TotalSeconds))
+    if ($ts.TotalHours -ge 1) {
+        return "{0:00}h {1:00}m {2:00}s" -f [int][Math]::Floor($ts.TotalHours), $ts.Minutes, $ts.Seconds
+    }
+    return "{0:00}m {1:00}s" -f $ts.Minutes, $ts.Seconds
 }
 
 function Get-ActiveMainModelPlaceholder {
@@ -39,6 +59,7 @@ function Get-ActiveMainModelPlaceholder {
 }
 
 function Get-LanguageServerEndpoint {
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
     $procs = Get-CimInstance Win32_Process | Where-Object { $_.Name -like 'language_server*' }
     foreach ($proc in $procs) {
         if ($proc.CommandLine -match '--csrf_token\s+([a-f0-9\-]+)') {
@@ -55,10 +76,13 @@ function Get-LanguageServerEndpoint {
                     $body = '{"metadata":{"ideName":"antigravity","extensionName":"antigravity","locale":"en"}}'
                     $resp = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -ContentType "application/json" -Body $body -TimeoutSec 3 -ErrorAction Stop
                     if ($null -ne $resp.userStatus.cascadeModelConfigData.clientModelConfigs) {
+                        $sw.Stop()
                         return @{
-                            Port    = $port
-                            Csrf    = $csrf
-                            Configs = $resp.userStatus.cascadeModelConfigData.clientModelConfigs
+                            Port      = $port
+                            ServerPid = $proc.ProcessId
+                            LatencyMs = $sw.ElapsedMilliseconds
+                            Csrf      = $csrf
+                            Configs   = $resp.userStatus.cascadeModelConfigData.clientModelConfigs
                         }
                     }
                 } catch {}
@@ -153,6 +177,8 @@ function Format-Kod5682FallbackPrompt {
 }
 
 function Invoke-QuotaCheckIteration {
+    param([int]$TickNumber = 1)
+
     $ep = Get-LanguageServerEndpoint
     if ($null -eq $ep) {
         Write-Warning "[QuotaWatchdog] Could not reach local Antigravity language_server GetUserStatus endpoint."
@@ -229,7 +255,6 @@ function Invoke-QuotaCheckIteration {
     }
 
     if ($operationalMode -eq "NORMAL_ARGON") {
-        # Auto-restore to Gemini 4 Argon (High) if we were previously in FALLBACK_FLASH mode!
         if ($null -ne $prevAlert -and $prevAlert.mode -eq "FALLBACK_FLASH" -and (-not $SimulateArgonExhausted) -and (-not $SimulateLowQuota)) {
             if ($activePlaceholder -ne $PrimaryMainModel) {
                 Set-AntigravitySelectedModel -Port $ep.Port -Csrf $ep.Csrf -ModelPlaceholder $PrimaryMainModel
@@ -240,14 +265,12 @@ function Invoke-QuotaCheckIteration {
         }
     }
     elseif ($operationalMode -eq "FALLBACK_FLASH") {
-        # Argon < 10%, but 3.8 Flash >= 10%! Switch Mudur to Gemini 3.8 Flash (High) (MODEL_PLACEHOLDER_M318)
         $alertKey = "FALLBACK_FLASH|$($argonModel.resetTimeUtc)"
         $alreadyTriggered = ($null -ne $prevAlert -and $prevAlert.alertKey -eq $alertKey -and $prevAlert.conversationId -eq $ConversationId -and (-not $SimulateArgonExhausted))
 
         $fbFormatted = Format-Kod5682FallbackPrompt -ArgonEntry $argonModel -FlashEntry $flashHighModel -EffectiveArgonFraction $effArgonFraction
         [System.IO.File]::WriteAllText($LastTriggeredPromptPath, $fbFormatted.RenderedPrompt, [System.Text.UTF8Encoding]::new($false))
 
-        # Live switch model via JetboxWriteState
         if ($activePlaceholder -ne $FallbackMainModel) {
             Set-AntigravitySelectedModel -Port $ep.Port -Csrf $ep.Csrf -ModelPlaceholder $FallbackMainModel
             $activePlaceholder = $FallbackMainModel
@@ -274,15 +297,13 @@ function Invoke-QuotaCheckIteration {
                 Write-Host "[KOD 5682-VARDIYA] Argon dropped to $($fbFormatted.ArgonPercent)%, Flash at $($fbFormatted.FlashPercent)%. Switched Mudur to $($flashHighModel.label)!" -ForegroundColor Yellow
                 & $AgentApiBat send-message --title="KOD 5682-VARDIYA: OTOMATIK FLASH GECISI" $ConversationId $fbFormatted.RenderedPrompt
             } else {
-                # Restore Argon immediately after verifying the live switch in simulation mode
                 Set-AntigravitySelectedModel -Port $ep.Port -Csrf $ep.Csrf -ModelPlaceholder $PrimaryMainModel
                 $activePlaceholder = $PrimaryMainModel
-                Write-Host "[KOD 5682-VARDIYA SIMULATION] Verified live switch to $($flashHighModel.label) ($FallbackMainModel) and restored $($argonModel.label) ($PrimaryMainModel). Prompt saved to $LastTriggeredPromptPath" -ForegroundColor Yellow
+                Write-Host "[KOD 5682-VARDIYA SIMULATION] Verified live RPC switch -> $($flashHighModel.label) ($FallbackMainModel) & restored $($argonModel.label)." -ForegroundColor Yellow
             }
         }
     }
     elseif ($operationalMode -eq "PAUSE_ALL") {
-        # Flash < 10% -> Full Safe Pause & Schedule Timer
         $alertKey = "PAUSE_ALL|$($flashMedModel.resetTimeUtc)"
         $alreadyTriggered = ($null -ne $prevAlert -and $prevAlert.alertKey -eq $alertKey -and $prevAlert.conversationId -eq $ConversationId -and (-not $SimulateLowQuota))
 
@@ -324,6 +345,8 @@ function Invoke-QuotaCheckIteration {
         checkedAtUtc             = $nowUtc.ToString("o")
         checkedAtLocal           = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss zzz")
         watchdogPid              = $PID
+        rpcPort                  = $ep.Port
+        rpcLatencyMs             = $ep.LatencyMs
         conversationId           = $ConversationId
         operationalMode          = $operationalMode
         thresholdFraction        = $Threshold
@@ -336,29 +359,87 @@ function Invoke-QuotaCheckIteration {
     $statusJson = $statusPayload | ConvertTo-Json -Depth 6
     [System.IO.File]::WriteAllText($LiveStatusPath, $statusJson, [System.Text.UTF8Encoding]::new($false))
 
+    # Print rich debug telemetry to terminal on every tick
+    $tsStr = (Get-Date).ToString("HH:mm:ss")
+    $modeColor = switch ($operationalMode) {
+        "NORMAL_ARGON"   { "Green" }
+        "FALLBACK_FLASH" { "Yellow" }
+        "PAUSE_ALL"      { "Red" }
+        default          { "Cyan" }
+    }
+    Write-Host ""
+    Write-Host ("[{0}] [TICK #{1:0000}] RPC 127.0.0.1:{2} ({3}ms) | GUARD: {4} | THRESHOLD: {5}%" -f $tsStr, $TickNumber, $ep.Port, $ep.LatencyMs, $operationalMode, ($Threshold * 100)) -ForegroundColor $modeColor
+
+    $logLines = @("[$tsStr] [TICK #$TickNumber] Mode=$operationalMode | RPC=127.0.0.1:$($ep.Port) ($($ep.LatencyMs)ms)")
+    $displayOrder = @($PrimaryMainModel, $FallbackMainModel, $SubagentModel)
+    $sortedMonitored = @()
+    foreach ($ph in $displayOrder) {
+        $match = $monitoredList | Where-Object { $_.placeholder -eq $ph } | Select-Object -First 1
+        if ($null -ne $match) { $sortedMonitored += $match }
+    }
+    foreach ($m in $monitoredList) {
+        if ($displayOrder -notcontains $m.placeholder) { $sortedMonitored += $m }
+    }
+
+    foreach ($m in $sortedMonitored) {
+        $dispFrac = [double]$m.remainingFraction
+        if ($SimulateArgonExhausted -and $m.placeholder -eq $PrimaryMainModel) { $dispFrac = $effArgonFraction }
+        if ($SimulateLowQuota -and $m.placeholder -eq $PrimaryMainModel) { $dispFrac = $effArgonFraction }
+        if ($SimulateLowQuota -and $m.placeholder -eq $SubagentModel) { $dispFrac = $effFlashFraction }
+
+        $dispPct = ($dispFrac * 100).ToString("0.0", [System.Globalization.CultureInfo]::InvariantCulture) + "%"
+        $bar = Get-QuotaBar -Fraction $dispFrac -Width 16
+        $ttl = Format-DurationShort -TotalSeconds $m.secondsUntilReset
+
+        $effectiveActivePh = if ($operationalMode -eq "FALLBACK_FLASH") { $FallbackMainModel } else { $activePlaceholder }
+        $roleTag = if ($m.placeholder -eq $effectiveActivePh) {
+            if ($operationalMode -eq "FALLBACK_FLASH") { "[MUDUR / FAILOVER]" } else { "[MUDUR / ACTIVE]" }
+        } elseif ($m.placeholder -eq $PrimaryMainModel) {
+            if ($dispFrac -lt $Threshold) { "[MUDUR / DEPLETED]" } else { "[MUDUR / PRIMARY]" }
+        } elseif ($m.placeholder -eq $FallbackMainModel) {
+            "[MUDUR / STANDBY]"
+        } elseif ($m.placeholder -eq $SubagentModel) {
+            "[SUBAGENTS / 5x]"
+        } else {
+            "[MONITORED]"
+        }
+
+        $lineColor = if ($dispFrac -lt $Threshold) { "Red" } elseif ($dispFrac -lt 0.25) { "Yellow" } else { "Gray" }
+        $formattedLine = ("  |-- {0,-18} {1,-28} {2} {3,6} | Reset in {4} ({5})" -f $roleTag, $m.label, $bar, $dispPct, $ttl, $m.resetTimeLocal.Substring(11, 8))
+        Write-Host $formattedLine -ForegroundColor $lineColor
+        $logLines += $formattedLine
+    }
+
+    try {
+        Add-Content -Path $WatchdogLogPath -Value ($logLines -join [Environment]::NewLine) -Encoding UTF8 -ErrorAction SilentlyContinue
+    } catch {}
+
     return $statusPayload
 }
 
 if ($CheckOnce) {
-    $res = Invoke-QuotaCheckIteration
-    if ($null -ne $res) {
-        Write-Host "=== KOD 5682 CANLI KOTA VE VARDIYA DURUMU ($($res.checkedAtLocal)) | Mod: $($res.operationalMode) ===" -ForegroundColor Cyan
-        foreach ($m in $res.monitoredModels) {
-            $roleTag = if ($m.placeholder -eq $res.activeMainPlaceholder) { "[MUDUR / AKTIF]" } elseif ($m.placeholder -eq $FallbackMainModel) { "[MUDUR / YEDEK]" } else { "[ALT AJAN / FLASH]" }
-            Write-Host ("{0,-20} {1,-28} Kalan: %{2,-6} | Sifirlanma: {3} ({4} sn)" -f $roleTag, $m.label, $m.remainingPercent, $m.resetTimeLocal, $m.secondsUntilReset) -ForegroundColor Green
-        }
-    }
+    $null = Invoke-QuotaCheckIteration -TickNumber 1
     exit 0
 }
 
 [System.IO.File]::WriteAllText($WatchdogPidPath, $PID.ToString(), [System.Text.UTF8Encoding]::new($false))
-Write-Host "[QuotaWatchdog] Started 10s KOD 5682 Quota & Model Failover Daemon (PID: $PID, Conversation: $ConversationId, Threshold: $($Threshold*100)%)" -ForegroundColor Cyan
+Write-Host "================================================================================================" -ForegroundColor DarkCyan
+Write-Host "  ANTIGRAVITY MULTI-AGENT QUOTA & FAILOVER WATCHDOG [PROTOCOL: KOD 5682]" -ForegroundColor Cyan
+Write-Host "  PID: $PID | Poll Interval: ${IntervalSeconds}s | Threshold: $($Threshold*100)% | Session: $($ConversationId.Substring(0,8))..." -ForegroundColor DarkGray
+Write-Host "  Architecture: Mudur (Argon -> Flash High Failover) + 4x Subagents (Flash Medium) + Safe Pause" -ForegroundColor DarkGray
+Write-Host "================================================================================================" -ForegroundColor DarkCyan
 
+$tick = 1
 while ($true) {
     try {
-        $null = Invoke-QuotaCheckIteration
+        $null = Invoke-QuotaCheckIteration -TickNumber $tick
     } catch {
-        Write-Warning "[QuotaWatchdog] Tick error: $($_.Exception.Message)"
+        Write-Warning "[QuotaWatchdog] Tick #$tick error: $($_.Exception.Message)"
     }
+    if ($MaxTicks -gt 0 -and $tick -ge $MaxTicks) {
+        break
+    }
+    $tick++
     Start-Sleep -Seconds $IntervalSeconds
 }
+

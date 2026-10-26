@@ -11,10 +11,10 @@ The project operates under a strict five-role command, execution, and auditing s
 ```text
 [Framework Sorumlusu]  <---  [Müdür (Ana Koordinatör)]  --->  [Mimarlar (Senaristler)]  --->  [Kod Çalışanları]
  (Flash Medium / C#)          (Argon High / Sorumlu)          (Flash Medium / Kurgu)          (Flash Medium / XML)
-                                        |
-                                        v
-                             [Müfettiş (QA & Denetim)]
-                          (Flash Medium / Test & Kod 7325)
+                                         |
+                                         v
+                              [Müfettiş (QA & Denetim)]
+                            (Flash Medium / Test & Kod 7325)
 ```
 
 ### Model & Quota Discipline (CRITICAL)
@@ -115,9 +115,16 @@ To prevent mid-task quota exhaustion from leaving half-written C#/XML files or b
 
 ---
 
-## 3. 🛡️ Honesty, Factuality & Proactive Research
+## 3. 🛡️ Honesty, Factuality, Proactive Research & MCP Tooling (`BannerlordSage` & `MB2-MCP`)
 
-- **Proactive Research First (Don't Lazily Say "I Don't Know"):** Before claiming ignorance on any technical question, Bannerlord API behavior, or system capability, **actively investigate** using all available tools (`view_file`, `BannerlordCodeBase` source search, repository grep, `search_web`, `read_url_content`).
+- **Proactive Research First (Don't Lazily Say "I Don't Know"):** Before claiming ignorance on any technical question, Bannerlord API behavior, or system capability, **actively investigate** using all available tools (`BannerlordSage` MCP, `MB2-MCP`, `view_file`, `BannerlordCodeBase` source search, repository grep, `search_web`, `read_url_content`).
+- **Dedicated Bannerlord MCP Servers & Skills:**
+  1. **`BannerlordSage` (`bannerlordsage` MCP & `.agents/skills/bannerlord-sage/SKILL.md`):**
+     - Provides 43 tools backed by a Roslyn C# AST & SQLite index of all 91 decompiled official Bannerlord DLLs, 5,049 official XMLs, official/community modding documentation, and our local `QuestlinerFramework` C# source.
+     - Use for `search_source`, `read_csharp_type`, `read_gauntlet_ui`, `search_bannerlord_knowledge`, `search_bannerlord_docs`, structured gameplay lookups (`trace_troop_tree`, `get_item_stats`, `get_hero_profile`, `get_clan_summary`, `get_settlement_summary`, etc.), local mod source search (`search_mod_source`, `read_mod_type`), and persistent project memory (`project_memory_wakeup`, `project_memory_search`, `project_memory_capture_session`).
+  2. **`MB2-MCP` (`mb2-mcp` MCP & `.agents/skills/mb2-mcp/SKILL.md`):**
+     - Provides 43 tools across all 56 installed modules (`25,219` XML objects, `51` XSD schemas, `7,366` prefabs).
+     - Use for `validate_module` (XSD schema validation, SubModule.xml checks, broken references, duplicate IDs), `l10n_scan` / `l10n_status` / `l10n_set` (EN/TR localization parity and missing/conflicting `{=id}` checks), `search_objects` / `get_object` / `find_references`, XSLT patch previewing (`xslt_patch`, `xslt_preview`), and game log inspection (`read_logs`).
 - **Zero Hallucination Tolerance:** Never fabricate C# methods, XML attributes, benchmark numbers, or unverified claims.
 - **Acknowledge Ignorance (Only After Exhausting Research):** If information is genuinely unavailable even after searching the codebase and web, clearly state what you searched and what specific data is missing.
 - **Confidence Calibration & No People-Pleasing:** Distinguish verified facts from reasoned assumptions. Never invent speculative or false answers just to satisfy a prompt.
