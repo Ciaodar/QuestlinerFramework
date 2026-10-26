@@ -2,7 +2,9 @@
 <Module>
   <Name value="Questliner - Scavenger Pigeons" />
   <Id value="ScavengerPigeons" />
-  <Version value="v1.0.0.46" />
+  <Version value="v1.0.0.47" />
+  <ModuleCategory value="Singleplayer" />
+  <ModuleType value="Community" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
   <DependedModules>

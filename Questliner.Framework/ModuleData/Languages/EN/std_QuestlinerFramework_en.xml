@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+    <string id="ql_dialog_start" text="I am looking for a task. Do you have any work for me?" />
+    <string id="ql_dialog_response" text="Indeed I do. Let's begin." />
+    <string id="ql_dialog_discuss" text="About the task..." />
+    <string id="ql_dialog_discuss_npc" text="Do you have what I asked for?" />
+    <string id="ql_dialog_discuss_yes" text="Yes, I have completed the preparations." />
+    <string id="ql_dialog_discuss_finish" text="Excellent work. Let us proceed." />
+    <string id="ql_dialog_discuss_no" text="Not yet, I need more time." />
+    <string id="qlf_target_died_cancel" text="{HERO_LINK} has died unexpectedly, rendering this task impossible to continue." />
+    <string id="qlf_quest_party_speed" text="Quest movement modifier" />
+    <string id="qlf_quest_party_pursuit" text="Quest pursuit" />
+    <string id="qlf_quest_party_mobilization" text="Quest party mobilization" />
+    <string id="yS1OVOgk" text="OK" />
+  </strings>
+</base>

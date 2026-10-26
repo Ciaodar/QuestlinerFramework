@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Türkçe" />
+  </tags>
+  <strings>
+    <string id="ql_dialog_start" text="Yapacak bir iş arıyorum. Bana göre bir göreviniz var mı?" />
+    <string id="ql_dialog_response" text="Elbette var. Hemen başlayalım." />
+    <string id="ql_dialog_discuss" text="Görev hakkında..." />
+    <string id="ql_dialog_discuss_npc" text="İstediğim hazırlıkları tamamladın mı?" />
+    <string id="ql_dialog_discuss_yes" text="Evet, tüm hazırlıkları tamamladım." />
+    <string id="ql_dialog_discuss_finish" text="Mükemmel iş. O halde devam edelim." />
+    <string id="ql_dialog_discuss_no" text="Henüz değil, biraz daha zamana ihtiyacım var." />
+    <string id="qlf_target_died_cancel" text="{HERO_LINK} beklenmedik bir şekilde hayatını kaybetti, bu nedenle göreve devam etmek imkansız hale geldi." />
+    <string id="qlf_quest_party_speed" text="Görev hareket çarpanı" />
+    <string id="qlf_quest_party_pursuit" text="Görev takibi" />
+    <string id="qlf_quest_party_mobilization" text="Görev birliği intikali" />
+    <string id="yS1OVOgk" text="Tamam" />
+  </strings>
+</base>
