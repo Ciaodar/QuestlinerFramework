@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "bannerlordsage": {
+      "command": "C:\\Users\\meteh\\.bun\\bin\\bun.exe",
+      "args": [
+        "run",
+        "--cwd",
+        "c:\\Users\\meteh\\RiderProjects\\BannerlordSage",
+        "src/entrypoints/bannerlord-full-stdio.ts"
+      ],
+      "env": {
+        "BANNERSAGE_GAME": "bannerlord",
+        "BANNERSAGE_BANNERLORD_GAME_DIR": "D:\\SteamLibrary\\steamapps\\common\\Mount & Blade II Bannerlord",
+        "BANNERSAGE_MOD_SOURCE_DIR": "c:\\Users\\meteh\\RiderProjects\\QuestlinerFramework",
+        "BANNERSAGE_ILSPYCMD_EXE": "C:\\Users\\meteh\\.dotnet\\tools\\ilspycmd.exe",
+        "BANNERSAGE_EULA_ACCEPTED": "true"
+      }
+    },
+    "mb2-mcp": {
+      "command": "C:\\Users\\meteh\\AppData\\Local\\nvm\\v24.15.0\\node.exe",
+      "args": [
+        "c:\\Users\\meteh\\RiderProjects\\MB2-MCP\\dist\\index.js"
+      ],
+      "env": {
+        "MB2_GAME_DIR": "D:\\SteamLibrary\\steamapps\\common\\Mount & Blade II Bannerlord",
+        "MB2_REDACT": "0"
+      }
+    }
+  }
+}
