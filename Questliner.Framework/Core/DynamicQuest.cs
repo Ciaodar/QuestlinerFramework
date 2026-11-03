@@ -737,6 +737,22 @@ namespace Questliner.Framework.Core
             }
         }
 
+        public void ChangeStage(StageModel stage)
+        {
+            if (stage != null && !string.IsNullOrEmpty(stage.Id))
+            {
+                TransitionToStage(stage.Id);
+            }
+        }
+
+        public void ChangeStage(string stageId)
+        {
+            if (!string.IsNullOrEmpty(stageId))
+            {
+                TransitionToStage(stageId);
+            }
+        }
+
         public void TransitionToStage(string nextStageId)
         {
             CurrentStageId = nextStageId;

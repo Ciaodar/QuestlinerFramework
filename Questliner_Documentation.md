@@ -238,5 +238,23 @@ Eğer oyuncunun yetersiz bir koşulu (örneğin yeterli altını veya skilli olm
 </DialogNode>
 ```
 
+## 8. Hata Ayıklama ve Geliştirici Konsol Komutları (Console Commands)
+
+Oyun içi testleri (özellikle BeforeQLF kayıtları, 3D sahnelere girmeden aşama atlamaları ve hedef doğrulamaları) hızlandırmak amacıyla `alt + ~` (tilde) konsolu üzerinden çalıştırılabilen `qlf` komut setidir:
+
+| Komut | Parametreler | Açıklama |
+| :--- | :--- | :--- |
+| `qlf.start_quest` | `[QuestId]` | Belirtilen görev modelini XML tanımlarından anında başlatır. |
+| `qlf.list_active` | - | O an sefer haritasında devam eden tüm aktif Questliner görevlerini ve aşama ID'lerini listeler. |
+| `qlf.complete_stage` | `[QuestId]` | Aktif görevin mevcut aşamasını başarıyla tamamlanmış sayarak bir sonraki aşamaya geçirir (`ForceCompleteCurrentStage`). |
+| `qlf.jump_stage` | `[QuestId] [StageId]` | Aktif görevi doğrudan belirtilen `StageId` aşamasına atlatır (`ChangeStage`). Hedef aşamanın `OnEnterActions` aksiyonlarını ve arayüz takiplerini temizce tetikler. |
+| `qlf.force_success` | `[QuestId]` | Aktif görevi zorla başarıyla sonuçlandırır (`ForceSuccess`). |
+| `qlf.force_fail` | `[QuestId]` | Aktif görevi zorla başarısızlıkla sonuçlandırır (`ForceFail` / `CompleteQuestWithFail`), böylece başarısızlık aksiyonları ve günlükleri test edilebilir. |
+| `qlf.print_targets` | `[QuestId]` | Görevin çözümlenmiş tüm hedeflerini (`TargetHeroes`, `TargetSettlements`, `TargetParties`) ve anlık durumlarını (Can, Hayatta mı, Konum, Birlik Sayısı) konsola döker. |
+| `qlf.set_flag` | `[FlagName] [1/0]` | Küresel bayrak (GlobalFlag) değerini dinamik olarak 1 (True) veya 0 (False) yapar. |
+| `qlf.get_flags` | - | Hafızadaki tüm kayıtlı küresel bayrakları listeler. |
+| `qlf.list_global_heroes` | - | Görevler arası kalıcı hafızaya kaydedilmiş (`SaveHeroToGlobal`) tüm `GlobalHeroes` listesini ve StringId'lerini döker. |
+| `qlf.reset_completed` | `[QuestId]` | Görevi tamamlanmış görevler listesinden kaldırarak yeniden alınabilir hale getirir. |
+
 ---
 `Bu belge Questliner Framework C# Motor Geliştiricisi tarafından hazırlanmıştır ve her zaman en güncel sürümü temsil eder.`

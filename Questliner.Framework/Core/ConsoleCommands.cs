@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 
@@ -52,12 +53,31 @@ namespace Questliner.Framework.Core
         {
             if (args.Count < 1) return "Usage: qlf.complete_stage [QuestId]";
             var id = args[0];
-            var q = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(x => x.IsOngoing && x.Model.Id == id);
-            if (q == null) return "Active quest not found.";
+            var q = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>()
+                .FirstOrDefault(x => x.IsOngoing && string.Equals(x.Model?.Id, id, System.StringComparison.OrdinalIgnoreCase));
+            if (q == null) return $"Active quest '{id}' not found.";
             
             string oldStage = q.CurrentStageId;
             q.ForceCompleteCurrentStage();
             return $"Quest {id} advanced from {oldStage} to {q.CurrentStageId}.";
+        }
+
+        [CommandLineFunctionality.CommandLineArgumentFunction("jump_stage", "qlf")]
+        public static string JumpStage(List<string> args)
+        {
+            if (args.Count < 2) return "Usage: qlf.jump_stage [QuestId] [StageId]";
+            var id = args[0];
+            var stageId = args[1];
+            var q = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>()
+                .FirstOrDefault(x => x.IsOngoing && string.Equals(x.Model?.Id, id, System.StringComparison.OrdinalIgnoreCase));
+            if (q == null) return $"Active quest '{id}' not found.";
+
+            var targetStageModel = q.Model?.Stages.FirstOrDefault(s => string.Equals(s.Id, stageId, System.StringComparison.OrdinalIgnoreCase));
+            if (targetStageModel == null) return $"Stage '{stageId}' not found in quest '{id}'.";
+
+            string oldStage = q.CurrentStageId;
+            q.ChangeStage(targetStageModel);
+            return $"Quest '{id}' jumped from '{oldStage}' to '{q.CurrentStageId}'.";
         }
         
         [CommandLineFunctionality.CommandLineArgumentFunction("force_success", "qlf")]
@@ -65,11 +85,110 @@ namespace Questliner.Framework.Core
         {
             if (args.Count < 1) return "Usage: qlf.force_success [QuestId]";
             var id = args[0];
-            var q = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().FirstOrDefault(x => x.IsOngoing && x.Model.Id == id);
-            if (q == null) return "Active quest not found.";
+            var q = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>()
+                .FirstOrDefault(x => x.IsOngoing && string.Equals(x.Model?.Id, id, System.StringComparison.OrdinalIgnoreCase));
+            if (q == null) return $"Active quest '{id}' not found.";
             
             q.ForceSuccess();
             return $"Forced success for {id}.";
+        }
+
+        [CommandLineFunctionality.CommandLineArgumentFunction("force_fail", "qlf")]
+        public static string ForceFail(List<string> args)
+        {
+            if (args.Count < 1) return "Usage: qlf.force_fail [QuestId]";
+            var id = args[0];
+            var q = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>()
+                .FirstOrDefault(x => x.IsOngoing && string.Equals(x.Model?.Id, id, System.StringComparison.OrdinalIgnoreCase));
+            if (q == null) return $"Active quest '{id}' not found.";
+
+            q.ForceFail();
+            if (q.IsOngoing)
+            {
+                q.CompleteQuestWithFail();
+            }
+            return $"Forced fail for {id}.";
+        }
+
+        [CommandLineFunctionality.CommandLineArgumentFunction("print_targets", "qlf")]
+        public static string PrintTargets(List<string> args)
+        {
+            if (args.Count < 1) return "Usage: qlf.print_targets [QuestId]";
+            var id = args[0];
+            var q = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>()
+                .FirstOrDefault(x => x.IsOngoing && string.Equals(x.Model?.Id, id, System.StringComparison.OrdinalIgnoreCase));
+            if (q == null) return $"Active quest '{id}' not found.";
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"=== Targets for Quest '{id}' (Stage: {q.CurrentStageId}) ===");
+
+            sb.AppendLine("[Heroes]");
+            if (q.TargetHeroes == null || q.TargetHeroes.Count == 0)
+            {
+                sb.AppendLine("  (None)");
+            }
+            else
+            {
+                foreach (var kvp in q.TargetHeroes)
+                {
+                    var h = kvp.Value;
+                    if (h == null)
+                    {
+                        sb.AppendLine($"  - [{kvp.Key}]: (null)");
+                        continue;
+                    }
+                    string location = h.CurrentSettlement != null ? $"Settlement: {h.CurrentSettlement.Name}"
+                                    : (h.StayingInSettlement != null ? $"Settlement: {h.StayingInSettlement.Name}"
+                                    : (h.PartyBelongedTo != null ? $"Party: {h.PartyBelongedTo.Name}"
+                                    : (h.PartyBelongedToAsPrisoner != null ? $"Prisoner of: {h.PartyBelongedToAsPrisoner.Name}"
+                                    : "Field / Unknown")));
+                    sb.AppendLine($"  - [{kvp.Key}] {h.Name} ({h.StringId}) | Alive: {h.IsAlive} | HP: {h.HitPoints} | Location: {location}");
+                }
+            }
+
+            sb.AppendLine("[Settlements]");
+            if (q.TargetSettlements == null || q.TargetSettlements.Count == 0)
+            {
+                sb.AppendLine("  (None)");
+            }
+            else
+            {
+                foreach (var kvp in q.TargetSettlements)
+                {
+                    var s = kvp.Value;
+                    if (s == null)
+                    {
+                        sb.AppendLine($"  - [{kvp.Key}]: (null)");
+                        continue;
+                    }
+                    string clanName = s.OwnerClan?.Name?.ToString() ?? "None";
+                    string kingdomName = s.OwnerClan?.Kingdom?.Name?.ToString() ?? (s.MapFaction as Kingdom)?.Name?.ToString() ?? "None";
+                    sb.AppendLine($"  - [{kvp.Key}] {s.Name} ({s.StringId}) | Clan: {clanName} | Kingdom: {kingdomName}");
+                }
+            }
+
+            sb.AppendLine("[Parties]");
+            if (q.TargetParties == null || q.TargetParties.Count == 0)
+            {
+                sb.AppendLine("  (None)");
+            }
+            else
+            {
+                foreach (var kvp in q.TargetParties)
+                {
+                    var p = kvp.Value;
+                    if (p == null)
+                    {
+                        sb.AppendLine($"  - [{kvp.Key}]: (null)");
+                        continue;
+                    }
+                    int count = p.MemberRoster != null ? p.MemberRoster.TotalManCount : 0;
+                    var pos = p.GetPosition2D;
+                    sb.AppendLine($"  - [{kvp.Key}] {p.Name} ({p.StringId}) | Men: {count} | Pos: ({pos.X:F1}, {pos.Y:F1}) | Active: {p.IsActive}");
+                }
+            }
+
+            return sb.ToString().TrimEnd();
         }
 
         [CommandLineFunctionality.CommandLineArgumentFunction("set_flag", "qlf")]

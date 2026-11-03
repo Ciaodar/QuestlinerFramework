@@ -2,6 +2,23 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.8.1] - 03 Kasım 2026 (Advanced QA & Live Testing Developer Console Commands)
+
+### Eklendi & Geliştirildi (Added & Improved)
+- **Doğrudan Aşama Atlama Komutu (`qlf.jump_stage [QuestId] [StageId]`):**
+  - Aktif dinamik görevi doğrudan istenen aşamaya geçiren konsol komutu eklendi.
+  - Hedef aşamanın XML modelinde olup olmadığını doğrular, `DynamicQuest.ChangeStage` API'si üzerinden `OnEnterActions`, süre senkronizasyonu ve harita takiplerini tetikleyerek temiz geçiş sağlar.
+  - `DynamicQuest.ChangeStage(StageModel)` ve `DynamicQuest.ChangeStage(string)` aşama değiştirme yardımcı metotları çekirdek sınıfa kazandırıldı.
+- **Hedef Durumlarını Konsola Yazdırma (`qlf.print_targets [QuestId]`):**
+  - Görevde çözümlenmiş tüm hedeflerin (`TargetHeroes`, `TargetSettlements`, `TargetParties`) anlık oyun içi durumunu detaylı döken konsol aracı eklendi:
+    - Kahramanlar: İsim, StringId, Hayatta mı (`IsAlive`), Can/Sağlık puanı (`HitPoints`), Anlık Yerleşim veya Birlik konumu.
+    - Yerleşimler: İsim, StringId, Sahip Klan (`OwnerClan`) ve Krallık (`Kingdom`).
+    - Birlikler: İsim, StringId, Mevcut asker sayısı (`TotalManCount`), Harita 2D koordinatları (`GetPosition2D`) ve aktiflik durumu.
+- **Zorla Başarısızlık Komutu (`qlf.force_fail [QuestId]`):**
+  - Test senaryolarında başarısızlık aşama günlükleri ve aksiyonlarını denemek için görevi doğrudan başarısızlığa düşüren `qlf.force_fail [QuestId]` komutu eklendi (`ForceFail` / `CompleteQuestWithFail`).
+
+---
+
 ## [v1.8.0] - 18 Ekim 2026 (Engine Overhaul: IsChild Filters, Advanced Aliases, Death Immunity, Softlock Protection, Party Cleanup, Stage Timers & Daily AutoStart)
 
 ### Eklendi & Geliştirildi (Added & Improved)
