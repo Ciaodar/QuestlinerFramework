@@ -121,6 +121,7 @@ XML içerisinden partideki asker tiplerini ve sayılarını birebir belirlemek i
 - `StringValue="Hold"`: Olduğu yerde beklemesini sağlar.
 - `StringValue="IgnoreAi"`: Partiyi diğer harita partilerine karşı görünmez/dokunulmaz kılar ve olduğu yerde sabit bekletir (`SetMoveModeHold`).
 - `StringValue="PatrolAroundSettlement"` / `StringValue="GoToSettlement"`: `ObjectId` veya `SettlementAlias` ile belirtilen yerleşke etrafında devriye gezmesini veya oraya yürümesini sağlar.
+- `StringValue="FleeFromPlayer"` / `StringValue="Escape"`: Partinin oyuncudan uzağa doğru kaçmasını sağlar. Oyuncunun konum vektörüne göre haritadaki en uygun uzak yerleşkeye doğru kaçış rotası çizer ve saatlik döngüde kaçış yönünü diri tutar. Hem `SetPartyAi` hem de `SpawnBanditParty` içinde kullanılabilir.
 
 ### 3.2. Dinamik Inquiry Modal Penceresi (`Action Type="ShowInquiry"`)
 Oyuncuya kritik hikaye gelişmelerini, idam haberlerini veya yol ayrımlarını dramatize edilmiş bir TaleWorlds açılır penceresi (Inquiry) ile sunmak için kullanılır.

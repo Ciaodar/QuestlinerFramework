@@ -468,7 +468,7 @@ namespace Questliner.Framework.Core
         public CampaignTime StageDeadline => _stageDeadline;
 
         public DynamicQuest(QuestModel model, Hero? questGiver, CampaignTime duration) 
-            : base(model.Id, questGiver, CampaignTime.DaysFromNow(9999f), 0)
+            : base(model.Id, (questGiver != null && questGiver != Hero.MainHero) ? questGiver : null, CampaignTime.DaysFromNow(9999f), 0)
         {
             Model = model;
             _modelId = model.Id;
@@ -645,6 +645,17 @@ namespace Questliner.Framework.Core
 
         protected override void OnStartQuest()
         {
+            if (Campaign.Current?.QuestManager != null)
+            {
+                if (Hero.MainHero != null && IsTracked(Hero.MainHero))
+                {
+                    Campaign.Current.QuestManager.RemoveTrackedObjectForQuest(Hero.MainHero, this);
+                }
+                if (QuestGiver != null && QuestGiver == Hero.MainHero && IsTracked(QuestGiver))
+                {
+                    Campaign.Current.QuestManager.RemoveTrackedObjectForQuest(QuestGiver, this);
+                }
+            }
             if (!string.IsNullOrEmpty(CurrentStageId)) TransitionToStage(CurrentStageId);
         }
 
@@ -773,6 +784,28 @@ namespace Questliner.Framework.Core
                     ChangeQuestDueTime(CampaignTime.DaysFromNow(9999f));
                 }
 
+                // Bug 8 Fix: Reset stage-scoped DefeatedParties counters so bandits killed in earlier stages don't autocomplete this stage
+                if (nextStageModel.Conditions != null)
+                {
+                    foreach (var cond in nextStageModel.Conditions.Where(c => c.ConditionType == "DefeatedParties"))
+                    {
+                        if (!string.IsNullOrEmpty(cond.TargetAlias))
+                        {
+                            SetCounter($"Defeated_{cond.TargetAlias}_Parties", 0);
+                        }
+                    }
+                }
+                if (nextStageModel.FailConditions != null)
+                {
+                    foreach (var cond in nextStageModel.FailConditions.Where(c => c.ConditionType == "DefeatedParties"))
+                    {
+                        if (!string.IsNullOrEmpty(cond.TargetAlias))
+                        {
+                            SetCounter($"Defeated_{cond.TargetAlias}_Parties", 0);
+                        }
+                    }
+                }
+
                 if (nextStageModel.IsSuccessNode)
                 {
                     EnsureGlobalHeroesPersisted();
@@ -837,42 +870,48 @@ namespace Questliner.Framework.Core
                         {
                             string key = kvp.Key;
                             if (nextStageModel.LogText.IndexOf("{" + key, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                                nextStageModel.Conditions.Any(c => string.Equals(c.TargetAlias, key, StringComparison.OrdinalIgnoreCase)) ||
-                                nextStageModel.OnEnterActions.Any(a => string.Equals(a.TargetAlias, key, StringComparison.OrdinalIgnoreCase)))
+                                (nextStageModel.Conditions != null && nextStageModel.Conditions.Any(c => string.Equals(c.TargetAlias, key, StringComparison.OrdinalIgnoreCase))) ||
+                                (nextStageModel.OnEnterActions != null && nextStageModel.OnEnterActions.Any(a => string.Equals(a.TargetAlias, key, StringComparison.OrdinalIgnoreCase))))
                             {
                                 AddTrackedObject(kvp.Value);
                             }
                         }
                     }
 
-                    foreach (var cond in nextStageModel.Conditions)
+                    if (nextStageModel.Conditions != null)
                     {
-                        if (!string.IsNullOrEmpty(cond.TargetAlias))
+                        foreach (var cond in nextStageModel.Conditions)
                         {
-                            var targetHero = GetTargetHero(cond.TargetAlias);
-                            if (targetHero != null)
+                            if (!string.IsNullOrEmpty(cond.TargetAlias))
                             {
-                                TrackHeroLocation(targetHero);
+                                var targetHero = GetTargetHero(cond.TargetAlias);
+                                if (targetHero != null)
+                                {
+                                    TrackHeroLocation(targetHero);
+                                }
+
+                                var targetSettlement = GetTargetSettlement(cond.TargetAlias);
+                                if (targetSettlement != null && !IsTracked(targetSettlement)) AddTrackedObject(targetSettlement);
+
+                                var targetParty = GetTargetParty(cond.TargetAlias);
+                                if (targetParty != null && !IsTracked(targetParty)) AddTrackedObject(targetParty);
                             }
-
-                            var targetSettlement = GetTargetSettlement(cond.TargetAlias);
-                            if (targetSettlement != null && !IsTracked(targetSettlement)) AddTrackedObject(targetSettlement);
-
-                            var targetParty = GetTargetParty(cond.TargetAlias);
-                            if (targetParty != null && !IsTracked(targetParty)) AddTrackedObject(targetParty);
                         }
                     }
 
-                    foreach (var act in nextStageModel.OnEnterActions)
+                    if (nextStageModel.OnEnterActions != null)
                     {
-                        if (!string.IsNullOrEmpty(act.TargetAlias))
+                        foreach (var act in nextStageModel.OnEnterActions)
                         {
-                            var targetHero = GetTargetHero(act.TargetAlias);
-                            if (targetHero != null)
+                            if (!string.IsNullOrEmpty(act.TargetAlias))
                             {
-                                if (act.ActionType == "MakeMet" || act.ActionType == "TalkTo" || act.ActionType == "ChangeRelation")
+                                var targetHero = GetTargetHero(act.TargetAlias);
+                                if (targetHero != null)
                                 {
-                                    TrackHeroLocation(targetHero);
+                                    if (act.ActionType == "MakeMet" || act.ActionType == "TalkTo" || act.ActionType == "ChangeRelation")
+                                    {
+                                        TrackHeroLocation(targetHero);
+                                    }
                                 }
                             }
                         }
@@ -880,7 +919,7 @@ namespace Questliner.Framework.Core
 
                     if (nextStageModel.LogType == "Discrete" || nextStageModel.LogType == "Progress")
                     {
-                        _trackedCondition = nextStageModel.Conditions.FirstOrDefault(c => c.Amount > 1) ?? nextStageModel.Conditions.FirstOrDefault();
+                        _trackedCondition = nextStageModel.Conditions?.FirstOrDefault(c => c.Amount > 1) ?? nextStageModel.Conditions?.FirstOrDefault();
                         int current = _trackedCondition != null ? Questliner.Framework.Engine.ConditionEvaluator.GetCurrentProgress(_trackedCondition, this) : 0;
                         int target = nextStageModel.TargetAmount > 1 ? nextStageModel.TargetAmount : (_trackedCondition?.Amount ?? 1);
                         

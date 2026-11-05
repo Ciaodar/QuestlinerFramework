@@ -15,7 +15,7 @@ namespace Questliner.Framework.Core
             var id = args[0];
             var q = Questliner.Framework.Services.QuestModuleScanner.LoadedQuests.FirstOrDefault(x => x.Id == id);
             if (q == null) return "Quest not found in XMLs.";
-            var dq = new DynamicQuest(q, TaleWorlds.CampaignSystem.Hero.MainHero, TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(q.TimeLimitInDays > 0 ? q.TimeLimitInDays : 9999));
+            var dq = new DynamicQuest(q, null, TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(q.TimeLimitInDays > 0 ? q.TimeLimitInDays : 9999));
             foreach(var res in q.TargetResolvers)
             {
                 if (res.TargetType == "Settlement")

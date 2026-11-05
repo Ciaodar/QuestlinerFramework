@@ -768,7 +768,7 @@ namespace Questliner.Framework.Behaviors
                     if (resolver != null && Engine.TargetResolverService.IsSettlementMatch(resolver, settlement, null))
                     {
                         var duration = TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(questModel.TimeLimitInDays > 0 ? questModel.TimeLimitInDays : 9999);
-                        var tempQuest = new DynamicQuest(questModel, Hero.MainHero, duration);
+                        var tempQuest = new DynamicQuest(questModel, null, duration);
                         tempQuest.TargetSettlements[trigger.TargetAlias] = settlement;
                         
                         bool canResolveAll = true;
@@ -778,19 +778,19 @@ namespace Questliner.Framework.Behaviors
                             
                             if (res.TargetType == "Settlement")
                             {
-                                var s = Engine.TargetResolverService.ResolveSettlement(res, tempQuest, Hero.MainHero);
+                                var s = Engine.TargetResolverService.ResolveSettlement(res, tempQuest, null);
                                 if (s == null && !res.IsOptional) { canResolveAll = false; break; }
                                 if (s != null) tempQuest.TargetSettlements[res.Alias] = s;
                             }
                             else if (res.TargetType == "MobileParty")
                             {
-                                var p = Engine.TargetResolverService.ResolveMobileParty(res, tempQuest, Hero.MainHero);
+                                var p = Engine.TargetResolverService.ResolveMobileParty(res, tempQuest, null);
                                 if (p == null && !res.IsOptional) { canResolveAll = false; break; }
                                 if (p != null) tempQuest.TargetParties[res.Alias] = p;
                             }
                             else
                             {
-                                var h = Engine.TargetResolverService.ResolveHero(res, tempQuest, Hero.MainHero);
+                                var h = Engine.TargetResolverService.ResolveHero(res, tempQuest, null);
                                 if (h == null && !res.IsOptional) { canResolveAll = false; break; }
                                 if (h != null) tempQuest.TargetHeroes[res.Alias] = h;
                             }
@@ -870,8 +870,13 @@ namespace Questliner.Framework.Behaviors
 
             foreach (var quest in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
             {
-                // Native specific defeat counters
-                if (mapEvent.IsPlayerMapEvent && mapEvent.WinningSide == mapEvent.PlayerSide)
+                // Native specific defeat counters - only count if current stage actively listens for DefeatedParties
+                bool hasDefeatedPartiesCondition = quest.CurrentStage != null && (
+                    (quest.CurrentStage.Conditions != null && quest.CurrentStage.Conditions.Any(c => c.ConditionType == "DefeatedParties")) ||
+                    (quest.CurrentStage.FailConditions != null && quest.CurrentStage.FailConditions.Any(c => c.ConditionType == "DefeatedParties"))
+                );
+
+                if (hasDefeatedPartiesCondition && mapEvent.IsPlayerMapEvent && mapEvent.WinningSide == mapEvent.PlayerSide)
                 {
                     var defeatedParties = mapEvent.InvolvedParties.Where(p => p.Side != mapEvent.PlayerSide);
                     foreach(var dp in defeatedParties)
@@ -957,6 +962,23 @@ namespace Questliner.Framework.Behaviors
             SanitizeQuestItemsInInventory();
             EvaluateAllQuests();
 
+            // Maintain fleeing AI for active fleeing parties (Bug 3 fix)
+            foreach (var quest in Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing).ToList())
+            {
+                foreach (var kvp in quest.TargetParties)
+                {
+                    var alias = kvp.Key;
+                    var p = kvp.Value;
+                    if (p != null && p.IsActive && quest.GetFlag($"FleeingParty_{alias}"))
+                    {
+                        if (p.TargetSettlement == null || p.GetPosition2D.Distance(p.TargetSettlement.GetPosition2D) < 5f || p.Speed < 0.1f)
+                        {
+                            Engine.ActionExecutor.SetPartyFleeFromPlayer(p);
+                        }
+                    }
+                }
+            }
+
             CheckAutoStartQuests();
         }
 
@@ -1032,9 +1054,9 @@ namespace Questliner.Framework.Behaviors
                 }
             }
 
-            var giver = overrideGiver ?? Hero.MainHero;
+            var giver = overrideGiver != null && overrideGiver != Hero.MainHero ? overrideGiver : null;
             var duration = TaleWorlds.CampaignSystem.CampaignTime.DaysFromNow(questModel.TimeLimitInDays > 0 ? questModel.TimeLimitInDays : 9999);
-            var tempQuest = new DynamicQuest(questModel, giver, duration); // AutoStart quests default to MainHero as giver if no other giver is specified, but TargetResolvers should assign proper heroes.
+            var tempQuest = new DynamicQuest(questModel, giver, duration);
             
             bool canResolveAll = true;
             foreach (var res in questModel.TargetResolvers)

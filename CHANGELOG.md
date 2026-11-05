@@ -2,6 +2,30 @@
 
 Tüm önemli güncellemeler, yeni eklenen özellikler, hata düzeltmeleri ve sistem değişiklikleri bu dosyada kronolojik olarak kayıt altına alınacaktır. Yapay zeka ajanları veya geliştiriciler, yeni bir "Build" (Geliştirme Paketi) tamamladıklarında bu dosyaya tarih ve sürüm düşerek notlarını eklemelidir.
 
+## [v1.8.2] - 05 Kasım 2026 (Patron Playtest QA Engine Fixes: MainHero Untracking, Artisan Settlement Collision Avoidance, Stage-Scoped DefeatedParties & Fleeing Party AI)
+
+### Düzeltildi & Geliştirildi (Fixed & Improved)
+- **"Quest Given By: Player" ve Ana Karakter Mavi Ünlem İşareti Çözümü (Bug 7 - `DynamicQuest.cs`, `QuestlinerCampaignBehavior.cs`, `ConsoleCommands.cs`):**
+  - Native `QuestBase` sınıfı `questGiver` parametresi dolu geldiğinde oyuncu birliğini otomatik harita takibine alıp günlüğe "Görevi Veren: Oyuncu" ibaresi düşüyordu.
+  - `DynamicQuest` kurucusu, `TryAutoStartQuest`, `OnSettlementEntered` ve `qlf.start_quest` içinde `questGiver` alanı eğer açık bir NPC verilmemişse veya `Hero.MainHero` ise kesin olarak `null` olarak geçirilecek şekilde güncellendi.
+  - `DynamicQuest.SpecialQuestType` özelliği `QuestGiver == null` durumunda `"QuestlinerSpecialQuest"` döndürerek Native arayüzünün "Görevi Veren" başlığını gizlemesini sağladı.
+  - `DynamicQuest` kurucusunda, `OnStartQuest` ve `TransitionToStage` aşama geçişlerinde `Hero.MainHero` varsa `RemoveTrackedObjectForQuest` ile takip listesinden temizlenmesi güvenceye alındı.
+- **Zanaatkar & Yerleşim Hedef Çakışması Önleme / Artisans Collision Fix (Bug 2 - `TargetResolverService.cs`):**
+  - Aynı bölgede başlayan birden fazla görev (`QLF_DemirAhit_Cirak` ve `QLF_GolgeTunegi_Cagri`) en yakın şehri seçtiğinde, tek zanaatkarı olan şehirlerde (`Marunath -> Humalgart the Smith`) zanaatkarın her iki görev tarafından birden atanması engellendi.
+  - `GetUsedHeroes(DynamicQuest?)` metodu eklenerek tüm aktif dinamik görevler, global durum kahramanları ve mevcut görevdeki hedefler birleşik bir kümede toplandı.
+  - Katman 1 (Önleyici Yerleşim Filtresi): `ResolveSettlement` aşamasında, bu yerleşkeye bağımlı (`RequiredSettlementAlias`) kahraman çözümleyicileri varsa, yerleşkeler elenerek sadece henüz kullanılmamış eşleşen kahramanı bulunan şehirler aday havuzuna alındı.
+  - Katman 2 (Dinamik Yerleşim Yeniden Atama): `ResolveHero` aşamasında seçili yerleşimde boşta kahraman kalmamışsa ve yerleşke sabit ID ile kilitlenmemişse, dünya çapında en yakın uygun boştaki kahraman bulunup görevin `TargetSettlements[model.RequiredSettlementAlias]` kaydı ve metin değişkenleri anında bu yeni şehre güncellendi.
+- **Aşamaya Özgü Düşman Yenme Sayaç Sıfırlama / Stage-Scoped DefeatedParties (Bug 8 - `DynamicQuest.cs`, `QuestlinerCampaignBehavior.cs`):**
+  - Önceki aşamalarda kesilen çapulcuların sonraki aşamayı ("3 Haydut Birliği Yok Et") otomatik tamamlaması hatası giderildi.
+  - `DynamicQuest.TransitionToStage` aşama geçişinde, yeni aşamanın `Conditions` ve `FailConditions` listeleri taranarak `DefeatedParties` türündeki sayaçlar (`Defeated_{alias}_Parties`) aşama girişinde sıfırlandı.
+  - `QuestlinerCampaignBehavior.OnMapEventEnded` dinleyicisinde genel yenilgi sayaçlarının (`Defeated_{cultureId}_Parties`, `Defeated_looters_Parties`, `Defeated_BanditParty_Parties`) yalnızca mevcut aşamada aktif bir `DefeatedParties` koşulu varsa artırılması sağlandı.
+- **Kaçan Birlik Yapay Zekası / Fleeing Party AI (`ActionExecutor.cs`, `QuestlinerCampaignBehavior.cs`):**
+  - `SetPartyAi` ve `SpawnBanditParty` aksiyonlarına `FleeFromPlayer` ve `Escape` desteği eklendi.
+  - `ActionExecutor.SetPartyFleeFromPlayer(MobileParty party)` metodu geliştirildi: Oyuncunun konumundan ters istikametteki kaçış vektörü hesaplanarak birliğe 15-85 mesafe uzaklıkta güvenli bir sığınak yerleşke rota hedefi verildi (`SetMoveGoToSettlement`).
+  - `QuestlinerCampaignBehavior.OnHourlyTick` saatlik döngüsüne kaçış koruması eklendi: Kaçan birlik hedefine ulaştığında, durduğunda veya oyuncu yaklaştığında kaçış rotası dinamik olarak tazelenerek birliğin kaçmaya devam etmesi sağlandı.
+
+---
+
 ## [v1.8.1] - 03 Kasım 2026 (Advanced QA & Live Testing Developer Console Commands)
 
 ### Eklendi & Geliştirildi (Added & Improved)

@@ -571,6 +571,11 @@ namespace Questliner.Framework.Engine
                     {
                         party.SetMoveModeHold();
                     }
+                    else if (aiBehavior.Equals("FleeFromPlayer", StringComparison.OrdinalIgnoreCase) || aiBehavior.Equals("Escape", StringComparison.OrdinalIgnoreCase))
+                    {
+                        SetPartyFleeFromPlayer(party);
+                        quest?.SetFlag($"FleeingParty_{action.TargetAlias}", true);
+                    }
                     else if (aiBehavior.Equals("PatrolAroundSettlement", StringComparison.OrdinalIgnoreCase) && quest != null && !string.IsNullOrEmpty(locationRefId))
                     {
                         var targetSettlement = quest.GetTargetSettlement(locationRefId)
@@ -766,25 +771,35 @@ namespace Questliner.Framework.Engine
                     if (quest != null && quest.TargetParties.TryGetValue(action.TargetAlias, out var p) && p != null && p.IsActive)
                     {
                         string targetRefId = !string.IsNullOrEmpty(action.ObjectId) ? action.ObjectId : action.SettlementAlias;
-                        if (action.StringValue == "IgnoreAi")
+                        if (action.StringValue == "FleeFromPlayer" || action.StringValue == "Escape")
                         {
+                            SetPartyFleeFromPlayer(p);
+                            quest.SetFlag($"FleeingParty_{action.TargetAlias}", true);
+                        }
+                        else if (action.StringValue == "IgnoreAi")
+                        {
+                            quest.SetFlag($"FleeingParty_{action.TargetAlias}", false);
                             p.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.Never);
                             p.SetMoveModeHold();
                         }
                         else if (action.StringValue == "UnignoreAi")
                         {
+                            quest.SetFlag($"FleeingParty_{action.TargetAlias}", false);
                             p.IgnoreByOtherPartiesTill(TaleWorlds.CampaignSystem.CampaignTime.Now);
                         }
                         else if (action.StringValue == "Hold")
                         {
+                            quest.SetFlag($"FleeingParty_{action.TargetAlias}", false);
                             p.SetMoveModeHold();
                         }
                         else if (action.StringValue == "EngagePlayer")
                         {
+                            quest.SetFlag($"FleeingParty_{action.TargetAlias}", false);
                             p.SetMoveEngageParty(TaleWorlds.CampaignSystem.Party.MobileParty.MainParty, TaleWorlds.CampaignSystem.Party.MobileParty.NavigationType.Default);
                         }
                         else if (!string.IsNullOrEmpty(targetRefId))
                         {
+                            quest.SetFlag($"FleeingParty_{action.TargetAlias}", false);
                             if (action.StringValue == "EngageParty")
                             {
                                 if (targetRefId.Equals("Player", System.StringComparison.OrdinalIgnoreCase))
@@ -1598,6 +1613,55 @@ namespace Questliner.Framework.Engine
             }
 
             return false;
+        }
+
+        public static void SetPartyFleeFromPlayer(MobileParty party)
+        {
+            if (party == null || !party.IsActive) return;
+
+            party.IgnoreByOtherPartiesTill(CampaignTime.Never);
+            party.Ai.SetDoNotMakeNewDecisions(true);
+
+            Vec2 fleeVec = party.GetPosition2D - MobileParty.MainParty.GetPosition2D;
+            if (fleeVec.LengthSquared < 0.001f)
+            {
+                fleeVec = new Vec2(1f, 0f);
+            }
+            fleeVec = fleeVec.Normalized();
+
+            var candidateSettlements = TaleWorlds.CampaignSystem.Settlements.Settlement.All
+                .Where(s => (s.IsTown || s.IsCastle || s.IsVillage) && !s.IsUnderRaid && !s.IsUnderSiege)
+                .ToList();
+
+            TaleWorlds.CampaignSystem.Settlements.Settlement? escapeTarget = null;
+            var directedCandidates = candidateSettlements.Where(s =>
+            {
+                var toSett = s.GetPosition2D - party.GetPosition2D;
+                float dist = toSett.Length;
+                if (dist < 15f || dist > 85f) return false;
+                return toSett.Normalized().DotProduct(fleeVec) > 0.2f;
+            }).OrderBy(s => s.GetPosition2D.DistanceSquared(party.GetPosition2D)).ToList();
+
+            if (directedCandidates.Count > 0)
+            {
+                escapeTarget = directedCandidates.FirstOrDefault();
+            }
+            else
+            {
+                escapeTarget = candidateSettlements
+                    .Where(s => s.GetPosition2D.Distance(party.GetPosition2D) >= 15f && s.GetPosition2D.Distance(party.GetPosition2D) <= 100f)
+                    .OrderByDescending(s => s.GetPosition2D.DistanceSquared(MobileParty.MainParty.GetPosition2D))
+                    .FirstOrDefault();
+            }
+
+            if (escapeTarget != null)
+            {
+                party.SetMoveGoToSettlement(escapeTarget, MobileParty.NavigationType.Default, false);
+            }
+            else
+            {
+                party.SetMoveGoToPoint(new CampaignVec2(party.GetPosition2D + fleeVec * 30f, true), MobileParty.NavigationType.Default);
+            }
         }
     }
 }

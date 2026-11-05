@@ -13,6 +13,40 @@ namespace Questliner.Framework.Engine
 {
     public static class TargetResolverService
     {
+        public static HashSet<Hero> GetUsedHeroes(DynamicQuest? currentQuest = null)
+        {
+            var usedHeroes = new HashSet<Hero>();
+            if (Campaign.Current != null)
+            {
+                var dynamicQuests = Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing);
+                foreach (var dq in dynamicQuests)
+                {
+                    foreach (var th in dq.TargetHeroes.Values)
+                    {
+                        if (th != null) usedHeroes.Add(th);
+                    }
+                }
+            }
+
+            if (GlobalStateManager.Instance.GlobalHeroes != null)
+            {
+                foreach (var gh in GlobalStateManager.Instance.GlobalHeroes.Values)
+                {
+                    if (gh != null) usedHeroes.Add(gh);
+                }
+            }
+
+            if (currentQuest != null)
+            {
+                foreach (var th in currentQuest.TargetHeroes.Values)
+                {
+                    if (th != null) usedHeroes.Add(th);
+                }
+            }
+
+            return usedHeroes;
+        }
+
         public static Hero? ResolveHero(TargetResolverModel model, DynamicQuest? quest, Hero? questGiver = null)
         {
             if (model.TargetType != "Hero") return null;
@@ -105,22 +139,45 @@ namespace Questliner.Framework.Engine
             if (!candidates.Any()) return null;
 
             // 1.5 EXCLUDE ALREADY USED HEROES IF POSSIBLE
-            if (TaleWorlds.CampaignSystem.Campaign.Current != null)
+            var usedHeroes = GetUsedHeroes(quest);
+            var unusedCandidates = candidates.Where(h => !usedHeroes.Contains(h)).ToList();
+            if (unusedCandidates.Any())
             {
-                var usedHeroes = new System.Collections.Generic.HashSet<Hero>();
-                var dynamicQuests = TaleWorlds.CampaignSystem.Campaign.Current.QuestManager.Quests.OfType<DynamicQuest>().Where(q => q.IsOngoing);
-                foreach (var dq in dynamicQuests)
+                candidates = unusedCandidates;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(model.RequiredSettlementAlias) && quest != null)
                 {
-                    foreach (var th in dq.TargetHeroes.Values)
+                    var settResolver = quest.Model?.TargetResolvers?.FirstOrDefault(r => r.Alias == model.RequiredSettlementAlias);
+                    if (settResolver == null || string.IsNullOrEmpty(settResolver.SpecificId))
                     {
-                        if (th != null) usedHeroes.Add(th);
+                        var allCandidates = Hero.AllAliveHeroes.Where(h => h.IsAlive && !h.IsDisabled && !h.IsNotSpawned && h != Hero.MainHero && (allowChildren || !h.IsChild) && !usedHeroes.Contains(h));
+                        if (!string.IsNullOrEmpty(model.Filters))
+                        {
+                            var filters = model.Filters.Split(',').Select(f => f.Trim());
+                            foreach (var filter in filters)
+                            {
+                                allCandidates = ApplyFilter(allCandidates, filter, quest, questGiver);
+                            }
+                        }
+                        var fallbackUnused = allCandidates.ToList();
+                        if (fallbackUnused.Count > 0)
+                        {
+                            var playerPos2 = GetPlayerPosition();
+                            var bestHero = fallbackUnused.OrderBy(h => (h.CurrentSettlement?.GetPosition2D ?? h.HomeSettlement?.GetPosition2D ?? TaleWorlds.Library.Vec2.Zero).DistanceSquared(playerPos2)).FirstOrDefault();
+                            if (bestHero != null)
+                            {
+                                var newSettlement = bestHero.CurrentSettlement ?? bestHero.HomeSettlement;
+                                if (newSettlement != null)
+                                {
+                                    quest.TargetSettlements[model.RequiredSettlementAlias] = newSettlement;
+                                    DynamicQuest.BindSettlementToMBTextManager(model.RequiredSettlementAlias, newSettlement);
+                                    return bestHero;
+                                }
+                            }
+                        }
                     }
-                }
-
-                var unusedCandidates = candidates.Where(h => !usedHeroes.Contains(h)).ToList();
-                if (unusedCandidates.Any())
-                {
-                    candidates = unusedCandidates;
                 }
             }
 
@@ -193,6 +250,38 @@ namespace Questliner.Framework.Engine
             }
 
             if (!candidates.Any()) return null;
+
+            // 1.5 Prefer settlements with unused matching heroes for any dependent hero resolvers (Bug 2 fix)
+            if (quest?.Model?.TargetResolvers != null)
+            {
+                var dependentHeroResolvers = quest.Model.TargetResolvers
+                    .Where(r => r.TargetType == "Hero" && r.RequiredSettlementAlias == model.Alias)
+                    .ToList();
+
+                if (dependentHeroResolvers.Count > 0)
+                {
+                    var usedHeroes = GetUsedHeroes(quest);
+                    var viableSettlements = candidates.Where(s =>
+                    {
+                        foreach (var hr in dependentHeroResolvers)
+                        {
+                            bool hasMatchingHero = Hero.AllAliveHeroes.Any(h =>
+                                (h.CurrentSettlement == s || h.HomeSettlement == s) &&
+                                h.IsAlive && !h.IsDisabled && !h.IsNotSpawned && h != Hero.MainHero &&
+                                !usedHeroes.Contains(h) &&
+                                IsHeroMatch(hr, h, quest, questGiver));
+
+                            if (!hasMatchingHero) return false;
+                        }
+                        return true;
+                    }).ToList();
+
+                    if (viableSettlements.Count > 0)
+                    {
+                        candidates = viableSettlements;
+                    }
+                }
+            }
 
             var playerPos = GetPlayerPosition();
             var selector = model.Selector ?? "Random";
