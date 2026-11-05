@@ -24,7 +24,7 @@
     <string id="demirahit1_title" text="Çırağın Yemini" />
     <string id="da_log_0" text="Klanının kahramanlıkları Kalradya'nın dört bir yanındaki meyhanelerde ve kalelerde yankılanıyor. {DemirciSehri_Link} şehrindeki usta demirci {EfsaneviDemirci_Link}, kanına ve soyuna mühürlü kadim bir kılıcı yeniden dövmek üzere seni yanına çağırıyor." />
     <string id="da_log_1" text="{HammadeKaynagi_Link} köyüne giderek köy büyüğü {KoyMuhtari_Link} ile görüş ve 5 adet Yıldız Demiri filizi tedarik et. Dikkatli ol: {RakipTuccar_Link}'ın tuttuğu paralı katillerin taş ocağı civarında kol gezdiği söyleniyor." />
-    <string id="da_katiller" text="Kiralık Katiller" />
+    <string id="da_katiller" text="Yıldız Demiri Hırsızları" />
     <string id="da_katiller_dlg_intro" text="O yıldız demiri efendimize ait! Geri dön beyzade, yoksa kanın madene su olur!" />
     <string id="da_katiller_p_savas" text="Benim yerime çeliğim konuşacak. Çekin pusatları!" />
     <string id="da_log_2" text="Rakip tüccarın tuttuğu kiralık katiller çalınan Yıldız Demirleri ile birlikte yakınlarda pusuda! Madenleri geri almak için onları savaşta alt et." />

@@ -10,8 +10,8 @@
     <string id="sp_hg_s1_log" text="You suspected the assassination mission and started investigating. You must find and defeat 3 different looter parties wandering around using the name {PlayerName}. The truth will be revealed when you interrogate their scouts." />
     <string id="sp_hg_s2_log" text="You are interrogating the captured looters in isolation... Wait for them to break and reveal the location of their ringleader. (1 Day)" />
     <string id="sp_hg_spawn1" text="Traitor Looters" />
-    <string id="sp_hg_s3_log" text="It is time to interrogate the captives. You must go to a nearby looter party (Field Coordinator) and speak with them." />
-    <string id="sp_hg_s4_log" text="The captives told you the whereabouts of their ringleader. If you wait a bit, the real pigeons will come to you." />
+    <string id="sp_hg_s3_log" text="It is time to interrogate the captives. You must go to the looter party {HainCapulcular_Link} and speak with them." />
+    <string id="sp_hg_s4_log" text="The captives revealed the whereabouts of their ringleader. Confront {CapulcuElebasi_Link} to learn the truth behind the conspiracy." />
     <string id="sp_hg_s5_log" text="You found out who the real traitor is. Now all you have to do is pledge your allegiance to the kingdom." />
     
     <string id="sp_hg_dlg1" text="We were sent by a looter in the field. Release our friends, and we will bring the looter to speak the truth." />
@@ -277,6 +277,7 @@
 
     <!-- Karanlik Ag and The Web of Shadows -->
     <string id="sp_ka_title" text="The Black Ledger &amp; The Web of Shadows" />
+    <string id="sp_ka_s0_wait_log" text="You spared the fugitive artisan and took his blood money. For now, keep a low profile and wait to see how the underworld reacts to your new arrangement." />
     <string id="sp_ka_s0_log" text="A dying black pigeon collapsed onto your campfire, its claws clutching a scorched parchment written in the fugitive artisan's trembling hand: '{Dost_Name} is not serving the Motherland; he is turning it into an abattoir. The Black Ledger detailing every manufactured war and staged assassination is hidden in {GizliSehir_Link}. Find the broker {KaraMuhbir_Link} before the silencers bury the truth.'" />
     <string id="sp_ka_s1_log" text="A dying black pigeon collapsed onto your campfire, its claws clutching a scorched parchment written in the fugitive artisan's trembling hand: '{Dost_Name} is not serving the Motherland; he is turning it into an abattoir. The Black Ledger detailing every manufactured war and staged assassination is hidden in {GizliSehir_Link}. Find the broker {KaraMuhbir_Link} before the silencers bury the truth.' Ride to {GizliSehir_Link} and locate {KaraMuhbir_Link}!" />
     <string id="sp_ka_s2_log" text="Just as {KaraMuhbir_Link} confessed, the death squad {GolgeSuikastcilar_Link} ambushed the district to silence anyone seeking the Black Ledger! Slay the assassins to survive and secure the coordinates to the cipher vault." />

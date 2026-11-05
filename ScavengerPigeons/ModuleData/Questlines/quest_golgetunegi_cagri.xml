@@ -5,12 +5,10 @@
     <Condition Type="!IsQuestCompleted" ObjectId="QLF_GolgeTunegi_Cagri" Amount="1" />
   </Prerequisites>
 
-  <Triggers>
-    <Trigger EventType="AutoStart" />
-  </Triggers>
+  <Triggers />
 
   <TargetResolvers>
-    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" IsOptional="true" />
+    <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
     <Resolver Alias="GolgeSehri" TargetType="Settlement" Filters="Town" Selector="Nearest" />
     <Resolver Alias="GolgeUlagi" TargetType="Hero" Filters="Artisan" RequiredSettlementAlias="GolgeSehri" />
     <Resolver Alias="GolgeSiginagi" TargetType="Settlement" Filters="Hideout" Selector="Nearest" />

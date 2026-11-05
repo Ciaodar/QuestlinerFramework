@@ -8,9 +8,7 @@
     <Condition Type="!IsQuestCompleted" ObjectId="QLF_KaranlikAg" Amount="1" />
   </Prerequisites>
 
-  <Triggers>
-    <Trigger EventType="AutoStart" />
-  </Triggers>
+  <Triggers />
 
   <TargetResolvers>
     <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
@@ -21,6 +19,16 @@
   </TargetResolvers>
 
   <Stages>
+    <Stage Id="Stage0_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+      <LogText>{=sp_ka_s0_wait_log}You spared the fugitive artisan and took his blood money. For now, keep a low profile and wait to see how the underworld reacts to your new arrangement.</LogText>
+      <Conditions />
+      <OnEnterActions />
+      <OnExitActions />
+      <OnTimeoutActions>
+        <Action Type="ChangeStage" ObjectId="Stage1_MuhbirBulusma" />
+      </OnTimeoutActions>
+    </Stage>
+
     <Stage Id="Stage1_MuhbirBulusma" NextStageId="Stage2_PusuSavasi" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
       <LogText>{=sp_ka_s1_log}A dying black pigeon collapsed onto your campfire, its claws clutching a scorched parchment written in the fugitive artisan's trembling hand: '{Dost_Name} is not serving the Motherland; he is turning it into an abattoir. The Black Ledger detailing every manufactured war and staged assassination is hidden in {GizliSehir_Link}. Find the broker {KaraMuhbir_Link} before the silencers bury the truth.' Ride to {GizliSehir_Link} and locate {KaraMuhbir_Link}!</LogText>
       <Conditions />

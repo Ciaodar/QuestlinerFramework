@@ -10,8 +10,8 @@
     <string id="sp_hg_s1_log" text="Suikast görevinden şüphelendin ve araştırmaya başladın. {PlayerName} adını kullanarak etrafta dolaşan 3 farklı çapulcu partisi bulup yenmelisin. Gözcüleri sorguladığında gerçek ortaya çıkacak." />
     <string id="sp_hg_s2_log" text="Esir aldığınız çapulcuları sorguluyorsunuz... Elebaşlarının yerini itiraf etmelerini bekleyin. (1 Gün)" />
     <string id="sp_hg_spawn1" text="Hain Çapulcular" />
-    <string id="sp_hg_s3_log" text="Esirlerle sorgulama vakti geldi. Yakındaki bir çapulcu partisine (Saha Koordinatörü) gidip onlarla konuşmalısın." />
-    <string id="sp_hg_s4_log" text="Esirler sana elebaşının yerini söyledi. Biraz beklersen asıl güvercinler sana gelecek." />
+    <string id="sp_hg_s3_log" text="Esirlerle sorgulama vakti geldi. Çapulcu birliği {HainCapulcular_Link} ile temas kurup konuşmalısın." />
+    <string id="sp_hg_s4_log" text="Esirler elebaşının yerini söyledi. Gerçeği öğrenmek için {CapulcuElebasi_Link} ile yüzleş." />
     <string id="sp_hg_s5_log" text="Asıl hainin kim olduğunu öğrendin. Artık tek yapman gereken krallığa bağlılık yemini etmek." />
     
     <string id="sp_hg_dlg1" text="Biz Sahadaki bir Çapulcu tarafından gönderildik. Arkadaşlarımızı serbest bırak gerçekleri konuşmak için Çapulcuyu getirelim." />
@@ -276,6 +276,7 @@
 
     <!-- Karanlik Ag ve Golgelerin Agi -->
     <string id="sp_ka_title" text="Kara Kütük ve Gölgelerin Ağı" />
+    <string id="sp_ka_s0_wait_log" text="Firari zanaatkarın canını bağışlayıp kan parasını aldın. Şimdilik dikkat çekmemeye bak ve yeraltı dünyasının bu yeni anlaşmaya nasıl tepki vereceğini bekle..." />
     <string id="sp_ka_s0_log" text="Can çekişen siyah bir güvercin kamp ateşinizin yanına düştü; pençelerinde firari zanaatkarın titreyen eliyle yazdığı yanık bir parşömen vardı: '{Dost_Name} Anavatan'a hizmet etmiyor; onu bir mezbahaya çeviriyor. Tezgahlanan her sahte savaşın ve suikastın kaydını tutan Kara Kütük, {GizliSehir_Link} şehrinde gizli. Cellatlar gerçeği gömmeden önce aracı {KaraMuhbir_Link}'ı bul.'" />
     <string id="sp_ka_s1_log" text="Can çekişen siyah bir güvercin kamp ateşinizin yanına düştü; pençelerinde firari zanaatkarın titreyen eliyle yazdığı yanık bir parşömen vardı: '{Dost_Name} Anavatan'a hizmet etmiyor; onu bir mezbahaya çeviriyor. Tezgahlanan her sahte savaşın ve suikastın kaydını tutan Kara Kütük, {GizliSehir_Link} şehrinde gizli. Cellatlar gerçeği gömmeden önce aracı {KaraMuhbir_Link}'ı bul.' {GizliSehir_Link} şehrine at sür ve {KaraMuhbir_Link}'ı bul!" />
     <string id="sp_ka_s2_log" text="Tam da {KaraMuhbir_Link} itiraf ettiği anda, ölüm mangası {GolgeSuikastcilar_Link} Kara Kütük'ü arayan herkesi susturmak için mahalleye pusu kurdu! Hayatta kalmak ve şifre mahzeninin koordinatlarını güvenceye almak için suikastçıları katlet." />
