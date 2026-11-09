@@ -2,6 +2,7 @@
 <Questline Id="QLF_KopukBaglar" Title="{=sp_kb_title}Severed Ties" TimeLimitInDays="45">
 
   <Prerequisites>
+    <Condition Type="ClanTier" Amount="3" />
     <Condition Type="IsQuestCompleted" ObjectId="QLF_AnavataninIhaneti" Amount="1" />
     <Condition Type="!IsQuestCompleted" ObjectId="QLF_KopukBaglar" Amount="1" />
   </Prerequisites>
@@ -16,7 +17,7 @@
   </TargetResolvers>
 
   <Stages>
-    <Stage Id="Stage0_Bekleme" NextStageId="Stage1_Mesaj" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
+    <Stage Id="Stage0_Bekleme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="2">
       <LogText>{=sp_kb_s0_log}You are waiting for news about the traitorous looter {HainZanaatkar_Link}. You hope he will soon pay the price for trying to deceive you.</LogText>
       <Conditions />
       <OnEnterActions>
@@ -27,7 +28,7 @@
       </OnTimeoutActions>
     </Stage>
 
-    <Stage Id="Stage1_Mesaj" NextStageId="Stage2_Av" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="14">
+    <Stage Id="Stage1_Mesaj" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false" TimeoutInDays="14">
       <LogText>{=sp_kb_s1_log}You received an urgent, blood-stained message from a pigeon. Your friend {Dost_Link} needs to see you immediately. Find him and ask what the emergency is.</LogText>
       <Conditions />
       <OnEnterActions>
@@ -69,9 +70,9 @@
       </OnTimeoutActions>
     </Stage>
 
-    <!-- ROTA B: Haini Öldürürsen (Sadakat & 4 Mevsim) -->
+    <!-- ROTA B: Haini Öldürürsen (Sadakat ve Golge Hizmeti) -->
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_kb_success_log}You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost_Link}. Impressed by your unwavering devotion, your old contact welcomed you into the deeper ranks of the realm's shadow service, promising to call upon you for four seasons of service.</LogText>
+      <LogText>{=sp_kb_success_log}You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost_Link}. Impressed by your unwavering devotion, your old contact named you the Servant of the Shadow Pigeon and promised to call upon you with new sealed dispatches on the 7th day of each season.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="KillHero" TargetAlias="HainZanaatkar" />

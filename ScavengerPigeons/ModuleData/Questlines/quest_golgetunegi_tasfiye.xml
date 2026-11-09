@@ -14,13 +14,13 @@
     <Resolver Alias="Dost" TargetType="Hero" Filters="GlobalHero(SP_Dost)" />
     <Resolver Alias="Muhbir1" TargetType="Hero" Filters="Merchant, SameKingdomAs(Dost)" Selector="Nearest" />
     <Resolver Alias="Muhbir2" TargetType="Hero" Filters="GangLeader, SameKingdomAs(Dost)" Selector="Random" />
-    <Resolver Alias="DostOrdusu" TargetType="MobileParty" Filters="LordParty, PartyOf(Dost)" Selector="NearestTo(Dost)" IsOptional="true" />
+    <Resolver Alias="DostOrdusu" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
     <Resolver Alias="CeteMuhafizlari" TargetType="MobileParty" Filters="BanditParty" Selector="Random" IsOptional="true" />
   </TargetResolvers>
 
   <Stages>
     <Stage Id="Stage1_Muhbir1" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_gt2_s1_log}The Shadow Roost demands all compromised channels severed. Track down the merchant informant {Muhbir1_Link} who funded {Dost_Name}'s black market network and silence him forever.</LogText>
+      <LogText>{=sp_gt2_s1_log}Having severed {Dost_Name}'s foreign buyers, the Shadow Roost demands the purge of his war-profiteering syndicate inside the realm. Track down merchant financier {Muhbir1_Link}, who fenced the stolen Pigeon ciphers and funded {Dost_Name}'s grain blockades since your earliest trials, and silence him forever.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="Muhbir1" />
@@ -28,7 +28,7 @@
     </Stage>
 
     <Stage Id="Stage2_Muhbir2" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_gt2_s2_log}{Muhbir1_Link} will speak no more. Now seek out the underworld gang leader {Muhbir2_Link} in the slums and eliminate him and his cutthroats.</LogText>
+      <LogText>{=sp_gt2_s2_log}{Muhbir1_Link} will fund no more blockades. Now seek out {Dost_Name}'s underworld broker {Muhbir2_Link}, the gang leader who supplied the false-flag looters and frontier deserters behind your old slanders and {Dost_Name}'s staged raids, and dismantle his ring.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="Muhbir2" />
@@ -57,18 +57,35 @@
       </OnEnterActions>
     </Stage>
 
-    <Stage Id="Stage3_DostYuzlesme" NextStageId="StageSuccess" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
-      <LogText>{=sp_gt2_s3_log}Your former ally {Dost_Link} has raised an army ({DostOrdusu_Link}) to hunt you down as a rogue conspirator. Confront his host on the battlefield and finish this!</LogText>
-      <Conditions>
-        <Condition Type="DefeatedParties" TargetAlias="DostOrdusu" Amount="1" />
-      </Conditions>
+    <Stage Id="Stage3_DostYuzlesme" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_gt2_s3_log}With his financier and underworld broker purged, {Dost_Name}'s hidden war machine inside the kingdom lies in ruins. Cornered at last, your former patron awaits a final reckoning. Confront {Dost_Link} face-to-face and end his betrayal once and for all!</LogText>
+      <Conditions />
       <OnEnterActions>
         <Action Type="MakeMet" TargetAlias="Dost" />
       </OnEnterActions>
     </Stage>
 
+    <Stage Id="Stage3_DostOrdusuSavas" NextStageId="StageSuccess" FailStageId="StageFail_DostOrdusuDefeat" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="false">
+      <LogText>{=sp_gt2_s3_battle_log}Unmasking himself at last, {Dost_Name} loosed his 75-strong elite execution force ({DostOrdusu_Link}) upon you! Crush {DostOrdusu_Link} in battle and end {Dost_Name}'s reign of deceit forever!</LogText>
+      <Conditions>
+        <Condition Type="DefeatedParties" TargetAlias="DostOrdusu" Amount="1" />
+      </Conditions>
+      <FailConditions>
+        <Condition Type="BattleResolvedAs" TargetAlias="DostOrdusu" StringValue="Defeat" />
+      </FailConditions>
+    </Stage>
+
+    <Stage Id="StageFail_DostOrdusuDefeat" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="false" IsFailNode="true">
+      <LogText>{=sp_gt2_fail_dost_log}{Dost_Name}'s elite Shadow Host overwhelmed your company on the battlefield. Left bleeding in the dust, your war against the puppet master ended in defeat.</LogText>
+      <Conditions />
+      <OnEnterActions>
+        <Action Type="DestroyParty" TargetAlias="DostOrdusu" />
+        <Action Type="ShowInquiry" Title="{=sp_gt2_inq_dost_defeat_title}Crushed by the Shadow Host" Text="{=sp_gt2_fail_dost_log}{Dost_Name}'s elite Shadow Host overwhelmed your company on the battlefield. Left bleeding in the dust, your war against the puppet master ended in defeat." AffirmativeText="{=sp_btn_bitter}A bitter defeat" />
+      </OnEnterActions>
+    </Stage>
+
     <Stage Id="StageSuccess" NextStageId="" LogType="Simple" TargetAmount="1" IsSuccessNode="true" IsFailNode="false">
-      <LogText>{=sp_gt2_s_success_log}You broke {Dost_Name}'s army and executed him on the field of honor. The false patriot is dead. The Shadow Roost sends you 50,000 denars and 50 renown, inviting you to the final council.</LogText>
+      <LogText>{=sp_gt2_s_success_log}You broke {Dost_Name}'s Shadow Host and cut the fallen mastermind down amidst his shattered ambush. The false slanders and manufactured wars are avenged. The Shadow Roost grants you 50,000 denars and 50 renown, inviting you to the final council.</LogText>
       <Conditions />
       <OnEnterActions>
         <Action Type="KillHero" TargetAlias="Dost" />
@@ -82,26 +99,51 @@
 
   <CustomDialogs>
     <!-- Muhbir 1 (Tuccar) Diyaloglari -->
-    <DialogNode Type="Npc" Id="GT2_M1_Npc" TargetAlias="Muhbir1" InputToken="start" OutputToken="ql_gt2_m1_intro" Priority="200">
-      <Text>{=sp_gt2_dlg1}You... You are that phantom from the Shadow Roost! What do you want from me? I burned all the ledgers, I swear it!</Text>
+    <DialogNode Type="Npc" Id="GT2_M1_Npc" TargetAlias="Muhbir1" InputToken="start" OutputToken="ql_gt2_m1_step1_choices" Priority="200">
+      <Text>{=sp_gt2_dlg1}You... You are {Dost_Name}'s former blade who burned the foreign exchange near the pass! Stay back! I only bought the ciphers and financed the grain blockades because he ordered it!</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Muhbir1" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Player" Id="GT2_M1_Player" TargetAlias="Muhbir1" InputToken="hero_main_options" OutputToken="ql_gt2_m1_player_intro" Priority="200">
-      <Text>{=sp_gt2_dlg1_p}I am here regarding the ciphers you purchased.</Text>
+      <Text>{=sp_gt2_dlg1_p}I know about the Pigeon ciphers you fenced and the war gold you laundered for {Dost_Name}.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage1_Muhbir1" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="GT2_M1_Npc_Reply" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_player_intro" OutputToken="ql_gt2_m1_intro">
-      <Text>{=sp_gt2_dlg1_reply}What?! Who sent you?! Was it the courier cabal?! Please, I burned all the ledgers, take anything you want, spare my life!</Text>
+    <DialogNode Type="Npc" Id="GT2_M1_Npc_Reply" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_player_intro" OutputToken="ql_gt2_m1_step1_choices">
+      <Text>{=sp_gt2_dlg1_reply}Mercy! Was it the Shadow Roost that sent you?! {Dost_Name} swore nobody could trace the laundered cipher accounts back to his banner! I burned all the ledgers, spare my life!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT2_M1_P1_Inq" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_step1_choices" OutputToken="ql_gt2_m1_a2">
+      <Text>{=sp_gt2_dlg_m1_p1_inq}How long has {Dost_Name} been using the Scavenger Pigeons to turn fabricated slanders and border panics into silver?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT2_M1_P1_Prag" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_step1_choices" OutputToken="ql_gt2_m1_a2">
+      <Text>{=sp_gt2_dlg_m1_p1_prag}Talk fast if you want a clean death. How did {Dost_Name}'s gold machine work inside our own kingdom?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT2_M1_P1_Ertele" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_step1_choices" OutputToken="close_window">
+      <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="GT2_M1_A2" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_a2" OutputToken="ql_gt2_m1_step2_choices">
+      <Text>{=sp_gt2_dlg_m1_a2}Ever since he took control of the outer cells! Every 'treason rumor' he whispered into noble ears, every loyalty test he staged like yours, was only the curtain! Behind it, he leaks garrison schedules to outsiders, buys up grain before a crisis, and sells mercenaries to the same lords he terrifies!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT2_M1_P2_Ask" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_step2_choices" OutputToken="ql_gt2_m1_a3">
+      <Text>{=sp_gt2_dlg_m1_p2_ask}And who hires the cutthroats who frame loyal men and burn caravans to sell his 'protection'?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT2_M1_P2_Ertele" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_step2_choices" OutputToken="close_window">
+      <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="GT2_M1_A3" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_a3" OutputToken="ql_gt2_m1_intro">
+      <Text>{=sp_gt2_dlg_m1_a3}{Muhbir2_Link} in the alleys handles the dirty steel, recruiting false-flag looters and deserters on {Dost_Name}'s silver! I was just his accountant! Take my chest keys, let me go!</Text>
     </DialogNode>
 
     <DialogNode Type="Player" Id="GT2_M1_ChoiceA" TargetAlias="Muhbir1" InputToken="ql_gt2_m1_intro" OutputToken="close_window">
-      <Text>{=sp_gt2_dlg2}The Shadow Roost knows no mercy. Silence is your only fate. (Execute the Merchant)</Text>
+      <Text>{=sp_gt2_dlg2}Your blood money starved entire provinces and fueled {Dost_Name}'s lies. Silence is your only fate. (Execute the Financier)</Text>
       <Consequences>
         <Action Type="KillHero" TargetAlias="Muhbir1" />
         <Action Type="ChangeStage" ObjectId="Stage2_Muhbir2" />
@@ -122,26 +164,40 @@
     </DialogNode>
 
     <!-- Muhbir 2 (Cete Lideri) Diyaloglari -->
-    <DialogNode Type="Npc" Id="GT2_M2_Npc" TargetAlias="Muhbir2" InputToken="start" OutputToken="ql_gt2_m2_intro" Priority="200">
-      <Text>{=sp_gt2_dlg4}You think you can purge the alleys, Pigeon? You murdered the merchant, but you won't leave this den breathing! Boys, gut this dog!</Text>
+    <DialogNode Type="Npc" Id="GT2_M2_Npc" TargetAlias="Muhbir2" InputToken="start" OutputToken="ql_gt2_m2_step1_choices" Priority="200">
+      <Text>{=sp_gt2_dlg4}Well, well... The stray Pigeon who turned coat! Word reached my alley that {Muhbir1_Name}'s ledgers are soaked in red. Did you really think I wouldn't know you were coming?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Muhbir2" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Player" Id="GT2_M2_Player" TargetAlias="Muhbir2" InputToken="hero_main_options" OutputToken="ql_gt2_m2_player_intro" Priority="200">
-      <Text>{=sp_gt2_dlg4_p}The Shadow Roost requires your silence, gang master.</Text>
+      <Text>{=sp_gt2_dlg4_p}{Muhbir1_Name} gave up your name before he died. The Shadow Roost requires your silence, gang master.</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage2_Muhbir2" />
       </Conditions>
     </DialogNode>
 
-    <DialogNode Type="Npc" Id="GT2_M2_Npc_Reply" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_player_intro" OutputToken="ql_gt2_m2_intro">
-      <Text>{=sp_gt2_dlg4_reply}My silence? The only silence you will find in this alley is six feet under! Boys, carve this wretch up!</Text>
+    <DialogNode Type="Npc" Id="GT2_M2_Npc_Reply" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_player_intro" OutputToken="ql_gt2_m2_step1_choices">
+      <Text>{=sp_gt2_dlg4_reply}That soft-bellied merchant cracked under one threat? Doesn't matter. {Dost_Name} warned us days ago that an ungrateful dog slipped his leash!</Text>
     </DialogNode>
 
-    <DialogNode Type="Player" Id="GT2_M2_Choice_Fight" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_intro" OutputToken="close_window">
-      <Text>{=sp_gt2_dlg5}Shadows swallow the alleys. Die! (Attack)</Text>
+    <DialogNode Type="Player" Id="GT2_M2_P1_Inq" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_step1_choices" OutputToken="ql_gt2_m2_intro">
+      <Text>{=sp_gt2_dlg_m2_p1_inq}So it was your street scum posing as looters to spread fake slanders and raid border villages under {Dost_Name}'s silver?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT2_M2_P1_Prag" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_step1_choices" OutputToken="ql_gt2_m2_intro">
+      <Text>{=sp_gt2_dlg_m2_p1_prag}You hired the deserters and cutthroats behind every false war. Where is your master hiding?</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT2_M2_P1_Ertele" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_step1_choices" OutputToken="close_window">
+      <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
+    </DialogNode>
+
+    <DialogNode Type="Npc" Id="GT2_M2_A2" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_intro" OutputToken="ql_gt2_m2_final_choices">
+      <Text>{=sp_gt2_dlg_m2_a2}Every fake raid, every panicked caravan, every decoy band along the frontier ran through my boys! Gold is gold, Pigeon, and {Dost_Name} pays double for chaos! Enough talk. Boys, bar the exits and carve this wretch up!</Text>
+    </DialogNode>
+
+    <DialogNode Type="Player" Id="GT2_M2_Choice_Fight" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_final_choices" OutputToken="close_window">
+      <Text>{=sp_gt2_dlg5}Shadows swallow the alleys. Die with your lies! (Attack)</Text>
       <Consequences>
         <Action Type="KillHero" TargetAlias="Muhbir2" />
         <Action Type="SpawnBanditParty" TargetAlias="CeteMuhafizlari" Amount="30" PartyTemplateId="mercenary_template" StringValue="{=sp_gt2_thugs}Alley Enforcers" SpawnDistance="2" SpawnRadius="3" />
@@ -149,10 +205,6 @@
         <Action Type="ChangeStage" ObjectId="Stage2_CeteSavasi" />
         <Action Type="LeaveEncounter" />
       </Consequences>
-    </DialogNode>
-
-    <DialogNode Type="Player" Id="GT2_M2_Choice_Ertele" TargetAlias="Muhbir2" InputToken="ql_gt2_m2_intro" OutputToken="close_window">
-      <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
     <!-- CETE SAVASI: MUHAFIZLAR ILE KARSILASMA DIYALOGU -->
@@ -178,41 +230,41 @@
     </DialogNode>
 
     <DialogNode Type="Npc" Id="GT2_Dost_Npc" TargetAlias="Dost" InputToken="start" OutputToken="ql_gt2_dost_step1_choices" Priority="200">
-      <Text>{=sp_gt2_dlg6_intro}{PlayerName}... You stand before me with an army at your back. Did you think I wouldn't see the shadow of the Roost looming behind you?</Text>
+      <Text>{=sp_gt2_dlg6_intro}{PlayerName}... First my merchant financier, then my enforcers in the alleys. You used the Shadow Roost's blades to carve through my entire network. Did you think I wouldn't see your treason looming behind me?</Text>
       <Conditions>
         <Condition Type="IsStageActive" ObjectId="Stage3_DostYuzlesme" />
       </Conditions>
     </DialogNode>
 
     <DialogNode Type="Npc" Id="GT2_Dost_A1" TargetAlias="Dost" InputToken="ql_gt2_dost_a1" OutputToken="ql_gt2_dost_step1_choices">
-      <Text>{=sp_gt2_dlg6_intro}{PlayerName}... You stand before me with an army at your back. Did you think I wouldn't see the shadow of the Roost looming behind you?</Text>
+      <Text>{=sp_gt2_dlg6_intro}{PlayerName}... First my merchant financier, then my enforcers in the alleys. You used the Shadow Roost's blades to carve through my entire network. Did you think I wouldn't see your treason looming behind me?</Text>
     </DialogNode>
 
     <!-- Tur 1: Oyuncu Tepkisi -->
     <DialogNode Type="Player" Id="GT2_D_P1_Inq" TargetAlias="Dost" InputToken="ql_gt2_dost_step1_choices" OutputToken="ql_gt2_dost_a2">
-      <Text>{=sp_gt2_dlg_p1_inq}We were allies once, {Dost_Name}. I served you through four seasons. How long have you been playing both sides?</Text>
+      <Text>{=sp_gt2_dlg_p1_inq}You built our alliance on a staged slander from the very first day, {Dost_Name}. I carried your ciphers across the realm while you traded innocent lives. How long were you using me?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P1_Direct" TargetAlias="Dost" InputToken="ql_gt2_dost_step1_choices" OutputToken="ql_gt2_dost_a2">
-      <Text>{=sp_gt2_dlg_p1_direct}I know about the Black Ledger and the manufactured wars. Your web of lies has unraveled.</Text>
+      <Text>{=sp_gt2_dlg_p1_direct}I uncovered the stolen ciphers, the Black Ledger, and the hired raiders you funded. Your web of lies has unraveled.</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P1_Prag" TargetAlias="Dost" InputToken="ql_gt2_dost_step1_choices" OutputToken="ql_gt2_dost_a2">
-      <Text>{=sp_gt2_dlg_p1_prag}You brought an army to hunt me down. Is this how the Motherland treats its most loyal blade?</Text>
+      <Text>{=sp_gt2_dlg_p1_prag}You turned the Scavenger Pigeons into a personal slaughterhouse for gold. Is this how the Motherland treats its loyal blades?</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P1_Ertele" TargetAlias="Dost" InputToken="ql_gt2_dost_step1_choices" OutputToken="close_window">
       <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Tur 2: KULLANICI DIREKTIFINDEKI IKONIK REPLIK -->
+    <!-- Tur 2: Ikonik Replik -->
     <DialogNode Type="Npc" Id="GT2_Dost_A2" TargetAlias="Dost" InputToken="ql_gt2_dost_a2" OutputToken="ql_gt2_dost_step2_choices">
-      <Text>{=sp_gt2_dlg6_reply}Ever since you didn't kill that traitor, my eyes were upon you... You shall pay for your betrayal with your life!</Text>
+      <Text>{=sp_gt2_dlg6_reply}Ever since you refused to silence that traitor when I marked him for death, my eyes were upon you... You shall pay for your betrayal with your life!</Text>
     </DialogNode>
 
     <!-- Tur 3: Oyuncu Ihanetin Gercek Yuzunu Ortaya Koyar -->
     <DialogNode Type="Player" Id="GT2_D_P2_Truth" TargetAlias="Dost" InputToken="ql_gt2_dost_step2_choices" OutputToken="ql_gt2_dost_a3">
-      <Text>{=sp_gt2_dlg_p2_truth}You call sparing a courier treason? Treason was setting Calradia on fire so your Pigeons could sell the ashes!</Text>
+      <Text>{=sp_gt2_dlg_p2_truth}You call sparing a witness treason? Treason was setting Calradia on fire so your Pigeons could sell the ashes!</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P2_Accuse" TargetAlias="Dost" InputToken="ql_gt2_dost_step2_choices" OutputToken="ql_gt2_dost_a3">
-      <Text>{=sp_gt2_dlg_p2_accuse}The courier showed me the orders you signed. You starved entire clans in winter and incited border raids in summer!</Text>
+      <Text>{=sp_gt2_dlg_p2_accuse}I read the sealed orders bearing your mark! You starved loyalist clans with rigged grain blockades and incited false border raids for profit!</Text>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_D_P2_Ertele" TargetAlias="Dost" InputToken="ql_gt2_dost_step2_choices" OutputToken="close_window">
       <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
@@ -234,28 +286,43 @@
       <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
     </DialogNode>
 
-    <!-- Tur 6: Dost'un Savaşa Çağrısı -->
+    <!-- Tur 6: Dost'un Golge Ordusunu Sahaya Surmesi -->
     <DialogNode Type="Npc" Id="GT2_Dost_A4" TargetAlias="Dost" InputToken="ql_gt2_dost_a4" OutputToken="ql_gt2_dost_final_choices">
-      <Text>{=sp_gt2_dlg_dost_battlecry}Then words are finished. The Shadow Roost will fall with you today. Knights of the Motherland, draw your steel! Slay this traitor!</Text>
+      <Text>{=sp_gt2_dlg_dost_battlecry}Then words are finished. If you will not bow to the Motherland's necessity, you will die in the dirt. Shadow Host, cut this traitor down!</Text>
     </DialogNode>
 
-    <!-- Tur 7: Savaşın Başlaması -->
+    <!-- Tur 7: Savasin Baslamasi (Hostile: No Ertele!) -->
     <DialogNode Type="Player" Id="GT2_Dost_Fight_Heroic" TargetAlias="Dost" InputToken="ql_gt2_dost_final_choices" OutputToken="close_window">
       <Text>{=sp_gt2_dlg7_heroic}For the true Calradia! Today the Motherland is freed from your poison! (Draw Steel &amp; Charge)</Text>
       <Consequences>
-        <Action Type="DeclareWar" TargetAlias="Dost" />
-        <Action Type="SetPartyAi" TargetAlias="DostOrdusu" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="SpawnBanditParty" TargetAlias="DostOrdusu" Amount="75" PartyTemplateId="garrison_guards_template" StringValue="{=sp_gt2_dost_host}Shadow Host" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SetPartyAi" TargetAlias="DostOrdusu" StringValue="EngagePlayer" />
+        <Action Type="ChangeStage" ObjectId="Stage3_DostOrdusuSavas" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
     <DialogNode Type="Player" Id="GT2_Dost_Fight_Dark" TargetAlias="Dost" InputToken="ql_gt2_dost_final_choices" OutputToken="close_window">
       <Text>{=sp_gt2_dlg7_dark}Draw your sword, puppet master! No cage will save you now! (Attack)</Text>
       <Consequences>
-        <Action Type="DeclareWar" TargetAlias="Dost" />
-        <Action Type="SetPartyAi" TargetAlias="DostOrdusu" StringValue="EngageParty" ObjectId="Player" />
+        <Action Type="SpawnBanditParty" TargetAlias="DostOrdusu" Amount="75" PartyTemplateId="garrison_guards_template" StringValue="{=sp_gt2_dost_host}Shadow Host" SpawnDistance="2" SpawnRadius="3" />
+        <Action Type="SetPartyAi" TargetAlias="DostOrdusu" StringValue="EngagePlayer" />
+        <Action Type="ChangeStage" ObjectId="Stage3_DostOrdusuSavas" />
+        <Action Type="LeaveEncounter" />
       </Consequences>
     </DialogNode>
-    <DialogNode Type="Player" Id="GT2_Dost_Choice_Ertele" TargetAlias="Dost" InputToken="ql_gt2_dost_final_choices" OutputToken="close_window">
-      <Text>{=sp_gt2_ertele}I cannot deal with this right now. We will speak later.</Text>
+
+    <!-- DOST ORDUSU ILE HARITA KARSILASMASI DIYALOGU -->
+    <DialogNode Type="Npc" Id="GT2_Host_Giris" TargetAlias="DostOrdusu" InputToken="start" OutputToken="ql_gt2_host_choices" Priority="200">
+      <Text>{=sp_gt2_dlg_host_intro}For {Dost_Name}! Cut them down!</Text>
+      <Conditions>
+        <Condition Type="IsStageActive" ObjectId="Stage3_DostOrdusuSavas" />
+      </Conditions>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT2_Host_P1" TargetAlias="DostOrdusu" InputToken="ql_gt2_host_choices" OutputToken="close_window">
+      <Text>{=sp_gt2_dlg_host_p1}Draw steel! (Fight)</Text>
+    </DialogNode>
+    <DialogNode Type="Player" Id="GT2_Host_P2" TargetAlias="DostOrdusu" InputToken="ql_gt2_host_choices" OutputToken="close_window">
+      <Text>{=sp_gt2_dlg_host_p2}Tell your master he falls next! (Fight)</Text>
     </DialogNode>
   </CustomDialogs>
 </Questline>

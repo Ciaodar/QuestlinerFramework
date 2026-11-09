@@ -150,8 +150,8 @@
     <string id="sp_kb_s2_log" text="You spoke to {Dost_Link}. He revealed that the artisan {HainZanaatkar_Link} is a traitor who stole the Pigeon ciphers and fled. To find his main convoy, you must first intercept and defeat 3 of his decoy looter parties roaming the lands before they disperse. (Time Limit: 10 Days)" />
     <string id="sp_kb_convoy" text="Traitor's Convoy" />
     <string id="sp_kb_s3_log" text="After defeating the decoys, the traitor's looter convoy has appeared to eliminate you! Confront them and retrieve the ciphers before they escape across the border. (Time Limit: 5 Days)" />
-    <string id="sp_kb_success_log" text="You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost_Link}. Impressed by your unwavering devotion, your old contact welcomed you into the deeper ranks of the realm's shadow service, promising to call upon you for four seasons of service." />
-    <string id="sp_kb_yozlasma_log" text="You spared {HainZanaatkar_Name} and took his 20,000 denars in exchange for faking his death. You told the world he was slain so {Dost_Name}'s hounds would stop hunting him. A mysterious shadow raven landed on your shoulder, dropping a cipher sealed with black wax..." />
+    <string id="sp_kb_success_log" text="You destroyed the convoy and executed the traitor {HainZanaatkar_Link}. The recovered ciphers were returned to {Dost_Link}. Impressed by your unwavering devotion, your old contact named you the Servant of the Shadow Pigeon and promised to call upon you with new sealed dispatches on the 7th day of each season." />
+    <string id="sp_kb_yozlasma_log" text="You told everyone that you executed {HainZanaatkar_Name}, while secretly accepting his 25,000 gold bribe and allowing him to vanish across the border. You gained 25,000 gold and the Pigeon's Secret Dagger. Moments later, a dying black pigeon delivered the artisan's final cryptic message: {Dost_Link} is playing everyone; the Black Ledger hidden in the ciphers will burn Calradia. The hunt for the truth has begun!" />
     <string id="sp_kb_fail_log" text="The traitor {HainZanaatkar_Link} and his convoy managed to slip across the border before you could intercept them. The secret ciphers are lost forever, and the Scavenger Pigeons have lost their trust in you." />
     
     <string id="sp_kb_dlg1" text="I received your bloody pigeon message. What is the emergency?" />
@@ -165,7 +165,7 @@
     <string id="sp_kb_dlg9" text="Wait! You blindly fight for {Dost_Link} and the Motherland. Do you even know what these ciphers contain? They are false-flag assassination orders to start an unjustified war! The Motherland is corrupt, my friend. Let me go, and I will give you a fortune and my legendary dagger." />
     <string id="sp_kb_dlg10" text="The poisoned tongue of a traitor cannot deceive me. The Motherland's justice will be served! Men, attack! (Fight)" />
     <string id="sp_kb_dlg11" text="False-flag wars and puppet masters? Hand over the 25,000 gold and that dagger, and disappear across the border. (Accept Bribe &amp; Let Escape)" />
-    <string id="sp_kb_dlg12" text="Fine! Take the gold, take your life, and vanish from Calradia. Everyone will believe you died by my blade. (Accept 20,000 denars and fake his death)" />
+    <string id="sp_kb_dlg12" text="A wise decision... The Pigeons are blind fools, but you have eyes to see. Tell everyone that you killed me so {Dost_Name}'s hounds stop hunting me! Take the gold and the dagger. Farewell, {PlayerName}!" />
 
     <!-- Golge Tunegi: Golge Tuneginin Cagri -->
     <string id="sp_gt1_title" text="Call of the Shadow Roost" />
@@ -180,24 +180,34 @@
 
     <!-- Golge Tunegi: Kanli Sifreler ve Buyuk Tasfiye -->
     <string id="sp_gt2_title" text="Blood Ciphers &amp; The Great Purge" />
-    <string id="sp_gt2_s1_log" text="To strip {Dost_Link} of his power, you must sever his financial and underworld networks. Track down his corrupt war-profiteer {Muhbir1_Link} and silence him forever." />
-    <string id="sp_gt2_s2_log" text="{Muhbir1_Link}'s war chest is closed. Now seek out {Dost_Link}'s underworld enforcer {Muhbir2_Link} in the slums and dismantle his assassination ring." />
+    <string id="sp_gt2_s1_log" text="Having severed {Dost_Name}'s foreign buyers, the Shadow Roost demands the purge of his war-profiteering syndicate inside the realm. Track down merchant financier {Muhbir1_Link}, who fenced the stolen Pigeon ciphers and funded {Dost_Name}'s grain blockades since your earliest trials, and silence him forever." />
+    <string id="sp_gt2_s2_log" text="{Muhbir1_Link} will fund no more blockades. Now seek out {Dost_Name}'s underworld broker {Muhbir2_Link}, the gang leader who supplied the false-flag looters and frontier deserters behind your old slanders and {Dost_Name}'s staged raids, and dismantle his ring." />
     <string id="sp_gt2_s2_fight_log" text="{Muhbir2_Link}'s 30 mercenary enforcers ({CeteMuhafizlari_Link}) have ambushed you in the back streets! Cut through them to complete the underworld purge." />
-    <string id="sp_gt2_s3_log" text="Cornered and furious, your former patron {Dost_Link} has raised an army ({DostOrdusu_Link}) to wipe you out. Confront his host on the battlefield and end his reign of deceit!" />
-    <string id="sp_gt2_s_success_log" text="You broke {Dost_Link}'s army and executed the corrupt mastermind on the battlefield. The false wars are avenged, and the Shadow Roost awaits you for the final reckoning. You received 50,000 denars and 50 renown." />
-    <string id="sp_gt2_dlg1" text="You... You are the blade who turned against {Dost_Name}! What do you want from me? I only financed the grain blockades because he ordered it!" />
-    <string id="sp_gt2_dlg1_p" text="I am here regarding the ciphers you purchased." />
-    <string id="sp_gt2_dlg1_reply" text="What?! Who sent you?! Was it the courier cabal?! Please, I burned all the ledgers, take anything you want, spare my life!" />
-    <string id="sp_gt2_dlg2" text="Your blood money starved entire provinces. The realm demands justice! (Execute the Financier)" />
+    <string id="sp_gt2_s3_log" text="With his financier and underworld broker purged, {Dost_Name}'s hidden war machine inside the kingdom lies in ruins. Cornered at last, your former patron awaits a final reckoning. Confront {Dost_Link} face-to-face and end his betrayal once and for all!" />
+    <string id="sp_gt2_s3_battle_log" text="Unmasking himself at last, {Dost_Name} loosed his 75-strong elite execution force ({DostOrdusu_Link}) upon you! Crush {DostOrdusu_Link} in battle and end {Dost_Name}'s reign of deceit forever!" />
+    <string id="sp_gt2_fail_dost_log" text="{Dost_Name}'s elite Shadow Host overwhelmed your company on the battlefield. Left bleeding in the dust, your war against the puppet master ended in defeat." />
+    <string id="sp_gt2_inq_dost_defeat_title" text="Crushed by the Shadow Host" />
+    <string id="sp_gt2_s_success_log" text="You broke {Dost_Name}'s Shadow Host and cut the fallen mastermind down amidst his shattered ambush. The false slanders and manufactured wars are avenged. The Shadow Roost grants you 50,000 denars and 50 renown, inviting you to the final council." />
+    <string id="sp_gt2_dlg1" text="You... You are {Dost_Name}'s former blade who burned the foreign exchange near the pass! Stay back! I only bought the ciphers and financed the grain blockades because he ordered it!" />
+    <string id="sp_gt2_dlg1_p" text="I know about the Pigeon ciphers you fenced and the war gold you laundered for {Dost_Name}." />
+    <string id="sp_gt2_dlg1_reply" text="Mercy! Was it the Shadow Roost that sent you?! {Dost_Name} swore nobody could trace the laundered cipher accounts back to his banner! I burned all the ledgers, spare my life!" />
+    <string id="sp_gt2_dlg_m1_p1_inq" text="How long has {Dost_Name} been using the Scavenger Pigeons to turn fabricated slanders and border panics into silver?" />
+    <string id="sp_gt2_dlg_m1_p1_prag" text="Talk fast if you want a clean death. How did {Dost_Name}'s gold machine work inside our own kingdom?" />
+    <string id="sp_gt2_dlg_m1_a2" text="Ever since he took control of the outer cells! Every 'treason rumor' he whispered into noble ears, every loyalty test he staged like yours, was only the curtain! Behind it, he leaks garrison schedules to outsiders, buys up grain before a crisis, and sells mercenaries to the same lords he terrifies!" />
+    <string id="sp_gt2_dlg_m1_p2_ask" text="And who hires the cutthroats who frame loyal men and burn caravans to sell his 'protection'?" />
+    <string id="sp_gt2_dlg_m1_a3" text="{Muhbir2_Link} in the alleys handles the dirty steel, recruiting false-flag looters and deserters on {Dost_Name}'s silver! I was just his accountant! Take my chest keys, let me go!" />
+    <string id="sp_gt2_dlg2" text="Your blood money starved entire provinces and fueled {Dost_Name}'s lies. Silence is your only fate. (Execute the Financier)" />
     <string id="sp_gt2_dlg3" text="Hand over the vault keys first, then face your doom. (Extort 15,000 denars &amp; Execute)" />
-    <string id="sp_gt2_dlg4" text="You think you can purge the alleys, Pigeon? You murdered the merchant, but you won't leave this den breathing! Boys, gut this dog!" />
-    <string id="sp_gt2_dlg4_p" text="The Shadow Roost requires your silence, gang master." />
-    <string id="sp_gt2_dlg4_reply" text="My silence? The only silence you will find in this alley is six feet under! Boys, carve this wretch up!" />
-    <string id="sp_gt2_dlg5" text="Shadows swallow the alleys. Die! (Attack)" />
-    <string id="sp_gt2_dlg6" text="{PlayerName}... When I look at you, I no longer see an ally, but a bloodthirsty cult monster! The artisan was a traitor, but he was to face a court of law. You butchered him like a dog and became a slave to the Shadow Roost! I will wipe you from these lands!" />
+    <string id="sp_gt2_dlg4" text="Well, well... The stray Pigeon who turned coat! Word reached my alley that {Muhbir1_Name}'s ledgers are soaked in red. Did you really think I wouldn't know you were coming?" />
+    <string id="sp_gt2_dlg4_p" text="{Muhbir1_Name} gave up your name before he died. The Shadow Roost requires your silence, gang master." />
+    <string id="sp_gt2_dlg4_reply" text="That soft-bellied merchant cracked under one threat? Doesn't matter. {Dost_Name} warned us days ago that an ungrateful dog slipped his leash!" />
+    <string id="sp_gt2_dlg_m2_p1_inq" text="So it was your street scum posing as looters to spread fake slanders and raid border villages under {Dost_Name}'s silver?" />
+    <string id="sp_gt2_dlg_m2_p1_prag" text="You hired the deserters and cutthroats behind every false war. Where is your master hiding?" />
+    <string id="sp_gt2_dlg_m2_a2" text="Every fake raid, every panicked caravan, every decoy band along the frontier ran through my boys! Gold is gold, Pigeon, and {Dost_Name} pays double for chaos! Enough talk. Boys, bar the exits and carve this wretch up!" />
+    <string id="sp_gt2_dlg5" text="Shadows swallow the alleys. Die with your lies! (Attack)" />
     <string id="sp_gt2_dlg6_p" text="We meet again, {Dost_Name}. It seems our paths end here." />
-    <string id="sp_gt2_dlg6_reply" text="Ever since you didn't kill that traitor, my eyes were upon you... You shall pay for your betrayal with your life!" />
-    <string id="sp_gt2_dlg7" text="You are weak, {Dost_Name}. Your courts, your kings, and your lies only protect the weak. Pigeons do not soar in the skies, they feast above tombs. Draw your sword!" />
+    <string id="sp_gt2_dlg6_reply" text="Ever since you refused to silence that traitor when I marked him for death, my eyes were upon you... You shall pay for your betrayal with your life!" />
+    <string id="sp_gt2_dlg7" text="You are weak, {Dost_Name}. Your courts, your kings, and your lies only protect the weak. Pigeons do not soar in the skies, they feast above tombs." />
 
     <!-- Golge Tunegi: Calradia'nin Kuklacisi (Nihai Son) -->
     <string id="sp_gt3_title" text="Puppeteer of Calradia" />
@@ -272,7 +282,7 @@
     <string id="sp_kb_dlg_k_ledger_reveal" text="Defense archives? Lies! These ciphers contain the Black Ledger, the secret record of every false-flag raid {Dost_Name} orchestrated! He hires deserters to slaughter frontier villages under rival banners, forcing kings into wars so the Pigeons can sell protection and intelligence at extortionate prices!" />
     <string id="sp_kb_dlg_p3_doubt" text="Manufactured wars... Is that why you gave me an assassination contract against {Dost_Name} when we first met?" />
     <string id="sp_kb_dlg_p3_skep" text="Even if {Dost_Name} is ruthless, you are surrounded by 70 looters. Why should I trust a runaway looter over a kingdom lord?" />
-    <string id="sp_kb_dlg_k_offer" text="Wait! Slay me and {Dost_Name}'s lies go to the grave with me! Spare my life, and I will show you where my caravan hid 20,000 denars from the forge! Tell everyone that you killed me so {Dost_Name}'s hounds stop hunting me!" />
+    <string id="sp_kb_dlg_k_offer" text="Yes! I tried to have him killed to save Calradia from another continental bloodbath, but you refused! Now my only desire is to live. Let me cross this border, {PlayerName}. Take my 25,000 gold and my Pigeon's Secret Dagger. Tell everyone that you killed me so {Dost_Name}'s hounds stop hunting me! You can walk away wealthy and unburdened!" />
     <string id="sp_kb_dlg_fight_prag" text="Your dagger and your gold will be mine once your corpse hits the dirt anyway. Draw your steel! (Fight)" />
 
     <!-- Karanlik Ag and The Web of Shadows -->
@@ -311,42 +321,51 @@
     <string id="sp_ka_dlg_fin_ruler" text="With this ledger, {Dost_Name}'s puppet empire is finished. From now on, the shadows answer to me. (Claim the Black Ledger)" />
     <string id="sp_ka_dlg_fin_prag" text="Power and gold always follow the truth. I will keep this weapon close. (Claim the Black Ledger)" />
 
-    <!-- Dostun Gorevleri (Four Seasons of Service) -->
-    <string id="sp_dg_title" text="Four Seasons of Service" />
-    <string id="sp_dg_s0_log" text="With the traitor executed, you have proven your absolute loyalty to {Dost_Link}. The true motives of the Scavenger Pigeons remain veiled in patriotic duty. You await your seasonal orders via pigeon dispatch..." />
-    <string id="sp_dg_s1_log" text="Spring Service - Espionage: A pigeon from {Dost_Link} directs you to {BaharSehir_Link}. Meet with operative {BaharOperatifi_Link} to receive decoded foreign intelligence." />
-    <string id="sp_dg_s2_wait_log" text="The Spring espionage task was completed. As summer sweeps across Calradia, you await {Dost_Link}'s next dispatch order..." />
-    <string id="sp_dg_s2_log" text="Summer Service - Courier Dispatch: Ride to {YazSehir_Link} and deliver an urgent, wax-sealed diplomatic cylinder to {YazKuryesi_Link} without breaking the seal." />
-    <string id="sp_dg_s3_wait_log" text="The dispatch reached its destination. As autumn leaves fall, {Dost_Link} summons your martial strength for a critical frontier operation..." />
-    <string id="sp_dg_raiders" text="Hostile Deserters" />
-    <string id="sp_dg_s3_log" text="Autumn Service - Combat: Hostile deserters {SonbaharHaydutlar_Link} are harassing Pigeon supply routes along the frontier. Hunt them down and eliminate them to ensure secure transit for the realm." />
-    <string id="sp_dg_s4_wait_log" text="The border is secured. Winter's frost envelops the realm, and delicate palace affairs will soon require your discretion..." />
-    <string id="sp_dg_s4_log" text="Winter Service - Court Affairs: Travel to {KisSehir_Link} and contact {KisSarayli_Link} to plant forged directives in the local registry to steer the noble council." />
-    <string id="sp_dg_s5_log" text="The four seasons of service are complete. But an unmarked black raven has arrived, directing you to meet {DerinKanatUlagi_Link}. The inner council has issued a shocking, unprecedented assassination decree: The target is none other than {Dost_Link}!" />
-    <string id="sp_dg_s_korsadakat_log" text="You refused to listen to a traitor and cut down {DerinKanatUlagi_Link} where he stood. You reported the coup attempt in the ranks to {Dost_Link}. Deeply impressed by your unyielding loyalty, {Dost_Name} rewarded you with 50,000 denars and declared you his eternal champion. Now, a new hunt begins against {YeniHainZanaatkar_Link}." />
-    <string id="sp_dg_s_golgerotasi_log" text="You held your blade and listened to {DerinKanatUlagi_Link}. The documents he provided tore the veil from your eyes: {Dost_Link} has orchestrated every crisis, every border war, and every death to line his own pockets. The courier handed you the Raven Bone Cipher and directed you to the hidden sanctuary of the Shadow Roost. But {Dost_Name} already senses your defiance..." />
-    <string id="sp_dg_dlg_b_entry" text="I am here on behalf of {Dost_Name}. Spring intelligence must be transferred." />
-    <string id="sp_dg_dlg_b_npc" text="The pigeon flew swiftly. The foreign garrisons are shifting patrols. Here are the decoded ciphers for {Dost_Name}." />
-    <string id="sp_dg_dlg_b_acc" text="The Motherland's eyes are everywhere. I will ensure these reach our archive." />
-    <string id="sp_dg_dlg_b_inq" text="Do these ciphers indicate an imminent attack, or just routine maneuvers?" />
+    <!-- Dostun Gorevleri (Servant of the Shadow Pigeon) -->
+    <string id="sp_dg_title" text="Servant of the Shadow Pigeon" />
+    <string id="sp_dg_s0_log" text="Having proven your loyalty to {Dost_Name} by executing the traitor, you now serve as an operative of the Scavenger Pigeons. Carry on with your affairs across the realm; time must pass until the 7th day of the season, when a pigeon courier will deliver your first sealed orders." />
+    <string id="sp_dg_s1_log" text="First Assignment, The Vault of Whispers: On the 7th day of the season, a grey pigeon delivered {Dost_Name}'s encrypted crest. Ride to {OperatifSehir_Link} and meet cipher artisan {Operatif_Link} to recover stolen foreign garrison supply ledgers." />
+    <string id="sp_dg_s2_wait_log" text="The decoded garrison ledgers from the Vault of Whispers have been sent to {Dost_Name}'s archive. Tend to your own affairs and wait for time to pass; the next pigeon dispatch will arrive on the 7th day of the next season." />
+    <string id="sp_dg_s2_log" text="Second Assignment, The Blood-Sealed Cylinder: A new 7th-day dispatch from {Dost_Name} directs you to {KuryeSehir_Link}. Deliver an urgent, crimson wax-sealed cylinder to merchant broker {Kurye_Link} without breaking the seal." />
+    <string id="sp_dg_s3_wait_log" text="The blood-sealed cylinder is now in the guild broker's vault. Continue your travels across the realm and let time pass until the 7th day of the next season, when {Dost_Name} will summon your blade for a frontier purge." />
+    <string id="sp_dg_raiders" text="Border Deserters" />
+    <string id="sp_dg_s3_log" text="Third Assignment, Frontier Purge: On the 7th day, {Dost_Name} sent word that renegades are threatening Pigeon supply routes near the frontier. Ride to {SinirKoyu_Link}, track down {SinirFirarileri_Link} patrolling around the village, and wipe them out." />
+    <string id="sp_dg_s4_wait_log" text="The frontier roads are silent once more, yet the deserters' dying curses linger in your memory. Let time pass until the 7th day of the next season, when the deepest dispatch of the Scavenger Pigeons will find you." />
+    <string id="sp_dg_s4_log" text="Fourth Assignment, The Shadow Decree: On the 7th day, an unmarked black pigeon arrived bearing the secret seal of the Deep Wing. Ride to {DerinKanatSehir_Link} and meet council envoy {DerinKanatUlagi_Link}. An unprecedented assassination decree has been issued: the target is none other than {Dost_Name}!" />
+    <string id="sp_dg_s_korsadakat_log" text="You refused to entertain the words of a traitor and struck down {DerinKanatUlagi_Link} where he stood. You reported the coup attempt to {Dost_Link}. Overwhelmed by your unyielding loyalty, {Dost_Name} rewarded you with 50,000 denars and named you his champion. But before the dust could settle, word arrived that another artisan, {YeniHainZanaatkar_Link}, has betrayed the circle and stolen master ciphers. The hunt begins anew!" />
+    <string id="sp_dg_s_golgerotasi_log" text="You held your blade and listened to {DerinKanatUlagi_Link}. The documents he provided tore the veil from your eyes: {Dost_Link} has orchestrated every crisis, every grain blockade, and every border raid to line his own pockets. The courier handed you the Raven Bone Cipher and directed you to the hidden sanctuary of the Shadow Roost. Yet {Dost_Name} already senses your defiance..." />
     <string id="sp_dg_ertele" text="I cannot deal with this right now. We will speak later." />
-    <string id="sp_dg_dlg_y_entry" text="I bear a sealed cylinder from {Dost_Name} for the Summer trade convoy." />
-    <string id="sp_dg_dlg_y_npc" text="The seal is unbroken... Praise the heavens. This guarantees our caravans passage across contested borders without imperial tariff." />
-    <string id="sp_dg_dlg_y_acc" text="My duty is fulfilled. Guard those manifests well." />
-    <string id="sp_dg_dlg_y_inq" text="How does a secret society secure trade immunity from rival kings?" />
-    <string id="sp_dg_dlg_k_entry" text="Winter has come. I bring the registry directives from {Dost_Name}." />
-    <string id="sp_dg_dlg_k_npc" text="Right on schedule. These forged seals will replace the tax ledgers tonight. The council will vote exactly as {Dost_Name} demands." />
-    <string id="sp_dg_dlg_k_acc" text="The four seasons of service are nearly complete. Proceed as planned." />
-    <string id="sp_dg_dlg_k_inq" text="Doesn't tampering with royal registries risk the wrath of the crown?" />
+    <string id="sp_dg_dlg_s1_entry" text="I carry {Dost_Name}'s encrypted mark. What intelligence waits in the Vault of Whispers?" />
+    <string id="sp_dg_dlg_s1_a1" text="Lower your voice, operative. Foreign envoys have been bribing frontier quartermasters to leak garrison grain inventories and patrol shift rosters. Two of our night runners bled to death in the cellars last night snatching this codebook back before it crossed the border." />
+    <string id="sp_dg_dlg_s1_p1_inq" text="Why would foreign spies pay in blood for grain manifests at backwater frontier keeps instead of army battle plans?" />
+    <string id="sp_dg_dlg_s1_p1_skep" text="{Dost_Name} sent me into the dark without telling me who died for these pages. Why keep this off royal ledgers?" />
+    <string id="sp_dg_dlg_s1_p1_prag" text="Spare me the cellar ghost stories. Tell me what these decoded plates unlock and let me ride." />
+    <string id="sp_dg_dlg_s1_a2" text="Armies march on granaries, not speeches! Knowing which castle runs short tells an enemy where to raid, and tells {Dost_Name} which panicked border lord will pay double for Pigeon escorts and mercenaries. Look closely at these cipher plates: the handwriting of three high lords sits beside foreign wax." />
+    <string id="sp_dg_dlg_s1_p2_ask" text="Wait. Are you saying {Dost_Name} sells warnings to panicked lords instead of handing traitors straight to the crown?" />
+    <string id="sp_dg_dlg_s1_p2_loyal" text="High politics requires dirty hands. Those nobles would tear the kingdom apart if left unchecked." />
+    <string id="sp_dg_dlg_s1_a3" text="Careful how loudly you ask that question in these alleys, operative. The craftsman before you asked too many questions, and you remember how his story ended. Take these decoded ledgers; our runners will relay them to {Dost_Name}. Be ready when the next 7th day arrives." />
+    <string id="sp_dg_dlg_s1_p3_acc" text="The ciphers are secured. Tell {Dost_Name} his operative awaits the next 7th-day dispatch." />
+    <string id="sp_dg_dlg_s1_p3_prag" text="I do not ask questions I am not paid to ask. Forward the archive and burn the scraps." />
+    <string id="sp_dg_dlg_s2_entry" text="I bear an unbroken crimson cylinder dispatched by {Dost_Name}." />
+    <string id="sp_dg_dlg_s2_a1" text="By the heavens, hide it under the wool bales! Do you know how many guild merchants vanished inside their own cellars after hesitating over {Dost_Name}'s crimson crest? If the town watch glimpses that pigeon wax on my counter, I am finished." />
+    <string id="sp_dg_dlg_s2_p1_inq" text="Why are your hands shaking? I was told this cylinder only holds caravan toll exemptions across the border." />
+    <string id="sp_dg_dlg_s2_p1_skep" text="Honest brokers do not sweat blood over salt tariffs. What is locked inside that iron tube?" />
+    <string id="sp_dg_dlg_s2_p1_prag" text="Check the seal, pay the Pigeons' tithe, and spare me your trembling." />
+    <string id="sp_dg_dlg_s2_a2" text="Tariff exemptions?! Inside this tube sit forged grain-blockade decrees and extortion writs against every merchant house that refused to fund {Dost_Name}'s shadow coffers! Three rival caravans along the pass were gutted by so-called deserters the same night their elders refused his demands." />
+    <string id="sp_dg_dlg_s2_p2_ask" text="Garrison supply ciphers first, and now blockade writs alongside caravan burnings... Who actually pays those deserters?" />
+    <string id="sp_dg_dlg_s2_p2_loyal" text="Every guild feeds off chaos until someone strong holds the reins. {Dost_Name} keeps order in the dark." />
+    <string id="sp_dg_dlg_s2_a3" text="Tell yourself whatever helps you sleep when the screams start at the border, soldier. The wax seal is unbroken, and the forged manifests will be filed tonight. Leave my stall before the watchers notice us speaking." />
+    <string id="sp_dg_dlg_s2_p3_acc" text="My courier duty is done. Keep the ledger quiet and prepare your tribute." />
+    <string id="sp_dg_dlg_s2_p3_prag" text="The cylinder reached your hands intact. What {Dost_Name} does with those merchants is his affair." />
     <string id="sp_dg_dlg_d_entry" text="A black raven brought me your summons. Who are you, and what is this urgent contract?" />
-    <string id="sp_dg_dlg_d_npc" text="You proved your discipline through four seasons of service, {PlayerName}. But the time for petty errands has ended. The deep wing of the Scavenger Pigeons has chosen you for the supreme task: {Dost_Link} must be executed tonight." />
+    <string id="sp_dg_dlg_d_npc" text="You proved your discipline through every cipher, courier run, and frontier purge, {PlayerName}. But the time for blind errands has ended. The deep wing of the Scavenger Pigeons has chosen you for the supreme task: {Dost_Link} must be executed tonight." />
     <string id="sp_dg_dlg_p_angry" text="Why are you committing such treachery?! Don't you know what happened to the last person who gave me this mission?! I hunted that artisan down and put him to the sword!" />
     <string id="sp_dg_dlg_p_skep" text="Another assassination order against {Dost_Name}? Is this another twisted loyalty test orchestrated by the Pigeons, or have you all lost your minds?" />
     <string id="sp_dg_dlg_p_prag" text="{Dost_Name} rewarded me with gold and honor, while you whisper treason in dark corners. Give me one reason not to take your head right now." />
-    <string id="sp_dg_dlg_d_reply" text="We are desperately trying to rid the realm of the true traitor to the motherland! {Dost_Name} is the real puppeteer of fabricated wars. The artisan you killed saw the darkness coming and tried to warn you! The dispatches you carried through four seasons didn't protect peace, they sparked border clashes for his personal profit!" />
-    <string id="sp_dg_dlg_p2_doubt" text="I served him through Spring, Summer, Autumn, and Winter! I carried dispatches, crushed deserters, planted directives. Are you saying all of it was a puppet show?!" />
+    <string id="sp_dg_dlg_d_reply" text="We are desperately trying to rid the realm of the true traitor to the motherland! {Dost_Name} is the real puppeteer of fabricated wars. The artisan you killed saw the darkness coming and tried to warn you! Every sealed dispatch you carried since his death didn't protect peace; they stoked border raids and grain panics for his personal profit!" />
+    <string id="sp_dg_dlg_p2_doubt" text="I broke foreign ciphers at the Vault of Whispers, delivered his crimson cylinder, and slaughtered the border deserters who cursed his name! Are you saying all of it was his puppet show?!" />
     <string id="sp_dg_dlg_p2_accuse" text="And who gave your shadowy faction the right to pass judgment? Are you just another ambitious butcher seeking {Dost_Name}'s seat?" />
-    <string id="sp_dg_dlg_d_facts" text="Yes, a puppet show of blood! The summer dispatches provoked a grain blockade, and the winter registry starved a rival loyalist clan. {Dost_Name} orchestrates every crisis so kings must grovel before the Scavenger Pigeons for information! We are the inner circle, the Shadow Council who refuse to let the Motherland burn for one man's greed!" />
+    <string id="sp_dg_dlg_d_facts" text="Yes, a puppet show of blood! The garrison ciphers you lifted handed him leverage over anxious frontier lords, and that crimson cylinder triggered a cruel grain blockade that starved loyalist houses! And those deserters you cut down at the border were mercenaries {Dost_Name} himself hired and silenced before they could talk! We are the Shadow Council who refuse to let the Motherland burn for one man's greed." />
     <string id="sp_dg_dlg_p3_proof" text="Show me your proof. If {Dost_Name} is the monster you claim, prove it before my blade draws your blood." />
     <string id="sp_dg_dlg_p3_defend" text="Words are cheap, and traitors always cloak themselves in righteousness. Why should I believe you over {Dost_Name}?" />
     <string id="sp_dg_dlg_d_plea" text="Listen to me; do not kill me right now, and let me prove to you that you are mistaken. If you are not convinced, my neck is forfeit to your blade! Here is the Raven Bone Cipher bearing the seal of the Shadow Council. Read the orders {Dost_Name} signed in secret, then make your choice!" />
@@ -360,17 +379,21 @@
 
     <!-- Golge Tunegi 2: Buyuk Tasfiye (Additions &amp; Iconic Duel of Words) -->
     <string id="sp_gt2_ertele" text="I cannot deal with this right now. We will speak later." />
-    <string id="sp_gt2_dlg6_intro" text="{PlayerName}... You stand before me with an army at your back. Did you think I wouldn't see the shadow of the Roost looming behind you?" />
-    <string id="sp_gt2_dlg_p1_inq" text="We were allies once, {Dost_Name}. I served you through four seasons. How long have you been playing both sides?" />
-    <string id="sp_gt2_dlg_p1_direct" text="I know about the Black Ledger and the manufactured wars. Your web of lies has unraveled." />
-    <string id="sp_gt2_dlg_p1_prag" text="You brought an army to hunt me down. Is this how the Motherland treats its most loyal blade?" />
-    <string id="sp_gt2_dlg_p2_truth" text="You call sparing a courier treason? Treason was setting Calradia on fire so your Pigeons could sell the ashes!" />
-    <string id="sp_gt2_dlg_p2_accuse" text="The courier showed me the orders you signed. You starved entire clans in winter and incited border raids in summer!" />
+    <string id="sp_gt2_dlg6_intro" text="{PlayerName}... First my merchant financier, then my enforcers in the alleys. You used the Shadow Roost's blades to carve through my entire network. Did you think I wouldn't see your treason looming behind me?" />
+    <string id="sp_gt2_dlg_p1_inq" text="You built our alliance on a staged slander from the very first day, {Dost_Name}. I carried your ciphers across the realm while you traded innocent lives. How long were you using me?" />
+    <string id="sp_gt2_dlg_p1_direct" text="I uncovered the stolen ciphers, the Black Ledger, and the hired raiders you funded. Your web of lies has unraveled." />
+    <string id="sp_gt2_dlg_p1_prag" text="You turned the Scavenger Pigeons into a personal slaughterhouse for gold. Is this how the Motherland treats its loyal blades?" />
+    <string id="sp_gt2_dlg_p2_truth" text="You call sparing a witness treason? Treason was setting Calradia on fire so your Pigeons could sell the ashes!" />
+    <string id="sp_gt2_dlg_p2_accuse" text="I read the sealed orders bearing your mark! You starved loyalist clans with rigged grain blockades and incited false border raids for profit!" />
     <string id="sp_gt2_dlg_dost_statecraft" text="You fool... You understand nothing of statecraft! Kings and emperors are arrogant toddlers who would drown Calradia in blood for sport. The Pigeons control the flow of wars so the realm survives in balance! Without our guided hand, chaos would swallow everything!" />
-    <string id="sp_gt2_dlg_p3_heroic" text="Balance? You call slaughtering innocents balance?! You are not a protector, old friend, you are a cancer on the Motherland." />
-    <string id="sp_gt2_dlg_dost_battlecry" text="Then words are finished. The Shadow Roost will fall with you today. Knights of the Motherland, draw your steel! Slay this traitor!" />
+    <string id="sp_gt2_dlg_p3_heroic" text="Balance? You call slaughtering innocents balance?! You are not a protector, {Dost_Name}, you are a cancer on the Motherland." />
+    <string id="sp_gt2_dlg_dost_battlecry" text="Then words are finished. If you will not bow to the Motherland's necessity, you will die in the dirt. Shadow Host, cut this traitor down!" />
     <string id="sp_gt2_dlg7_heroic" text="For the true Calradia! Today the Motherland is freed from your poison! (Draw Steel &amp; Charge)" />
     <string id="sp_gt2_dlg7_dark" text="Draw your sword, puppet master! No cage will save you now! (Attack)" />
+    <string id="sp_gt2_dost_host" text="Shadow Host" />
+    <string id="sp_gt2_dlg_host_intro" text="For {Dost_Name}! Cut them down!" />
+    <string id="sp_gt2_dlg_host_p1" text="Draw steel! (Fight)" />
+    <string id="sp_gt2_dlg_host_p2" text="Tell your master he falls next! (Fight)" />
 
     <!-- Golge Tunegi 3: Calradia'nin Kuklacisi (Philosophical Dialogues) -->
     <string id="sp_gt3_dlg_p1_inq" text="So you are the Blind Master, the hidden phantom who birthed the Scavenger Pigeons from the shadows." />
@@ -408,9 +431,9 @@
     <string id="sp_gt1_dlg_u_test" text="A 50-man foreign detachment waits near {GolgeSiginagi_Link} to purchase {Dost_Name}'s stolen realm defense blueprints! If that intelligence crosses the frontier, thousands will burn. Slay them all. Let him find only cold steel where he expected gold!" />
 
     <!-- Encounter Dialogues & Hostile Parties -->
-    <string id="sp_dg_dlg_raiders_intro" text="Stand your ground! This mountain road belongs to us. Yield your coin or feed the crows!" />
-    <string id="sp_dg_dlg_raiders_p1" text="You picked the wrong supply line to raid. Draw your steel! (Fight)" />
-    <string id="sp_dg_dlg_raiders_p2" text="The Motherland's justice leaves no raiders breathing! (Fight)" />
+    <string id="sp_dg_dlg_raiders_intro" text="Halt! Did {Dost_Name} send another lapdog to silence us?! We were promised silver for raiding those caravans, not an ambush on our own patrol!" />
+    <string id="sp_dg_dlg_raiders_p1" text="Spit all the lies you want. Your raids along this border end in blood today! (Fight)" />
+    <string id="sp_dg_dlg_raiders_p2" text="No mercenaries buy their survival with rumors. Draw your steel! (Fight)" />
     <string id="sp_gt1_foreign_agents" text="Foreign Detachment" />
     <string id="sp_gt1_dlg_agents_intro" text="You are intruding on private negotiations, Calradian! Lower your weapons or be put down!" />
     <string id="sp_gt1_dlg_agents_p1" text="Those stolen defense blueprints stay on this side of the mountains! (Fight)" />
@@ -425,10 +448,10 @@
     <string id="sp_gt3_dlg_fanatic_p2" text="The Roost's lies die with you! (Fight)" />
 
     <!-- Defeat Fail Conditions, Inquiries & Rebalance Additions -->
-    <string id="sp_kb_fail_defeat_log" text="The traitor artisan's caravan guards overwhelmed your forces. The artisan escaped into foreign lands, and {Dost_Name} will not forgive this failure." />
-    <string id="sp_kb_inq_defeat_title" text="Caravan Ambush Defeat" />
-    <string id="sp_dg_fail_s3_log" text="The deep wing courier's elite escort defeated your detachment. The courier vanished into the mist, and {Dost_Name}'s trust in your strength is broken." />
-    <string id="sp_dg_inq_defeat_title" text="Courier Ambush Defeat" />
+    <string id="sp_kb_fail_defeat_log" text="The traitor's convoy overwhelmed your forces. Leaving you bleeding in the mud, {HainZanaatkar_Name} slipped across the border with the stolen ciphers. The Scavenger Pigeons hold you responsible for the catastrophic loss." />
+    <string id="sp_kb_inq_defeat_title" text="Crushed by the Convoy" />
+    <string id="sp_dg_fail_s3_log" text="The Border Deserters overwhelmed your company near the frontier village. Supply routes fell into chaos, and your failure severely damaged your standing with {Dost_Name}." />
+    <string id="sp_dg_inq_defeat_title" text="Defeat on the Frontier" />
     <string id="sp_ka_inq_defeat_title" text="Ambushed by Shadow Assassins" />
     <string id="sp_ka_inq_defeat_text" text="The shadow assassins have cut down your retinue and surrounded you with drawn blades. They demand 10% of your total gold to let you walk away humiliated, or your life ends here." />
     <string id="sp_ka_inq_bribe_btn" text="Offer 10% of Your Gold" />
